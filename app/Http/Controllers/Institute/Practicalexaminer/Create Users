@@ -1,0 +1,17 @@
+$str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+$pes = \App\Practicalexaminer::whereNull('password')->get();
+        
+        foreach($pes as $pe){
+            $password = substr($pe->crr_no,2)."#".rand(10,99).'@'.strtoupper(substr(str_shuffle($str_result),0,2));
+            $user = \App\User::create([
+                'username' => $pe->crr_no,
+                    'password' =>  Hash::make($password),
+                     'confirmed' => 0,
+                     'confirmation_code' => 'abcd',
+                     'usertype_id' => 10,
+                     'email' => $pe->email
+            ]);
+            $pe->user_id = $user->id;
+            $pe->password = $password;
+            $pe->save();
+        }

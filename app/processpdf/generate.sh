@@ -1,0 +1,2 @@
+java -jar $1/processpdf/pdfbox-app-3.0.3.jar overlay -i=$2/questionpapers/27/decrypted/$8/dc_$6_$7_$4.pdf  -o=$2/questionpapers/27/watermarked/$8/wm_$5_$4_$6_$7.pdf -default=$2/questionpapers/27/overlays/$5.pdf -position=FOREGROUND
+java -jar $1/processpdf/pdfbox-app-3.0.3.jar encrypt -i=$2/questionpapers/27/watermarked/$8/wm_$5_$4_$6_$7.pdf -o=$2/questionpapers/27/dist/$8/wm_e_$5_$4_$6_$7.pdf -O=Rc1M@st3rPwdSS -U=$9  -canExtractContent=false

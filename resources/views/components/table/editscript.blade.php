@@ -1,0 +1,1 @@
+$('#{{$link}}_edit_modal {{$type}}[name="{{$field}}"]').val($('#{{$field}}_'+id).val());

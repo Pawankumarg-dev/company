@@ -1,0 +1,1 @@
+java -jar $1/processpdf/pdfbox-app-3.0.3.jar decrypt -i=$2/uploadedqp//$3 -o=$2/questionpapers/27/decrypted/$8/dc_$4_$6_$7.pdf -password=$5

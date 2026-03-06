@@ -1,0 +1,77 @@
+select * from tmpexaminers te
+left join practicalexaminers pe on pe.crr_no = te.crr_no
+where pe.id is null
+group by te.crr_no
+
+
+insert into practicalexaminers (
+name,
+crr_no,
+email
+)
+select te.name, te.crr_no, te.email from tmpexaminers te
+left join practicalexaminers pe on pe.crr_no = te.crr_no
+where pe.id is null
+group by te.crr_no
+
+update tmpexaminers te
+left join practicalexaminers pe on pe.crr_no = te.crr_no
+set te.existing = 1
+where pe.id is not null
+
+update tmpexaminers te
+left join practicalexaminers pe on pe.crr_no = te.crr_no
+set te.practicalexaminer_id = pe.id
+
+
+update tmpexaminers te
+left join practicalexaminers pe on pe.crr_no = te.old_crr
+set te.old_practicalexaminer_id = pe.id
+
+
+select * from practicalexaminers order by id desc;
+
+update tmpexaminers set course_id = 13 where course = 'D.ED SPL EDN HI';
+update tmpexaminers set course_id = 12 where course = 'DECSE';
+update tmpexaminers set course_id = 15 where course = 'DHLS';
+
+update tmpexaminers set course_id = 4 where course = 'D.E.C.S.E.(ID) ';
+update tmpexaminers set course_id = 7 where course = 'D.Ed.Spl.Ed.(IDD)';
+update tmpexaminers set course_id = 8 where course = 'D.Ed.Spl.Ed.(MD)';
+
+select course_id, count(*) from tmpexaminers group by course_id
+select * from tmpexaminers;
+
+update tmpexaminers te
+left join institutes i on i.rci_code = te.rci_code
+set institute_id = i.id;
+
+select * from tmpexaminers where institute_id is null;
+
+update tmpexaminers te
+left join practicalexams pe on pe.course_id = te.course_id and pe.practicalexaminer_id = te.old_practicalexaminer_id and te.institute_id = pe.institute_id
+set te.practicalexam_id = pe.id
+
+select pe.id, te.practicalexaminer_id from practicalexams pe
+left join tmpexaminers te on pe.id = te.practicalexam_id
+where te.id is not null
+
+select * from practicalexams;
+
+insert into practicalexams (practicalexaminer_id,institute_id,course_id,exam_id)
+select te.practicalexaminer_id, te.institute_id, te.course_id, 25 from tmpexaminers te
+where te.practicalexam_id is null
+
+// SET PASSWORD USING TINEER
+
+login to server
+cd /var/www/html/rcinber
+php artisan tinker
+$str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';   
+$pes = \App\Practicalexaminer::whereNull('password')->get();
+ foreach($pes as $pe){                                                                                                      $password = substr($pe->crr_no,2)."#".rand(10,99).'@'.strtoupper(substr(str_shuffle($str_result),0,2));                                                                                                                               $user = \App\User::create([                                                                                            'username' => $pe->crr_no,                                                                                             'password' =>  Hash::make($password),                                                                               'confirmed' => 0,                                                                                                  'confirmation_code' => 'abcd',                                                                                     'usertype_id' => 10,                                                                                               'email' => $pe->email                                                                                     ]);                                                                                                                $pe->user_id = $user->id;                                                                                          $pe->password = $password;                                                                                         $pe->save();                                                                                                   }
+ 
+select pe.name, pe.email, pe.crr_no, pe.password from tmpexaminers te 
+left join practicalexaminers pe on pe.id = te.practicalexaminer_id
+
+

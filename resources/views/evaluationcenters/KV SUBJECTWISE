@@ -1,0 +1,10 @@
+select evc.code, evc.name, p.abbreviation, s.scode, s.sname, l.language, sum(qpl.countofpapers) from questionpaperlanguages qpl
+left join examtimetables tt on tt.subject_id = qpl.subject_id and tt.exam_id =22
+left join subjects s on s.id = qpl.subject_id
+left join programmes p on p.id = s.programme_id
+left join externalexamcenters ec on ec.id = qpl.externalexamcenter_id
+left join languages l on l.id = qpl.language_id
+left join evaluationcenterdetails ev on ev.externalexamcenter_id = ec.id
+left join evaluationcenters evc on evc.id = ev.`evaluationcenter_id`
+where tt.examdate = '2023-09-09' or tt.examdate = '2023-09-10'
+group by ev.`evaluationcenter_id`,   p.id, s.id, l.id

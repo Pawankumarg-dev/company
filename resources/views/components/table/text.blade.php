@@ -1,0 +1,1 @@
+<td> <input type='hidden' id='{{$field}}_{{$collection->id}}' value="{{$collection->$field}}" />{{$collection->$field}}</td>

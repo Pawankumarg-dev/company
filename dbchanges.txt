@@ -1,0 +1,124 @@
+
+
+
+// Changes for the initila commit
+create table configurations (id int auto_increment default null, attribute varchar(255) not null, value varchar(255), primary key(id));
+insert into configurations (attribute,value) values('enrolment',1);
+drop table nberstaffs;
+alter table nberstaffs add column admin int default 0;
+alter table genders add column code varchar(1);
+update genders set code = 'M' where id = 1;
+update genders set code = 'F' where id = 2;
+update genders set code = 'T' where id = 3;
+create table nbers (id int auto_increment not null, code varchar(20) not null, name varchar(255) not null, primary key(id));
+insert into users (username,email,password,usertype_id) values('rciadmin','rci-depwd@gov.in',md5('p@ssw0rd'),5);
+alter table nbers add column address varchar(255);
+alter table nbers add column name_code varchar(10);
+insert into nbers(code,name,address,name_code) values ('NBER001','National Institute for Empowerment of Persons with Multiple Disabilities ','#East Coast Road, Kovalam Post, Muttukadu, Chennai - 603112, Tamil Nadu, India','NIEPMD');
+insert into nbers(code,name,address,name_code) values ('NBER002',' Ali Yavar Jung National Institute Of Speech And Hearing Disabilities ','NIMH Building, Plot No. 44-A, First Floor, C Block, Sector 40, Noida, Uttar Pradesh 201303','AYJNISHD');
+insert into nbers(code,name,address,name_code) values ('NBER003',' National Institute for the Empowerment of Persons with Visual Disabilities','116, Rajpur Rd, Jakhan, Dehradun, Uttarakhand 248001','NIEPVD');
+alter table programmes add column nber_id int;
+update  programmes set nber_id = 1;
+alter table institutes add column rci_code varchar(10);
+
+CREATE TABLE nationalities (id int(11) NOT NULL AUTO_INCREMENT,name varchar(200) DEFAULT NULL,PRIMARY KEY (id));
+
+INSERT INTO nationalities(id,name ) VALUES (1,'Afghan'),(2,'Albanian'),(3,'Algerian'),(4,'American'),(5,'Andorran'),(6,'Angolan'),(7,'Antiguans'),(8,'Argentinean'),(9,'Armenian'),(10,'Australian'),(11,'Austrian'),(12,'Azerbaijani'),(13,'Bahamian'),(14,'Bahraini'),(15,'Bangladeshi'),(16,'Barbadian'),(17,'Barbudans'),(18,'Batswana'),(19,'Belarusian'),(20,'Belgian'),(21,'Belizean'),(22,'Beninese'),(23,'Bhutanese'),(24,'Bolivian'),(25,'Bosnian'),(26,'Brazilian'),(27,'British'),(28,'Bruneian'),(29,'Bulgarian'),(30,'Burkinabe'),(31,'Burmese'),(32,'Burundian'),(33,'Cambodian'),(34,'Cameroonian'),(35,'Canadian'),(36,'Cape Verdean'),(37,'Central African'),(38,'Chadian'),(39,'Chilean'),(40,'Chinese'),(41,'Colombian'),(42,'Comoran'),(43,'Congolese'),(44,'Congolese'),(45,'Costa Rican'),(46,'Croatian'),(47,'Cuban'),(48,'Cypriot'),(49,'Czech'),(50,'Danish'),(51,'Djibouti'),(52,'Dominican'),(53,'Dominican'),(54,'Dutch'),(55,'Dutchman'),(56,'Dutchwoman'),(57,'East Timorese'),(58,'Ecuadorean'),(59,'Egyptian'),(60,'Emirian'),(61,'Equatorial Guinean'),(62,'Eritrean'),(63,'Estonian'),(64,'Ethiopian'),(65,'Fijian'),(66,'Filipino'),(67,'Finnish'),(68,'French'),(69,'Gabonese'),(70,'Gambian'),(71,'Georgian'),(72,'German'),(73,'Ghanaian'),(74,'Greek'),(75,'Grenadian'),(76,'Guatemalan'),(77,'Guinea-Bissauan'),(78,'Guinean'),(79,'Guyanese'),(80,'Haitian'),(81,'Herzegovinian'),(82,'Honduran'),(83,'Hungarian'),(84,'I-Kiribati'),(85,'Icelander'),(86,'Indian'),(87,'Indonesian'),(88,'Iranian'),(89,'Iraqi'),(90,'Irish'),(91,'Irish'),(92,'Israeli'),(93,'Italian'),(94,'Ivorian'),(95,'Jamaican'),(96,'Japanese'),(97,'Jordanian'),(98,'Kazakhstani'),(99,'Kenyan'),(100,'Kittian and Nevisian'),(101,'Kuwaiti'),(102,'Kyrgyz'),(103,'Laotian'),(104,'Latvian'),(105,'Lebanese'),(106,'Liberian'),(107,'Libyan'),(108,'Liechtensteiner'),(109,'Lithuanian'),(110,'Luxembourger'),(111,'Macedonian'),(112,'Malagasy'),(113,'Malawian'),(114,'Malaysian'),(115,'Maldivan'),(116,'Malian'),(117,'Maltese'),(118,'Marshallese'),(119,'Mauritanian'),(120,'Mauritian'),(121,'Mexican'),(122,'Micronesian'),(123,'Moldovan'),(124,'Monacan'),(125,'Mongolian'),(126,'Moroccan'),(127,'Mosotho'),(128,'Motswana'),(129,'Mozambican'),(130,'Namibian'),(131,'Nauruan'),(132,'Nepalese'),(133,'Netherlander'),(134,'New Zealander'),(135,'Ni-Vanuatu'),(136,'Nicaraguan'),(137,'Nigerian'),(138,'Nigerien'),(139,'North Korean'),(140,'Northern Irish'),(141,'Norwegian'),(142,'Omani'),(143,'Pakistani'),(144,'Palauan'),(145,'Panamanian'),(146,'Papua New Guinean'),(147,'Paraguayan'),(148,'Peruvian'),(149,'Polish'),(150,'Portuguese'),(151,'Qatari'),(152,'Romanian'),(153,'Russian'),(154,'Rwandan'),(155,'Saint Lucian'),(156,'Salvadoran'),(157,'Samoan'),(158,'San Marinese'),(159,'Sao Tomean'),(160,'Saudi'),(161,'Scottish'),(162,'Senegalese'),(163,'Serbian'),(164,'Seychellois'),(165,'Sierra Leonean'),(166,'Singaporean'),(167,'Slovakian'),(168,'Slovenian'),(169,'Solomon Islander'),(170,'Somali'),(171,'South African'),(172,'South Korean'),(173,'Spanish'),(174,'Sri Lankan'),(175,'Sudanese'),(176,'Surinamer'),(177,'Swazi'),(178,'Swedish'),(179,'Swiss'),(180,'Syrian'),(181,'Taiwanese'),(182,'Tajik'),(183,'Tanzanian'),(184,'Thai'),(185,'Togolese'),(186,'Tongan'),(187,'Trinidadian or Tobagonian'),(188,'Tunisian'),(189,'Turkish'),(190,'Tuvaluan'),(191,'Ugandan'),(192,'Ukrainian'),(193,'Uruguayan'),(194,'Uzbekistani'),(195,'Venezuelan'),(196,'Vietnamese'),(197,'Welsh'),(198,'Yemenite'),(199,'Zambian'),(200,'Zimbabwean');
+alter table candidates add column nationality_id int;
+
+
+
+
+
+alter table programmegroups add column minage int(5) default 15;
+alter table academicyears add column accademicsession date default null;
+
+alter table academicyears add column previous_academicyear_id int;
+
+alter table programmegroups add column tenth int(1) default 1;
+alter table programmegroups add column twelveth int(1) default 1;
+
+alter table candidates add column isdisabled int(1) default 0;
+alter table candidates add column aadhar varchar(12) default null;
+
+
+alter table candidates add column udid varchar(25);
+alter table candidates add column ews int;
+
+alter table candidates add column district_id int;
+alter table candidates add column subdistrict_id int;
+alter table candidates add column state_id int;
+alter table candidates add column village_id int;
+
+
+alter table candidates add column pdistrict_id int;
+alter table candidates add column psubdistrict_id int;
+alter table candidates add column pstate_id int;
+alter table candidates add column pvillage_id int;
+alter table candidates add column nationality_id int;
+alter table candidates add column disabilitytype_id int;
+alter table candidates add column disabilityper int;
+
+
+create  table disabilitytypes(id int not null auto_increment, disabilitytype int, disabilityname varchar(100), primary key(id));
+insert into disabilitytypes(disabilitytype,disabilityname) values(197,'Acid Attack Victim');
+insert into disabilitytypes(disabilitytype,disabilityname) values(206,'Autism Spectrum Disorder');
+insert into disabilitytypes(disabilitytype,disabilityname) values(2,'Blindness');
+insert into disabilitytypes(disabilitytype,disabilityname) values(7,'Cerebral Palsy');
+insert into disabilitytypes(disabilitytype,disabilityname) values(205,'Chronic Neurological Conditions');
+insert into disabilitytypes(disabilitytype,disabilityname) values(4,'Hearing Impairment');
+insert into disabilitytypes(disabilitytype,disabilityname) values(200,'Hemophilia');
+insert into disabilitytypes(disabilitytype,disabilityname) values(8,'Intellectual Disability');
+insert into disabilitytypes(disabilitytype,disabilityname) values(6,'Leprosy cured');
+insert into disabilitytypes(disabilitytype,disabilityname) values(5,'Locomotor Disability');
+insert into disabilitytypes(disabilitytype,disabilityname) values(3,'Low Vision');
+insert into disabilitytypes(disabilitytype,disabilityname) values(9,'Mental Illness');
+insert into disabilitytypes(disabilitytype,disabilityname) values(213,'Multiple Disability');
+insert into disabilitytypes(disabilitytype,disabilityname) values(203,'Multiple Sclerosis');
+insert into disabilitytypes(disabilitytype,disabilityname) values(195,'Muscular Dystrophy');
+insert into disabilitytypes(disabilitytype,disabilityname) values(196,"Parkinson's Disease");
+insert into disabilitytypes(disabilitytype,disabilityname) values(207,'Short Stature/Dwarfism');
+insert into disabilitytypes(disabilitytype,disabilityname) values(199,'Sickle Cell Disease');
+insert into disabilitytypes(disabilitytype,disabilityname) values(204,'Specific Learning Disabilities');
+insert into disabilitytypes(disabilitytype,disabilityname) values(202,'Speech and Language Disability');
+insert into disabilitytypes(disabilitytype,disabilityname) values(201,'Thalassemia');
+
+
+alter table candidates add column nationality varchar(100);
+alter table candidates add column udid varchar(25);
+alter table candidates add column ews int;
+
+alter table candidates add column district_id int;
+alter table candidates add column subdistrict_id int;
+alter table candidates add column state_id int;
+alter table candidates add column village_id int;
+
+
+alter table candidates add column pdistrict_id int;
+alter table candidates add column psubdistrict_id int;
+alter table candidates add column pstate_id int;
+alter table candidates add column pvillage_id int;
+
+create table educations(id int auto_increment default null, primary key(id), candidate_id int not null, board varchar(255),yop date, tmarks int, omarks int, percentage int, subjects varchar(255), edugrade varchar(255));
+
+insert into programmes(code,type,abbreviation,name,recognised_by,approval_letter_required,numberofterms,active_status,programmegroup_id,nber_id) values(550,'Diploma','D.Ed.Spl.Ed.(VI)','D.Ed. Special Education (Visual Impairment)','RCI',1,2,1,1,3);
+insert into programmes(code,type,abbreviation,name,recognised_by,approval_letter_required,numberofterms,active_status,programmegroup_id,nber_id) values(0,'Diploma','D.Ed.Spl.Ed.(DB)','D.Ed. Special Education (Deafblind)','RCI',1,2,1,1,3);
+insert into programmes(code,type,abbreviation,name,recognised_by,approval_letter_required,numberofterms,active_status,programmegroup_id,nber_id) values(566,'Diploma','DCE(VI)','Diploma in Computer Education (Visual Impairment)','RCI',1,2,1,1,3);
+insert into programmes(code,type,abbreviation,name,recognised_by,approval_letter_required,numberofterms,active_status,programmegroup_id,nber_id) values(547,'Diploma','D.Ed Spl Ed.(HI)','D.Ed. Special Education (Hearing Impairment)','RCI',1,2,1,1,2);
+insert into programmes(code,type,abbreviation,name,recognised_by,approval_letter_required,numberofterms,active_status,programmegroup_id,nber_id) values(801,'Diploma','D.H.L.S.','Diploma in Hearing Language and Speech','RCI',1,2,1,1,2);
+insert into programmes(code,type,abbreviation,name,recognised_by,approval_letter_required,numberofterms,active_status,programmegroup_id,nber_id) values(1701,'Diploma','D.I.S.L.I','Diploma in Indian Sign Language Interpretation','RCI',1,2,1,1,2);
+insert into programmes(code,type,abbreviation,name,recognised_by,approval_letter_required,numberofterms,active_status,programmegroup_id,nber_id) values(552,'Diploma','D.E.C.S.E.(HI)','Diploma in Early Childhood Special Education  ( Hearing Impairment)','RCI',1,2,1,1,2);
+insert into programmes(code,type,abbreviation,name,recognised_by,approval_letter_required,numberofterms,active_status,programmegroup_id,nber_id) values(1703,'Diploma','D.T.I.S.L','Diploma in Teaching Indian Sign Language','RCI',1,2,1,1,2);
+insert into programmes(code,type,abbreviation,name,recognised_by,approval_letter_required,numberofterms,active_status,programmegroup_id,nber_id) values(301,'Diploma','D.H.A.R.E.M.T','Diploma in Hearing Aid Repair and Ear Mould Technology','RCI',1,2,1,1,2);
+insert into configurations (attribute,value) values('ccavenue_merchant_id',2657199);
+insert into configurations (attribute,value) values('ccavenue_access_code','AVJU88KG02BA61UJAB');
+insert into configurations (attribute,value) values('ccavenue_working_key','14D6680B5D2CCFA76948FA57501E7090');
+
+
+alter table candidates add column ppincode varchar(10) ;
+alter table candidates add column paddress varchar(255) ;
+alter table nberstaffs add column nber_id int;
+update nberstaffs set nber_id = 1;
+
+create table institutecodes (id int auto_increment default null, institute_id int, nber_id int, code varchar(12), primary key(id));
+

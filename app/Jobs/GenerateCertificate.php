@@ -1,0 +1,89 @@
+<?php
+
+namespace App\Jobs;
+
+use App\Jobs\Job;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+
+use App\Candidate;
+use App\Currentapplication;
+
+use PDF;
+
+use \Milon\Barcode\DNS1D;
+use \Milon\Barcode\DNS2D;
+
+class GenerateCertificate extends Job implements ShouldQueue
+{
+    use InteractsWithQueue, SerializesModels;
+
+    public $cid;
+    public $term;
+
+    /**
+     * Create a new job instance.
+     *
+     * @return void
+     */
+    public function __construct($cid)
+    {
+        $this->cid = $cid;
+        
+    }
+
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        $cid = $this->cid;
+        $candidate = Candidate::find($cid);
+        $rid = $candidate->currentapplicant->randstrig;
+        $applicantid = str_pad($candidate->currentapplicant_id,5,'0',STR_PAD_LEFT);
+        $file = '/var/www/html/rcinber/public/files/certificate/22/'.$rid.'_'.$applicantid.'.pdf';
+        //if($candidate->new_changes > 0 && $candidate->currentapplicant->current_version < $candidate->new_changes){
+            
+        //if(!file_exists($file)){
+            $headers = array(
+                'Content-Type: application/pdf',
+            );
+            $d = new DNS2D();
+            $d->setStorPath('/var/www/html/rcinber/storage/framework/cache/');    
+            $barcode =  $d->getBarcodeHTML('https://rcinber.org.in/certificate/22/'.$rid.'/'.$applicantid, 'QRCODE',2.5,2.5);
+            view()->share('candidate',$candidate);
+            view()->share('barcode',$barcode);
+            $headers = array(
+                'Content-Type: application/pdf',
+            );
+            
+            $reevaluation = \App\Reevaluationapplication::where('candidate_id',$cid)->where('exam_id',22)->count();
+
+       
+              if($reevaluation> 0){
+                $pdf = PDF::loadView('common.certificate2023rev')->setPaper('a4', 'portrait');
+                $file = '/var/www/html/rcinber/public/files/certificate/22/RE_'.$rid.'_'.$applicantid.'.pdf';
+
+              }
+    else{
+        $pdf = PDF::loadView('common.certificate')->setPaper('a4', 'portrait');
+
+    }
+
+            $output = $pdf->output();
+            file_put_contents($file, $output);
+            unset($pdf);
+            unset($output);
+            $currentapplicant = \App\Currentapplicant::find($candidate->currentapplicant_id);
+            $currentapplicant->current_version =  $candidate->new_changes;
+            $currentapplicant->save();
+            echo 'Certificate Generated';
+            shell_exec(app_path().'/mscpermission.sh');
+
+        //}
+        //}
+    }
+}

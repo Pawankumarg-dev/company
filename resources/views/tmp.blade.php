@@ -1,0 +1,76 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" >
+            @include('common.errorandmsg')
+            <form action="{{ url('institute-details') }}" method="GET" id="form">
+                <h3>Diploma and Certificate Level Courses</h3>
+                <input type="hidden" name="filter" value="1">
+                <div class="form-group">
+                    <label for="institute">State</label>
+                    <select class="form-control" name="state_id" id="state_id">
+                        <option value="0" selected disabled>--Please select -- </option>
+                        @foreach ($dropdowndata['states'] as $state)
+                            <option  @if($selected['state_id'] == $state->id) selected @endif value="{{ $state->id }}">{{ $state->state_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                @if(!is_null($dropdowndata['courses']) && $selected['state_id'] != -1 )
+                    <div class="form-group">
+                        <label for="course">Course </label>
+                        <select class="form-control" name="course_id" id="course_id">
+                            @if($dropdowndata['courses']->count()>0)
+                                <option value="-1" disabled> --Please select --</option>
+                                <option value="0">All</option>
+                            @else
+                                <option value="-1"  selected disabled> --No courses found --</option>
+                            @endif
+                            @foreach ($dropdowndata['courses'] as $course)
+                                    <option value="{{ $course->id }}" @if($selected['course_id'] == $course->id) selected @endif)>{{ $course->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
+
+                @if(!is_null($dropdowndata['institutes']) && $selected['state_id'] != -1)
+                    <div class="form-group">
+                        <label for="course">Institute </label>
+                        <select class="form-control" name="institute_id" id="institute_id">
+                            @if($dropdowndata['institutes']->count()>0)
+                                <option value="-1" disabled selected> --Please select --</option>
+                            @else
+                                <option value="-1"  selected disabled> --No Institute found --</option>
+                            @endif
+                            @foreach ($dropdowndata['institutes'] as $institute)
+                                    <option value="{{ $institute->id }}" @if($selected['institute_id'] == $institute->id) selected @endif)> {{ $institute->rci_code }} - {{ $institute->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
+                <button type="submit" class="btn btn-primary"      @if($dropdowndata['courses']->count() == 0) disabled @endif>Show</button>
+            </form>
+        </div>
+    </div>
+ 
+</div>
+<script>
+	$(document).ready(function () {
+        $('#state_id').on('change',function(){
+            var reload = location.protocol + '//' + location.host + location.pathname;
+            window.location.replace(reload+"/?filter=1&state_id="+$('#state_id').val());
+        });
+        $('#course_id').on('change',function(){
+            var reload = location.protocol + '//' + location.host + location.pathname;
+            window.location.replace(reload+"/?filter=1&state_id="+$('#state_id').val()+"&course_id="+$('#course_id').val());
+        });
+        $('#institute_id').on('change',function(){
+            var reload = location.protocol + '//' + location.host + location.pathname;
+            window.location.replace(reload+"/?filter=1&state_id="+$('#state_id').val()+"&course_id="+$('#course_id').val()+"&institute_id="+$('#institute_id').val());
+        });
+    });
+
+</script>
+@endsection

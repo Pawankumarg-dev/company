@@ -1,0 +1,46 @@
+storage
+.DS_Store
+.env
+examcell.sql
+/vendor/
+vendor
+/vendor
+vendor/
+composer.json
+composer.lock
+bootstrap/cache
+/bootstrap/cache
+bootstrap/cache
+/bootstrap/cache
+public/.htaccess
+publish.sh
+node_modules
+_ide_helper.php
+/public/files
+/public
+  .env.bkp
+        Untitled-1
+        app/Services/Result/.GenerateMarksheetService.php.swp
+        artisan
+        bootstrap/
+        config/
+        database/
+        dbchanges.txt
+        deploy.sh
+        index.html
+        lgdir.txt
+        migrations/
+        package-lock.json
+        public/
+        r.txt
+        rl.txt
+        rlist.txt
+        rlistn.txt
+        route.txt
+        server.php
+        tests/
+        webpack.mix.js
+
+vendor_local/phpoffice/phpexcel/Classes/PHPExcel/Shared/String.php
+config/session.php
+*.zip

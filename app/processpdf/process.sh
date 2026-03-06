@@ -1,0 +1,3 @@
+java -jar $1/processpdf/pdfbox-app-3.0.3.jar decrypt -i=$2/files/questionpapers/$3 -o=$2/files/questionpapers/dc_$4_$3 -password=$6
+java -jar $1/processpdf/pdfbox-app-3.0.3.jar overlay -i=$2/files/questionpapers/dc_$4_$3  -o=$2/files/questionpapers/wm_$4_$3 -default=$2/watermarks/$4.pdf
+java -jar $1/processpdf/pdfbox-app-3.0.3.jar encrypt -i=$2/files/questionpapers/wm_$4_$3 -o=$2/files/questionpapers/wm_e_$4_$3 -O=$5 -U=$5

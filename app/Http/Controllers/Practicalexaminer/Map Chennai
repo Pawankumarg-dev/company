@@ -1,0 +1,2535 @@
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "DL005" and crr_no = "A36302";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "DL007" and crr_no = "A15322";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "DL009" and crr_no = "A43705";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "DL012" and crr_no = "A13464";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "DL021" and crr_no = "A70567";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "DL022" and crr_no = "A50368";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "DL022" and crr_no = "A11228";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	11	 from practicalexaminers pe, institutes i where i.rci_code = "DL022" and crr_no = "A60879";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "DL028" and crr_no = "A15994";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "DL028" and crr_no = "A62459";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "DL029" and crr_no = "A72578";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "DL030" and crr_no = "A15312";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "DL030" and crr_no = "A20222";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "DL032" and crr_no = "A37003";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "DL034" and crr_no = "A65454";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "DL035" and crr_no = "A14116";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "DL036" and crr_no = "A81852";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "DL008" and crr_no = "A05659";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "DL008" and crr_no = "A60121";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "DL033" and crr_no = "A51201";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "DL013" and crr_no = "A26231";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR006" and crr_no = "A53698";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "HR006" and crr_no = "A41477";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	4	 from practicalexaminers pe, institutes i where i.rci_code = "HR006" and crr_no = "A42687";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR029" and crr_no = "A01787";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR039" and crr_no = "A64413";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR045" and crr_no = "A24282";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR052" and crr_no = "A24491";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR069" and crr_no = "A52396";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR070" and crr_no = "A54707";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "HR070" and crr_no = "A54707";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR076" and crr_no = "A38100";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR075" and crr_no = "A59831";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR021" and crr_no = "A23922";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR038" and crr_no = "A47725";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR007" and crr_no = "A64612";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR015" and crr_no = "A62790";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR009" and crr_no = "A50662";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "HR009" and crr_no = "A14396";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	10	 from practicalexaminers pe, institutes i where i.rci_code = "HR009" and crr_no = "A24596";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "HR012" and crr_no = "A88669";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR017" and crr_no = "A12512";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR019" and crr_no = "A24073";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR008" and crr_no = "A39125";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR030" and crr_no = "A43622";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "HR030" and crr_no = "A14348";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR014" and crr_no = "A60054";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR042" and crr_no = "A12301";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR047" and crr_no = "A12605";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR049" and crr_no = "A50195";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR055" and crr_no = "A01271";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR066" and crr_no = "A56308";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR065" and crr_no = "A15109";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR060" and crr_no = "A24079";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR036" and crr_no = "A48935";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR041" and crr_no = "A11655";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR068" and crr_no = "A12604";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR054" and crr_no = "A52603";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR071" and crr_no = "A42664";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR074" and crr_no = "A42664";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR043" and crr_no = "A18529";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR058" and crr_no = "A35578";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR016" and crr_no = "A09545";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "HR047" and crr_no = "A03248";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR063" and crr_no = "A49211";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR023" and crr_no = "A22389";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR026" and crr_no = "A22389";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR024" and crr_no = "A08704";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HR064" and crr_no = "A08704";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ005" and crr_no = "A44759";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ011" and crr_no = "A59780";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ098" and crr_no = "A35653";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ019" and crr_no = "A36773";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ015" and crr_no = "A66456";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ105" and crr_no = "A61192";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ197" and crr_no = "A40486";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ181" and crr_no = "A40486";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ194" and crr_no = "A60906";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ135" and crr_no = "A60906";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ191" and crr_no = "A48725";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ198" and crr_no = "A48725";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ107" and crr_no = "A13994";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ144" and crr_no = "A42093";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ113" and crr_no = "A86873";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ093" and crr_no = "A72128";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ151" and crr_no = "A40767";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ188" and crr_no = "A68670";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ037" and crr_no = "A49290";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ022" and crr_no = "A11150";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ045" and crr_no = "A15069";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ006" and crr_no = "A09996";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ055" and crr_no = "A19531";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ018" and crr_no = "A40214";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ060" and crr_no = "A23361";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ040" and crr_no = "A16360";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ207" and crr_no = "A28680";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ063" and crr_no = "A12256";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ076" and crr_no = "A47102";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ131" and crr_no = "A13997";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ134" and crr_no = "A73322";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ120" and crr_no = "A92488";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ077" and crr_no = "A62457";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ141" and crr_no = "A40523";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ108" and crr_no = "A66819";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ080" and crr_no = "A90402";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ081" and crr_no = "A42105";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ082" and crr_no = "A56361";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ025" and crr_no = "A21517";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ112" and crr_no = "A50471";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ048" and crr_no = "A28679";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ028" and crr_no = "A19018";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ089" and crr_no = "A66149";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ057" and crr_no = "A23157";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ054" and crr_no = "A28152";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ042" and crr_no = "A45016";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ056" and crr_no = "A40731";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ058" and crr_no = "A62451";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ072" and crr_no = "A64542";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ073" and crr_no = "A50819";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ096" and crr_no = "A49976";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ084" and crr_no = "A43577";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ092" and crr_no = "A28688";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ052" and crr_no = "A45986";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ206" and crr_no = "A47762";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ139" and crr_no = "A25356";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ132" and crr_no = "A45866";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ133" and crr_no = "A74791";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ137" and crr_no = "A43951";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ140" and crr_no = "A60817";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ142" and crr_no = "A09149";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ146" and crr_no = "A11757";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ159" and crr_no = "A25540";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ160" and crr_no = "A17820";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ128" and crr_no = "A15979";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ177" and crr_no = "A15393";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ185" and crr_no = "A15393";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ023" and crr_no = "A20122";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ138" and crr_no = "A74157";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ208" and crr_no = "A37086";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ202" and crr_no = "A37086";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ203" and crr_no = "A72376";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ205" and crr_no = "A72376";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ078" and crr_no = "A72661";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ047" and crr_no = "A49791";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ046" and crr_no = "A72893";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ061" and crr_no = "A79753";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ062" and crr_no = "A37641";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ087" and crr_no = "A88683";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ075" and crr_no = "A28880";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ074" and crr_no = "A23245";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ079" and crr_no = "A24790";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ071" and crr_no = "A86846";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ069" and crr_no = "A28682";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ044" and crr_no = "A38386";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ067" and crr_no = "A33844";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ090" and crr_no = "A59435";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ204" and crr_no = "A50015";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ136" and crr_no = "A57140";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ143" and crr_no = "A11396";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ147" and crr_no = "A10786";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ178" and crr_no = "A50859";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ145" and crr_no = "A52604";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ190" and crr_no = "A43578";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ122" and crr_no = "A24049";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ124" and crr_no = "A49590";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ104" and crr_no = "A49242";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ110" and crr_no = "A32847";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ111" and crr_no = "A24576";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ114" and crr_no = "A22370";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ123" and crr_no = "A59901";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ152" and crr_no = "A60945";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ156" and crr_no = "A10002";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ169" and crr_no = "A11986";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ161" and crr_no = "A60309";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ176" and crr_no = "A60309";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ175" and crr_no = "A49938";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ163" and crr_no = "A49938";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ164" and crr_no = "A18841";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ165" and crr_no = "A31152";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ187" and crr_no = "A39713";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ189" and crr_no = "A39713";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ026" and crr_no = "A18718";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ199" and crr_no = "A37405";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ173" and crr_no = "A37405";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ032" and crr_no = "A90155";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	3	 from practicalexaminers pe, institutes i where i.rci_code = "RJ032" and crr_no = "A32147";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ182" and crr_no = "A32147";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ031" and crr_no = "A23530";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ097" and crr_no = "A79261";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ068" and crr_no = "A46020";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ100" and crr_no = "A83244";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ158" and crr_no = "A54432";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ008" and crr_no = "A28762";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ171" and crr_no = "A61208";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ172" and crr_no = "A61208";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ099" and crr_no = "A19090";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ186" and crr_no = "A61438";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ121" and crr_no = "A67336";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ167" and crr_no = "A67336";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ168" and crr_no = "A61019";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ036" and crr_no = "A61019";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ183" and crr_no = "A83510";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ051" and crr_no = "A83510";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ166" and crr_no = "A24812";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ116" and crr_no = "A24812";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ125" and crr_no = "A38097";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ162" and crr_no = "A98523";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ201" and crr_no = "A95205";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ117" and crr_no = "A23605";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ155" and crr_no = "A60832";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ066" and crr_no = "A57773";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ091" and crr_no = "A20651";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ053" and crr_no = "A72380";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ083" and crr_no = "A39716";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ059" and crr_no = "A36588";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ126" and crr_no = "A40106";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ021" and crr_no = "A70553";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ148" and crr_no = "A99627";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ148" and crr_no = "A99627";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ129" and crr_no = "A63851";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "RJ041" and crr_no = "A27166";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP001" and crr_no = "A50042";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP004" and crr_no = "A82905";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "UP004" and crr_no = "A82905";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP019" and crr_no = "A57392";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP032" and crr_no = "A81860";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP011" and crr_no = "A98462";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP031" and crr_no = "A64736";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP039" and crr_no = "A57150";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP048" and crr_no = "A74439";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP055" and crr_no = "A29297";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP061" and crr_no = "A54448";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP063" and crr_no = "A19260";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP185" and crr_no = "A36735";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP042" and crr_no = "A37270";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP058" and crr_no = "A04680";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP178" and crr_no = "A32659";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP051" and crr_no = "A25906";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP115" and crr_no = "A73227";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP173" and crr_no = "A30387";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP252" and crr_no = "A51665";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP067" and crr_no = "A61210";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP071" and crr_no = "A51727";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "UP079" and crr_no = "A58956";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP091" and crr_no = "A81481";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP096" and crr_no = "A71666";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP047" and crr_no = "A65828";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP049" and crr_no = "A73224";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP050" and crr_no = "A20999";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP066" and crr_no = "A25064";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP089" and crr_no = "A32506";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP183" and crr_no = "A32506";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "UP089" and crr_no = "A25399";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP256" and crr_no = "A25399";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP088" and crr_no = "A53907";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP085" and crr_no = "A08630";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP097" and crr_no = "A30889";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP072" and crr_no = "A08548";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP084" and crr_no = "A69432";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP099" and crr_no = "A73016";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP201" and crr_no = "A68742";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP238" and crr_no = "A64829";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP216" and crr_no = "A64865";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP214" and crr_no = "A10442";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP217" and crr_no = "A52767";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP231" and crr_no = "A68201";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP213" and crr_no = "A64106";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP205" and crr_no = "A23219";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP215" and crr_no = "A12602";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP222" and crr_no = "A51492";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP240" and crr_no = "A47194";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP253" and crr_no = "A47194";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP245" and crr_no = "A69102";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP268" and crr_no = "A69102";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP104" and crr_no = "A34176";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP105" and crr_no = "A06977";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP108" and crr_no = "A56642";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP109" and crr_no = "A25600";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP248" and crr_no = "A63733";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP111" and crr_no = "A38352";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP120" and crr_no = "A52768";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP121" and crr_no = "A10868";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP122" and crr_no = "A64728";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP124" and crr_no = "A57548";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP125" and crr_no = "A13250";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP126" and crr_no = "A69117";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP129" and crr_no = "A53904";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP035" and crr_no = "A53904";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP130" and crr_no = "A22230";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP137" and crr_no = "A51492";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP139" and crr_no = "A36050";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP140" and crr_no = "A39048";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP142" and crr_no = "A12450";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP143" and crr_no = "A51415";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP148" and crr_no = "A20194";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP156" and crr_no = "A48093";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP157" and crr_no = "A39848";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP170" and crr_no = "A74979";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP179" and crr_no = "A62533";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP181" and crr_no = "A59315";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP187" and crr_no = "A81495";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP188" and crr_no = "A81033";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP192" and crr_no = "A46775";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP199" and crr_no = "A58290";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP196" and crr_no = "A50655";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	2	 from practicalexaminers pe, institutes i where i.rci_code = "UP262" and crr_no = "CRRTMP03";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP193" and crr_no = "A71648";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP034" and crr_no = "A08366";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	10	 from practicalexaminers pe, institutes i where i.rci_code = "UP180" and crr_no = "A08366";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP204" and crr_no = "A36026";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP228" and crr_no = "A07263";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP269" and crr_no = "A07263";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP255" and crr_no = "A52573";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP102" and crr_no = "A44164";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP146" and crr_no = "A47304";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "UP031" and crr_no = "A35602";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP079" and crr_no = "A12504";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP038" and crr_no = "A33276";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "UP038" and crr_no = "A30764";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "UP218" and crr_no = "A09212";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP202" and crr_no = "A22650";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP236" and crr_no = "A28925";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP211" and crr_no = "A16747";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP203" and crr_no = "A16747";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP025" and crr_no = "A68751";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP144" and crr_no = "A32551";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP235" and crr_no = "A55246";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP246" and crr_no = "A55246";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP200" and crr_no = "A31677";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP233" and crr_no = "A35714";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP020" and crr_no = "A57681";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP076" and crr_no = "A32167";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP059" and crr_no = "A19651";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP239" and crr_no = "A20099";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP258" and crr_no = "A20099";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP152" and crr_no = "A84300";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP153" and crr_no = "A84195";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP113" and crr_no = "A41811";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "UP091" and crr_no = "A41811";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP149" and crr_no = "A13808";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP265" and crr_no = "A18780";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP110" and crr_no = "A18780";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP194" and crr_no = "A84670";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP023" and crr_no = "A81249";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP024" and crr_no = "A19587";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP182" and crr_no = "A34278";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP189" and crr_no = "A34278";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP197" and crr_no = "A74958";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP041" and crr_no = "A11043";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP116" and crr_no = "A35126";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "UP043" and crr_no = "A49618";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP230" and crr_no = "A11164";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP184" and crr_no = "A50647";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP176" and crr_no = "A71127";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP263" and crr_no = "A62684";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP264" and crr_no = "A62684";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP234" and crr_no = "A81663";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP163" and crr_no = "A81663";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP117" and crr_no = "A19654";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP206" and crr_no = "A59698";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "UP177" and crr_no = "A18894";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP037" and crr_no = "A81034";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP243" and crr_no = "A59766";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP057" and crr_no = "A15796";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP186" and crr_no = "A99344";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UP162" and crr_no = "A63881";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "AP004" and crr_no = "A92157";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "AP038" and crr_no = "A23673";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "AP022" and crr_no = "A11408";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "AP022" and crr_no = "A22295";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "AP045" and crr_no = "A22295";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "AP034" and crr_no = "A26025";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "AP037" and crr_no = "A47986";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "AP040" and crr_no = "A22217";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "AP041" and crr_no = "A12566";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "AP014" and crr_no = "A12566";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "AP047" and crr_no = "A06360";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	4	 from practicalexaminers pe, institutes i where i.rci_code = "AP047" and crr_no = "A06360";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "AP036" and crr_no = "A06360";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "AR004" and crr_no = "A02655";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "AS002" and crr_no = "A11385";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "BR005" and crr_no = "A07400";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "BR010" and crr_no = "A44173";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "BR013" and crr_no = "A12509";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "BR016" and crr_no = "A78331";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "BR017" and crr_no = "A51253";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "BR009" and crr_no = "A28373";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	4	 from practicalexaminers pe, institutes i where i.rci_code = "CH003" and crr_no = "A53532";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "CH002" and crr_no = "A31508";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "CG012" and crr_no = "A73205";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "CG002" and crr_no = "A50656";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "GJ010" and crr_no = "A36359";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "GJ019" and crr_no = "A79900";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "GJ007" and crr_no = "A05205";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "GJ021" and crr_no = "A57616";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HP001" and crr_no = "A51760";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "HP001" and crr_no = "A08842";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HP005" and crr_no = "A10813";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "HP002" and crr_no = "A26991";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "JKH004" and crr_no = "A83620";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "JKH019" and crr_no = "A65103";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "JKH013" and crr_no = "A33315";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KK039" and crr_no = "A64783";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KK004" and crr_no = "A10285";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KK008" and crr_no = "A63723";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KK037" and crr_no = "A83054";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KK044" and crr_no = "A11802";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	1	 from practicalexaminers pe, institutes i where i.rci_code = "KK040" and crr_no = "L-17354";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	2	 from practicalexaminers pe, institutes i where i.rci_code = "KK040" and crr_no = "L-17354";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL040" and crr_no = "A54333";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	11	 from practicalexaminers pe, institutes i where i.rci_code = "KL013" and crr_no = "A12550";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL013" and crr_no = "A10133";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL003" and crr_no = "A84050";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL039" and crr_no = "A13569";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL036" and crr_no = "A60428";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL014" and crr_no = "A17363";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL022" and crr_no = "A07605";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL015" and crr_no = "A13320";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL004" and crr_no = "A33213";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL041" and crr_no = "A41180";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "KL045" and crr_no = "A22094";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	1	 from practicalexaminers pe, institutes i where i.rci_code = "KL045" and crr_no = "B62911";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL045" and crr_no = "A44776";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL048" and crr_no = "A59283";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL010" and crr_no = "A08422";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	10	 from practicalexaminers pe, institutes i where i.rci_code = "KL011" and crr_no = "A37045";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL012" and crr_no = "A07576";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	11	 from practicalexaminers pe, institutes i where i.rci_code = "KL020" and crr_no = "A00328";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "KL032" and crr_no = "A38586";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	3	 from practicalexaminers pe, institutes i where i.rci_code = "KL032" and crr_no = "A90806";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	4	 from practicalexaminers pe, institutes i where i.rci_code = "MH005" and crr_no = "A87854";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	11	 from practicalexaminers pe, institutes i where i.rci_code = "MH005" and crr_no = "A87854";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "MH025" and crr_no = "A09079";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MH039" and crr_no = "A35351";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MH045" and crr_no = "A12421";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MH048" and crr_no = "A34552";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MH054" and crr_no = "A20446";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MH084" and crr_no = "A29132";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MH089" and crr_no = "A15321";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MH091" and crr_no = "A22630";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	11	 from practicalexaminers pe, institutes i where i.rci_code = "MH033" and crr_no = "A34550";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MH075" and crr_no = "A21824";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MH036" and crr_no = "A10217";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MH107" and crr_no = "A10217";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MH110" and crr_no = "A17296";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MP006" and crr_no = "A17985";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MP010" and crr_no = "A69448";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "MP010" and crr_no = "A69288";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MP030" and crr_no = "A51496";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MP037" and crr_no = "A62462";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MP038" and crr_no = "A18884";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MP048" and crr_no = "A89549";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MP016" and crr_no = "A81797";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MP029" and crr_no = "A55163";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	1	 from practicalexaminers pe, institutes i where i.rci_code = "MP036" and crr_no = "A72660";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	11	 from practicalexaminers pe, institutes i where i.rci_code = "MP036" and crr_no = "A11949";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	3	 from practicalexaminers pe, institutes i where i.rci_code = "MP036" and crr_no = "A11949";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MP027" and crr_no = "A42326";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MP028" and crr_no = "A48944";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MP035" and crr_no = "A29681";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "MP045" and crr_no = "A52579";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "OR002" and crr_no = "A05712";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "OR024" and crr_no = "A71764";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "OR025" and crr_no = "A40719";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "OR036" and crr_no = "A13471";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "OR010" and crr_no = "A70558";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "OR010" and crr_no = "A35609";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "OR031" and crr_no = "A14626";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "OR035" and crr_no = "A65989";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "PB003" and crr_no = "A11874";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "PB006" and crr_no = "A27983";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "PB012" and crr_no = "A32217";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "PB013" and crr_no = "A10776";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "PB019" and crr_no = "A07617";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "TL010" and crr_no = "A40917";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "TL002" and crr_no = "A33254";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	11	 from practicalexaminers pe, institutes i where i.rci_code = "TL002" and crr_no = "A21699";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	4	 from practicalexaminers pe, institutes i where i.rci_code = "TL002" and crr_no = "A21699";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "TN006" and crr_no = "A17789";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "TN008" and crr_no = "A42515";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "TN011" and crr_no = "A34025";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "TN012" and crr_no = "A51350";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	4	 from practicalexaminers pe, institutes i where i.rci_code = "TN018" and crr_no = "A90801";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "TN023" and crr_no = "A36507";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	1	 from practicalexaminers pe, institutes i where i.rci_code = "TN023" and crr_no = "A36507";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	9	 from practicalexaminers pe, institutes i where i.rci_code = "TN037" and crr_no = "A23330";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "TN038" and crr_no = "A40260";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	8	 from practicalexaminers pe, institutes i where i.rci_code = "TN044" and crr_no = "A04527";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "TN047" and crr_no = "A27187";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	4	 from practicalexaminers pe, institutes i where i.rci_code = "TN050" and crr_no = "A03805";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	1	 from practicalexaminers pe, institutes i where i.rci_code = "TN050" and crr_no = "A03805";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "TN060" and crr_no = "A32772";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UT002" and crr_no = "A21343";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "UT007" and crr_no = "A31507";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "WB003" and crr_no = "A18157";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "WB004" and crr_no = "A46506";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	11	 from practicalexaminers pe, institutes i where i.rci_code = "WB004" and crr_no = "A20915";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "WB018" and crr_no = "A67525";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "WB020" and crr_no = "A11921";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "WB028" and crr_no = "A17425";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "WB033" and crr_no = "A63856";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "WB034" and crr_no = "A49695";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "WB037" and crr_no = "A15705";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "WB039" and crr_no = "A17923";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "WB041" and crr_no = "A31620";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "WB043" and crr_no = "A18679";
+insert  into practicalexams (
+practicalexaminer_id,
+institute_id,
+exam_id, course_id
+) select pe.id,i.id, 25,	7	 from practicalexaminers pe, institutes i where i.rci_code = "WB032" and crr_no = "A54124";

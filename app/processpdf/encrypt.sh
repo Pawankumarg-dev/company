@@ -1,0 +1,1 @@
+java -jar $1/processpdf/pdfbox-app-3.0.3.jar encrypt -i=$2/questionpapers/27/watermarked/$9/wm_$5_$4_$7_$8.pdf -o=$2/questionpapers/27/dist/$9/wm_e_$5_$4_$7_$8.pdf -O=Rc1M@st3rPwdSS -U=$6  -canExtractContent=false

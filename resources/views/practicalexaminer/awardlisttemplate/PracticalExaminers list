@@ -1,0 +1,7 @@
+select  crr_no,pe.name,pe.email, pe.mobile, pe.password , group_concat(distinct c.name), group_concat(distinct i.rci_code)	, group_concat(distinct n.name_code) from practicalexaminers pe
+left join practicalexams e on e.practicalexaminer_id = pe.id
+left join institutes i on i.id = e.institute_id
+left join courses c on c.id = e.course_id
+left join programmes p on p.course_id = c.id
+left join nbers n on n.id =p.nber_id
+group by pe.id
