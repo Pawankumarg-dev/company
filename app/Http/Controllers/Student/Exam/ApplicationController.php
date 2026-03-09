@@ -194,9 +194,8 @@ WHERE
 
 ) t
 GROUP BY t.candidate_id;");
+            
             $orders  = \App\Order::where('id' , $applicant->order_id)->get();
-           // dd( $orders);
-                // dd($subjects);
             return view('student.exam.application',compact(
             'subjects',
             'exam',
@@ -251,7 +250,7 @@ WHERE
     and subjecttype_id in ($theoty,$paractical)
 ) t
 GROUP BY t.candidate_id;");
-           //dd('hello');
+           //dd($subjects);
             return view('student.exam.application',compact(
             'subjects',
             'exam',

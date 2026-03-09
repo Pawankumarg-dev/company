@@ -268,16 +268,12 @@
                                 @endforeach
                             </select>
                         </div>
-
-                             {{-- @if (is_null($applicant)) --}}
                                 <div id="amount" class="alert alert-warning pull-left" style="margin-bottom:0; width:50%; ">
                                 </div>
-                             {{-- @endif --}}
+                            
                             @if (!is_null($applicant))
                            @if ($applicant->payment_status == 1 )
-                            {{-- <div  class="alert alert-warning pull-left" style="margin-bottom:0; width:50%; ">
-                               <p>Total  Payment Amount : <strong>{{$applicant->amount ?? '-'}}</strong></p>
-                            </div> --}}
+                            
                             <button type="button" onclick="printPayment()" class="btn btn-success" style="margin:15px;">
                                 Print Payment Details
                             </button>
@@ -295,7 +291,7 @@
                                         
                                         <tr>
                                             <td><strong>Batch Year :</strong></td>
-                                            <td>{{$Candidate->approvedprogramme->academicyear->year ?? '-'}}</td>
+                                             <td>{{$Candidate->approvedprogramme->academicyear->year ?? '-'}} , ({{$Candidate->approvedprogramme->programme->abbreviation}} )</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Name:</strong></td>
@@ -306,36 +302,57 @@
                                             <td>{{$Candidate->email ?? '-'}}</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Exam Form:</strong></td>
+                                            <td><strong>Payment Form:</strong></td>
                                             <td>{{ $exam->examtype->name ?? '-'}} , {{ $exam->name ?? '-'}}</td>
                                         </tr>
                                         <tr>
                                             <td ><strong>Subject:</strong></td>
-                                            <td>
-                                                @foreach($subjects as $key => $subject)
-                                                    {{ $key+1 }}. Term: {{ $subject->term ?? '-'}} | <small >{{ $subject->type ?? '-'}}</small> | <strong> {{ $subject->scode ?? '-'}}</strong> | {{ $subject->sname ?? '-' }} <br>
-                                                @endforeach
-                                            </td>
+                                            <td style="padding:0;">
+
+                                            <table border="1" width="100%" cellpadding="5" cellspacing="3">
+                                                <thead >
+                                                    <tr>
+                                                        <th  style="text-align: center;">Sr No.</th>
+                                                        <th  style="text-align: center;" >Name</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    @foreach($subjects as $key => $subject)
+                                                    <tr>
+                                                        <td>{{ $key+1 }}</td>
+                                                        <td>
+                                                            Term: {{ $subject->term ?? '-' }} |
+                                                            <small>{{ $subject->type ?? '-' }}</small> |
+                                                            <strong>{{ $subject->scode ?? '-' }}</strong> |
+                                                            {{ $subject->sname ?? '-' }}
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+
+                                         </td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Payment Order ID:</strong></td>
-                                            <td>{{$applicant->order_id ?? '-'}}</td>
+                                            <td><strong>Order Number:</strong></td>
+                                            <td>{{$orders->first()->order_number ?? '-'}} ({{$orders->first()->bank_referencenumber ?? '-'}})</td>
                                         </tr>
-                                        <tr>
-                                            <td><strong>Bank Reference Number:</strong></td>
+                                        {{-- <tr>
+                                            <td><strong>Payment Referencenumber NO.:</strong></td>
                                             <td>{{$orders->first()->bank_referencenumber ?? '-'}}</td>
+                                        </tr> --}}
+                                        <tr>
+                                            <td><strong>Payment Date:</strong></td>
+                                           <td>
+                                            {{ !empty($orders->first()->payment_date) ? date('d M Y ', strtotime($orders->first()->payment_date)) : '-' }}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td><strong>Total Amount:</strong></td>
                                             <td>₹ {{$applicant->amount ?? '-'}}</td>
                                         </tr>
                                        
-                                        <tr>
-                                            <td><strong>Payment Date:</strong></td>
-                                           <td>
-                                            {{ !empty($orders->first()->payment_date) ? date('d M Y h:i A', strtotime($orders->first()->payment_date)) : '-' }}
-                                            </td>
-                                        </tr>
 
                                         <tr>
                                             <td><strong>Status:</strong></td>
