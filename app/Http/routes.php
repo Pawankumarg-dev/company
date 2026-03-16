@@ -1282,6 +1282,8 @@ Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->
 
     Route::post('/nber/internal-marksheet-details', 'Nber\Verify\VerifyAttendanceNInternalsController@showInternalMarksheet_details');
     Route::post('/nber/internal-marksheet-verify', 'Nber\Verify\VerifyAttendanceNInternalsController@InternalMarksheetverify');
+    //external marks routes
+    
 
 
     Route::resource('/nber/exam/verifyattnninternal','Nber\Verify\VerifyAttendanceNInternalsController');
@@ -1318,10 +1320,10 @@ Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->
     Route::post('nber/adddocument','Nber\BacklogController@adddocument');
     Route::post('nber/applicant/store','Nber\Backlog\ApplicantController@store');
     Route::post('/nber/marks/update','Nber\BacklogController@updatedata');
-        Route::post('/nber/marks/update/cancel','Nber\BacklogController@updatedata_cancel');
+    Route::post('/nber/marks/update/cancel','Nber\BacklogController@updatedata_cancel');
 
     
-        Route::post('/nber/marks/change_request','Nber\BacklogController@mark_change_request');
+    Route::post('/nber/marks/change_request','Nber\BacklogController@mark_change_request');
 
     Route::post('/nber/marks/delete','Nber\BacklogController@delete');
     Route::get('nber/rechecksupp/{batch}','Nber\ExamController@recheckpaymentstatus');

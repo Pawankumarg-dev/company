@@ -16,7 +16,7 @@
             @if(!is_null($timetables))
             	<div class="row">
                     <div class="col-md-12">
-                <div class="alert alert-success ">No of Applicants: {{$countofcandidates}}</div>
+                <div class="alert alert-success ">No of Applicants: {{$timetables->count()}}</div>
             </div>
                 </div>
             	<div class="row">

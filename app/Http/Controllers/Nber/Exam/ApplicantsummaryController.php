@@ -59,7 +59,7 @@ class ApplicantsummaryController extends Controller
     public function index(Request $r)
     {
         $nber_id = $this->helperService->getNberID();
-
+         $languages = \App\Language::all();
         if($r->has('pending')){
             $sql = '
 
@@ -240,7 +240,7 @@ class ApplicantsummaryController extends Controller
                     
                     $subject = \App\Subject::find($r->subject_id);
         }
-
+        // dd($languages);
         return view('nber.exam.applicantsummary.index',compact(
             'exam',
             'schedules',

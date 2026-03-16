@@ -6,7 +6,7 @@
         TTI
     </th>
     <th style="width:60%;">
-        Examiner
+        Examiner 
     </th>
 @endsection
 

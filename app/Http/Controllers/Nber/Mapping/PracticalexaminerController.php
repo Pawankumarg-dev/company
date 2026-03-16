@@ -26,16 +26,18 @@ class PracticalexaminerController extends Controller
         $this->helperService = $help;
         $type = app()->request->has('type') ? app()->request->type : 'all';
         $this->page =  (new PracticalExaminerMapping($type));
+       
     }
     public function index(Request $r){
+  
       set_time_limit(300);
       ini_set('memory_limit','-1');
       ini_set('max_execution_time',300);
       $results = $this->page->getPracticalExaminers();
+      // dd( $results);
       $title = $this->page->getTitle();
       $type = $this->page->getType();
       $faculties = $this->page->getListofFaculties();
-      //return $faculties;
       return (new Downloadable('nber/mapping','practicalexaminers',compact(
         'results',
         'title',
@@ -67,18 +69,20 @@ class PracticalexaminerController extends Controller
       if($r->has('subjects')){
         foreach($r->subjects as $s){
           $subject = \App\Subject::find($s);
-          $pe = \App\Practicalexam::where('institute_id',$r->institute_id)->where('faculty_id',$r->faculty_id)->where('exam_id',27)->where('programme_id',$subject->programme_id)->first();
+          $pe = \App\Practicalexam::where('institute_id',$r->institute_id)->where('faculty_id',$r->faculty_id)->where('exam_id',28)->where('programme_id',$subject->programme_id)->first();
           $progamme = \App\Programme::find($subject->programme_id);
+         // dd($pe);
           if(is_null($pe)){
             $pe = \App\Practicalexam::create([
               'institute_id' => $r->institute_id,
               'faculty_id' => $r->faculty_id,
-              'exam_id' => 27,
+              'exam_id' => 28,
               'programme_id' => $subject->programme_id,
               'course_id' => $progamme->course_id,
               'start_date' => $r->start_date,
               'end_date' => $r->end_date
             ]);
+           // dd($pe);
           }else{
               $pe->start_date = $r->start_date;
               $pe->end_date = $r->end_date;

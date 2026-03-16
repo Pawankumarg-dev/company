@@ -19,7 +19,7 @@
         private $helperService;
 
         public function __construct($type) {
-            $this->exam_id = 27;
+            $this->exam_id = 28;
             parent::__construct($type);
             $this->setTitle("Practical Examiner Mapping");
             $this->helperService = new HelperService();
@@ -28,11 +28,13 @@
 
         public function getPracticalExaminers(){
             $sp = "getPracticalExaminers(".$this->exam_id."," .$this->nber_id.",'".$this->getType()."')";
+          // dd($sp);
             return Grammer::returnIfNotNull((new DBService)->callSP($sp,true),$this->getType());
         }
 
         public function getFacultyList(){
             $sp = "getAllFacultyList(".$this->nber_id.",'PE')";
+           
             return Grammer::returnIfNotNull((new DBService)->callSP($sp,true),$this->getType());
         }
 

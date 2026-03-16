@@ -1,0 +1,3734 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://localhost:8000/candidate/create/4114 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>National Board of Examination in Rehabilitation(NBER)</title>
+
+    <!-- Fonts -->
+
+
+<!-- Styles -->
+    <style>.file-input-wrapper { overflow: hidden; position: relative; cursor: pointer; z-index: 1; }.file-input-wrapper input[type=file], .file-input-wrapper input[type=file]:focus, .file-input-wrapper input[type=file]:hover { position: absolute; top: 0; left: 0; cursor: pointer; opacity: 0; filter: alpha(opacity=0); z-index: 99; outline: 0; }.file-input-name { margin-left: 8px; }</style><link rel="stylesheet" href="./National Board of Examination in Rehabilitation(NBER)_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./National Board of Examination in Rehabilitation(NBER)_files/sweetalert.min.css">
+    <link rel="stylesheet" href="./National Board of Examination in Rehabilitation(NBER)_files/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="./National Board of Examination in Rehabilitation(NBER)_files/style.css">
+    <link rel="stylesheet" href="./National Board of Examination in Rehabilitation(NBER)_files/font-awesome.min.css">
+    <link rel="stylesheet" href="./National Board of Examination in Rehabilitation(NBER)_files/bootstrap-imageupload.css">
+
+
+<!-- JavaScripts -->
+    <script src="./National Board of Examination in Rehabilitation(NBER)_files/jquery-3.6.0.min.js"></script>
+    <script src="./National Board of Examination in Rehabilitation(NBER)_files/moment.min.js"></script>
+    <script src="./National Board of Examination in Rehabilitation(NBER)_files/bootstrap.min.js"></script>
+    <script src="./National Board of Examination in Rehabilitation(NBER)_files/bootstrap-datetimepicker.min.js"></script>
+    <script src="./National Board of Examination in Rehabilitation(NBER)_files/sweetalert.min.js"></script><style type="text/css">body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+  overflow-y: hidden; }
+
+body.swal2-toast-shown {
+  overflow-y: auto; }
+  body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column; }
+    body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast .swal2-icon {
+      margin: 0 0 15px; }
+    body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast .swal2-buttonswrapper {
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      -ms-flex-item-align: stretch;
+          align-self: stretch;
+      -webkit-box-pack: end;
+          -ms-flex-pack: end;
+              justify-content: flex-end; }
+    body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast .swal2-loading {
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center; }
+    body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast .swal2-input {
+      height: 32px;
+      font-size: 14px;
+      margin: 5px auto; }
+  body.swal2-toast-shown > .swal2-container {
+    position: fixed;
+    background-color: transparent; }
+    body.swal2-toast-shown > .swal2-container.swal2-shown {
+      background-color: transparent; }
+    body.swal2-toast-shown > .swal2-container.swal2-top {
+      top: 0;
+      left: 50%;
+      bottom: auto;
+      right: auto;
+      -webkit-transform: translateX(-50%);
+              transform: translateX(-50%); }
+    body.swal2-toast-shown > .swal2-container.swal2-top-right {
+      top: 0;
+      left: auto;
+      bottom: auto;
+      right: 0; }
+    body.swal2-toast-shown > .swal2-container.swal2-top-left {
+      top: 0;
+      left: 0;
+      bottom: auto;
+      right: auto; }
+    body.swal2-toast-shown > .swal2-container.swal2-center-left {
+      top: 50%;
+      left: 0;
+      bottom: auto;
+      right: auto;
+      -webkit-transform: translateY(-50%);
+              transform: translateY(-50%); }
+    body.swal2-toast-shown > .swal2-container.swal2-center {
+      top: 50%;
+      left: 50%;
+      bottom: auto;
+      right: auto;
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%); }
+    body.swal2-toast-shown > .swal2-container.swal2-center-right {
+      top: 50%;
+      left: auto;
+      bottom: auto;
+      right: 0;
+      -webkit-transform: translateY(-50%);
+              transform: translateY(-50%); }
+    body.swal2-toast-shown > .swal2-container.swal2-bottom-left {
+      top: auto;
+      left: 0;
+      bottom: 0;
+      right: auto; }
+    body.swal2-toast-shown > .swal2-container.swal2-bottom {
+      top: auto;
+      left: 50%;
+      bottom: 0;
+      right: auto;
+      -webkit-transform: translateX(-50%);
+              transform: translateX(-50%); }
+    body.swal2-toast-shown > .swal2-container.swal2-bottom-right {
+      top: auto;
+      left: auto;
+      bottom: 0;
+      right: 0; }
+
+body.swal2-iosfix {
+  position: fixed;
+  left: 0;
+  right: 0; }
+
+body.swal2-no-backdrop > .swal2-shown {
+  top: auto;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  background-color: transparent; }
+  body.swal2-no-backdrop > .swal2-shown > .swal2-modal {
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); }
+  body.swal2-no-backdrop > .swal2-shown.swal2-top {
+    top: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%); }
+  body.swal2-no-backdrop > .swal2-shown.swal2-top-left {
+    top: 0;
+    left: 0; }
+  body.swal2-no-backdrop > .swal2-shown.swal2-top-right {
+    top: 0;
+    right: 0; }
+  body.swal2-no-backdrop > .swal2-shown.swal2-center {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); }
+  body.swal2-no-backdrop > .swal2-shown.swal2-center-left {
+    top: 50%;
+    left: 0;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%); }
+  body.swal2-no-backdrop > .swal2-shown.swal2-center-right {
+    top: 50%;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%); }
+  body.swal2-no-backdrop > .swal2-shown.swal2-bottom {
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%); }
+  body.swal2-no-backdrop > .swal2-shown.swal2-bottom-left {
+    bottom: 0;
+    left: 0; }
+  body.swal2-no-backdrop > .swal2-shown.swal2-bottom-right {
+    bottom: 0;
+    right: 0; }
+
+.swal2-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: fixed;
+  padding: 10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  z-index: 1060; }
+  .swal2-container.swal2-top {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start; }
+  .swal2-container.swal2-top-left {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
+  .swal2-container.swal2-top-right {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end; }
+  .swal2-container.swal2-center {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+  .swal2-container.swal2-center-left {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
+  .swal2-container.swal2-center-right {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end; }
+  .swal2-container.swal2-bottom {
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end; }
+  .swal2-container.swal2-bottom-left {
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
+  .swal2-container.swal2-bottom-right {
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end; }
+  .swal2-container.swal2-grow-fullscreen > .swal2-modal {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    -ms-flex-item-align: stretch;
+        align-self: stretch;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+  .swal2-container.swal2-grow-row > .swal2-modal {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+  .swal2-container.swal2-grow-column {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column; }
+    .swal2-container.swal2-grow-column.swal2-top, .swal2-container.swal2-grow-column.swal2-center, .swal2-container.swal2-grow-column.swal2-bottom {
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; }
+    .swal2-container.swal2-grow-column.swal2-top-left, .swal2-container.swal2-grow-column.swal2-center-left, .swal2-container.swal2-grow-column.swal2-bottom-left {
+      -webkit-box-align: start;
+          -ms-flex-align: start;
+              align-items: flex-start; }
+    .swal2-container.swal2-grow-column.swal2-top-right, .swal2-container.swal2-grow-column.swal2-center-right, .swal2-container.swal2-grow-column.swal2-bottom-right {
+      -webkit-box-align: end;
+          -ms-flex-align: end;
+              align-items: flex-end; }
+    .swal2-container.swal2-grow-column > .swal2-modal {
+      display: -webkit-box !important;
+      display: -ms-flexbox !important;
+      display: flex !important;
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      -ms-flex-line-pack: center;
+          align-content: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center; }
+  .swal2-container:not(.swal2-top):not(.swal2-top-left):not(.swal2-top-right):not(.swal2-center-left):not(.swal2-center-right):not(.swal2-bottom):not(.swal2-bottom-left):not(.swal2-bottom-right) > .swal2-modal {
+    margin: auto; }
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .swal2-container .swal2-modal {
+      margin: 0 !important; } }
+  .swal2-container.swal2-fade {
+    -webkit-transition: background-color .1s;
+    transition: background-color .1s; }
+  .swal2-container.swal2-shown {
+    background-color: rgba(0, 0, 0, 0.4); }
+
+.swal2-popup {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #fff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  border-radius: 5px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  text-align: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: none;
+  position: relative;
+  max-width: 100%; }
+  .swal2-popup.swal2-toast {
+    width: 300px;
+    padding: 0 15px;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    overflow-y: hidden;
+    -webkit-box-shadow: 0 0 10px #d9d9d9;
+            box-shadow: 0 0 10px #d9d9d9; }
+    .swal2-popup.swal2-toast .swal2-title {
+      max-width: 300px;
+      font-size: 16px;
+      text-align: left; }
+    .swal2-popup.swal2-toast .swal2-content {
+      font-size: 14px;
+      text-align: left; }
+    .swal2-popup.swal2-toast .swal2-icon {
+      width: 32px;
+      min-width: 32px;
+      height: 32px;
+      margin: 0 15px 0 0; }
+      .swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring {
+        width: 32px;
+        height: 32px; }
+      .swal2-popup.swal2-toast .swal2-icon.swal2-info, .swal2-popup.swal2-toast .swal2-icon.swal2-warning, .swal2-popup.swal2-toast .swal2-icon.swal2-question {
+        font-size: 26px;
+        line-height: 32px; }
+      .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+        top: 14px;
+        width: 22px; }
+        .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='left'] {
+          left: 5px; }
+        .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='right'] {
+          right: 5px; }
+    .swal2-popup.swal2-toast .swal2-buttonswrapper {
+      margin: 0 0 0 5px; }
+    .swal2-popup.swal2-toast .swal2-styled {
+      margin: 0 0 0 5px;
+      padding: 5px 10px; }
+      .swal2-popup.swal2-toast .swal2-styled:focus {
+        -webkit-box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(50, 100, 150, 0.4);
+                box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(50, 100, 150, 0.4); }
+    .swal2-popup.swal2-toast .swal2-validationerror {
+      width: 100%;
+      margin: 5px -20px; }
+    .swal2-popup.swal2-toast .swal2-success {
+      border-color: #a5dc86; }
+      .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'] {
+        border-radius: 50%;
+        position: absolute;
+        width: 32px;
+        height: 64px;
+        -webkit-transform: rotate(45deg);
+                transform: rotate(45deg); }
+        .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'][class$='left'] {
+          border-radius: 64px 0 0 64px;
+          top: -4px;
+          left: -15px;
+          -webkit-transform: rotate(-45deg);
+                  transform: rotate(-45deg);
+          -webkit-transform-origin: 32px 32px;
+                  transform-origin: 32px 32px; }
+        .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'][class$='right'] {
+          border-radius: 0 64px 64px 0;
+          top: -5px;
+          left: 14px;
+          -webkit-transform-origin: 0 32px;
+                  transform-origin: 0 32px; }
+      .swal2-popup.swal2-toast .swal2-success .swal2-success-ring {
+        width: 32px;
+        height: 32px; }
+      .swal2-popup.swal2-toast .swal2-success .swal2-success-fix {
+        width: 7px;
+        height: 90px;
+        left: 28px;
+        top: 8px; }
+      .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'] {
+        height: 5px; }
+        .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'][class$='tip'] {
+          width: 12px;
+          left: 3px;
+          top: 18px; }
+        .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'][class$='long'] {
+          width: 22px;
+          right: 3px;
+          top: 15px; }
+    .swal2-popup.swal2-toast .swal2-animate-success-line-tip {
+      -webkit-animation: animate-toast-success-tip .75s;
+              animation: animate-toast-success-tip .75s; }
+    .swal2-popup.swal2-toast .swal2-animate-success-line-long {
+      -webkit-animation: animate-toast-success-long .75s;
+              animation: animate-toast-success-long .75s; }
+  .swal2-popup:focus {
+    outline: none; }
+  .swal2-popup.swal2-loading {
+    overflow-y: hidden; }
+  .swal2-popup .swal2-title {
+    color: #595959;
+    font-size: 30px;
+    text-align: center;
+    font-weight: 600;
+    text-transform: none;
+    position: relative;
+    margin: 0 0 .4em;
+    padding: 0;
+    display: block;
+    word-wrap: break-word; }
+  .swal2-popup .swal2-buttonswrapper {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin-top: 15px; }
+    .swal2-popup .swal2-buttonswrapper:not(.swal2-loading) .swal2-styled[disabled] {
+      opacity: .4;
+      cursor: no-drop; }
+    .swal2-popup .swal2-buttonswrapper.swal2-loading .swal2-styled.swal2-confirm {
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      border: 4px solid transparent;
+      border-color: transparent;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      margin: 7.5px;
+      vertical-align: top;
+      background-color: transparent !important;
+      color: transparent;
+      cursor: default;
+      border-radius: 100%;
+      -webkit-animation: rotate-loading 1.5s linear 0s infinite normal;
+              animation: rotate-loading 1.5s linear 0s infinite normal;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none; }
+    .swal2-popup .swal2-buttonswrapper.swal2-loading .swal2-styled.swal2-cancel {
+      margin-left: 30px;
+      margin-right: 30px; }
+    .swal2-popup .swal2-buttonswrapper.swal2-loading :not(.swal2-styled).swal2-confirm::after {
+      display: inline-block;
+      content: '';
+      margin-left: 5px;
+      vertical-align: -1px;
+      height: 15px;
+      width: 15px;
+      border: 3px solid #999999;
+      -webkit-box-shadow: 1px 1px 1px #fff;
+              box-shadow: 1px 1px 1px #fff;
+      border-right-color: transparent;
+      border-radius: 50%;
+      -webkit-animation: rotate-loading 1.5s linear 0s infinite normal;
+              animation: rotate-loading 1.5s linear 0s infinite normal; }
+  .swal2-popup .swal2-styled {
+    border: 0;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 500;
+    margin: 15px 5px 0;
+    padding: 10px 32px; }
+    .swal2-popup .swal2-styled:focus {
+      outline: none;
+      -webkit-box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(50, 100, 150, 0.4);
+              box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(50, 100, 150, 0.4); }
+  .swal2-popup .swal2-image {
+    margin: 20px auto;
+    max-width: 100%; }
+  .swal2-popup .swal2-close {
+    background: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 38px;
+    height: 40px;
+    font-size: 36px;
+    line-height: 40px;
+    font-family: serif;
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    cursor: pointer;
+    color: #cccccc;
+    -webkit-transition: color .1s ease;
+    transition: color .1s ease; }
+    .swal2-popup .swal2-close:hover {
+      color: #d55; }
+  .swal2-popup > .swal2-input,
+  .swal2-popup > .swal2-file,
+  .swal2-popup > .swal2-textarea,
+  .swal2-popup > .swal2-select,
+  .swal2-popup > .swal2-radio,
+  .swal2-popup > .swal2-checkbox {
+    display: none; }
+  .swal2-popup .swal2-content {
+    font-size: 18px;
+    text-align: center;
+    font-weight: 300;
+    position: relative;
+    float: none;
+    margin: 0;
+    padding: 0;
+    line-height: normal;
+    color: #545454;
+    word-wrap: break-word; }
+  .swal2-popup .swal2-input,
+  .swal2-popup .swal2-file,
+  .swal2-popup .swal2-textarea,
+  .swal2-popup .swal2-select,
+  .swal2-popup .swal2-radio,
+  .swal2-popup .swal2-checkbox {
+    margin: 20px auto; }
+  .swal2-popup .swal2-input,
+  .swal2-popup .swal2-file,
+  .swal2-popup .swal2-textarea {
+    width: 100%;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-size: 18px;
+    border-radius: 3px;
+    border: 1px solid #d9d9d9;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06);
+    -webkit-transition: border-color .3s, -webkit-box-shadow .3s;
+    transition: border-color .3s, -webkit-box-shadow .3s;
+    transition: border-color .3s, box-shadow .3s;
+    transition: border-color .3s, box-shadow .3s, -webkit-box-shadow .3s; }
+    .swal2-popup .swal2-input.swal2-inputerror,
+    .swal2-popup .swal2-file.swal2-inputerror,
+    .swal2-popup .swal2-textarea.swal2-inputerror {
+      border-color: #f27474 !important;
+      -webkit-box-shadow: 0 0 2px #f27474 !important;
+              box-shadow: 0 0 2px #f27474 !important; }
+    .swal2-popup .swal2-input:focus,
+    .swal2-popup .swal2-file:focus,
+    .swal2-popup .swal2-textarea:focus {
+      outline: none;
+      border: 1px solid #b4dbed;
+      -webkit-box-shadow: 0 0 3px #c4e6f5;
+              box-shadow: 0 0 3px #c4e6f5; }
+    .swal2-popup .swal2-input::-webkit-input-placeholder,
+    .swal2-popup .swal2-file::-webkit-input-placeholder,
+    .swal2-popup .swal2-textarea::-webkit-input-placeholder {
+      color: #cccccc; }
+    .swal2-popup .swal2-input:-ms-input-placeholder,
+    .swal2-popup .swal2-file:-ms-input-placeholder,
+    .swal2-popup .swal2-textarea:-ms-input-placeholder {
+      color: #cccccc; }
+    .swal2-popup .swal2-input::-ms-input-placeholder,
+    .swal2-popup .swal2-file::-ms-input-placeholder,
+    .swal2-popup .swal2-textarea::-ms-input-placeholder {
+      color: #cccccc; }
+    .swal2-popup .swal2-input::placeholder,
+    .swal2-popup .swal2-file::placeholder,
+    .swal2-popup .swal2-textarea::placeholder {
+      color: #cccccc; }
+  .swal2-popup .swal2-range input {
+    float: left;
+    width: 80%; }
+  .swal2-popup .swal2-range output {
+    float: right;
+    width: 20%;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center; }
+  .swal2-popup .swal2-range input,
+  .swal2-popup .swal2-range output {
+    height: 43px;
+    line-height: 43px;
+    vertical-align: middle;
+    margin: 20px auto;
+    padding: 0; }
+  .swal2-popup .swal2-input {
+    height: 43px;
+    padding: 0 12px; }
+    .swal2-popup .swal2-input[type='number'] {
+      max-width: 150px; }
+  .swal2-popup .swal2-file {
+    font-size: 20px; }
+  .swal2-popup .swal2-textarea {
+    height: 108px;
+    padding: 12px; }
+  .swal2-popup .swal2-select {
+    color: #545454;
+    font-size: inherit;
+    padding: 5px 10px;
+    min-width: 40%;
+    max-width: 100%; }
+  .swal2-popup .swal2-radio {
+    border: 0; }
+    .swal2-popup .swal2-radio label:not(:first-child) {
+      margin-left: 20px; }
+    .swal2-popup .swal2-radio input,
+    .swal2-popup .swal2-radio span {
+      vertical-align: middle; }
+    .swal2-popup .swal2-radio input {
+      margin: 0 3px 0 0; }
+  .swal2-popup .swal2-checkbox {
+    color: #545454; }
+    .swal2-popup .swal2-checkbox input,
+    .swal2-popup .swal2-checkbox span {
+      vertical-align: middle; }
+  .swal2-popup .swal2-validationerror {
+    background-color: #f0f0f0;
+    margin: 0 -20px;
+    overflow: hidden;
+    padding: 10px;
+    color: gray;
+    font-size: 16px;
+    font-weight: 300;
+    display: none; }
+    .swal2-popup .swal2-validationerror::before {
+      content: '!';
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: #ea7d7d;
+      color: #fff;
+      line-height: 24px;
+      text-align: center;
+      margin-right: 10px; }
+
+@supports (-ms-accelerator: true) {
+  .swal2-range input {
+    width: 100% !important; }
+  .swal2-range output {
+    display: none; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .swal2-range input {
+    width: 100% !important; }
+  .swal2-range output {
+    display: none; } }
+
+.swal2-icon {
+  width: 80px;
+  height: 80px;
+  border: 4px solid transparent;
+  border-radius: 50%;
+  margin: 20px auto 30px;
+  padding: 0;
+  position: relative;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+  .swal2-icon.swal2-error {
+    border-color: #f27474; }
+    .swal2-icon.swal2-error .swal2-x-mark {
+      position: relative;
+      display: block; }
+    .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+      position: absolute;
+      height: 5px;
+      width: 47px;
+      background-color: #f27474;
+      display: block;
+      top: 37px;
+      border-radius: 2px; }
+      .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='left'] {
+        -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+        left: 17px; }
+      .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='right'] {
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+        right: 16px; }
+  .swal2-icon.swal2-warning {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #f8bb86;
+    border-color: #facea8;
+    font-size: 60px;
+    line-height: 80px;
+    text-align: center; }
+  .swal2-icon.swal2-info {
+    font-family: 'Open Sans', sans-serif;
+    color: #3fc3ee;
+    border-color: #9de0f6;
+    font-size: 60px;
+    line-height: 80px;
+    text-align: center; }
+  .swal2-icon.swal2-question {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #87adbd;
+    border-color: #c9dae1;
+    font-size: 60px;
+    line-height: 80px;
+    text-align: center; }
+  .swal2-icon.swal2-success {
+    border-color: #a5dc86; }
+    .swal2-icon.swal2-success [class^='swal2-success-circular-line'] {
+      border-radius: 50%;
+      position: absolute;
+      width: 60px;
+      height: 120px;
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg); }
+      .swal2-icon.swal2-success [class^='swal2-success-circular-line'][class$='left'] {
+        border-radius: 120px 0 0 120px;
+        top: -7px;
+        left: -33px;
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+        -webkit-transform-origin: 60px 60px;
+                transform-origin: 60px 60px; }
+      .swal2-icon.swal2-success [class^='swal2-success-circular-line'][class$='right'] {
+        border-radius: 0 120px 120px 0;
+        top: -11px;
+        left: 30px;
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+        -webkit-transform-origin: 0 60px;
+                transform-origin: 0 60px; }
+    .swal2-icon.swal2-success .swal2-success-ring {
+      width: 80px;
+      height: 80px;
+      border: 4px solid rgba(165, 220, 134, 0.2);
+      border-radius: 50%;
+      -webkit-box-sizing: content-box;
+              box-sizing: content-box;
+      position: absolute;
+      left: -4px;
+      top: -4px;
+      z-index: 2; }
+    .swal2-icon.swal2-success .swal2-success-fix {
+      width: 7px;
+      height: 90px;
+      position: absolute;
+      left: 28px;
+      top: 8px;
+      z-index: 1;
+      -webkit-transform: rotate(-45deg);
+              transform: rotate(-45deg); }
+    .swal2-icon.swal2-success [class^='swal2-success-line'] {
+      height: 5px;
+      background-color: #a5dc86;
+      display: block;
+      border-radius: 2px;
+      position: absolute;
+      z-index: 2; }
+      .swal2-icon.swal2-success [class^='swal2-success-line'][class$='tip'] {
+        width: 25px;
+        left: 14px;
+        top: 46px;
+        -webkit-transform: rotate(45deg);
+                transform: rotate(45deg); }
+      .swal2-icon.swal2-success [class^='swal2-success-line'][class$='long'] {
+        width: 47px;
+        right: 8px;
+        top: 38px;
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg); }
+
+.swal2-progresssteps {
+  font-weight: 600;
+  margin: 0 0 20px;
+  padding: 0; }
+  .swal2-progresssteps li {
+    display: inline-block;
+    position: relative; }
+  .swal2-progresssteps .swal2-progresscircle {
+    background: #3085d6;
+    border-radius: 2em;
+    color: #fff;
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
+    width: 2em;
+    z-index: 20; }
+    .swal2-progresssteps .swal2-progresscircle:first-child {
+      margin-left: 0; }
+    .swal2-progresssteps .swal2-progresscircle:last-child {
+      margin-right: 0; }
+    .swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep {
+      background: #3085d6; }
+      .swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep ~ .swal2-progresscircle {
+        background: #add8e6; }
+      .swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep ~ .swal2-progressline {
+        background: #add8e6; }
+  .swal2-progresssteps .swal2-progressline {
+    background: #3085d6;
+    height: .4em;
+    margin: 0 -1px;
+    z-index: 10; }
+
+[class^='swal2'] {
+  -webkit-tap-highlight-color: transparent; }
+
+@-webkit-keyframes showSweetToast {
+  0% {
+    -webkit-transform: translateY(-10px) rotateZ(2deg);
+            transform: translateY(-10px) rotateZ(2deg);
+    opacity: 0; }
+  33% {
+    -webkit-transform: translateY(0) rotateZ(-2deg);
+            transform: translateY(0) rotateZ(-2deg);
+    opacity: .5; }
+  66% {
+    -webkit-transform: translateY(5px) rotateZ(2deg);
+            transform: translateY(5px) rotateZ(2deg);
+    opacity: .7; }
+  100% {
+    -webkit-transform: translateY(0) rotateZ(0);
+            transform: translateY(0) rotateZ(0);
+    opacity: 1; } }
+
+@keyframes showSweetToast {
+  0% {
+    -webkit-transform: translateY(-10px) rotateZ(2deg);
+            transform: translateY(-10px) rotateZ(2deg);
+    opacity: 0; }
+  33% {
+    -webkit-transform: translateY(0) rotateZ(-2deg);
+            transform: translateY(0) rotateZ(-2deg);
+    opacity: .5; }
+  66% {
+    -webkit-transform: translateY(5px) rotateZ(2deg);
+            transform: translateY(5px) rotateZ(2deg);
+    opacity: .7; }
+  100% {
+    -webkit-transform: translateY(0) rotateZ(0);
+            transform: translateY(0) rotateZ(0);
+    opacity: 1; } }
+
+@-webkit-keyframes hideSweetToast {
+  0% {
+    opacity: 1; }
+  33% {
+    opacity: .5; }
+  100% {
+    -webkit-transform: rotateZ(1deg);
+            transform: rotateZ(1deg);
+    opacity: 0; } }
+
+@keyframes hideSweetToast {
+  0% {
+    opacity: 1; }
+  33% {
+    opacity: .5; }
+  100% {
+    -webkit-transform: rotateZ(1deg);
+            transform: rotateZ(1deg);
+    opacity: 0; } }
+
+@-webkit-keyframes showSweetAlert {
+  0% {
+    -webkit-transform: scale(0.7);
+            transform: scale(0.7); }
+  45% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05); }
+  80% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95); }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@keyframes showSweetAlert {
+  0% {
+    -webkit-transform: scale(0.7);
+            transform: scale(0.7); }
+  45% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05); }
+  80% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95); }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@-webkit-keyframes hideSweetAlert {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1; }
+  100% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+    opacity: 0; } }
+
+@keyframes hideSweetAlert {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1; }
+  100% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+    opacity: 0; } }
+
+.swal2-show {
+  -webkit-animation: showSweetAlert .3s;
+          animation: showSweetAlert .3s; }
+  .swal2-show.swal2-toast {
+    -webkit-animation: showSweetToast .5s;
+            animation: showSweetToast .5s; }
+  .swal2-show.swal2-noanimation {
+    -webkit-animation: none;
+            animation: none; }
+
+.swal2-hide {
+  -webkit-animation: hideSweetAlert .15s forwards;
+          animation: hideSweetAlert .15s forwards; }
+  .swal2-hide.swal2-toast {
+    -webkit-animation: hideSweetToast .2s forwards;
+            animation: hideSweetToast .2s forwards; }
+  .swal2-hide.swal2-noanimation {
+    -webkit-animation: none;
+            animation: none; }
+
+@-webkit-keyframes animate-success-tip {
+  0% {
+    width: 0;
+    left: 1px;
+    top: 19px; }
+  54% {
+    width: 0;
+    left: 1px;
+    top: 19px; }
+  70% {
+    width: 50px;
+    left: -8px;
+    top: 37px; }
+  84% {
+    width: 17px;
+    left: 21px;
+    top: 48px; }
+  100% {
+    width: 25px;
+    left: 14px;
+    top: 45px; } }
+
+@keyframes animate-success-tip {
+  0% {
+    width: 0;
+    left: 1px;
+    top: 19px; }
+  54% {
+    width: 0;
+    left: 1px;
+    top: 19px; }
+  70% {
+    width: 50px;
+    left: -8px;
+    top: 37px; }
+  84% {
+    width: 17px;
+    left: 21px;
+    top: 48px; }
+  100% {
+    width: 25px;
+    left: 14px;
+    top: 45px; } }
+
+@-webkit-keyframes animate-success-long {
+  0% {
+    width: 0;
+    right: 46px;
+    top: 54px; }
+  65% {
+    width: 0;
+    right: 46px;
+    top: 54px; }
+  84% {
+    width: 55px;
+    right: 0;
+    top: 35px; }
+  100% {
+    width: 47px;
+    right: 8px;
+    top: 38px; } }
+
+@keyframes animate-success-long {
+  0% {
+    width: 0;
+    right: 46px;
+    top: 54px; }
+  65% {
+    width: 0;
+    right: 46px;
+    top: 54px; }
+  84% {
+    width: 55px;
+    right: 0;
+    top: 35px; }
+  100% {
+    width: 47px;
+    right: 8px;
+    top: 38px; } }
+
+@-webkit-keyframes animate-toast-success-tip {
+  0% {
+    width: 0;
+    left: 1px;
+    top: 9px; }
+  54% {
+    width: 0;
+    left: 1px;
+    top: 9px; }
+  70% {
+    width: 24px;
+    left: -4px;
+    top: 17px; }
+  84% {
+    width: 8px;
+    left: 10px;
+    top: 20px; }
+  100% {
+    width: 12px;
+    left: 3px;
+    top: 18px; } }
+
+@keyframes animate-toast-success-tip {
+  0% {
+    width: 0;
+    left: 1px;
+    top: 9px; }
+  54% {
+    width: 0;
+    left: 1px;
+    top: 9px; }
+  70% {
+    width: 24px;
+    left: -4px;
+    top: 17px; }
+  84% {
+    width: 8px;
+    left: 10px;
+    top: 20px; }
+  100% {
+    width: 12px;
+    left: 3px;
+    top: 18px; } }
+
+@-webkit-keyframes animate-toast-success-long {
+  0% {
+    width: 0;
+    right: 22px;
+    top: 26px; }
+  65% {
+    width: 0;
+    right: 22px;
+    top: 26px; }
+  84% {
+    width: 26px;
+    right: 0;
+    top: 15px; }
+  100% {
+    width: 22px;
+    right: 3px;
+    top: 15px; } }
+
+@keyframes animate-toast-success-long {
+  0% {
+    width: 0;
+    right: 22px;
+    top: 26px; }
+  65% {
+    width: 0;
+    right: 22px;
+    top: 26px; }
+  84% {
+    width: 26px;
+    right: 0;
+    top: 15px; }
+  100% {
+    width: 22px;
+    right: 3px;
+    top: 15px; } }
+
+@-webkit-keyframes rotatePlaceholder {
+  0% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg); }
+  5% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg); }
+  12% {
+    -webkit-transform: rotate(-405deg);
+            transform: rotate(-405deg); }
+  100% {
+    -webkit-transform: rotate(-405deg);
+            transform: rotate(-405deg); } }
+
+@keyframes rotatePlaceholder {
+  0% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg); }
+  5% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg); }
+  12% {
+    -webkit-transform: rotate(-405deg);
+            transform: rotate(-405deg); }
+  100% {
+    -webkit-transform: rotate(-405deg);
+            transform: rotate(-405deg); } }
+
+.swal2-animate-success-line-tip {
+  -webkit-animation: animate-success-tip .75s;
+          animation: animate-success-tip .75s; }
+
+.swal2-animate-success-line-long {
+  -webkit-animation: animate-success-long .75s;
+          animation: animate-success-long .75s; }
+
+.swal2-success.swal2-animate-success-icon .swal2-success-circular-line-right {
+  -webkit-animation: rotatePlaceholder 4.25s ease-in;
+          animation: rotatePlaceholder 4.25s ease-in; }
+
+@-webkit-keyframes animate-error-icon {
+  0% {
+    -webkit-transform: rotateX(100deg);
+            transform: rotateX(100deg);
+    opacity: 0; }
+  100% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+    opacity: 1; } }
+
+@keyframes animate-error-icon {
+  0% {
+    -webkit-transform: rotateX(100deg);
+            transform: rotateX(100deg);
+    opacity: 0; }
+  100% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+    opacity: 1; } }
+
+.swal2-animate-error-icon {
+  -webkit-animation: animate-error-icon .5s;
+          animation: animate-error-icon .5s; }
+
+@-webkit-keyframes animate-x-mark {
+  0% {
+    -webkit-transform: scale(0.4);
+            transform: scale(0.4);
+    margin-top: 26px;
+    opacity: 0; }
+  50% {
+    -webkit-transform: scale(0.4);
+            transform: scale(0.4);
+    margin-top: 26px;
+    opacity: 0; }
+  80% {
+    -webkit-transform: scale(1.15);
+            transform: scale(1.15);
+    margin-top: -6px; }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    margin-top: 0;
+    opacity: 1; } }
+
+@keyframes animate-x-mark {
+  0% {
+    -webkit-transform: scale(0.4);
+            transform: scale(0.4);
+    margin-top: 26px;
+    opacity: 0; }
+  50% {
+    -webkit-transform: scale(0.4);
+            transform: scale(0.4);
+    margin-top: 26px;
+    opacity: 0; }
+  80% {
+    -webkit-transform: scale(1.15);
+            transform: scale(1.15);
+    margin-top: -6px; }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    margin-top: 0;
+    opacity: 1; } }
+
+.swal2-animate-x-mark {
+  -webkit-animation: animate-x-mark .5s;
+          animation: animate-x-mark .5s; }
+
+@-webkit-keyframes rotate-loading {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes rotate-loading {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+</style>
+    <script src="./National Board of Examination in Rehabilitation(NBER)_files/bootstrap.file-input.js"></script>
+    <script src="./National Board of Examination in Rehabilitation(NBER)_files/bootstrap-imageupload.js"></script>
+    <script src="./National Board of Examination in Rehabilitation(NBER)_files/tableExport.js"></script>
+    	<link rel="stylesheet" href="./National Board of Examination in Rehabilitation(NBER)_files/chosen.min.css">
+	<link rel="stylesheet" href="./National Board of Examination in Rehabilitation(NBER)_files/cropper.css">
+	<style>
+		.hidden{
+			display:none;
+		}
+		.community_id_3, .value_community_id_3{
+			display:none;
+		}
+		.form-control{
+			max-width:500px;
+		}
+	</style>
+	<script>
+		$(document).ready(function () {
+			$('#nationality_id').val(86).change();
+			var formattedDate = new Date("2010-08-01");
+			var d = String(formattedDate.getDate()).padStart(2, '0');
+			var m =  String(formattedDate.getMonth() +1).padStart(2, '0');
+			var y = formattedDate.getFullYear();
+			var mindate  = y + "-" + m + "-" + d;
+			$('input[name="dob"]').attr('max', mindate);
+			$('input[name="ver_dob"]').attr('max', mindate);
+			$('.max99').attr('max',99);
+			$("#ms_num").attr('maxlength','6');
+			$('input[name="ver_udid"]').attr('maxlength','23');
+			$('input[name="ver_udid"]').keypress(function (e) {
+			var regex = new RegExp("^[a-zA-Z0-9_]+$");
+			var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+			if (regex.test(str)) {
+				return true;
+			}
+			e.preventDefault();
+			return false;
+		});
+		});
+
+		
+		</script>
+    <style>
+        body {
+            /*margin-top: -40px;*/
+            background: #EEEEEE;
+        }
+
+        .custom-pageheader {
+            background: #EEEEEE;
+        }
+
+        .lucida-text {
+            font-family: "Lucida Calligraphy";
+        }
+        .adobe {
+            font-family: "Adobe Caslon Pro";
+        }
+        .yu {
+            font-family: "Yu Gothic Light";
+        }
+        .arial-text {
+            font-family: "Arial";
+        }
+        .courier-text {
+            font-family: "Courier New";
+        }
+
+        .table-borderless > tbody > tr > td,
+        .table-borderless > tbody > tr > th,
+        .table-borderless > tfoot > tr > td,
+        .table-borderless > tfoot > tr > th,
+        .table-borderless > thead > tr > td,
+        .table-borderless > thead > tr > th {
+            border: none !important;
+        }
+        @media  print {
+            #printPageButton {
+                display: none;
+            }
+            #printPage {
+                size: A4 landscape;
+            }
+            .hidethis {
+                display: none;
+            }
+            .hidelink:after {
+                content: none !important;
+            }
+            a[href]:after {
+                content: none !important;
+            }
+        }
+
+        .equal-height-row {
+            display: flex;
+        }
+
+        .minus15px-margin-top {
+            margin-top: -15px !important;
+        }
+
+        .white-background {
+            background-color: white;
+            color: black;
+        }
+
+        .black-background {
+            background-color: black;
+            color: white;
+        }
+
+        .red-background {
+            background-color: red !important;
+            color: white !important;
+        }
+
+        .ghostwhite-background {
+            background-color: ghostwhite;
+            color: deepskyblue;
+        }
+
+        .darkblue-background {
+            background-color: darkblue;
+            color: white;
+        }
+
+        .green-background {
+            background: green !important;
+            color: white !important;
+        }
+
+        .grey-background {
+            background: #EEEEEE;
+        }
+
+        .bold-text {
+            font-weight: bold;
+        }
+
+        .center-text {
+            text-align: center !important;
+        }
+
+        .left-text {
+            text-align: left !important;
+        }
+
+        .right-text {
+            text-align: right !important;
+        }
+
+        .orange-text {
+            color: darkorange !important;
+        }
+
+        .green-text {
+            color: darkgreen !important;
+        }
+
+        .red-text {
+            color: red !important;
+        }
+
+        .blue-text {
+            color: blue !important;
+        }
+
+        .brown-text {
+            color: brown !important;
+        }
+
+        .yellow-text {
+            color: yellow !important;
+        }
+
+        .black-text {
+            color: black !important;
+        }
+
+        .icon-text {
+            font-size: 30px;
+        }
+
+        .large-text {
+            font-size: large;
+        }
+
+        .footer {
+            background: #3fc3ee;
+            color: white;
+        }
+
+        td, th {
+            vertical-align: middle !important;
+        }
+
+        . {
+            display: flex; /* equal height of the children */
+        }
+        .page-break {
+            page-break-after: always;
+        }
+
+        .h4-text {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .h5-text {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .h6-text {
+            font-size: 15px;
+        }
+        .h7-text {
+            font-size: 12px;
+        }
+        .h8-text {
+            font-size: 10px;
+        }
+
+        .medium-text {
+            font-size: medium;
+        }
+
+        .justified-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .red-button {
+            background-color: red !important;
+            color: white !important;
+        }
+
+        .red-button:focus,
+        .red-button:hover {
+            background-color: indianred !important;
+            border-color: indianred !important;
+            color: white !important;
+        }
+
+        .breadcrumb {
+            padding: 10px !important;
+            background-color: cornsilk;
+        }
+        .breadcrumb a, .breadcrumb > .heading, .breadcrumb > .active{
+            font-size: medium;
+            color: blue;
+        }
+        .breadcrumb > .active{
+            font-weight: bold;
+            color: red;
+        }
+        .breadcrumb > li + li:before {
+            content: "\00BB";
+            color: blue;
+            font-size: large;
+        }
+        .uppercase-text {
+            text-transform: uppercase !important;
+        }
+        .notfound{
+            display: none;
+        }
+        .table-condensed .progress {
+            margin-bottom: 0 !important;
+        }
+        .wrimagecard{
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            position: relative;
+            background: #fff;
+            box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .wrimagecard .fa{
+            position: relative;
+            font-size: 70px;
+        }
+        .wrimagecard-topimage_header{
+            padding: 20px;
+        }
+        a.wrimagecard:hover, .wrimagecard-topimage:hover {
+            box-shadow: 2px 4px 8px 0px rgba(46,61,73,0.2);
+        }
+        .wrimagecard-topimage a {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .wrimagecard-topimage_title {
+            padding: 10px 10px;
+            height: 80px;
+            padding-bottom: 0.75rem !important;
+            position: relative;
+        }
+        .wrimagecard-topimage a {
+            border-bottom: none;
+            text-decoration: none;
+            color: #525c65;
+            transition: color 0.3s ease;
+        }
+
+        .custom-link:hover, .custom-link:visited, .custom-link:link, .custom-link:active
+        {
+            text-decoration: none;
+        }
+
+        .content-hide {
+            /*visibility: hidden !important;*/
+            display: none !important;
+        }
+
+        .content-show {
+            /*visibility: visible;*/
+            display: inline !important;
+        }
+
+        .loader {
+            margin: auto !important;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid blue;
+            border-right: 16px solid green;
+            border-bottom: 16px solid red;
+            border-left: 16px solid pink;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes  spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .center-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body id="app-layout">
+<div id="printPageButton">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 darkblue-background">
+               <!-- <img src="http://localhost:8000/images/header.png" class="img-rounded img-responsive center-block" height="60%"/> -->
+               <center>
+                <table style="margin:10px;"> 
+                <tbody><tr>
+                    <td style="width:90px;">
+                        <img style="background-color:white;padding:4px;" src="./National Board of Examination in Rehabilitation(NBER)_files/rci_logo.png" alt="RCI" class="img-rounded img-responsive center-block" height="60%">
+                    </td>
+                    <td style="text-align: center;padding:18px;">
+                    <span style="color:yellow;font-size:16px;">
+                        National Board of Examination in Rehabilitation(NBER)
+                    </span> <br>
+                    <div style="color:white;font-size:10px;padding-bottom:8px;">
+                    An Adjunct Body of Rehabilitation Council of India, under Ministry of Social Justice and Empowerment
+                    </div> 
+                    <!--
+                    <span style="color:white;font-size:12px;">
+                        <u> <i>
+                    Examination conducted by
+                        </u></i>
+                    </span> <br />
+                    <span style="color:yellow;font-size:16px;">
+                        
+                    </span>   <br /> 
+                    <div style="color:white;font-size:10px;padding-bottom:8px;">
+                        (Dept. of Empowerment of Persons with Disabilties (Divyangjan), Ministry of Social Justice & Empowerment, Govt. of India)
+                    </div>-->
+                    </td> 
+                    <td style="width:90px;margin-right:40px;">
+                        <img style="background-color:white;padding:0px;" src="./National Board of Examination in Rehabilitation(NBER)_files/rci_nber_logo.png" alt="NBER" class="img-rounded img-responsive center-block" height="60%">
+                    </td>
+                </tr>
+               </tbody></table>
+
+</center>            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+
+                <!-- Collapsed Hamburger -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <!-- Branding Image -->
+                <a class="navbar-brand" href="http://localhost:8000/">
+                    NBER 
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <!-- Left Side Of Navbar -->
+                <ul class="nav navbar-nav">
+                    <li><a href="http://localhost:8000/institute/center-information">Center Information</a></li>
+                    <li><a href="http://localhost:8000/enrolment">Enrolments</a></li>
+                    <li><a href="http://localhost:8000/institute/examinations">Examinations </a></li>
+                    <li><a href="http://localhost:8000/payment">Payments </a></li>
+                                        <li><a href="http://localhost:8000/institute/certifications">Certifications</a></li>
+                                        <li><a href="http://localhost:8000/institute/coursecoordinators">Course Coordinators <img src="./National Board of Examination in Rehabilitation(NBER)_files/new.gif"> </a></li>
+
+                </ul>
+
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li><form action="http://localhost:8000/searchcandidates">
+                            <div class="input-group" style="width:300px;margin-top:7px;margin-right: 5px;">
+                                <input type="text" name="key" class="form-control" placeholder="Search with Enrolment# or Name">
+                                <span class="input-group-btn">
+                                                <button type="submit" class="btn btn-primary"><i class="fa fa-btn fa-search"></i></button>
+                                            </span>
+                            </div></form>
+                    </li>
+
+                    <!-- Authentication Links -->
+                                            <li class="dropdown">
+                            <a href="http://localhost:8000/candidate/create/4114#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                AP01 <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="http://localhost:8000/logout"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            </ul>
+                        </li>
+                                    </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+    
+	<style>
+		.heading{padding-top:0;padding-bottom: 10px;font-size:20px;}
+		.chosen-container {width:100%!important;}
+	</style>
+	<form action="http://localhost:8000/candidate" enctype="multipart/form-data" method="post" id="form">
+		<input type="hidden" name="_token" value="Gi2Wy3kEW4a7fGt5amBkJToc7HrgaNaYHFQqx83g">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<ul class="breadcrumb">
+						<li><a href="http://localhost:8000/">Home</a></li>
+						<li><a href="http://localhost:8000/programme/4114"> C.C.C.G. </a></li>
+						<li> New Enrolment</li>
+						<button type="submit" class="btn btn-primary pull-right btn-bc">Save</button>
+					</ul>
+
+				</div>
+
+			</div>
+						<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Personal Details
+						</div>
+
+						<div class="panel-body">
+							<input name="approvedprogramme_id" type="hidden" value="4114">
+							<input name="programmegroup_id" type="hidden" value="1">
+							<input name="status_id" value="1" type="hidden">
+
+							<div class="form-group">
+	    <label for="PwD" class="control-label">PwD</label>
+        <div class="form-control">
+                    <input type="radio" value="0" class="isdisabled_0" name="isdisabled" checked=""> <span class="value_isdisabled_0">No </span> 
+                    <input type="radio" value="1" class="isdisabled_1" name="isdisabled"> <span class="value_isdisabled_1">Yes </span> 
+            </div>
+</div>
+
+	
+					
+	
+    
+							
+							<div class="form-group">
+	    <label for="Student&#39;s Name" class="control-label">Student's Name</label>
+        <input class="form-control max99" name="name" type="text" value="" max="99">
+</div>
+							<div class="form-group">
+	    <label for="Father&#39;s Name" class="control-label">Father's Name</label>
+        <input class="form-control" name="fathername" type="text">
+</div>
+
+							<!--<div class="form-group">
+	    <label for="Father's / Husband's name" class="control-label">Father&#039;s / Husband&#039;s Name</label>
+    <div>
+<div style="width:20%;" class="pull-left">   
+	<select  id="salutation_id" name="salutation_id" class="ls" >
+		<option value="0" disabled selected> Choose </option>
+									<option value="1"    >S/O</option>
+												<option value="2"    >D/O</option>
+												<option value="3"    >W/O</option>
+												<option value="4"    >C/O</option>
+						</select>
+</div>
+<div style="width:80%" class="pull-left">
+	<input class="form-control" name="fathername" type="text">
+</div>	
+				</div>	
+</div>
+	
+	
+					
+	
+    
+							-->
+							<div class="form-group">
+	    <label for="Mother&#39;s name" class="control-label">Mother's Name</label>
+        <input class="form-control" name="mothername" type="text">
+</div>
+						<!--									<div class="form-group">
+	    <label for="HSc Percentage" class="control-label">HSc Percentage</label>
+        <input class="form-control" min="1" max="100" step="any" name="percentage" type="number">
+</div>
+
+								<h4 class="red-text">
+									<input type="checkbox" name='pex' id="pex"> Please click here to Apply for Percentage Exception </input> <br />
+								</h4>
+							 -->
+							<div class="form-group">
+	    <label for="Gender" class="control-label">Gender</label>
+        <div class="form-control">
+                    <input type="radio" value="1" class="gender_id_1" name="gender_id"> <span class="value_gender_id_1">Male </span> 
+                    <input type="radio" value="2" class="gender_id_2" name="gender_id"> <span class="value_gender_id_2">Female </span> 
+                    <input type="radio" value="3" class="gender_id_3" name="gender_id"> <span class="value_gender_id_3">Transgender </span> 
+            </div>
+</div>
+
+	
+					
+	
+    
+							<div class="showhideudid hidden">
+								<div class="form-group">
+	    <label for="UDID or UDID Enrolment No" class="control-label">UDID Or UDID Enrolment No</label>
+        <input class="form-control" name="udid" type="text">
+</div>
+							</div>
+							<div class="form-group">
+	    <label for="Date of Birth" class="control-label">Date Of Birth</label>
+        <input class="form-control" name="dob" type="date" max="2010-08-01">
+</div>
+							<div class="form-group">
+	    <label for="Nationality" class="control-label">Nationality</label>
+        <div>
+   				<select id="nationality_id" name="nationality_id" class="ls form-control">
+						<option value="0" disabled="" selected=""> Choose   Nationality </option>
+						
+																				<option value="1">Afghan</option>
+																											<option value="2">Albanian</option>
+																											<option value="3">Algerian</option>
+																											<option value="4">American</option>
+																											<option value="5">Andorran</option>
+																											<option value="6">Angolan</option>
+																											<option value="7">Antiguans</option>
+																											<option value="8">Argentinean</option>
+																											<option value="9">Armenian</option>
+																											<option value="10">Australian</option>
+																											<option value="11">Austrian</option>
+																											<option value="12">Azerbaijani</option>
+																											<option value="13">Bahamian</option>
+																											<option value="14">Bahraini</option>
+																											<option value="15">Bangladeshi</option>
+																											<option value="16">Barbadian</option>
+																											<option value="17">Barbudans</option>
+																											<option value="18">Batswana</option>
+																											<option value="19">Belarusian</option>
+																											<option value="20">Belgian</option>
+																											<option value="21">Belizean</option>
+																											<option value="22">Beninese</option>
+																											<option value="23">Bhutanese</option>
+																											<option value="24">Bolivian</option>
+																											<option value="25">Bosnian</option>
+																											<option value="26">Brazilian</option>
+																											<option value="27">British</option>
+																											<option value="28">Bruneian</option>
+																											<option value="29">Bulgarian</option>
+																											<option value="30">Burkinabe</option>
+																											<option value="31">Burmese</option>
+																											<option value="32">Burundian</option>
+																											<option value="33">Cambodian</option>
+																											<option value="34">Cameroonian</option>
+																											<option value="35">Canadian</option>
+																											<option value="36">Cape Verdean</option>
+																											<option value="37">Central African</option>
+																											<option value="38">Chadian</option>
+																											<option value="39">Chilean</option>
+																											<option value="40">Chinese</option>
+																											<option value="41">Colombian</option>
+																											<option value="42">Comoran</option>
+																											<option value="43">Congolese</option>
+																											<option value="44">Congolese</option>
+																											<option value="45">Costa Rican</option>
+																											<option value="46">Croatian</option>
+																											<option value="47">Cuban</option>
+																											<option value="48">Cypriot</option>
+																											<option value="49">Czech</option>
+																											<option value="50">Danish</option>
+																											<option value="51">Djibouti</option>
+																											<option value="52">Dominican</option>
+																											<option value="53">Dominican</option>
+																											<option value="54">Dutch</option>
+																											<option value="55">Dutchman</option>
+																											<option value="56">Dutchwoman</option>
+																											<option value="57">East Timorese</option>
+																											<option value="58">Ecuadorean</option>
+																											<option value="59">Egyptian</option>
+																											<option value="60">Emirian</option>
+																											<option value="61">Equatorial Guinean</option>
+																											<option value="62">Eritrean</option>
+																											<option value="63">Estonian</option>
+																											<option value="64">Ethiopian</option>
+																											<option value="65">Fijian</option>
+																											<option value="66">Filipino</option>
+																											<option value="67">Finnish</option>
+																											<option value="68">French</option>
+																											<option value="69">Gabonese</option>
+																											<option value="70">Gambian</option>
+																											<option value="71">Georgian</option>
+																											<option value="72">German</option>
+																											<option value="73">Ghanaian</option>
+																											<option value="74">Greek</option>
+																											<option value="75">Grenadian</option>
+																											<option value="76">Guatemalan</option>
+																											<option value="77">Guinea-Bissauan</option>
+																											<option value="78">Guinean</option>
+																											<option value="79">Guyanese</option>
+																											<option value="80">Haitian</option>
+																											<option value="81">Herzegovinian</option>
+																											<option value="82">Honduran</option>
+																											<option value="83">Hungarian</option>
+																											<option value="84">I-Kiribati</option>
+																											<option value="85">Icelander</option>
+																											<option value="86">Indian</option>
+																											<option value="87">Indonesian</option>
+																											<option value="88">Iranian</option>
+																											<option value="89">Iraqi</option>
+																											<option value="90">Irish</option>
+																											<option value="91">Irish</option>
+																											<option value="92">Israeli</option>
+																											<option value="93">Italian</option>
+																											<option value="94">Ivorian</option>
+																											<option value="95">Jamaican</option>
+																											<option value="96">Japanese</option>
+																											<option value="97">Jordanian</option>
+																											<option value="98">Kazakhstani</option>
+																											<option value="99">Kenyan</option>
+																											<option value="100">Kittian and Nevisian</option>
+																											<option value="101">Kuwaiti</option>
+																											<option value="102">Kyrgyz</option>
+																											<option value="103">Laotian</option>
+																											<option value="104">Latvian</option>
+																											<option value="105">Lebanese</option>
+																											<option value="106">Liberian</option>
+																											<option value="107">Libyan</option>
+																											<option value="108">Liechtensteiner</option>
+																											<option value="109">Lithuanian</option>
+																											<option value="110">Luxembourger</option>
+																											<option value="111">Macedonian</option>
+																											<option value="112">Malagasy</option>
+																											<option value="113">Malawian</option>
+																											<option value="114">Malaysian</option>
+																											<option value="115">Maldivan</option>
+																											<option value="116">Malian</option>
+																											<option value="117">Maltese</option>
+																											<option value="118">Marshallese</option>
+																											<option value="119">Mauritanian</option>
+																											<option value="120">Mauritian</option>
+																											<option value="121">Mexican</option>
+																											<option value="122">Micronesian</option>
+																											<option value="123">Moldovan</option>
+																											<option value="124">Monacan</option>
+																											<option value="125">Mongolian</option>
+																											<option value="126">Moroccan</option>
+																											<option value="127">Mosotho</option>
+																											<option value="128">Motswana</option>
+																											<option value="129">Mozambican</option>
+																											<option value="130">Namibian</option>
+																											<option value="131">Nauruan</option>
+																											<option value="132">Nepalese</option>
+																											<option value="133">Netherlander</option>
+																											<option value="134">New Zealander</option>
+																											<option value="135">Ni-Vanuatu</option>
+																											<option value="136">Nicaraguan</option>
+																											<option value="137">Nigerian</option>
+																											<option value="138">Nigerien</option>
+																											<option value="139">North Korean</option>
+																											<option value="140">Northern Irish</option>
+																											<option value="141">Norwegian</option>
+																											<option value="142">Omani</option>
+																											<option value="143">Pakistani</option>
+																											<option value="144">Palauan</option>
+																											<option value="145">Panamanian</option>
+																											<option value="146">Papua New Guinean</option>
+																											<option value="147">Paraguayan</option>
+																											<option value="148">Peruvian</option>
+																											<option value="149">Polish</option>
+																											<option value="150">Portuguese</option>
+																											<option value="151">Qatari</option>
+																											<option value="152">Romanian</option>
+																											<option value="153">Russian</option>
+																											<option value="154">Rwandan</option>
+																											<option value="155">Saint Lucian</option>
+																											<option value="156">Salvadoran</option>
+																											<option value="157">Samoan</option>
+																											<option value="158">San Marinese</option>
+																											<option value="159">Sao Tomean</option>
+																											<option value="160">Saudi</option>
+																											<option value="161">Scottish</option>
+																											<option value="162">Senegalese</option>
+																											<option value="163">Serbian</option>
+																											<option value="164">Seychellois</option>
+																											<option value="165">Sierra Leonean</option>
+																											<option value="166">Singaporean</option>
+																											<option value="167">Slovakian</option>
+																											<option value="168">Slovenian</option>
+																											<option value="169">Solomon Islander</option>
+																											<option value="170">Somali</option>
+																											<option value="171">South African</option>
+																											<option value="172">South Korean</option>
+																											<option value="173">Spanish</option>
+																											<option value="174">Sri Lankan</option>
+																											<option value="175">Sudanese</option>
+																											<option value="176">Surinamer</option>
+																											<option value="177">Swazi</option>
+																											<option value="178">Swedish</option>
+																											<option value="179">Swiss</option>
+																											<option value="180">Syrian</option>
+																											<option value="181">Taiwanese</option>
+																											<option value="182">Tajik</option>
+																											<option value="183">Tanzanian</option>
+																											<option value="184">Thai</option>
+																											<option value="185">Togolese</option>
+																											<option value="186">Tongan</option>
+																											<option value="187">Trinidadian or Tobagonian</option>
+																											<option value="188">Tunisian</option>
+																											<option value="189">Turkish</option>
+																											<option value="190">Tuvaluan</option>
+																											<option value="191">Ugandan</option>
+																											<option value="192">Ukrainian</option>
+																											<option value="193">Uruguayan</option>
+																											<option value="194">Uzbekistani</option>
+																											<option value="195">Venezuelan</option>
+																											<option value="196">Vietnamese</option>
+																											<option value="197">Welsh</option>
+																											<option value="198">Yemenite</option>
+																											<option value="199">Zambian</option>
+																											<option value="200">Zimbabwean</option>
+																		</select>
+				</div>	
+</div>
+	
+					
+	
+    
+							<div class="form-group">
+								<label for="aadhar" class="control-label">
+										Aadhar Number
+								</label>
+								<input type="text" id="aadhar" name="aadhar" class="form-control">
+							</div>
+							
+							<div class="form-group">
+	    <label for="Category" class="control-label">Category</label>
+        <div class="form-control">
+                    <input type="radio" value="1" class="community_id_1" name="community_id"> <span class="value_community_id_1">General </span> 
+                    <input type="radio" value="2" class="community_id_2" name="community_id"> <span class="value_community_id_2">OBC </span> 
+                    <input type="radio" value="3" class="community_id_3" name="community_id"> <span class="value_community_id_3">SC/ST </span> 
+                    <input type="radio" value="4" class="community_id_4" name="community_id"> <span class="value_community_id_4">SC </span> 
+                    <input type="radio" value="5" class="community_id_5" name="community_id"> <span class="value_community_id_5">ST </span> 
+            </div>
+</div>
+
+	
+					
+	
+    
+							<div class="form-group">
+	    <label for="Do you belong to EWS category?" class="control-label">Do You Belong To EWS Category?</label>
+        <div class="form-control">
+                    <input type="radio" value="0" class="ews_0" name="ews" checked=""> <span class="value_ews_0">No </span> 
+                    <input type="radio" value="1" class="ews_1" name="ews"> <span class="value_ews_1">Yes </span> 
+            </div>
+</div>
+
+	
+					
+	
+    
+							<div class="form-group">
+	    <label for="Email ID" class="control-label">Email ID</label>
+        <input class="form-control" name="email" type="text">
+</div>
+							<div class="form-group">
+	    <label for="Mobile Number" class="control-label">Mobile Number</label>
+        <input class="form-control" name="contactnumber" type="text">
+</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Correspondence Address
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+	    <label for="Addresss" class="control-label">Addresss</label>
+        <input class="form-control" name="address" type="text">
+</div>
+							<div class="form-group">
+	    <label for="State" class="control-label">State</label>
+        <div>
+   				<select id="state_id" name="state_id" class="ls form-control">
+						<option value="0" disabled="" selected=""> Choose   State </option>
+						
+																				<option value="2">ANDAMAN AND NICOBAR ISLANDS</option>
+																											<option value="3">ANDHRA PRADESH</option>
+																											<option value="4">ARUNACHAL PRADESH</option>
+																											<option value="5">ASSAM</option>
+																											<option value="6">BIHAR</option>
+																											<option value="7">CHANDIGARH</option>
+																											<option value="8">CHHATTISGARH</option>
+																											<option value="9">DELHI</option>
+																											<option value="10">GOA</option>
+																											<option value="11">GUJARAT</option>
+																											<option value="12">HARYANA</option>
+																											<option value="13">HIMACHAL PRADESH</option>
+																											<option value="14">JAMMU AND KASHMIR</option>
+																											<option value="15">JHARKHAND</option>
+																											<option value="16">KARNATAKA</option>
+																											<option value="17">KERALA</option>
+																											<option value="18">LADAKH</option>
+																											<option value="19">LAKSHADWEEP</option>
+																											<option value="20">MADHYA PRADESH</option>
+																											<option value="21">MAHARASHTRA</option>
+																											<option value="22">MANIPUR</option>
+																											<option value="23">MEGHALAYA</option>
+																											<option value="24">MIZORAM</option>
+																											<option value="25">NAGALAND</option>
+																											<option value="26">ODISHA</option>
+																											<option value="27">PUDUCHERRY</option>
+																											<option value="28">PUNJAB</option>
+																											<option value="29">RAJASTHAN</option>
+																											<option value="30">SIKKIM</option>
+																											<option value="31">TAMIL NADU</option>
+																											<option value="32">TELANGANA</option>
+																											<option value="33">THE DADRA AND NAGAR HAVELI AND DAMAN AND DIU</option>
+																											<option value="34">TRIPURA</option>
+																											<option value="35">UTTARAKHAND</option>
+																											<option value="36">UTTAR PRADESH</option>
+																											<option value="37">WEST BENGAL</option>
+																		</select>
+				</div>	
+</div>
+	
+					
+	
+    
+							<div class="form-group hidden" id="districtsdiv">
+								<label for="District" class="control-label">
+										District
+								</label>
+								<select class="form-control" name="district_id" id="district_id">
+								<option value="0">Choosesse District</option>
+
+								</select>
+							</div>
+							<div class="form-group hidden" id="subdistrictsdiv">
+								<label for="subDistrict" class="control-label">
+										Sub District
+								</label>
+								<select class="form-control" name="subdistrict_id" id="subdistrict_id">
+									<option value="0">Choose Sub District</option>
+									<option value="1">Sample</option>
+								</select>
+							</div>
+
+							<div class="form-group hidden" id="villagediv">
+								<label for="block" class="control-label">
+										Block/Village
+								</label>
+								<select class="form-control" name="village_id" id="village_id">
+									<option value="0">Choose City/Village</option>
+								</select>
+							</div>
+							<div class="form-group">
+	    <label for="PIN Code" class="control-label">PIN Code</label>
+        <input class="form-control" name="pincode" type="text">
+</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Permanent Address  &nbsp;&nbsp;&nbsp; <input type="checkbox" checked="" id="saa"> Same as above 
+						</div>
+						<div class="panel-body per-add hidden">
+							<div class="form-group">
+	    <label for="Addresss" class="control-label">Addresss</label>
+        <input class="form-control" name="paddress" type="text">
+</div>
+							<div class="form-group">
+	    <label for="State" class="control-label">State</label>
+        <div>
+   				<select id="pstate_id" name="pstate_id" class="ls form-control">
+						<option value="0" disabled="" selected=""> Choose   State </option>
+						
+																				<option value="2">ANDAMAN AND NICOBAR ISLANDS</option>
+																											<option value="3">ANDHRA PRADESH</option>
+																											<option value="4">ARUNACHAL PRADESH</option>
+																											<option value="5">ASSAM</option>
+																											<option value="6">BIHAR</option>
+																											<option value="7">CHANDIGARH</option>
+																											<option value="8">CHHATTISGARH</option>
+																											<option value="9">DELHI</option>
+																											<option value="10">GOA</option>
+																											<option value="11">GUJARAT</option>
+																											<option value="12">HARYANA</option>
+																											<option value="13">HIMACHAL PRADESH</option>
+																											<option value="14">JAMMU AND KASHMIR</option>
+																											<option value="15">JHARKHAND</option>
+																											<option value="16">KARNATAKA</option>
+																											<option value="17">KERALA</option>
+																											<option value="18">LADAKH</option>
+																											<option value="19">LAKSHADWEEP</option>
+																											<option value="20">MADHYA PRADESH</option>
+																											<option value="21">MAHARASHTRA</option>
+																											<option value="22">MANIPUR</option>
+																											<option value="23">MEGHALAYA</option>
+																											<option value="24">MIZORAM</option>
+																											<option value="25">NAGALAND</option>
+																											<option value="26">ODISHA</option>
+																											<option value="27">PUDUCHERRY</option>
+																											<option value="28">PUNJAB</option>
+																											<option value="29">RAJASTHAN</option>
+																											<option value="30">SIKKIM</option>
+																											<option value="31">TAMIL NADU</option>
+																											<option value="32">TELANGANA</option>
+																											<option value="33">THE DADRA AND NAGAR HAVELI AND DAMAN AND DIU</option>
+																											<option value="34">TRIPURA</option>
+																											<option value="35">UTTARAKHAND</option>
+																											<option value="36">UTTAR PRADESH</option>
+																											<option value="37">WEST BENGAL</option>
+																		</select>
+				</div>	
+</div>
+	
+					
+	
+    
+							<div class="form-group hidden" id="pdistrictsdiv">
+								<label for="District" class="control-label">
+										District
+								</label>
+								<select class="form-control" name="pdistrict_id" id="pdistrict_id">
+								<option value="0">Choosesse District</option>
+
+								</select>
+							</div>
+							<div class="form-group hidden" id="psubdistrictsdiv">
+								<label for="subDistrict" class="control-label">
+										Sub District
+								</label>
+								<select class="form-control" name="psubdistrict_id" id="psubdistrict_id">
+									<option value="0">Choose Sub District</option>
+									<option value="1">Sample</option>
+								</select>
+							</div>
+
+							<div class="form-group hidden" id="pvillagediv">
+								<label for="block" class="control-label">
+										Block/Village
+								</label>
+								<select class="form-control" name="pvillage_id" id="pvillage_id">
+									<option value="0">Choose City/Village</option>
+								</select>
+							</div>
+							<div class="form-group">
+	    <label for="PIN Code" class="control-label">PIN Code</label>
+        <input class="form-control" name="ppincode" type="text">
+</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Education Details
+						</div>
+						<div class="panel-body">
+							<table>
+								<tbody><tr>
+									<td>
+										Name of the Examination passed
+									</td>
+									<td>
+										Board/University
+									</td>
+									<td>
+										Year of Passing
+									</td>
+									<td>
+										Total Marks
+									</td>
+									<td>
+										Marks Obtained
+									</td>
+									<td>
+										%Obtained
+									</td>
+									<td>
+										Subject(s)
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<select name="edutype_id_1" id="edutype_id_1" class="form-control">
+											<option value="0">Please Choose</option>
+											<option value="1">10th</option>
+											<option value="2">12th</option>
+										</select>
+									</td>
+									<td>
+										<input type="text" class="form-control" id="board_1" name="board_1">
+									</td>
+									<td>
+										<input type="text" class="form-control" id="yop_1" name="yop_1">
+									</td>
+									<td>
+										<input type="text" class="form-control num" id="tmarks_1" name="tmarks_1">
+									</td>
+									<td>
+										<input type="text" class="form-control num" id="omarks_1" onkeyup="javascript:calper(1);" name="omarks_1">
+									</td>
+									<td>
+										<input type="text" class="form-control" id="percentage_1" name="percentage_1" disabled="">
+									</td>
+									<td>
+										<input type="text" class="form-control" id="subjects_1" name="subjects_1">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<select name="edutype_id_2" id="edutype_id_2" class="form-control">
+											<option value="0">Please Choose</option>
+											<option value="1">10th</option>
+											<option value="2">12th</option>
+										</select>
+									</td>
+									<td>
+										<input type="text" class="form-control" id="board_2" name="board_2">
+									</td>
+									<td>
+										<input type="text" class="form-control" id="yop_2" name="yop_2">
+									</td>
+									<td>
+										<input type="text" class="form-control num" id="tmarks_2" name="tmarks_2">
+									</td>
+									<td>
+										<input type="text" class="form-control num" id="omarks_2" name="omarks_2">
+									</td>
+									<td>
+										<input type="text" class="form-control" id="percentage_2" name="percentage_2" disabled="">
+									</td>
+									<td>
+										<input type="text" class="form-control" id="subjects_2" name="subjects_2">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<input type="text" name="edutype_id_3" id="edutype_id_3" placeholder="Any Other" class="form-control">
+									</td>
+									<td>
+										<input type="text" class="form-control" id="board_3" name="board_3">
+									</td>
+									<td>
+										<input type="text" class="form-control" id="yop_3" name="yop_3">
+									</td>
+									<td>
+										<input type="text" class="form-control num" id="tmarks_3" name="tmarks_3">
+									</td>
+									<td>
+										<input type="text" class="form-control num" id="omarks_3" name="omarks_3">
+									</td>
+									<td>
+										<input type="text" class="form-control" id="percentage_3" name="percentage_3" disabled="">
+									</td>
+									<td>
+										<input type="text" class="form-control" id="subjects_3" name="subjects_3">
+									</td>
+								</tr>
+								
+							</tbody></table>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Documents
+						</div>
+						<div class="panel-body">
+							<h4>Documents</h4>
+							<div class="form-group" id="photo_form">
+	<hr>
+	    <label for="Photo" class="control-label">Photo</label>
+                         	    		<img src="http://localhost:8000/candidate/create/4114" class="hidden img-thumbnail" id="photo_filename" style="height: 150px!important;display: inline-block;">
+    	        
+       	<input name="file_photo" id="file_photo" class="file hidden" type="file" accept="image/*"> 
+        <input id="photo" class="hidden" name="photo" type="text" value="">
+    &nbsp;&nbsp;
+    <button class="btn btn-xs btn-primary" type="button" onclick="event.preventDefault();  document.getElementById(&#39;file_photo&#39;).click();">
+		<span class="pull-right" id="updtxt_photo"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</span> <img src="./National Board of Examination in Rehabilitation(NBER)_files/loading.gif" id="loading_photo" class="hidden">
+	</button>
+		<script>
+	    $("#file_photo").on('change',function(){
+	    	if(this.files[0].size > 2097152){
+			  	swal({
+				  type: 'error',
+				  title: 'File Size Should be less than 2 MB',
+				  showConfirmButton: true,
+				});
+			  	this.val('').clone(true);;
+			}else{
+				event.preventDefault();
+				$('#loading_photo').removeClass('hidden');
+				$('#updtxt_photo').html('&nbsp;&nbsp;Uploading..');
+				var photo = $('#file_photo');
+				var token = $('input[name=_token]');
+				var formData = new FormData();
+				var fname = "photo_" + Math.random()+'.'+photo.val().split('.').pop();
+				formData.append('photo', photo[0].files[0]); 
+				formData.append('filename', fname ); 
+				formData.append('field','photo');
+				$.ajax({
+				    url: 'http://localhost:8000/fileupload',
+				    method: 'POST',
+				    dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+				    	'X-CSRF-TOKEN': token.val()
+					},
+				    data: formData,
+				    success: function (data) {
+				    },
+				    error: function (data) {
+				    if (data.status === 422) {
+				    } else {
+				    }
+				}
+				}).done(function(response) {
+						$('#loading_photo').addClass('hidden');
+						$('#updtxt_photo').html('<i class="fa fa-upload"></i>&nbsp;&nbsp;Change.');
+				        $('#photo').val(fname);
+				        $('#file_photo').val('');
+				        				       		var fileurl = 'http://localhost:8000/files//temp/"'+fname;
+				        	$('#image').attr('src',fileurl);
+				        	 $('#image').cropper({
+							  aspectRatio: 4 / 5,
+							  crop: function(e) {
+							    $('#left').val(e.x);
+							    $('#top').val(e.y);
+							    $('#width').val(e.width);
+							    $('#height').val(e.height);
+							  }
+							});
+							$('#image').cropper('replace',"http://localhost:8000/files//temp/"+fname);
+							$('#modalbtn').click();
+										});
+				return false;	
+			}
+		});
+	
+	</script>
+</div>
+															<div class="form-group" id="doc_dob_form">
+	<hr>
+	    <label for="SSLC / 12th Certificate as proof of date of birth" class="control-label">SSLC / 12th Certificate As Proof Of Date Of Birth</label>
+                         	    		<a target="_blank" id="doc_dob_filename" style="margin-left: 10px;" class="hidden ">  </a>
+    	        
+        <input name="file_doc_dob" id="file_doc_dob" class="file hidden" type="file"> 
+        <input id="doc_dob" class="hidden" name="doc_dob" type="text" value="">
+    &nbsp;&nbsp;
+    <button class="btn btn-xs btn-primary" type="button" onclick="event.preventDefault();  document.getElementById(&#39;file_doc_dob&#39;).click();">
+		<span class="pull-right" id="updtxt_doc_dob"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</span> <img src="./National Board of Examination in Rehabilitation(NBER)_files/loading.gif" id="loading_doc_dob" class="hidden">
+	</button>
+		<script>
+	    $("#file_doc_dob").on('change',function(){
+	    	if(this.files[0].size > 2097152){
+			  	swal({
+				  type: 'error',
+				  title: 'File Size Should be less than 2 MB',
+				  showConfirmButton: true,
+				});
+			  	this.val('').clone(true);;
+			}else{
+				event.preventDefault();
+				$('#loading_doc_dob').removeClass('hidden');
+				$('#updtxt_doc_dob').html('&nbsp;&nbsp;Uploading..');
+				var photo = $('#file_doc_dob');
+				var token = $('input[name=_token]');
+				var formData = new FormData();
+				var fname = "doc_dob_" + Math.random()+'.'+photo.val().split('.').pop();
+				formData.append('doc_dob', photo[0].files[0]); 
+				formData.append('filename', fname ); 
+				formData.append('field','doc_dob');
+				$.ajax({
+				    url: 'http://localhost:8000/fileupload',
+				    method: 'POST',
+				    dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+				    	'X-CSRF-TOKEN': token.val()
+					},
+				    data: formData,
+				    success: function (data) {
+				    },
+				    error: function (data) {
+				    if (data.status === 422) {
+				    } else {
+				    }
+				}
+				}).done(function(response) {
+						$('#loading_doc_dob').addClass('hidden');
+						$('#updtxt_doc_dob').html('<i class="fa fa-upload"></i>&nbsp;&nbsp;Change.');
+				        $('#doc_dob').val(fname);
+				        $('#file_doc_dob').val('');
+				        							$("#doc_dob_filename").prop('href',"http://localhost:8000/files/temp/"+fname);
+							$("#doc_dob_filename").html("doc_dob."+fname.split('.').pop());
+							$("#doc_dob_filename").removeClass('hidden');
+				        				});
+				return false;	
+			}
+		});
+	
+	</script>
+</div>
+								<div class="form-group" id="doc_mark_form">
+	<hr>
+	    <label for="SSLC / 12th Marksheet" class="control-label">SSLC / 12th Marksheet</label>
+                         	    		<a target="_blank" id="doc_mark_filename" style="margin-left: 10px;" class="hidden ">  </a>
+    	        
+        <input name="file_doc_mark" id="file_doc_mark" class="file hidden" type="file"> 
+        <input id="doc_mark" class="hidden" name="doc_mark" type="text" value="">
+    &nbsp;&nbsp;
+    <button class="btn btn-xs btn-primary" type="button" onclick="event.preventDefault();  document.getElementById(&#39;file_doc_mark&#39;).click();">
+		<span class="pull-right" id="updtxt_doc_mark"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</span> <img src="./National Board of Examination in Rehabilitation(NBER)_files/loading.gif" id="loading_doc_mark" class="hidden">
+	</button>
+		<script>
+	    $("#file_doc_mark").on('change',function(){
+	    	if(this.files[0].size > 2097152){
+			  	swal({
+				  type: 'error',
+				  title: 'File Size Should be less than 2 MB',
+				  showConfirmButton: true,
+				});
+			  	this.val('').clone(true);;
+			}else{
+				event.preventDefault();
+				$('#loading_doc_mark').removeClass('hidden');
+				$('#updtxt_doc_mark').html('&nbsp;&nbsp;Uploading..');
+				var photo = $('#file_doc_mark');
+				var token = $('input[name=_token]');
+				var formData = new FormData();
+				var fname = "doc_mark_" + Math.random()+'.'+photo.val().split('.').pop();
+				formData.append('doc_mark', photo[0].files[0]); 
+				formData.append('filename', fname ); 
+				formData.append('field','doc_mark');
+				$.ajax({
+				    url: 'http://localhost:8000/fileupload',
+				    method: 'POST',
+				    dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+				    	'X-CSRF-TOKEN': token.val()
+					},
+				    data: formData,
+				    success: function (data) {
+				    },
+				    error: function (data) {
+				    if (data.status === 422) {
+				    } else {
+				    }
+				}
+				}).done(function(response) {
+						$('#loading_doc_mark').addClass('hidden');
+						$('#updtxt_doc_mark').html('<i class="fa fa-upload"></i>&nbsp;&nbsp;Change.');
+				        $('#doc_mark').val(fname);
+				        $('#file_doc_mark').val('');
+				        							$("#doc_mark_filename").prop('href',"http://localhost:8000/files/temp/"+fname);
+							$("#doc_mark_filename").html("doc_mark."+fname.split('.').pop());
+							$("#doc_mark_filename").removeClass('hidden');
+				        				});
+				return false;	
+			}
+		});
+	
+	</script>
+</div>
+
+														<div class="form-group" id="doc_community_form">
+	<hr>
+	    <label for="Proof of SC/ST or OBC Certificate as prescribed in Central Government format" class="control-label">Proof Of SC/ST Or OBC Certificate As Prescribed In Central Government Format</label>
+                         	    		<a target="_blank" id="doc_community_filename" style="margin-left: 10px;" class="hidden ">  </a>
+    	        
+        <input name="file_doc_community" id="file_doc_community" class="file hidden" type="file"> 
+        <input id="doc_community" class="hidden" name="doc_community" type="text" value="">
+    &nbsp;&nbsp;
+    <button class="btn btn-xs btn-primary" type="button" onclick="event.preventDefault();  document.getElementById(&#39;file_doc_community&#39;).click();">
+		<span class="pull-right" id="updtxt_doc_community"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</span> <img src="./National Board of Examination in Rehabilitation(NBER)_files/loading.gif" id="loading_doc_community" class="hidden">
+	</button>
+		<script>
+	    $("#file_doc_community").on('change',function(){
+	    	if(this.files[0].size > 2097152){
+			  	swal({
+				  type: 'error',
+				  title: 'File Size Should be less than 2 MB',
+				  showConfirmButton: true,
+				});
+			  	this.val('').clone(true);;
+			}else{
+				event.preventDefault();
+				$('#loading_doc_community').removeClass('hidden');
+				$('#updtxt_doc_community').html('&nbsp;&nbsp;Uploading..');
+				var photo = $('#file_doc_community');
+				var token = $('input[name=_token]');
+				var formData = new FormData();
+				var fname = "doc_community_" + Math.random()+'.'+photo.val().split('.').pop();
+				formData.append('doc_community', photo[0].files[0]); 
+				formData.append('filename', fname ); 
+				formData.append('field','doc_community');
+				$.ajax({
+				    url: 'http://localhost:8000/fileupload',
+				    method: 'POST',
+				    dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+				    	'X-CSRF-TOKEN': token.val()
+					},
+				    data: formData,
+				    success: function (data) {
+				    },
+				    error: function (data) {
+				    if (data.status === 422) {
+				    } else {
+				    }
+				}
+				}).done(function(response) {
+						$('#loading_doc_community').addClass('hidden');
+						$('#updtxt_doc_community').html('<i class="fa fa-upload"></i>&nbsp;&nbsp;Change.');
+				        $('#doc_community').val(fname);
+				        $('#file_doc_community').val('');
+				        							$("#doc_community_filename").prop('href',"http://localhost:8000/files/temp/"+fname);
+							$("#doc_community_filename").html("doc_community."+fname.split('.').pop());
+							$("#doc_community_filename").removeClass('hidden');
+				        				});
+				return false;	
+			}
+		});
+	
+	</script>
+</div>
+							<div class="form-group" id="doc_disability_form">
+	<hr>
+	    <label for="Disability Certificate, if the candidate has a disability" class="control-label">Disability Certificate, If The Candidate Has A Disability</label>
+                         	    		<a target="_blank" id="doc_disability_filename" style="margin-left: 10px;" class="hidden ">  </a>
+    	        
+        <input name="file_doc_disability" id="file_doc_disability" class="file hidden" type="file"> 
+        <input id="doc_disability" class="hidden" name="doc_disability" type="text" value="">
+    &nbsp;&nbsp;
+    <button class="btn btn-xs btn-primary" type="button" onclick="event.preventDefault();  document.getElementById(&#39;file_doc_disability&#39;).click();">
+		<span class="pull-right" id="updtxt_doc_disability"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</span> <img src="./National Board of Examination in Rehabilitation(NBER)_files/loading.gif" id="loading_doc_disability" class="hidden">
+	</button>
+		<script>
+	    $("#file_doc_disability").on('change',function(){
+	    	if(this.files[0].size > 2097152){
+			  	swal({
+				  type: 'error',
+				  title: 'File Size Should be less than 2 MB',
+				  showConfirmButton: true,
+				});
+			  	this.val('').clone(true);;
+			}else{
+				event.preventDefault();
+				$('#loading_doc_disability').removeClass('hidden');
+				$('#updtxt_doc_disability').html('&nbsp;&nbsp;Uploading..');
+				var photo = $('#file_doc_disability');
+				var token = $('input[name=_token]');
+				var formData = new FormData();
+				var fname = "doc_disability_" + Math.random()+'.'+photo.val().split('.').pop();
+				formData.append('doc_disability', photo[0].files[0]); 
+				formData.append('filename', fname ); 
+				formData.append('field','doc_disability');
+				$.ajax({
+				    url: 'http://localhost:8000/fileupload',
+				    method: 'POST',
+				    dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+				    	'X-CSRF-TOKEN': token.val()
+					},
+				    data: formData,
+				    success: function (data) {
+				    },
+				    error: function (data) {
+				    if (data.status === 422) {
+				    } else {
+				    }
+				}
+				}).done(function(response) {
+						$('#loading_doc_disability').addClass('hidden');
+						$('#updtxt_doc_disability').html('<i class="fa fa-upload"></i>&nbsp;&nbsp;Change.');
+				        $('#doc_disability').val(fname);
+				        $('#file_doc_disability').val('');
+				        							$("#doc_disability_filename").prop('href',"http://localhost:8000/files/temp/"+fname);
+							$("#doc_disability_filename").html("doc_disability."+fname.split('.').pop());
+							$("#doc_disability_filename").removeClass('hidden');
+				        				});
+				return false;	
+			}
+		});
+	
+	</script>
+</div>
+							<div class="form-group" id="doc_percentage_exception_form">
+	<hr>
+	    <label for="supporting State Norms G.O.s / Circulars for Percentage exception" class="control-label">Supporting State Norms G.O.s / Circulars For Percentage Exception</label>
+                         	    		<a target="_blank" id="doc_percentage_exception_filename" style="margin-left: 10px;" class="hidden ">  </a>
+    	        
+        <input name="file_doc_percentage_exception" id="file_doc_percentage_exception" class="file hidden" type="file"> 
+        <input id="doc_percentage_exception" class="hidden" name="doc_percentage_exception" type="text" value="">
+    &nbsp;&nbsp;
+    <button class="btn btn-xs btn-primary" type="button" onclick="event.preventDefault();  document.getElementById(&#39;file_doc_percentage_exception&#39;).click();">
+		<span class="pull-right" id="updtxt_doc_percentage_exception"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</span> <img src="./National Board of Examination in Rehabilitation(NBER)_files/loading.gif" id="loading_doc_percentage_exception" class="hidden">
+	</button>
+		<script>
+	    $("#file_doc_percentage_exception").on('change',function(){
+	    	if(this.files[0].size > 2097152){
+			  	swal({
+				  type: 'error',
+				  title: 'File Size Should be less than 2 MB',
+				  showConfirmButton: true,
+				});
+			  	this.val('').clone(true);;
+			}else{
+				event.preventDefault();
+				$('#loading_doc_percentage_exception').removeClass('hidden');
+				$('#updtxt_doc_percentage_exception').html('&nbsp;&nbsp;Uploading..');
+				var photo = $('#file_doc_percentage_exception');
+				var token = $('input[name=_token]');
+				var formData = new FormData();
+				var fname = "doc_percentage_exception_" + Math.random()+'.'+photo.val().split('.').pop();
+				formData.append('doc_percentage_exception', photo[0].files[0]); 
+				formData.append('filename', fname ); 
+				formData.append('field','doc_percentage_exception');
+				$.ajax({
+				    url: 'http://localhost:8000/fileupload',
+				    method: 'POST',
+				    dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+				    	'X-CSRF-TOKEN': token.val()
+					},
+				    data: formData,
+				    success: function (data) {
+				    },
+				    error: function (data) {
+				    if (data.status === 422) {
+				    } else {
+				    }
+				}
+				}).done(function(response) {
+						$('#loading_doc_percentage_exception').addClass('hidden');
+						$('#updtxt_doc_percentage_exception').html('<i class="fa fa-upload"></i>&nbsp;&nbsp;Change.');
+				        $('#doc_percentage_exception').val(fname);
+				        $('#file_doc_percentage_exception').val('');
+				        							$("#doc_percentage_exception_filename").prop('href',"http://localhost:8000/files/temp/"+fname);
+							$("#doc_percentage_exception_filename").html("doc_percentage_exception."+fname.split('.').pop());
+							$("#doc_percentage_exception_filename").removeClass('hidden');
+				        				});
+				return false;	
+			}
+		});
+	
+	</script>
+</div>
+							<hr>
+
+							<label>Additional Documents (If required)</label>
+
+															<div class="row" style="margin-bottom: 5px;">
+	<div id="divfilename_0" class="hidden">
+		<div class="col-md-4">
+			<input type="text" placeholder="Description" name="filedescription_0">
+		</div>
+		<div class="col-md-8">
+			<a target="_blank" id="filename_0_filename" style="margin-left: 10px;" class="hidden ">  </a>
+			<input name="file_filename_0" id="file_filename_0" class="file hidden" type="file"> 
+			<input name="filename_0" id="filename_0" type="hidden">
+			 &nbsp;&nbsp;
+		    <button class="btn btn-xs btn-primary" type="button" onclick="event.preventDefault();  document.getElementById(&#39;file_filename_0&#39;).click();">
+				<span class="pull-right" id="updtxt_filename_0"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</span> 
+				<img src="./National Board of Examination in Rehabilitation(NBER)_files/loading.gif" id="loading_filename_0" class="hidden">
+			</button>
+		</div>
+	</div>
+</div>
+<script>
+	    $("#file_filename_0").on('change',function(){
+	    	if(this.files[0].size > 2097152){
+			  	swal({
+				  type: 'error',
+				  title: 'File Size Should be less than 2 MB',
+				  showConfirmButton: true,
+				});
+			  	this.val('').clone(true);;
+			}else{
+				event.preventDefault();
+				$('#loading_filename_0').removeClass('hidden');
+				$('#updtxt_filename_0').html('&nbsp;&nbsp;Uploading..');
+				var photo = $('#file_filename_0');
+				var token = $('input[name=_token]');
+				var formData = new FormData();
+				var fname = "filename_0_" + Math.random()+'.'+photo.val().split('.').pop();
+				formData.append('filename_0', photo[0].files[0]); 
+				formData.append('filename', fname ); 
+				formData.append('field','filename_0');
+				$.ajax({
+				    url: 'http://localhost:8000/fileupload',
+				    method: 'POST',
+				    dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+				    	'X-CSRF-TOKEN': token.val()
+					},
+				    data: formData,
+				    success: function (data) {
+				    },
+				    error: function (data) {
+				    if (data.status === 422) {
+				    } else {
+				    }
+				}
+				}).done(function(response) {
+						console.log('uploaded'+fname);
+						$('#loading_filename_0').addClass('hidden');
+						$('#updtxt_filename_0').html('<i class="fa fa-upload"></i>&nbsp;&nbsp;Change.');
+				        $('#filename_0').val(fname);
+				        $('#file_filename_0').val('');
+				       	console.log( $('#filename_0').val());
+							$("#filename_0_filename").prop('href',"http://localhost:8000/files/temp/"+fname);
+							$("#filename_0_filename").html("additional_1."+fname.split('.').pop());
+							$("#filename_0_filename").removeClass('hidden');
+				       
+				});
+				return false;	
+			}
+		});
+	
+	</script>
+					 
+															<div class="row" style="margin-bottom: 5px;">
+	<div id="divfilename_1" class="hidden">
+		<div class="col-md-4">
+			<input type="text" placeholder="Description" name="filedescription_1">
+		</div>
+		<div class="col-md-8">
+			<a target="_blank" id="filename_1_filename" style="margin-left: 10px;" class="hidden ">  </a>
+			<input name="file_filename_1" id="file_filename_1" class="file hidden" type="file"> 
+			<input name="filename_1" id="filename_1" type="hidden">
+			 &nbsp;&nbsp;
+		    <button class="btn btn-xs btn-primary" type="button" onclick="event.preventDefault();  document.getElementById(&#39;file_filename_1&#39;).click();">
+				<span class="pull-right" id="updtxt_filename_1"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</span> 
+				<img src="./National Board of Examination in Rehabilitation(NBER)_files/loading.gif" id="loading_filename_1" class="hidden">
+			</button>
+		</div>
+	</div>
+</div>
+<script>
+	    $("#file_filename_1").on('change',function(){
+	    	if(this.files[0].size > 2097152){
+			  	swal({
+				  type: 'error',
+				  title: 'File Size Should be less than 2 MB',
+				  showConfirmButton: true,
+				});
+			  	this.val('').clone(true);;
+			}else{
+				event.preventDefault();
+				$('#loading_filename_1').removeClass('hidden');
+				$('#updtxt_filename_1').html('&nbsp;&nbsp;Uploading..');
+				var photo = $('#file_filename_1');
+				var token = $('input[name=_token]');
+				var formData = new FormData();
+				var fname = "filename_1_" + Math.random()+'.'+photo.val().split('.').pop();
+				formData.append('filename_1', photo[0].files[0]); 
+				formData.append('filename', fname ); 
+				formData.append('field','filename_1');
+				$.ajax({
+				    url: 'http://localhost:8000/fileupload',
+				    method: 'POST',
+				    dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+				    	'X-CSRF-TOKEN': token.val()
+					},
+				    data: formData,
+				    success: function (data) {
+				    },
+				    error: function (data) {
+				    if (data.status === 422) {
+				    } else {
+				    }
+				}
+				}).done(function(response) {
+						console.log('uploaded'+fname);
+						$('#loading_filename_1').addClass('hidden');
+						$('#updtxt_filename_1').html('<i class="fa fa-upload"></i>&nbsp;&nbsp;Change.');
+				        $('#filename_1').val(fname);
+				        $('#file_filename_1').val('');
+				       	console.log( $('#filename_1').val());
+							$("#filename_1_filename").prop('href',"http://localhost:8000/files/temp/"+fname);
+							$("#filename_1_filename").html("additional_2."+fname.split('.').pop());
+							$("#filename_1_filename").removeClass('hidden');
+				       
+				});
+				return false;	
+			}
+		});
+	
+	</script>
+					 
+															<div class="row" style="margin-bottom: 5px;">
+	<div id="divfilename_2" class="hidden">
+		<div class="col-md-4">
+			<input type="text" placeholder="Description" name="filedescription_2">
+		</div>
+		<div class="col-md-8">
+			<a target="_blank" id="filename_2_filename" style="margin-left: 10px;" class="hidden ">  </a>
+			<input name="file_filename_2" id="file_filename_2" class="file hidden" type="file"> 
+			<input name="filename_2" id="filename_2" type="hidden">
+			 &nbsp;&nbsp;
+		    <button class="btn btn-xs btn-primary" type="button" onclick="event.preventDefault();  document.getElementById(&#39;file_filename_2&#39;).click();">
+				<span class="pull-right" id="updtxt_filename_2"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</span> 
+				<img src="./National Board of Examination in Rehabilitation(NBER)_files/loading.gif" id="loading_filename_2" class="hidden">
+			</button>
+		</div>
+	</div>
+</div>
+<script>
+	    $("#file_filename_2").on('change',function(){
+	    	if(this.files[0].size > 2097152){
+			  	swal({
+				  type: 'error',
+				  title: 'File Size Should be less than 2 MB',
+				  showConfirmButton: true,
+				});
+			  	this.val('').clone(true);;
+			}else{
+				event.preventDefault();
+				$('#loading_filename_2').removeClass('hidden');
+				$('#updtxt_filename_2').html('&nbsp;&nbsp;Uploading..');
+				var photo = $('#file_filename_2');
+				var token = $('input[name=_token]');
+				var formData = new FormData();
+				var fname = "filename_2_" + Math.random()+'.'+photo.val().split('.').pop();
+				formData.append('filename_2', photo[0].files[0]); 
+				formData.append('filename', fname ); 
+				formData.append('field','filename_2');
+				$.ajax({
+				    url: 'http://localhost:8000/fileupload',
+				    method: 'POST',
+				    dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+				    	'X-CSRF-TOKEN': token.val()
+					},
+				    data: formData,
+				    success: function (data) {
+				    },
+				    error: function (data) {
+				    if (data.status === 422) {
+				    } else {
+				    }
+				}
+				}).done(function(response) {
+						console.log('uploaded'+fname);
+						$('#loading_filename_2').addClass('hidden');
+						$('#updtxt_filename_2').html('<i class="fa fa-upload"></i>&nbsp;&nbsp;Change.');
+				        $('#filename_2').val(fname);
+				        $('#file_filename_2').val('');
+				       	console.log( $('#filename_2').val());
+							$("#filename_2_filename").prop('href',"http://localhost:8000/files/temp/"+fname);
+							$("#filename_2_filename").html("additional_3."+fname.split('.').pop());
+							$("#filename_2_filename").removeClass('hidden');
+				       
+				});
+				return false;	
+			}
+		});
+	
+	</script>
+					 
+															<div class="row" style="margin-bottom: 5px;">
+	<div id="divfilename_3" class="hidden">
+		<div class="col-md-4">
+			<input type="text" placeholder="Description" name="filedescription_3">
+		</div>
+		<div class="col-md-8">
+			<a target="_blank" id="filename_3_filename" style="margin-left: 10px;" class="hidden ">  </a>
+			<input name="file_filename_3" id="file_filename_3" class="file hidden" type="file"> 
+			<input name="filename_3" id="filename_3" type="hidden">
+			 &nbsp;&nbsp;
+		    <button class="btn btn-xs btn-primary" type="button" onclick="event.preventDefault();  document.getElementById(&#39;file_filename_3&#39;).click();">
+				<span class="pull-right" id="updtxt_filename_3"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</span> 
+				<img src="./National Board of Examination in Rehabilitation(NBER)_files/loading.gif" id="loading_filename_3" class="hidden">
+			</button>
+		</div>
+	</div>
+</div>
+<script>
+	    $("#file_filename_3").on('change',function(){
+	    	if(this.files[0].size > 2097152){
+			  	swal({
+				  type: 'error',
+				  title: 'File Size Should be less than 2 MB',
+				  showConfirmButton: true,
+				});
+			  	this.val('').clone(true);;
+			}else{
+				event.preventDefault();
+				$('#loading_filename_3').removeClass('hidden');
+				$('#updtxt_filename_3').html('&nbsp;&nbsp;Uploading..');
+				var photo = $('#file_filename_3');
+				var token = $('input[name=_token]');
+				var formData = new FormData();
+				var fname = "filename_3_" + Math.random()+'.'+photo.val().split('.').pop();
+				formData.append('filename_3', photo[0].files[0]); 
+				formData.append('filename', fname ); 
+				formData.append('field','filename_3');
+				$.ajax({
+				    url: 'http://localhost:8000/fileupload',
+				    method: 'POST',
+				    dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+				    	'X-CSRF-TOKEN': token.val()
+					},
+				    data: formData,
+				    success: function (data) {
+				    },
+				    error: function (data) {
+				    if (data.status === 422) {
+				    } else {
+				    }
+				}
+				}).done(function(response) {
+						console.log('uploaded'+fname);
+						$('#loading_filename_3').addClass('hidden');
+						$('#updtxt_filename_3').html('<i class="fa fa-upload"></i>&nbsp;&nbsp;Change.');
+				        $('#filename_3').val(fname);
+				        $('#file_filename_3').val('');
+				       	console.log( $('#filename_3').val());
+							$("#filename_3_filename").prop('href',"http://localhost:8000/files/temp/"+fname);
+							$("#filename_3_filename").html("additional_4."+fname.split('.').pop());
+							$("#filename_3_filename").removeClass('hidden');
+				       
+				});
+				return false;	
+			}
+		});
+	
+	</script>
+					 
+															<div class="row" style="margin-bottom: 5px;">
+	<div id="divfilename_4" class="hidden">
+		<div class="col-md-4">
+			<input type="text" placeholder="Description" name="filedescription_4">
+		</div>
+		<div class="col-md-8">
+			<a target="_blank" id="filename_4_filename" style="margin-left: 10px;" class="hidden ">  </a>
+			<input name="file_filename_4" id="file_filename_4" class="file hidden" type="file"> 
+			<input name="filename_4" id="filename_4" type="hidden">
+			 &nbsp;&nbsp;
+		    <button class="btn btn-xs btn-primary" type="button" onclick="event.preventDefault();  document.getElementById(&#39;file_filename_4&#39;).click();">
+				<span class="pull-right" id="updtxt_filename_4"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</span> 
+				<img src="./National Board of Examination in Rehabilitation(NBER)_files/loading.gif" id="loading_filename_4" class="hidden">
+			</button>
+		</div>
+	</div>
+</div>
+<script>
+	    $("#file_filename_4").on('change',function(){
+	    	if(this.files[0].size > 2097152){
+			  	swal({
+				  type: 'error',
+				  title: 'File Size Should be less than 2 MB',
+				  showConfirmButton: true,
+				});
+			  	this.val('').clone(true);;
+			}else{
+				event.preventDefault();
+				$('#loading_filename_4').removeClass('hidden');
+				$('#updtxt_filename_4').html('&nbsp;&nbsp;Uploading..');
+				var photo = $('#file_filename_4');
+				var token = $('input[name=_token]');
+				var formData = new FormData();
+				var fname = "filename_4_" + Math.random()+'.'+photo.val().split('.').pop();
+				formData.append('filename_4', photo[0].files[0]); 
+				formData.append('filename', fname ); 
+				formData.append('field','filename_4');
+				$.ajax({
+				    url: 'http://localhost:8000/fileupload',
+				    method: 'POST',
+				    dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+				    	'X-CSRF-TOKEN': token.val()
+					},
+				    data: formData,
+				    success: function (data) {
+				    },
+				    error: function (data) {
+				    if (data.status === 422) {
+				    } else {
+				    }
+				}
+				}).done(function(response) {
+						console.log('uploaded'+fname);
+						$('#loading_filename_4').addClass('hidden');
+						$('#updtxt_filename_4').html('<i class="fa fa-upload"></i>&nbsp;&nbsp;Change.');
+				        $('#filename_4').val(fname);
+				        $('#file_filename_4').val('');
+				       	console.log( $('#filename_4').val());
+							$("#filename_4_filename").prop('href',"http://localhost:8000/files/temp/"+fname);
+							$("#filename_4_filename").html("additional_5."+fname.split('.').pop());
+							$("#filename_4_filename").removeClass('hidden');
+				       
+				});
+				return false;	
+			}
+		});
+	
+	</script>
+					 
+							
+							<div style="width:100%;margin-top: 0px;" class="pull-left">
+								<a href="javascript:addfile();" id="addlink">Add document</a>
+							</div>
+							<input type="hidden" value="0" id="filecount">
+
+							<script>
+                                function addfile(){
+                                    var c = $('#filecount').val();
+
+
+                                    $('#divfilename_'+c).removeClass('hidden');
+                                    $('#filecount').val(parseInt(c)+1);
+                                    if(c==4){
+                                        $('#addlink').addClass('hidden');
+                                    }
+
+                                }
+							</script>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12" style="background: #EEEEEE;padding:30px;">
+			<button type="submit" class="btn btn-primary pull-right">Save</button>
+		</div>
+		
+	</form>
+	
+
+	
+	<button type="button" class="btn btn-info btn-lg hidden" data-toggle="modal" data-target="#myModal" id="modalbtn">Open Modal</button>
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					Crop Image
+				</div>
+				<div class="modal-body">
+					<div class="img-container" id="imgcropbox" style="height:300px!important;">
+						<center style="height:300px!important;"><img src="./National Board of Examination in Rehabilitation(NBER)_files/pleasewait.gif" id="image" style="height:300px!important;"></center>
+					</div>
+					<input type="hidden" id="left">
+					<input type="hidden" id="top">
+					<input type="hidden" id="width">
+					<input type="hidden" id="height">
+					<input type="hidden" id="photofile">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary pull-right" onclick="onsave();">Crop</button>
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+	<div id="udidModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					Verify UDID / UDID Enrolment No
+				</div>
+				<div class="modal-body">
+					<div style="padding-bottom:10px;">
+						<small>Verify UDID/UDID Enrolment number and get candidate details</small>
+					</div>
+					<div class="form-group">
+	    <label for="UDID or UDID Enrolment No" class="control-label">UDID Or UDID Enrolment No</label>
+        <input class="form-control ver_uid" name="ver_udid" type="text" value="" maxlength="23">
+</div>
+					<div class="form-group">
+	    <label for="Date of Birth" class="control-label">Date Of Birth</label>
+        <input class="form-control" name="ver_dob" type="date" max="2010-08-01">
+</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary pull-right" onclick="verifyudid();">Verify</button>
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+		function calper(id){
+			if($('#tmarks_'+id).val()>0 && $('#omarks_'+id).val()>0 ){
+				$('#percentage_'+id).val((parseInt($('#omarks_'+id).val()) / parseInt($('#tmarks_'+id).val()))*100);
+			}
+		}
+var Verhoeff = {
+        "d": [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
+            [2, 3, 4, 0, 1, 7, 8, 9, 5, 6],
+            [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
+            [4, 0, 1, 2, 3, 9, 5, 6, 7, 8],
+            [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],
+            [6, 5, 9, 8, 7, 1, 0, 4, 3, 2],
+            [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],
+            [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
+            [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]],
+        "p": [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
+            [5, 8, 0, 3, 7, 9, 6, 1, 4, 2],
+            [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],
+            [9, 4, 5, 3, 1, 2, 6, 8, 7, 0],
+            [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],
+            [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],
+            [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]],
+        "j": [0, 4, 3, 2, 1, 5, 6, 7, 8, 9],
+        "check": function (str) {
+            var c = 0;
+            str.replace(/\D+/g, "").split("").reverse().join("").replace(/[\d]/g, function (u, i) {
+                c = Verhoeff.d[c][Verhoeff.p[i % 8][parseInt(u, 10)]];
+            });
+            return c;
+
+        },
+        "get": function (str) {
+
+            var c = 0;
+            str.replace(/\D+/g, "").split("").reverse().join("").replace(/[\d]/g, function (u, i) {
+                c = Verhoeff.d[c][Verhoeff.p[(i + 1) % 8][parseInt(u, 10)]];
+            });
+            return Verhoeff.j[c];
+        }
+    };
+
+    String.prototype.verhoeffCheck = (function () {
+        var d = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
+            [2, 3, 4, 0, 1, 7, 8, 9, 5, 6],
+            [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
+            [4, 0, 1, 2, 3, 9, 5, 6, 7, 8],
+            [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],
+            [6, 5, 9, 8, 7, 1, 0, 4, 3, 2],
+            [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],
+            [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
+            [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]];
+        var p = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
+            [5, 8, 0, 3, 7, 9, 6, 1, 4, 2],
+            [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],
+            [9, 4, 5, 3, 1, 2, 6, 8, 7, 0],
+            [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],
+            [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],
+            [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]];
+
+        return function () {
+            var c = 0;
+            this.replace(/\D+/g, "").split("").reverse().join("").replace(/[\d]/g, function (u, i) {
+                c = d[c][p[i % 8][parseInt(u, 10)]];
+            });
+            return (c === 0);
+        };
+    })();
+		function verifyudid(){
+			console.log('start');
+			if($('input[name="ver_dob"]').val()=='')
+			{
+				swal({
+						type: 'error',
+						title: 'Please enter valid Date of Birth',
+						showConfirmButton: false,
+						timer: 1500
+					});
+			}
+			if($('input[name="ver_udid"]').val().length != 18 && $('input[name="ver_udid"]').val().length != 23){
+				swal({
+						type: 'error',
+						title: 'Please enter valid UDID',
+						showConfirmButton: false,
+						timer: 1500
+					});
+			}
+			var formData = new FormData();
+		//	formData.append('udid','07070000023051473049');
+	//		formData.append('dob','1955-01-01');
+			/*$.ajax({
+				url: 'https://delhigw.napix.gov.in/nic/depwd/udid-login/depwd-udidapi',
+				method: 'POST',
+				dataType: 'json',
+				contentType: false,
+				processData: false,
+				data: formData,
+				headers: {
+					'X-Client-Id': '6c2a46576b620c5699cf6ab99e737a60',
+					'accept': 'application/json',
+					'clientsecret': '0b0019de595d0e91ee9524391de7ae2c',
+					'content-type': 'application/json',
+				},
+				success: function (data) {
+					swal({
+						type: 'success',
+						title: 'UDID Verified',
+						showConfirmButton: false,
+						timer: 1500
+					});
+					$('#udidModal').modal('hide');
+					console.log(data);
+				},
+				error: function (data) {
+					swal({
+						type: 'error',
+						title: 'Could not verify UDID, Please check the number and try again.',
+						showConfirmButton: false,
+						timer: 1500
+					});
+					console.log(data);
+				}
+			}); */
+		/*	formData.append('udid','07070000023051473049');
+			formData.append('dob','1955-01-01');
+
+			$.ajax({
+				url: 'https://www.swavlambancard.gov.in/Api/getApplicationInformation',
+				method: 'POST',
+				dataType: 'json',
+				contentType: false,
+				processData: false,
+				data: formData,
+				success: function (data) {
+					swal({
+						type: 'success',
+						title: 'UDID Verified',
+						showConfirmButton: false,
+						timer: 1500
+					});
+					$('#udidModal').modal('hide');
+					console.log(data);
+				},
+				error: function (data) {
+					swal({
+						type: 'error',
+						title: 'Could not verify UDID, Please check the number and try again.',
+						showConfirmButton: false,
+						timer: 1500
+					});
+					console.log(data);
+				}
+			}); */
+			
+		}
+		function showhideudid(){
+			if($('input[type=radio][name=isdisabled]:checked').val()==0){
+				$('.showhideudid').addClass('hidden');
+			}else{
+				$('.showhideudid').removeClass('hidden');
+			}
+		}
+
+        $(document).ready(function() {
+			if($("#saa").is(':checked')){
+					$('.per-add').addClass('hidden');
+				}else{
+					$('.per-add').removeClass('hidden');
+				}
+			$('input[type=radio][name=isdisabled]').change(function() {
+				showhideudid();
+				if (this.value == 1) {
+					$('#udidModal').modal('show');
+				}
+				else{
+					$('#udidModal').modal('hide');
+				}
+			});
+			$('#saa').on('change',function(){
+				if($(this).is(':checked')){
+					$('.per-add').addClass('hidden');
+				}else{
+					$('.per-add').removeClass('hidden');
+				}
+			});
+			$('.num').keypress(function (e) {    
+    
+				var charCode = (e.which) ? e.which : event.keyCode    
+
+				if (String.fromCharCode(charCode).match(/[^0-9]/g))    
+
+					return false;                        
+
+			});    
+			$('#form').on('submit',function(e){
+				var uid = $('#aadhar').val().replace(/\s/g, "");
+				if (Verhoeff['check'](uid) === 0) {
+				} else {
+					alert('Please enter valid Aadhar Card number');
+					return false;
+				}
+			});
+			$('#isdisabled').on('change',function(){
+				if($(this).val()==1){
+					$('.disability').removeClass('hidden');
+				}
+			});
+			$('#state_id').on('change',function(){
+				var formData = new FormData();
+				var token = $('input[name=_token]');
+				formData.append('state_id', $('#state_id').val());
+				console.log($('#state_id').val());
+				$.ajax({
+					url: 'http://localhost:8000/getdistricts',
+					method: 'POST',
+					dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+						'X-CSRF-TOKEN': token.val()
+					},
+					data: formData,
+					success: function (data) {
+						console.log(data);
+						if(data =='nodata' || data.length == 0 ){
+							swal({
+								type: 'warning',
+								title: 'No data found',
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}else{
+							$('#districtsdiv').removeClass('hidden');
+							$('#district_id').html('');
+							$('#subdistrict_id').html('');
+							$('#subdistrictsdiv').addClass('hidden');
+							$('#villagediv').addClass('hidden');
+							$('#village_id').html('');
+							$('#district_id').append('<option value="0" selected disabled>Choose district</option>');
+							data.forEach(function (value,key) {
+								$('#district_id').append('<option value="'+value.id+'">'+ value.districtName  +'</option>');
+							});
+						}
+					},
+					error: function (data) {
+						swal({
+								type: 'warning',
+								title: 'No data found',
+								showConfirmButton: false,
+								timer: 1500
+							});
+					}
+				});
+			});
+			$('#district_id').on('change',function(){
+				var formData = new FormData();
+				var token = $('input[name=_token]');
+				formData.append('district_id', $('#district_id').val());
+				$.ajax({
+					url: 'http://localhost:8000/getsubdistricts',
+					method: 'POST',
+					dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+						'X-CSRF-TOKEN': token.val()
+					},
+					data: formData,
+					success: function (data) {
+						console.log(data);
+						if(data =='nodata' || data.length == 0 ){
+							swal({
+								type: 'warning',
+								title: 'No data found',
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}else{
+							$('#subdistrictsdiv').removeClass('hidden');
+							$('#subdistrict_id').html('');
+							$('#villagediv').removeClass('hidden');
+							$('#village_id').html('');
+							$('#subdistrict_id').append('<option value="0" selected disabled>Choose Sub district</option>');
+							$('#village_id').append('<option value="0" selected disabled>Choose Sub district</option>');
+							if(data['subdistricts'].length == 0){
+								$('#subdistrict_id').attr('disabled',true);
+							}else{
+								$('#subdistrict_id').attr('disabled',false);
+								data['subdistricts'].forEach(function (value,key) {
+									$('#subdistrict_id').append('<option value="'+value.id+'">'+ value.Sub_district_Name  +'</option>');
+								});
+							}
+							if(data['blocks'].length == 0){
+								$('#village_id').attr('disabled',true);
+							}else{
+								$('#village_id').attr('disabled',false);
+								data['blocks'].forEach(function (value,key) {
+									$('#village_id').append('<option value="'+value.id+'">'+ value.Block_Name  +'</option>');
+								});
+							}
+							
+						}
+					},
+					error: function (data) {
+						swal({
+								type: 'warning',
+								title: 'No data found',
+								showConfirmButton: false,
+								timer: 1500
+							});
+					}
+				});
+			});
+
+			$('#pstate_id').on('change',function(){
+				var formData = new FormData();
+				var token = $('input[name=_token]');
+				formData.append('state_id', $('#pstate_id').val());
+				$.ajax({
+					url: 'http://localhost:8000/getdistricts',
+					method: 'POST',
+					dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+						'X-CSRF-TOKEN': token.val()
+					},
+					data: formData,
+					success: function (data) {
+						console.log(data);
+						if(data =='nodata' || data.length == 0 ){
+							swal({
+								type: 'warning',
+								title: 'No data found',
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}else{
+							$('#pdistrictsdiv').removeClass('hidden');
+							$('#pdistrict_id').html('');
+							$('#psubdistrict_id').html('');
+							$('#psubdistrictsdiv').addClass('hidden');
+							$('#pvillagediv').addClass('hidden');
+							$('#pvillage_id').html('');
+							$('#pdistrict_id').append('<option value="0" selected disabled>Choose district</option>');
+							data.forEach(function (value,key) {
+								$('#pdistrict_id').append('<option value="'+value.id+'">'+ value.districtName  +'</option>');
+							});
+						}
+					},
+					error: function (data) {
+						swal({
+								type: 'warning',
+								title: 'No data found',
+								showConfirmButton: false,
+								timer: 1500
+							});
+					}
+				});
+			});
+			$('#pdistrict_id').on('change',function(){
+				var formData = new FormData();
+				var token = $('input[name=_token]');
+				formData.append('district_id', $('#pdistrict_id').val());
+				$.ajax({
+					url: 'http://localhost:8000/getsubdistricts',
+					method: 'POST',
+					dataType: 'json',
+					contentType: false,
+					processData: false,
+					headers: {
+						'X-CSRF-TOKEN': token.val()
+					},
+					data: formData,
+					success: function (data) {
+						console.log(data);
+						if(data =='nodata' || data.length == 0 ){
+							swal({
+								type: 'warning',
+								title: 'No data found',
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}else{
+							$('#psubdistrictsdiv').removeClass('hidden');
+							$('#psubdistrict_id').html('');
+							$('#pvillagediv').removeClass('hidden');
+							$('#pvillage_id').html('');
+							$('#psubdistrict_id').append('<option value="0" selected disabled>Choose Sub district</option>');
+							$('#pvillage_id').append('<option value="0" selected disabled>Choose Sub district</option>');
+							if(data['subdistricts'].length == 0){
+								$('#psubdistrict_id').attr('disabled',true);
+							}else{
+								$('#psubdistrict_id').attr('disabled',false);
+								data['subdistricts'].forEach(function (value,key) {
+									$('#psubdistrict_id').append('<option value="'+value.id+'">'+ value.Sub_district_Name  +'</option>');
+								});
+							}
+							if(data['blocks'].length == 0){
+								$('#pvillage_id').attr('disabled',true);
+							}else{
+								$('#pvillage_id').attr('disabled',false);
+								data['blocks'].forEach(function (value,key) {
+									$('#pvillage_id').append('<option value="'+value.id+'">'+ value.Block_Name  +'</option>');
+								});
+							}
+							
+						}
+					},
+					error: function (data) {
+						swal({
+								type: 'warning',
+								title: 'No data found',
+								showConfirmButton: false,
+								timer: 1500
+							});
+					}
+				});
+			});
+
+	
+
+			
+            $(".ls").chosen();
+            $('#doc_percentage_exception_form').addClass('hidden');
+            if($('#community_id').val()<2){
+                $('#doc_community_form').addClass('hidden');
+            }
+            if($('#disability_id').val()<2){
+                $('#doc_disability_form').addClass('hidden');
+            }
+            if($('#pex').prop('checked')==false){
+                $('#doc_percentage_exception_form').addClass('hidden');
+            }
+            //alert($('#pex').prop('checked'));
+        });
+
+        $('#disability_id').on('change',function(){
+            if($(this).val()>1){
+                $('#doc_disability_form').removeClass('hidden');
+            }else{
+                $('#doc_disability_form').addClass('hidden');
+            }
+        });
+
+        $('#disability_id').on('change', function () {
+            if($(this).val() == 5){
+                $('#disability_name').attr('disabled', false);
+            }
+            else {
+                $('#disability_name').attr('disabled', true);
+            }
+        })
+        $('#community_id').on('change',function(){
+            if($(this).val()>1){
+                $('#doc_community_form').removeClass('hidden');
+            }else{
+                $('#doc_community_form').addClass('hidden');
+            }
+        });
+        $('#pex').on('change',function(){
+            if($(this).prop('checked')==true){
+                $('#doc_percentage_exception_form').removeClass('hidden');
+            }else{
+                $('#doc_percentage_exception_form').addClass('hidden');
+            }
+        });
+        $('.file').on('change', function() {
+
+
+
+        });
+        function onsave(){
+            //$('#myModal').modal('hide');
+            var formData = new FormData();
+            var token = $('input[name=_token]');
+
+            formData.append('height', $('#height').val());
+            formData.append('width',  $('#width').val());
+            formData.append('left', $('#left').val());
+            formData.append('top', $('#top').val());
+            formData.append('filename',$('#photo').val())
+            $.ajax({
+                url: 'http://localhost:8000/cropimage',
+                method: 'POST',
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                headers: {
+                    'X-CSRF-TOKEN': token.val()
+                },
+                data: formData,
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (data) {
+
+                    if (data.status === 422) {
+
+                        console.log(data);
+
+                    } else {
+                        console.log('uploaded the cordinates');
+                        $('#myModal').modal('hide');
+                        $("#photo_filename").prop('src',"http://localhost:8000/files/temp/cropped/"+$('#photo').val());
+                        //	$("#photo_filename").html("photo."+$('#photo').val().split('.').pop());
+                        $("#photo_filename").removeClass('hidden');
+
+
+                    }
+                }
+
+            });
+
+        }
+
+		
+
+	</script>
+	<script src="./National Board of Examination in Rehabilitation(NBER)_files/cropper.js"></script>
+
+
+</body></html>

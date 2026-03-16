@@ -24,7 +24,7 @@ class StoreScheduleRequest extends Request
     public function rules()
     {
         $exam_id = \App\Exam::where('scheduled_exam',1)->first()->id;
-        $exam_id = 27;
+        $exam_id = 28;
         return [
             'exam_id' => 'required|numeric|max:'.$exam_id.'|min:'.$exam_id,
             'examdate' => 'required',

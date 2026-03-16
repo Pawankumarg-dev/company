@@ -310,6 +310,7 @@ class ReevaluationController extends Controller
             $reevaluationapplications = $reevaluationapplications->where('status_id',1);
         }
         $reevaluationapplications = $reevaluationapplications->orderBy('application_number')->paginate(100);
+      
         return view('nber.reevaluations.showstudentlist', compact('exam', 'reevaluationapplications','evaluationcenters','evaluation_center','show'));
     }
     public function showApplications($id){

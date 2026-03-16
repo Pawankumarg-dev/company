@@ -194,8 +194,8 @@ WHERE
 
 ) t
 GROUP BY t.candidate_id;");
-            
-            $orders  = \App\Order::where('id' , $applicant->order_id)->get();
+           // dd($applicant->order->order_number);
+            // $orders  = \App\Order::where('id' , $applicant->order_id)->get();
             return view('student.exam.application',compact(
             'subjects',
             'exam',
@@ -204,8 +204,7 @@ GROUP BY t.candidate_id;");
             'exception',
             'reason',
             'Candidate',
-            'internalpass',
-            'orders'
+            'internalpass'
         ));
             }
         }else{

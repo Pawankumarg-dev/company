@@ -6,7 +6,7 @@
 
 
     class PaginationService{
-
+        
         private $perPage; 
         private $request;
 

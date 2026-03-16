@@ -51,6 +51,7 @@ class ExamcenterController extends Controller
                     });
                 })->export('xlsx');
             }
+            //dd($examcenters);
             return view('nber.exam.examcenter.index',
                 compact(
                     'examcenters',
@@ -133,6 +134,7 @@ class ExamcenterController extends Controller
             
             if($r->type == 'institute'){
                 $examcenter = Examcenter::create($r->all());
+    
             }
             if($r->type == 'district'){
                 $district = $r->district_id;

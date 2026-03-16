@@ -2,43 +2,42 @@
 @section('content')
     <div class="container">
         <style>
-        @media print {
+            @media print {
 
-            body * {
-                visibility: hidden;
-            }
+                body * {
+                    visibility: hidden;
+                }
 
-            #paymentSection, #paymentSection * {
-                visibility: visible;
-            }
+                #paymentSection,
+                #paymentSection * {
+                    visibility: visible;
+                }
 
-            #paymentSection {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-            }
+                #paymentSection {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                }
 
-            .print-container {
-                width: 100%;
-                margin: auto;
-                padding: 20px;
-                /* border: 1px solid #000; */
-                font-family: Arial, sans-serif;
-            }
+                .print-container {
+                    width: 100%;
+                    margin: auto;
+                    padding: 20px;
+                    /* border: 1px solid #000; */
+                    font-family: Arial, sans-serif;
+                }
 
-            .print-container table{
-                width:100%;
-                border-collapse: collapse;
-            }
+                .print-container table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
 
-            .print-container td{
-                padding:10px;
-                border:1px solid #000;
+                .print-container td {
+                    padding: 10px;
+                    border: 1px solid #000;
+                }
             }
-        }
-            
-        
         </style>
 
         <div class="row">
@@ -171,87 +170,88 @@
                             <input type="hidden" id="noofsubjects" value="{{ $subjects->count() }}">
                             @foreach ($subjects as $s)
                                 @if ($s->application_status == 1)
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <span class="badge bg-primary rounded-pill pull-left " style="margin-right:5px;">
-                                        {{ $slno }} <?php $slno++; ?></span>
-                                    <small><span class="badge bg-transparent rounded-pill pull-left text-small"
-                                            style="margin-right:5px;"> Term: {{ $s->term }} </span></small>
-                                    <small><span class="badge bg-transparent rounded-pill pull-left text-small"
-                                            style="margin-right:5px;"> {{ $s->type }} </span></small>
-                                    @if ($s->application_status == 1)
-                                        <small><span class="badge bg-primary rounded-pill pull-left text-small"
-                                                style="margin-right:5px;"> Applied </span></small>
-                                    @else
-                                        <?php $notapplied += 1; ?>
-                                    @endif
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <span class="badge bg-primary rounded-pill pull-left " style="margin-right:5px;">
+                                            {{ $slno }} <?php $slno++; ?></span>
+                                        <small><span class="badge bg-transparent rounded-pill pull-left text-small"
+                                                style="margin-right:5px;"> Term: {{ $s->term }} </span></small>
+                                        <small><span class="badge bg-transparent rounded-pill pull-left text-small"
+                                                style="margin-right:5px;"> {{ $s->type }} </span></small>
+                                        @if ($s->application_status == 1)
+                                            <small><span class="badge bg-primary rounded-pill pull-left text-small"
+                                                    style="margin-right:5px;"> Applied </span></small>
+                                        @else
+                                            <?php $notapplied += 1; ?>
+                                        @endif
 
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">
-                                            <b>{{ $s->scode }}</b>
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">
+                                                <b>{{ $s->scode }}</b>
 
-                                            <?php
-                                            $internalpassArray = [];
-                                            
-                                            if (!empty($internalpass) && !empty($internalpass[0]->internalpass)) {
-                                                $internalpassArray = explode(',', $internalpass[0]->internalpass);
-                                            }
-                                            ?>
-                                            @if (in_array($s->id, $internalpassArray))
-                                                <input type="checkbox"  onchange="confirmUncheck(this)"
-                                                    class="pull-right checkbox" id="{{ $s->id }}"
-                                                    name="subject_{{ $s->id }}" checked
-                                                    @if ($s->application_status == 1) disabled @endif>
+                                                <?php
+                                                $internalpassArray = [];
                                                 
-                                            @else
-                                                <small><span class="btn btn-danger pull-right" style="margin-right:5px;">Not
-                                                        Eligible For This Subject <br> <Strong>Reason:</Strong> Internal
-                                                        Fail or Attendance is not 75% </span></small>
-                                            @endif
-
-                                         {{-- payment details --}}
-                                            <input type="hidden" id="amount_{{ $s->id }}"
-                                                value="<?php if ($s->is_external == 1) {
-                                                   echo 100 ;
-                                                } else {
-                                                    echo '0';
-                                                } ?>">
-
-        
-                                        </div>
-                                            
-                                        <div>
-                                            <div style="margin-left:30px;">
-                                                @if (is_null($s->elective_subjects))
-                                                    {{ $s->sname }}
-                                                    <input type="hidden" id="elective_{{ $s->id }}" value="0">
+                                                if (!empty($internalpass) && !empty($internalpass[0]->internalpass)) {
+                                                    $internalpassArray = explode(',', $internalpass[0]->internalpass);
+                                                }
+                                                ?>
+                                                @if (in_array($s->id, $internalpassArray))
+                                                    <input type="checkbox" onchange="confirmUncheck(this)"
+                                                        class="pull-right checkbox" id="{{ $s->id }}"
+                                                        name="subject_{{ $s->id }}" checked
+                                                        @if ($s->application_status == 1) disabled @endif>
                                                 @else
-                                                    <span style="color:red;">Select your alternative subject</span> <br />
-                                                    <input type="hidden" id="elective_{{ $s->id }}" value="1">
-                                                    <table>
-                                                        @foreach (json_decode('[' . $s->elective_subjects . ']') as $es)
-                                                            <tr>
-                                                                <td>
-                                                                    {{ $es->sname }} (<small>{{ $es->scode }}
-                                                                    </small>)
-                                                                </td>
-                                                                <td style="vertical-align: top!important;">
-                                                                    @if (in_array($s->id, $internalpassArray))
-                                                                        <input type="radio" style="margin-left:5px;"
-                                                                            value="{{ $es->id }}"
-                                                                            class="radio pull-right"
-                                                                            name="radio_{{ $s->id }}"
-                                                                            @if ($s->application_status == 1) disabled @endif
-                                                                            @if ($es->id == $s->alternativesubject_id) checked @endif>
-                                                                    @endif
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </table>
+                                                    <small><span class="btn btn-danger pull-right"
+                                                            style="margin-right:5px;">Not
+                                                            Eligible For This Subject <br> <Strong>Reason:</Strong> Internal
+                                                            Fail or Attendance is not 75% </span></small>
                                                 @endif
+
+                                                {{-- payment details --}}
+                                                <input type="hidden" id="amount_{{ $s->id }}"
+                                                    value="<?php if ($s->is_external == 1) {
+                                                        echo 100;
+                                                    } else {
+                                                        echo '0';
+                                                    } ?>">
+                                            </div>
+
+                                            <div>
+                                                <div style="margin-left:30px;">
+                                                    @if (is_null($s->elective_subjects))
+                                                        {{ $s->sname }}
+                                                        <input type="hidden" id="elective_{{ $s->id }}"
+                                                            value="0">
+                                                    @else
+                                                        <span style="color:red;">Select your alternative subject</span>
+                                                        <br />
+                                                        <input type="hidden" id="elective_{{ $s->id }}"
+                                                            value="1">
+                                                        <table>
+                                                            @foreach (json_decode('[' . $s->elective_subjects . ']') as $es)
+                                                                <tr>
+                                                                    <td>
+                                                                        {{ $es->sname }} (<small>{{ $es->scode }}
+                                                                        </small>)
+                                                                    </td>
+                                                                    <td style="vertical-align: top!important;">
+                                                                        @if (in_array($s->id, $internalpassArray))
+                                                                            <input type="radio" style="margin-left:5px;"
+                                                                                value="{{ $es->id }}"
+                                                                                class="radio pull-right"
+                                                                                name="radio_{{ $s->id }}"
+                                                                                @if ($s->application_status == 1) disabled @endif
+                                                                                @if ($es->id == $s->alternativesubject_id) checked @endif>
+                                                                        @endif
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </table>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
                                 @endif
                             @endforeach
                         </ol>
@@ -268,101 +268,105 @@
                                 @endforeach
                             </select>
                         </div>
-                                <div id="amount" class="alert alert-warning pull-left" style="margin-bottom:0; width:50%; ">
-                                </div>
-                            
-                            @if (!is_null($applicant))
-                           @if ($applicant->payment_status == 1 )
-                            
-                            <button type="button" onclick="printPayment()" class="btn btn-success" style="margin:15px;">
-                                Print Payment Details
-                            </button>
+                        <div id="amount" class="alert alert-warning pull-left" style="margin-bottom:0; width:50%; ">
+                        </div>
 
-                            <div id="paymentSection" style="display:none;">
-                                <div class="print-container">
-                                    <table width="100%"  border="1" cellpadding="10" cellspacing="5">
-                                        <td colspan="2" style="text-align:center;">
-                                            <h2>Exam Fee Receipt</h2>
-                                        </td>
-                                        <tr>
-                                            <td ><strong>Enrolment No:</strong></td>
-                                            <td>{{$Candidate->enrolmentno ?? '-'}}</td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td><strong>Batch Year :</strong></td>
-                                             <td>{{$Candidate->approvedprogramme->academicyear->year ?? '-'}} , ({{$Candidate->approvedprogramme->programme->abbreviation}} )</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Name:</strong></td>
-                                            <td>{{$Candidate->name ?? '-'}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Email:</strong></td>
-                                            <td>{{$Candidate->email ?? '-'}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Payment Form:</strong></td>
-                                            <td>{{ $exam->examtype->name ?? '-'}} , {{ $exam->name ?? '-'}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td ><strong>Subject:</strong></td>
-                                            <td style="padding:0;">
+                        @if (!is_null($applicant))
+                            @if ($applicant->payment_status == 1)
+                                <button type="button" onclick="printPayment()" class="btn btn-success"
+                                    style="margin:15px;">
+                                    Print Payment Details
+                                </button>
 
-                                            <table border="1" width="100%" cellpadding="5" cellspacing="3">
-                                                <thead >
-                                                    <tr>
-                                                        <th  style="text-align: center;">Sr No.</th>
-                                                        <th  style="text-align: center;" >Name</th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    @foreach($subjects as $key => $subject)
-                                                    <tr>
-                                                        <td>{{ $key+1 }}</td>
-                                                        <td>
-                                                            Term: {{ $subject->term ?? '-' }} |
-                                                            <small>{{ $subject->type ?? '-' }}</small> |
-                                                            <strong>{{ $subject->scode ?? '-' }}</strong> |
-                                                            {{ $subject->sname ?? '-' }}
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-
-                                         </td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Order Number:</strong></td>
-                                            <td>{{$orders->first()->order_number ?? '-'}} ({{$orders->first()->bank_referencenumber ?? '-'}})</td>
-                                        </tr>
-                                        {{-- <tr>
-                                            <td><strong>Payment Referencenumber NO.:</strong></td>
-                                            <td>{{$orders->first()->bank_referencenumber ?? '-'}}</td>
-                                        </tr> --}}
-                                        <tr>
-                                            <td><strong>Payment Date:</strong></td>
-                                           <td>
-                                            {{ !empty($orders->first()->payment_date) ? date('d M Y ', strtotime($orders->first()->payment_date)) : '-' }}
+                                <div id="paymentSection" style="display:none;">
+                                    <div class="print-container">
+                                        <table width="100%" border="1" cellpadding="10" cellspacing="5">
+                                            <td colspan="2" style="text-align:center;">
+                                                <h2>Exam Fee Receipt</h2>
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Total Amount:</strong></td>
-                                            <td>₹ {{$applicant->amount ?? '-'}}</td>
-                                        </tr>
-                                       
+                                            <tr>
+                                                <td><strong>Enrolment No:</strong></td>
+                                                <td>{{ $Candidate->enrolmentno ?? '-' }}</td>
+                                            </tr>
 
-                                        <tr>
-                                            <td><strong>Status:</strong></td>
-                                            <td style="color:green;"><strong>{{$applicant->payment_status == 1 ? 'Success' : '-'}}</strong></td>
-                                        </tr>
-                                    </table>
+                                            <tr>
+                                                <td><strong>Batch Year :</strong></td>
+                                                <td>{{ $Candidate->approvedprogramme->academicyear->year ?? '-' }} ,
+                                                    ({{ $Candidate->approvedprogramme->programme->abbreviation }} )</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Name:</strong></td>
+                                                <td>{{ $Candidate->name ?? '-' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Email:</strong></td>
+                                                <td>{{ $Candidate->email ?? '-' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Payment Form:</strong></td>
+                                                <td>{{ $exam->examtype->name ?? '-' }} , {{ $exam->name ?? '-' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Subject:</strong></td>
+                                                <td style="padding:0px;">
+
+                                                    <table border="1" width="100%" cellpadding="5" cellspacing="3">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="text-align: center;">Sr No.</th>
+                                                                <th style="text-align: center;">Name</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            @foreach ($subjects as $key => $subject)
+                                                                <tr>
+                                                                    <td>{{ $key + 1 }}</td>
+                                                                    <td>
+                                                                        Term: {{ $subject->term ?? '-' }} |
+                                                                        <small>{{ $subject->type ?? '-' }}</small> |
+                                                                        <strong>{{ $subject->scode ?? '-' }}</strong> |
+                                                                        {{ $subject->sname ?? '-' }}
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Order Number:</strong></td>
+                                                <td>{{ $applicant->order->order_number ?? '-' }}
+                                                    ({{ $applicant->order->ccavenue_referencenumber ?? '-' }})</td>
+                                            </tr>
+                                                {{-- <tr>
+                                                <td><strong>Payment Referencenumber NO.:</strong></td>
+                                                <td>{{$orders->first()->bank_referencenumber ?? '-'}}</td>
+                                                </tr> --}}
+                                            <tr>
+                                                <td><strong>Payment Date:</strong></td>
+                                                <td>
+                                                    {{ $applicant->order->payment_date ? date('d M Y ', strtotime($applicant->order->payment_date)) : '-' }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Total Amount:</strong></td>
+                                                <td>₹ {{ $applicant->amount ?? '-' }}</td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td><strong>Status:</strong></td>
+                                                <td style="color:green;">
+                                                    <strong>{{ $applicant->payment_status == 1 ? 'Success' : '-' }}</strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
                             @endif
-                         @endif
+                        @endif
 
                         <input type="hidden" id="finalamount" name="finalamount">
                         <div id="message" class="alert alert-danger">
@@ -447,7 +451,7 @@
             } else {
                 $('#notallSubjects').removeClass('hidden');
                 $('#notallSubjects').text('You have choosen ' + selectedsubjects + ' out of ' + noofsubjects +
-                ' subjects.');
+                    ' subjects.');
             }
 
             if (countofalternative == checkedradio) {
@@ -553,5 +557,5 @@
             section.style.display = "none";
         }
     </script>
-     
+
 @endsection

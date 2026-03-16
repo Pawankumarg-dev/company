@@ -43,7 +43,7 @@ class TimetableController extends Controller
         $programme = null;
         $countofcandidates  = null;
         if($r->has('programme_id')){
-            $timetables = $this->timetableService->getTimetable($r->programme_id,$this->exam_id)->get();
+            $timetables = $this->timetableService->getTimetable($r->programme_id,$this->exam_id);
             $programme = \App\Programme::find($r->programme_id);
            // $countofcandidates = $this->scheduleService->getCandidatesCount($r->programme_id);
            $countofcandidates = 0;
@@ -89,6 +89,7 @@ class TimetableController extends Controller
     }
 
     public function store(StoreTimetableRequest $r){
+        
         Examtimetable::create($r->all());
         return redirect('nber/exam/timetable?programme_id='.$r->programme_id);
     }

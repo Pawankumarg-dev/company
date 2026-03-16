@@ -43,7 +43,7 @@
                                 {{$r->name}}
                             </td>
                             <td>
-                                {{$r->course_name}}
+                                {{$r->abbreviation}}
                             </td>
                             <td class="center-text">
                                 {{$r->numberofterms}}

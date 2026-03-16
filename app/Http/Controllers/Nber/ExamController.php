@@ -465,6 +465,7 @@ class ExamController extends Controller
                     ')
                     ->groupBy('i.id','ap.id')
                     ->get();
+           // dd($result);
         return view('nber.exams.result',compact('result'));
     }
 

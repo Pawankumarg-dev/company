@@ -40,6 +40,7 @@ class ApplicantController extends Controller
     }
     public function index(Request $r)
     {
+       
         $nber_id = $this->helperService->getNberID();
         if($r->has('ttiwiseexcel')){
 	        ini_set('memory_limit','-1');

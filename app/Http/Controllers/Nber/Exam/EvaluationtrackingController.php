@@ -25,6 +25,7 @@ class EvaluationtrackingController extends Controller
 
     public function index(){
 	ini_set('memory_limit','-1');
+	ini_set('max_execution_time', 300); 
         // $exampapers = \App\Allexampaper::whereHas('programme',function($q){
         //     $q->where('nber_id',$this->nber_id);
         // })->get();
@@ -63,7 +64,7 @@ WHERE
 
 
     $exampapers  = DB::select($sql);
-
+	
  return view('nber.exam.evaluationtracking.index',compact(
             'exampapers'
         ));

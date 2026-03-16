@@ -23,6 +23,7 @@ class SupplementaryController extends Controller
     }
     public function index(Request $r){
       $type = $r->has('type') ? $r->type : 'all';
+      
       $forms =  (new SupplementaryService($this->nber_id,$type));
       $results = $forms->getCandidates();
       $title = $forms->getTitle();

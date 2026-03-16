@@ -76,7 +76,7 @@ class VerifyAttendanceNInternalsController extends Controller
 public function showInternalMarksheet(Request $request)
 {
 
-
+//dd( $this->exam_id);
 
     $query = DB::table('internalmarksheets')
     ->join('approvedprogrammes', 'internalmarksheets.approvedprogramme_id', '=', 'approvedprogrammes.id')
@@ -188,7 +188,6 @@ $exam_id =$this->exam_id;
 $subjects = DB::table('approvedprogrammes')
     ->join('programmes', 'approvedprogrammes.programme_id', '=', 'programmes.id')
     ->join('subjects', 'programmes.id', '=', 'subjects.programme_id')
-    
     ->where('approvedprogrammes.id', $request->approvedprogramme_id)
     ->where('subjects.syear', $term)
     

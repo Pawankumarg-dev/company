@@ -39,6 +39,7 @@ class AnswerbookletController extends Controller
         $this->page =  (new Answerbooklet($type));
     }
     public function index(Request $r){
+      
       if(Auth::user()->id != 88387){
         return "";
       }
