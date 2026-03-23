@@ -358,5 +358,158 @@ public function attendance_index(Request $r)
             }
 
 
+            public function practical(Request $request){
+                    $exam_id = $this->exam_id;
+                    $nber_id = Auth::user()->nberstaffs->first()->nber_id;
+                    $course = $request->course;
+                    $uploaded = $request->uploaded;
+                    $query = "
+                        SELECT
+                            SUM(
+                                CASE 
+                                    WHEN (allapplications.attendance_ex =2 or allapplications.attendance_ex is NULL)
+                                        AND  (allapplications.mark_ex IS NULL or allapplications.mark_ex ='')
+                                    THEN 1 
+                                    ELSE 0 
+                                END
+                            ) AS pending_count,
+                            SUM(
+                                CASE 
+                                    WHEN ( allapplications.attendance_ex = 1)
+                                        and allapplications.mark_ex IS NOT NULL and allapplications.mark_ex !=''
+                                    THEN 1 
+                                    ELSE 0 
+                                END
+                            ) AS uploaded,                         
+                            programmes.id as programme_id,
+                            programmes.abbreviation,
+                            institutes.name AS institute_name,
+                            count(allapplications.candidate_id) AS practical_count
+                        FROM allapplicants
+                        INNER JOIN allapplications
+                            ON allapplicants.id = allapplications.applicant_id
+                        INNER JOIN subjects
+                            ON allapplications.subject_id = subjects.id
+                        INNER JOIN candidates
+                            ON allapplications.candidate_id = candidates.id
+                        INNER JOIN approvedprogrammes
+                            ON approvedprogrammes.id = candidates.approvedprogramme_id
+                        INNER JOIN institutes
+                            ON approvedprogrammes.institute_id = institutes.id
+                        INNER JOIN programmes
+                            ON programmes.id = approvedprogrammes.programme_id
+                        WHERE subjects.is_external = 1 
+                        AND allapplications.exam_id = ? 
+                        AND programmes.nber_id = ?
+                    ";
+                   // dd($query);
+
+                    $params = [$exam_id, $nber_id];
+
+                    if (!empty($course)) {
+                        $query .= " AND programmes.id = ?";
+                        $params[] = $course;
+                    }
+
+                    if ($uploaded !== null && $uploaded !== '') {
+                        if ($uploaded == 1) {
+                            $query .= " 
+                                AND (allapplications.attendance_ex = 1 
+                                AND allapplications.mark_ex IS NOT NULL 
+                                AND allapplications.mark_ex != '')
+                            ";
+                        } else {
+                            $query .= " 
+                                AND ((allapplications.attendance_ex = 2 OR allapplications.attendance_ex IS NULL)
+                                AND (allapplications.mark_ex IS NULL OR allapplications.mark_ex = ''))
+                            ";
+                        }
+                    }
+
+                    $query .= " GROUP BY programmes.abbreviation, institutes.id 
+                                ORDER BY programmes.abbreviation ASC";
+
+                    $practicals = DB::select($query, $params);
+                   // dd($practicals);
+                    return view('notices.practical', compact('practicals'));
+                }
+
+
+                public function exam_timetable(Request $request)
+                    {
+                        $exam_id = $this->exam_id;
+                        $nber_id = Auth::user()->nberstaffs->first()->nber_id;
+
+                        $attendance = $request->attendence;
+                        $date = $request->date;
+                        $query = "
+                            SELECT
+                                examschedules.description AS exam_name,
+                                examschedules.examdate,
+                                examschedules.id as exam_id,
+                                CONCAT(examschedules.starttime, ' - ', examschedules.endtime) AS exam_time,
+                                programmes.abbreviation AS course_name,
+                                programmes.name AS subject_name,
+                                COUNT(allexamstudents.candidate_id) AS candidate_count,
+                                SUM(
+                                    CASE 
+                                        WHEN allexamstudents.attendance = 1 
+                                            AND allexamstudents.answerbooklet_no IS NOT NULL 
+                                        THEN 1 ELSE 0 
+                                    END
+                                ) AS attendance_upload,
+                                SUM(
+                                    CASE 
+                                        WHEN allexamstudents.attendance = 1 
+                                            AND allexamstudents.answerbooklet_no IS NULL 
+                                        THEN 1 ELSE 0 
+                                    END
+                                ) AS attendance_pending
+                            FROM allexamstudents
+                            INNER JOIN examschedules 
+                                ON allexamstudents.examschedule_id = examschedules.id
+                            INNER JOIN programmes 
+                                ON allexamstudents.programme_id = programmes.id
+                            INNER JOIN subjects 
+                                ON allexamstudents.subject_id = subjects.id
+                            WHERE 
+                                allexamstudents.exam_id = $exam_id 
+                                AND programmes.nber_id = $nber_id
+                        ";
+
+                        if (!empty($date)) {
+                            $query .= " AND examschedules.examdate = '$date'";
+                        }
+
+                        if ($attendance !== null && $attendance !== '') {
+                            if ($attendance == 1) {
+                                $query .= " 
+                                    AND allexamstudents.attendance = 1 
+                                    AND allexamstudents.answerbooklet_no IS NOT NULL
+                                ";
+                            } elseif ($attendance == 0) {
+                                $query .= " 
+                                    AND allexamstudents.attendance = 1 
+                                    AND allexamstudents.answerbooklet_no IS NULL
+                                ";
+                            }
+                        }
+
+                        $query .= "
+                            GROUP BY 
+                                examschedules.id,
+                                examschedules.description,
+                                programmes.id,
+                                programmes.abbreviation,
+                                programmes.name
+                            ORDER BY examschedules.description ASC
+                        ";
+
+                        $examTimeTables = DB::select($query);
+
+                        return view('notices.exam_timetable', compact('examTimeTables'));
+                    }
+
+
 
 }

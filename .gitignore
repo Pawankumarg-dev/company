@@ -12,9 +12,12 @@ bootstrap/cache
 /bootstrap/cache
 bootstrap/cache
 /bootstrap/cache
+public/.htaccess
 publish.sh
 node_modules
 _ide_helper.php
+/public/files
+/public
   .env.bkp
         Untitled-1
         app/Services/Result/.GenerateMarksheetService.php.swp
@@ -28,6 +31,7 @@ _ide_helper.php
         lgdir.txt
         migrations/
         package-lock.json
+        public/
         r.txt
         rl.txt
         rlist.txt

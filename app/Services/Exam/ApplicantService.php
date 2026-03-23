@@ -215,6 +215,7 @@ class ApplicantService
     }
     
     public function getApplicant($id){
+        //dd($this->model::toSql());
         $this->applicant = $this->model::find($id);
         return $this->applicant;
     }
@@ -249,10 +250,10 @@ class ApplicantService
         // if(is_null($institute->state_id) && $this->exam_id != 25){
         //     return null;
         // }
-        if($this->exam_id == 27 ){
-            $exam_center = \App\Examcenter::where('exam_id',27)->where('institute_id',$institute->id)->first();
+        if($this->exam_id == 28 ){
+            $exam_center = \App\Examcenter::where('exam_id',28)->where('institute_id',$institute->id)->first();
             if($institute->id == 1057 && $district_id != 83){
-                $exam_center = \App\Examcenter::where('exam_id',27)->whereHas('externalexamcenter',function($q) use($district_id){
+                $exam_center = \App\Examcenter::where('exam_id',28)->whereHas('externalexamcenter',function($q) use($district_id){
                     $q->where('district',$district_id);
                 })->where('institute_id',$institute->id)->first();
             }

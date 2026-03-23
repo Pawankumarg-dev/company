@@ -1428,6 +1428,8 @@ Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->
      Route::get('/nber/dashboard', 'Nber\DashboardController@index');
      //route
     Route::get('/nber/nber-dashboard','Nber\Verify\VerifyAttendanceNInternalsController@nber_dashboard');
+    Route::get('/nber/practical','Nber\Verify\VerifyAttendanceNInternalsController@practical');
+    Route::get('/nber/exam_timetable','Nber\Verify\VerifyAttendanceNInternalsController@exam_timetable');
 	 Route::post('/cropimageadmin','Nber\CandidateController@crop');
 	 Route::get('/programmeapplications', 'Nber\ApprovedprogrammeController@index');
 	 Route::get('/programme/{status_id}/{id}','Nber\ApprovedprogrammeController@changestatus');

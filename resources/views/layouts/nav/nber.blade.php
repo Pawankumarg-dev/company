@@ -225,7 +225,8 @@
     @if(Auth::user()->id==88387)
 
                                 <li><a href="{{ url('/nber/index') }}"> Notice </a></li>
-                                 <li><a href="{{ url('/nber/nber-dashboard') }}">Nber Dashboard</a></li>   
+                                 <li><a href="{{ url('/nber/nber-dashboard') }}">Nber Dashboard</a></li>
+                                 <li><a href="{{ url('/nber/practical') }}"> Practical</a></li>   
     @endif
 
                                 

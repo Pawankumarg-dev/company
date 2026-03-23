@@ -119,7 +119,7 @@
                 <table border="1" cellpadding="2" cellspacing="0" width="100%" class="h8-text border-table" style="margin-top:15px;">
                     <tr>
                         <td class="h7-text blue-text" colspan="5" style="border-left:1px solid #aaa;border-top:1px solid #aaa;">
-                            <span class="h7-text bold-text bt" style="font-weight: 500;"><b>HALL TICKET  - JUNE 2025</b></span>
+                            <span class="h7-text bold-text bt" style="font-weight: 500;"><b>HALL TICKET  - {{$exam->name}}</b></span>
                             <span class="h7-text bold-text bt" style="font-weight: 500;float: right;"><b>HALL TICKET NUMBER - {{ $applicant->hallticket_no }}</b></span>
                         </td>
                     </tr>
@@ -171,6 +171,7 @@
                     <tr>
                         <td class="left-text blue-text" width="18%">Exam Center Code
                         </td>
+                       
                         <td class="left-text blue-text bold-text" width="25%" colspan="2" >
                             @if(!is_null($exam_center) && !is_null($exam_center->externalexamcenter))
                                 {{$exam_center->externalexamcenter->code}}
@@ -219,7 +220,7 @@
                     ?>
                     <?php
                         $applicant->applications->sortBy('subject.sortorder');
-                        $applications = \App\Allapplication::where('candidate_id',$applicant->candidate_id)->where('exam_id',27)->get();
+                        $applications = \App\Allapplication::where('candidate_id',$applicant->candidate_id)->where('exam_id',28)->get();
                     ?>
                     @foreach($applications->sortBy('subject.sortorder') as $application)
                         @php 
@@ -241,7 +242,7 @@
                             $table = \App\Examtimetable::where('subject_id',$subject->id)->where('exam_id',$exam->id); 
                         ?>
                         
-                        @if($subject->subjecttype_id==1 && $show == 1 && $application->mark_as_deleted != 1)
+                        @if($subject->subjecttype_id==1 && $show == 1 )
                         <tr class="signaturetd">
                             <td class="center-text blue-text">{{ $sno }}</td>
                             <td class="center-text blue-text bold-text">
@@ -382,13 +383,13 @@
                                         </div>
                                     </td>
             
-                                    <td width="50%"  valign="bottom" colspan="2">
+                                    {{-- <td width="50%"  valign="bottom" colspan="2">
                                         <div class="center-text bold-text blue-text" >
                                             <img src="{{url('images')}}/{{$applicant->candidate->approvedprogramme->programme->nber->signature}}" style="height:40px;" alt="">
                                             <br />
                                             I/c  NBER - {{$applicant->candidate->approvedprogramme->programme->nber->name_code}}
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             </table>
                         </td>

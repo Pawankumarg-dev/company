@@ -124,7 +124,6 @@
                                             $hallticket= \App\Hallticket::where('exam_id',27)->where('candidate_id',$applicant->candidate_id)->first();
                                         ?>
                                                                                     @if(!is_null($hallticket))
-
                                             @if($hallticket->first_year > 0)
                                                 <a target="_blank" href="{{url('institute/exam/applicants/')}}/{{$applicant->id}}?downloadht=yes&term=1&practical=yes"  class="btn btn-xs btn-primary ">First Year Hall Ticket (Practical)</a>
                                             @endif

@@ -120,10 +120,6 @@ WHERE
 
     }
 
-
-
-
-
     public function update($id,Request $request){
         //return "Closed";
             $subject_id = $request->subject_id;
