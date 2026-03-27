@@ -18,16 +18,21 @@ class AwardlisttemplateController extends Controller
         $this->middleware(['role:faculty']);
         $this->helperService = $help;
     }
-    public function store(Request $r){
-        $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
 
+    public function store(Request $r){
+    
+       // $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
+        $practicalexaminer_id = 7467;
+       // dd($practicalexaminer_id);
         // if($practicalexaminer_id != 1894){
         //     return redirect('/logoff');
         // }
         //$practicalexaminer  = \App\Practicalexaminer::find($practicalexaminer_id);
         $practicalexaminer  = \App\Faculty::find($practicalexaminer_id);
+       // dd($practicalexaminer);
         //$date = \Carbon\Carbon::now()->toDateString();
         $date = Session::get('date');
+      
         $downloadTime = \Carbon\Carbon::now()->toDateTimeString();
         $term = $r->term;
         $templates = \App\Awardlisttemplate::where('faculty_id',$practicalexaminer_id)
@@ -37,6 +42,7 @@ class AwardlisttemplateController extends Controller
                     ->where('approvedprogramme_id',$r->approvedprogramme_id)
                     ->where('term',$term)
                     ->get();
+        //dd($templates);
         foreach($templates as $t){
             $t->subjects()->detach();
             $t->delete();
@@ -51,8 +57,7 @@ class AwardlisttemplateController extends Controller
             'term' => $term,
             'downloaded_at' => $downloadTime
         ]);
-        
-        
+      //  dd($template); 
         $approvedprogramme = \App\Approvedprogramme::find($r->approvedprogramme_id);
        // $practicalexam  = \App\Practicalexam::find($r->practicalexam_id);
         $subjects = \App\Subject::where('syear',$term)
@@ -90,7 +95,6 @@ class AwardlisttemplateController extends Controller
         ));  
     }
     public function show($id,Request $r){
-  
         $subject_id = $r->subject_id;
         $template = \App\Awardlisttemplate::find($id);
         $ap = \App\Approvedprogramme::find($template->approvedprogramme_id);

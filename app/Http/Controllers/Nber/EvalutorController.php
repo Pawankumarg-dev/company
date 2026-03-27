@@ -279,16 +279,11 @@ public function http_response($url, $status = null, $wait = 3)
 
 
 public function course(){
-
-
         $exam_id = Session::get('exam_id');
         $nber_id = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
         $programmes = \App\Programme::where('nber_id',$nber_id)->where('active_status',1)->get();
         $year =Session::get('academicyear_id');
         $evaluationcenters = \App\Evaluationcenter::where('exam_id',$exam_id)->get();
-
-
-
         return view('nber.evaluations.programmes', compact('programmes','year','evaluationcenters'));
 
 }
@@ -330,7 +325,7 @@ public function verify_marks(Request $r){
         //     $application->verified = 1;
         //     $application->save();
         // }
-                        Session::put('messages','Verified marks updated successfully.');
+    Session::put('messages','Verified marks updated successfully.');
 
 return redirect()->route('marks-verification-course');
 
@@ -339,11 +334,6 @@ return redirect()->route('marks-verification-course');
 
 public function update_marks(Request $request)
 {
-  
-
-
-
-
 
     $nber_id = \App\Nberstaff::where('user_id', Auth::id())->value('nber_id');
         $access = Session::get('admin');

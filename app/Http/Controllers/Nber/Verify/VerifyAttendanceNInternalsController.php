@@ -75,7 +75,6 @@ class VerifyAttendanceNInternalsController extends Controller
 
 public function showInternalMarksheet(Request $request)
 {
-
 //dd( $this->exam_id);
 
     $query = DB::table('internalmarksheets')
@@ -435,81 +434,171 @@ public function attendance_index(Request $r)
                 }
 
 
-                public function exam_timetable(Request $request)
-                    {
-                        $exam_id = $this->exam_id;
-                        $nber_id = Auth::user()->nberstaffs->first()->nber_id;
+public function exam_timetable(Request $request)
+    {
+        $exam_id = $this->exam_id;
+        
+        $nber_id = Auth::user()->nberstaffs->first()->nber_id;
 
-                        $attendance = $request->attendence;
-                        $date = $request->date;
-                        $query = "
-                            SELECT
-                                examschedules.description AS exam_name,
-                                examschedules.examdate,
-                                examschedules.id as exam_id,
-                                CONCAT(examschedules.starttime, ' - ', examschedules.endtime) AS exam_time,
-                                programmes.abbreviation AS course_name,
-                                programmes.name AS subject_name,
-                                COUNT(allexamstudents.candidate_id) AS candidate_count,
-                                SUM(
-                                    CASE 
-                                        WHEN allexamstudents.attendance = 1 
-                                            AND allexamstudents.answerbooklet_no IS NOT NULL 
-                                        THEN 1 ELSE 0 
-                                    END
-                                ) AS attendance_upload,
-                                SUM(
-                                    CASE 
-                                        WHEN allexamstudents.attendance = 1 
-                                            AND allexamstudents.answerbooklet_no IS NULL 
-                                        THEN 1 ELSE 0 
-                                    END
-                                ) AS attendance_pending
-                            FROM allexamstudents
-                            INNER JOIN examschedules 
-                                ON allexamstudents.examschedule_id = examschedules.id
-                            INNER JOIN programmes 
-                                ON allexamstudents.programme_id = programmes.id
-                            INNER JOIN subjects 
-                                ON allexamstudents.subject_id = subjects.id
-                            WHERE 
-                                allexamstudents.exam_id = $exam_id 
-                                AND programmes.nber_id = $nber_id
-                        ";
+        $attendance = $request->attendence;
+        $date = $request->date;
+        $query = "
+            SELECT
+                examschedules.description AS exam_name,
+                examschedules.examdate,
+                examschedules.id as exam_id,
+                CONCAT(examschedules.starttime, ' - ', examschedules.endtime) AS exam_time,
+                programmes.abbreviation AS course_name,
+                programmes.name AS subject_name,
+                COUNT(allexamstudents.candidate_id) AS candidate_count,
+                SUM(
+                    CASE 
+                        WHEN allexamstudents.attendance = 1 
+                            AND allexamstudents.answerbooklet_no IS NOT NULL 
+                        THEN 1 ELSE 0 
+                    END
+                ) AS attendance_upload,
+                SUM(
+                    CASE 
+                        WHEN allexamstudents.attendance = 1 
+                            AND allexamstudents.answerbooklet_no IS NULL 
+                        THEN 1 ELSE 0 
+                    END
+                ) AS attendance_pending
+            FROM allexamstudents
+            INNER JOIN examschedules 
+                ON allexamstudents.examschedule_id = examschedules.id
+            INNER JOIN programmes 
+                ON allexamstudents.programme_id = programmes.id
+            INNER JOIN subjects 
+                ON allexamstudents.subject_id = subjects.id
+            WHERE 
+                allexamstudents.exam_id = $exam_id 
+                AND programmes.nber_id = $nber_id
+        ";
 
-                        if (!empty($date)) {
-                            $query .= " AND examschedules.examdate = '$date'";
-                        }
+        if (!empty($date)) {
+            $query .= " AND examschedules.examdate = '$date'";
+        }
 
-                        if ($attendance !== null && $attendance !== '') {
-                            if ($attendance == 1) {
-                                $query .= " 
-                                    AND allexamstudents.attendance = 1 
-                                    AND allexamstudents.answerbooklet_no IS NOT NULL
-                                ";
-                            } elseif ($attendance == 0) {
-                                $query .= " 
-                                    AND allexamstudents.attendance = 1 
-                                    AND allexamstudents.answerbooklet_no IS NULL
-                                ";
-                            }
-                        }
+        if ($attendance !== null && $attendance !== '') {
+            if ($attendance == 1) {
+                $query .= " 
+                    AND allexamstudents.attendance = 1 
+                    AND allexamstudents.answerbooklet_no IS NOT NULL
+                ";
+            } elseif ($attendance == 0) {
+                $query .= " 
+                    AND allexamstudents.attendance = 1 
+                    AND allexamstudents.answerbooklet_no IS NULL
+                ";
+            }
+        }
 
-                        $query .= "
-                            GROUP BY 
-                                examschedules.id,
-                                examschedules.description,
-                                programmes.id,
-                                programmes.abbreviation,
-                                programmes.name
-                            ORDER BY examschedules.description ASC
-                        ";
+        $query .= "
+            GROUP BY 
+                examschedules.id,
+                examschedules.description,
+                programmes.id,
+                programmes.abbreviation,
+                programmes.name
+            ORDER BY examschedules.description ASC
+        ";
 
-                        $examTimeTables = DB::select($query);
+        $examTimeTables = DB::select($query);
+        // dd( $examTimeTables);
+        return view('notices.exam_timetable', compact('examTimeTables'));
+    }
 
-                        return view('notices.exam_timetable', compact('examTimeTables'));
-                    }
 
+    public function external_detail(Request $request)
+            {
+                $nber_id = Auth::user()->nberstaffs->first()->nber_id;
+                $exam_id = $this->exam_id;
+                $institute = $request->institute;
 
+                $query = "
+                    SELECT
+                        institutes.rci_code, 
+                        institutes.name, 
+                        institutes.id AS institute_id, 
+                        academicyears.year,
+                         candidates.id as  candidate_id ,
+                        programmes.abbreviation, 
+                        programmes.numberofterms, 
+                        awardlisttemplates.id AS awardlisttemplate_id, 
+                        awardlisttemplates.approvedprogramme_id, 
+                        awardlisttemplates.term,
+                        GROUP_CONCAT(
+                            awardlisttemplates.term
+                            ORDER BY awardlisttemplates.term 
+                            SEPARATOR ','
+                        ) AS term_subjecttypes
+                    FROM awardlisttemplates
+                    JOIN approvedprogrammes
+                        ON awardlisttemplates.approvedprogramme_id = approvedprogrammes.id
+                    JOIN institutes
+                        ON approvedprogrammes.institute_id = institutes.id
+                    JOIN academicyears
+                        ON approvedprogrammes.academicyear_id = academicyears.id
+                    JOIN programmes
+                        ON approvedprogrammes.programme_id = programmes.id
+                    INNER JOIN candidates
+                        ON approvedprogrammes.id = candidates.approvedprogramme_id
+                    INNER JOIN allapplications
+                        ON candidates.id = allapplications.candidate_id
+                    WHERE programmes.nber_id = ? 
+                    AND allapplications.exam_id = ?
+                ";
+
+                $params = [$nber_id, $exam_id];
+
+                if (!empty($institute)) {
+                    $query .= " AND institutes.id = ?";
+                    $params[] = $institute;
+                }
+
+                $query .= "
+                    GROUP BY approvedprogrammes.id
+                    ORDER BY institutes.rci_code ASC
+                ";
+
+                $external = DB::select($query, $params);
+
+                return view('notices.external_detail', compact('external'));
+            }
+
+    public function external_mark(Request $request ){
+        $candidate_id = $request->candidate_id ;
+       $extenal_marks = DB::select("SELECT
+            allapplications.candidate_id ,
+                candidates.enrolmentno, 
+                candidates.`name`, 
+                subjects.sname, 
+                subjects.scode, 
+                subjects.pabbrvn, 
+                allapplications.mark_ex, 
+            allapplications.exam_id,
+                allapplications.mark_in, 
+                allapplications.attendance_ex, 
+                allapplications.attendance_in, 
+                allapplications.mark_ex_re, 
+                allapplications.grace, 
+                allapplications.payment_status, 
+                allapplications.nber_id
+            FROM
+                allapplications
+                INNER JOIN
+                candidates
+                ON 
+                    allapplications.candidate_id = candidates.id
+                INNER JOIN
+                subjects
+                ON 
+                    allapplications.subject_id = subjects.id
+            where allapplications.nber_id =1 and allapplications.exam_id = 27
+            and  allapplications.candidate_id = 87629") ;
+         dd($extenal_marks);   
+    }
 
 }

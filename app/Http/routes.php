@@ -189,9 +189,10 @@ Route::get('/password/resettootp','PublicController@resettootp');
 
 Route::post('/changepassword', 'PublicController@changePassword');
 
-
+//new routes
 Route::get('/notices-circulars', 'PublicController@notices_circulars');
 Route::get('/exam-timetable', 'PublicController@exam_timetable');
+
 
 
 
@@ -1426,10 +1427,12 @@ Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->
      Route::get('/nber/settings','Nber\DashboardController@settings');
      Route::get('/nber/settings/update','Nber\DashboardController@updatesettings');
      Route::get('/nber/dashboard', 'Nber\DashboardController@index');
-     //route
+     //newroute
     Route::get('/nber/nber-dashboard','Nber\Verify\VerifyAttendanceNInternalsController@nber_dashboard');
     Route::get('/nber/practical','Nber\Verify\VerifyAttendanceNInternalsController@practical');
     Route::get('/nber/exam_timetable','Nber\Verify\VerifyAttendanceNInternalsController@exam_timetable');
+    Route::get('/nber/external_detail','Nber\Verify\VerifyAttendanceNInternalsController@external_detail');
+    Route::get('/nber/external_mark','Nber\Verify\VerifyAttendanceNInternalsController@external_mark');
 	 Route::post('/cropimageadmin','Nber\CandidateController@crop');
 	 Route::get('/programmeapplications', 'Nber\ApprovedprogrammeController@index');
 	 Route::get('/programme/{status_id}/{id}','Nber\ApprovedprogrammeController@changestatus');
@@ -1831,7 +1834,7 @@ Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->
     
 });
 Route::group(array('middleware' => ['role:clo']), function ()
-{   
+{  
     Route::get('clo',function(){return view('clo.welcome');});
 
     Route::resource('/clo/tabill','Clo\TABillController');

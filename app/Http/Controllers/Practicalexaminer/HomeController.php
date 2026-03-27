@@ -22,16 +22,19 @@ class HomeController extends Controller
         $this->helperService = $help;
     }
     public function index(Request $r){
-        $examstartdate = '2025-05-20';
-        $examenddate = '2025-06-15';
+      
+        $examstartdate = '2026-03-01';
+        $examenddate = '2026-03-30';
        // $examstartdate =  \Carbon\Carbon::now()->subDay()->subDay()->subDay()->toDateString();
-        $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
-        
+        // $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
+         $practicalexaminer_id = 8058;
+        //dd($practicalexaminer_id);
         $practicalexams = \App\Practicalexam::where('exam_id',27)->where('faculty_id',$practicalexaminer_id)->orderBy('institute_id')->get();
+       
         foreach($practicalexams as $pe){
-
+            
             $examstartdate= $pe->start_date;
-
+           
 
             // if($pe->course_id == 1){
             //     $examstartdate = '2025-05-20';
@@ -49,13 +52,15 @@ class HomeController extends Controller
             $fromdate = \Carbon\Carbon::parse($examstartdate)->toDateString();
             for ($i = 0; $i < 60; $i++) {
                 $fromdate = \Carbon\Carbon::parse($fromdate)->addDay()->toDateString();
+               // dd($fromdate);
                 $date =  $r->date == $fromdate ? $r->date : $date;
             }
+           
         }
         // $job = (new \App\Jobs\GeneratePEPassword())->onQueue('gpepwd');
         // $this->dispatch($job);
-
         Session::put('date',$date);
+       // dd(Session::get('date'));
         
         return view('practicalexaminer.home.index',compact(
             'practicalexams','practicalexaminer_id','examstartdate'
@@ -130,9 +135,6 @@ WHERE
                 $q->where('approvedprogramme_id',$template->approvedprogramme_id);
             })->where('subject_id',$subject_id)->where('exam_id',27)
             ->get();
-
-            
-            
             foreach($applications as $application){
                 $key = 'mark_'.$application->id;
                 $absent = 'absent_'.$application->id;

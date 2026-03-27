@@ -80,9 +80,16 @@
                             <td>{{ $examTimeTable->exam_time ?? '' }}</td>
                             <td>{{ $examTimeTable->course_name ?? '' }}</td>
                             <td>{{ $examTimeTable->subject_name ?? '' }}</td>
+
                             <td>{{ $examTimeTable->candidate_count ?? 0 }}</td>
                             <td>{{ $examTimeTable->attendance_upload ?? 0 }}</td>
-                            <td>{{ $examTimeTable->attendance_pending ?? 0 }}</td>
+                            <td class="{{ $examTimeTable->attendance_pending > 0 ? 'text-danger':'' }}">
+                                @if ($examTimeTable->attendance_pending > 0)
+                                   <strong>{{ $examTimeTable->attendance_pending ?? 0 }}</strong> 
+                                @else 
+                               {{ $examTimeTable->attendance_pending ?? 0 }}
+                               @endif
+                            </td>
                         </tr>
                     @endforeach
                 @else
