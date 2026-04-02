@@ -99,7 +99,6 @@ class ApplicantController extends Controller
         //$applicants= $this->ApplicantService->getApplicants(100);
         //$programme_ids = $this->ApplicantService->getProgrammeIDs();
         //return 'B4';
-        $nber_id = $this->helperService->getNberID();
         if($r->has('programme_id')){
             $programme_id = $r->programme_id;
             $applicants = \App\Allapplicant::where('exam_id',$this->exam_id)->whereHas('candidate',function($q) use($nber_id, $programme_id) {
@@ -143,14 +142,14 @@ class ApplicantController extends Controller
         //return $applicants->paginate(100);
 
         $programmes = $this->helperService->getProgrammes();
-        
+       // dd($programmes);
         //$programme_ids = $this->helperService->getProgrammes(1)->pluck('id')->toArray();
 
         $institute_ids = \App\Approvedprogramme::whereHas('programme', function($q) use ($nber_id){
             $q->where('nber_id',$nber_id);
             $q->where('academicyear_id','>',8);
         })->pluck('institute_id')->unique()->toArray();
-
+        //dd($institute_ids );
         
         $institutes = \App\Institute::whereIn('id',$institute_ids)->get();
 
@@ -159,6 +158,7 @@ class ApplicantController extends Controller
         $exam = $this->exam;
         $nber = $this->helperService->getNberShortCode();
         $case = $this->case;
+        
         //return $case;
         return view('nber.exam.applicants.index',compact(
             'applicants',
@@ -176,14 +176,18 @@ class ApplicantController extends Controller
 
     public function show($id,Request $r)
     {
-        $applicant = $this->ApplicantService->getApplicant($id);
-
+    
+       // $applicant = $this->ApplicantService->getApplicant($id);
+        $applicant = \App\Allapplicant::find($id);
+        //dd($applicant->candidate->approvedprogramme->institute->id);
+      //  dd($applicant);
         $exam_center = null;
 
         //$exam_center = $this->ApplicantService->getExamcenter($applicant->institute,2);
         $exam = $this->exam;
 
-        $institute = \App\Institute::find($applicant->institute_id);
+        $institute = \App\Institute::find($applicant->candidate->approvedprogramme->institute->id);
+       
         if($applicant->candidate->approvedprogramme->transferred_to > 0){
             $institute = \App\Institute::find($applicant->candidate->approvedprogramme->transferred_to);
         }
@@ -200,10 +204,10 @@ class ApplicantController extends Controller
                 Session::flash('error','Not Generated');
                 return back();
             }
-            if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
-                Session::flash('error','Photo not found');
-                return back();
-            }
+            // if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
+            //     Session::flash('error','Photo not found');
+            //     return back();
+            // }
             $ht = \App\Practicalhallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',27)->first();
           //  $ht->downloaded += 2;
            // $ht->save();
@@ -257,14 +261,14 @@ class ApplicantController extends Controller
             //     Session::flash('error','Not Generated');
             //     return back();
             // }
-            if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
-                Session::flash('error','Photo not found');
-                return back();
-            }
-            if(!file_exists(public_path().'/files/enrolment/signature/'.$applicant->candidate->signature) || is_null($applicant->candidate->signature) || $applicant->candidate->signature == ''){
-                Session::flash('error','Signature not found');
-                return back();
-            }
+            // if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
+            //     Session::flash('error','Photo not found');
+            //     return back();
+            // }
+            // if(!file_exists(public_path().'/files/enrolment/signature/'.$applicant->candidate->signature) || is_null($applicant->candidate->signature) || $applicant->candidate->signature == ''){
+            //     Session::flash('error','Signature not found');
+            //     return back();
+            // }
             
                 $ht = \App\Hallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',27)->first();
               // $ht->downloaded += 2;
@@ -272,9 +276,10 @@ class ApplicantController extends Controller
             
             
             $district_id = $applicant->candidate->district_id;
+          
             $exam_center = $this->ApplicantService->getExamcenter($applicant->institute,2,$district_id);
             $exam = $this->exam;
-    
+           // dd( $exam_center);
             return view('common.exam.hallticket_new',compact(
                 'applicant',
                 'exam_center',

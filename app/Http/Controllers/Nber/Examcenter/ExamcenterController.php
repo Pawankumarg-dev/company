@@ -47,14 +47,14 @@ class ExamcenterController extends Controller
     }
 
     public function create(){
-        return 'Closed';
+       // return 'Closed';
         $lgstates = \App\Lgstate::all();
         $districts = \App\District::all();
         return view('nber.examcenter.create',compact('lgstates','districts'));
     }
 
     public function edit($id){
-        return 'Closed';
+        //return 'Closed';
 
         if(Auth::user()->id == 88387){
             $districts = \App\District::all();
@@ -66,7 +66,8 @@ class ExamcenterController extends Controller
     }
 
     public function store(Request $r){
-        return 'Closed';
+       
+       // return 'Closed';
 
         $examcenter = Externalexamcenter::create($r->except('username','password'));
         $user = \App\User::where('username',$r->username)->first();
@@ -92,7 +93,7 @@ class ExamcenterController extends Controller
     }
 
     public function update($id,Request $r){
-        return 'Closed';
+      //  return 'Closed';
 
         $examcenter = Externalexamcenter::find($id);
         $examcenter->update($r->except('username','password'));
@@ -118,7 +119,7 @@ class ExamcenterController extends Controller
         Session::flash('messages','Updated');
         return redirect('/nber/excenter/') ;
         
-        
+
         return view('nber.examcenter.show',compact('examcenter'));
     }
 

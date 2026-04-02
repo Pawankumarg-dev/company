@@ -32,6 +32,7 @@ class ExamcenterController extends Controller
            
             $show = $r->has('show') ? $r->show : 'all';
             $examcenters = Examcenter::where('exam_id',$this->exam_id);
+            //dd($examcenters);
             if($show=='ec'){
                 $examcenters = $examcenters->groupBy('externalexamcenter_id');
             }

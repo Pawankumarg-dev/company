@@ -10,6 +10,7 @@ use App\Services\Common\Downloadable;
 use Session;
 use DB;
 use Auth;
+use Svg\Tag\Group;
 
 class VerifyAttendanceNInternalsController extends Controller
 {
@@ -523,7 +524,7 @@ public function exam_timetable(Request $request)
                         institutes.name, 
                         institutes.id AS institute_id, 
                         academicyears.year,
-                         candidates.id as  candidate_id ,
+                        GROUP_CONCAT(Distinct candidates.id SEPARATOR ',') as candidate_id,
                         programmes.abbreviation, 
                         programmes.numberofterms, 
                         awardlisttemplates.id AS awardlisttemplate_id, 
@@ -547,7 +548,9 @@ public function exam_timetable(Request $request)
                         ON approvedprogrammes.id = candidates.approvedprogramme_id
                     INNER JOIN allapplications
                         ON candidates.id = allapplications.candidate_id
-                    WHERE programmes.nber_id = ? 
+                    WHERE
+                    allapplications.attendance_ex =1  AND
+                    programmes.nber_id = ? 
                     AND allapplications.exam_id = ?
                 ";
 
@@ -564,41 +567,147 @@ public function exam_timetable(Request $request)
                 ";
 
                 $external = DB::select($query, $params);
-
+               // dd( $external);
                 return view('notices.external_detail', compact('external'));
             }
 
-    public function external_mark(Request $request ){
-        $candidate_id = $request->candidate_id ;
-       $extenal_marks = DB::select("SELECT
-            allapplications.candidate_id ,
-                candidates.enrolmentno, 
-                candidates.`name`, 
-                subjects.sname, 
-                subjects.scode, 
-                subjects.pabbrvn, 
-                allapplications.mark_ex, 
-            allapplications.exam_id,
-                allapplications.mark_in, 
-                allapplications.attendance_ex, 
-                allapplications.attendance_in, 
-                allapplications.mark_ex_re, 
-                allapplications.grace, 
-                allapplications.payment_status, 
-                allapplications.nber_id
-            FROM
-                allapplications
-                INNER JOIN
-                candidates
-                ON 
-                    allapplications.candidate_id = candidates.id
-                INNER JOIN
-                subjects
-                ON 
-                    allapplications.subject_id = subjects.id
-            where allapplications.nber_id =1 and allapplications.exam_id = 27
-            and  allapplications.candidate_id = 87629") ;
-         dd($extenal_marks);   
+    public function external_student(Request $request){
+        $nber_id = Auth::user()->nberstaffs->first()->nber_id;
+        $exam_id = $this->exam_id;
+        $candidate_ids = $request->candidate_id;
+        //dd($candidate_ids);
+        $external_marks = DB::table('allapplications')
+            ->join('candidates', 'allapplications.candidate_id', '=', 'candidates.id')
+            ->join('subjects', 'allapplications.subject_id', '=', 'subjects.id')
+            ->where('allapplications.nber_id', $nber_id)
+            ->where('allapplications.exam_id', $exam_id)
+            ->whereIn('allapplications.candidate_id', $candidate_ids)
+            ->where('subjects.is_external', 1)
+            ->where('subjects.is_practical',1)
+            ->select(
+                'allapplications.candidate_id',
+                'candidates.enrolmentno',
+                'candidates.name as candidate_name',
+                'subjects.sname',
+                'subjects.scode',
+                'subjects.pabbrvn',
+                'allapplications.mark_ex',
+                'allapplications.exam_id',
+                'allapplications.mark_in',
+                'allapplications.attendance_ex',
+                'allapplications.attendance_in',
+                'allapplications.mark_ex_re',
+                'allapplications.grace',
+                'allapplications.payment_status',
+                'allapplications.nber_id'
+            )
+        ->groupBy('allapplications.candidate_id')
+            ->get();
+           // dd($extenal_marks);
+            return view('notices.external_student', compact('external_marks'));
     }
+
+    public function external_marks(request $request ,$candidate_id){
+        $nber_id = Auth::user()->nberstaffs->first()->nber_id;
+        $exam_id = $this->exam_id;
+        $candidate_id = $request->candidate_id;
+       // dd($candidate_id);
+        $external_mark_details = DB::table('allapplications')
+            ->join('candidates', 'allapplications.candidate_id', '=', 'candidates.id')
+            ->join('subjects', 'allapplications.subject_id', '=', 'subjects.id')
+            ->where('allapplications.nber_id',  $nber_id)
+            ->where('allapplications.exam_id', $exam_id)
+            ->where('allapplications.candidate_id', $candidate_id)
+            ->where('subjects.is_external', 1)
+            ->where('subjects.is_practical',1)
+            ->select(
+                'allapplications.candidate_id',
+                'candidates.enrolmentno',
+                'candidates.name as candidate_name',
+                'subjects.emin_marks',
+                'subjects.emax_marks',
+                'subjects.sname',
+                'subjects.scode',
+                'subjects.pabbrvn',
+                'allapplications.mark_ex',
+                'allapplications.exam_id',
+                'allapplications.mark_in',
+                'allapplications.attendance_ex',
+                'allapplications.attendance_in',
+                'allapplications.mark_ex_re',
+                'allapplications.grace',
+                'allapplications.payment_status',
+                'allapplications.nber_id'
+            )
+            ->get();
+           //dd( $external_mark_details);
+            return view('notices.external_marks_details', compact('external_mark_details'));
+    }
+
+
+    // public function externals(){
+    //             set_time_limit(300);
+    //             $exam_id = $this->exam_id;
+    //             $externals =DB::SELECT("SELECT
+    //                             institutes.name as institute_name, 
+    //                             institutes.rci_code,
+                                 
+    //                             GROUP_CONCAT(distinct(subjects.scode)) AS subjects, 
+    //                             awardlisttemplates.exam_date, 
+    //                             awardlisttemplates.marksheet, 
+    //                             programmes.abbreviation, 
+    //                             faculties.crr_no, 
+    //                             faculties.name as faculties_name, 
+    //                             faculties.mobileno, 
+    //                             faculties.email
+    //                         FROM
+    //                             practicalexams
+    //                             INNER JOIN
+    //                             faculties
+    //                             ON 
+    //                                 faculties.id = practicalexams.faculty_id
+    //                             INNER JOIN
+    //                             awardlisttemplates
+    //                             ON 
+    //                                 practicalexams.id = awardlisttemplates.practicalexam_id AND
+    //                                 practicalexams.practicalexaminer_id = awardlisttemplates.practicalexaminer_id
+    //                             INNER JOIN
+    //                             institutes
+    //                             ON 
+    //                                 practicalexams.institute_id = institutes.id
+    //                             INNER JOIN
+    //                             approvedprogrammes
+    //                             ON 
+    //                                 awardlisttemplates.approvedprogramme_id = approvedprogrammes.id
+    //                             INNER JOIN
+    //                             programmes
+    //                             ON 
+    //                                 programmes.id = approvedprogrammes.programme_id
+    //                             INNER JOIN
+    //                             candidates
+    //                             ON 
+    //                                 approvedprogrammes.id = candidates.approvedprogramme_id
+    //                             INNER JOIN
+    //                             allapplications
+    //                             ON 
+    //                                 candidates.id = allapplications.candidate_id AND
+    //                                 practicalexams.exam_id = 27
+    //                             INNER JOIN
+    //                             awardlisttemplate_subject
+    //                             ON 
+    //                                 awardlisttemplates.id = awardlisttemplate_subject.awardlisttemplate_id
+    //                             LEFT JOIN
+    //                             subjects
+    //                             ON 
+    //                                 awardlisttemplate_subject.subject_id = subjects.id AND
+    //                                 allapplications.subject_id = subjects.id
+    //                         WHERE
+    //                             practicalexams.exam_id =  27
+    //                         GROUP BY
+    //                             awardlisttemplates.id LIMIT 50") ;
+    //             return view('notices.externals', compact('externals'));
+    // }
+
+
 
 }

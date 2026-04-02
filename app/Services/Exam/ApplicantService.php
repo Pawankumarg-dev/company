@@ -215,7 +215,7 @@ class ApplicantService
     }
     
     public function getApplicant($id){
-        //dd($this->model::toSql());
+       // dd($this->model::toSql());
         $this->applicant = $this->model::find($id);
         return $this->applicant;
     }

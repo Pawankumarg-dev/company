@@ -89,7 +89,7 @@
 								<td>
 									<a href="{{url('nber/excenter')}}/{{$ec->externalexamcenter_id}}?req=otp" target="_blank" class="btn btn-xs btn-danger">
 										Disable OTP
-										</a>
+									</a>
 								</td>
 								<td>
 								

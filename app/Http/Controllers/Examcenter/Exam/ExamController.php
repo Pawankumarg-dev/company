@@ -34,20 +34,50 @@ class ExamController extends Controller
             return redirect(url('logoff'));
         }
         $externalexamcenter_id = $this->helperService->getExternalexamcenterID();
-       // return $externalexamcenter_id;
+       //return $externalexamcenter_id;
         $externalexamcenter = $this->helperService->getExternalexamcenter();
-    //$exam_id = $this->helperService->getScheduledExamID();
-        $exam_id= 27;
-       // $schedules = $this->examService->getSchedules($exam_id,$externalexamcenter_id);
+       // dd($externalexamcenter);
+      //$exam_id = $this->helperService->getScheduledExamID();
+        $exam_id= $this->exam_id;
+      
 
-        $schedule_ids = \App\Allexampaper::where('exam_id',$this->exam_id)->where('externalexamcenter_id',$externalexamcenter_id)->pluck('examschedule_id')->toArray();
-       // return $schedule_ids;
-        $schedules = \App\Examschedule::whereIn('id',$schedule_ids)->where('exam_id',$this->exam_id)->orderBy('examdate')->orderBy('starttime')->get();
-        $count = [];
-        foreach($schedules as $s){
-            //$s['count'] = $this->examService->getStudentCount($exam_id,$externalexamcenter_id,$s->id);
-            $s['count'] = \App\Allexampaper::where('exam_id',$this->exam_id)->where('examschedule_id',$s->id)->where('externalexamcenter_id',$externalexamcenter_id)->sum('theory');
-        }
+    //     //old code 
+    //     $schedule_ids = \App\Allexampaper::where('exam_id',$this->exam_id)->where('externalexamcenter_id',$externalexamcenter_id)->pluck('examschedule_id')->toArray();
+    //   // return $schedule_ids;
+    //     $schedules = \App\Examschedule::whereIn('id',$schedule_ids)->where('exam_id',$this->exam_id)->orderBy('examdate')->orderBy('starttime')->get();
+    //     //dd($schedules);
+    //     $count = [];
+    //     foreach($schedules as $s){
+    //         //$s['count'] = $this->examService->getStudentCount($exam_id,$externalexamcenter_id,$s->id);
+    //         $s['count'] = \App\Allexampaper::where('exam_id',$this->exam_id)->where('examschedule_id',$s->id)->where('externalexamcenter_id',$externalexamcenter_id)->sum('theory');
+    //     }
+
+        //new code 
+        $schedules = DB::table('allexamstudents')
+        ->join('externalexamcenters', function ($join) use($exam_id) {
+            $join->on('allexamstudents.externalexamcenter_id', '=', 'externalexamcenters.id')
+                ->where('externalexamcenters.exam_id', '=' , $exam_id);
+        })
+        ->join('examschedules', 'allexamstudents.examschedule_id', '=', 'examschedules.id')
+        ->where('allexamstudents.exam_id', $exam_id)
+        ->where('allexamstudents.externalexamcenter_id',  $externalexamcenter_id)
+        ->select(
+            'examschedules.id',
+            DB::raw('COUNT(examschedules.id) as count'),
+            'examschedules.description',
+            'examschedules.examdate',
+            'examschedules.starttime',
+            'examschedules.endtime',
+            'examschedules.user_id',
+            'examschedules.qpset',
+            'examschedules.year',
+            'examschedules.examtype_id'
+        )
+        ->groupBy('examschedules.id')
+        ->orderBy('examschedules.examdate')
+        ->get();
+       // dd( $schedules);
+       
         return view('examcenter.schedule',compact(
             'schedules',
             'externalexamcenter'
@@ -56,11 +86,11 @@ class ExamController extends Controller
 
     public function show($id,Request $r){
         $examcenter = $this->helperService->getExternalexamcenter();
-        
         //return $applications;
         $schedule = \App\Examschedule::find($id);
         set_time_limit(300);
         $format = 'html';
+      
         // if($r->has('format') && !($r->format=='html')){
         //     $format = 'pdf';
         //     view()->share('applications',$applications);
@@ -75,6 +105,7 @@ class ExamController extends Controller
             
             if($format=='html'){
                 $applications = $this->examService->getStudentList($this->exam_id,$examcenter->id,$id,'approvedprogramme_id');
+                //dd( $applications);
                 return view('examcenter.roomallocation',compact(
                     'applications','schedule','examcenter','format'
                 ));
@@ -83,7 +114,6 @@ class ExamController extends Controller
             return $pdf->download('room_allocation_'.$schedule->examdate.'.pdf'); 
         }
         if($format=='html'){
-           // return $applications;
            $applications = $this->examService->getStudentList($this->exam_id,$examcenter->id,$id,'approvedprogramme_id');
            //return $applications;
             return view('examcenter.attendancesheet',compact(

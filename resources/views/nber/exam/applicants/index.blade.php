@@ -267,7 +267,7 @@
                                     
                                    </td>
 
-                                   <td class="hidden">
+                                   <td class="">
                                          {{-- PRACTICAL--}}
                                          <?php 
                                          $hallticket  =    $applicant->practicalhalltickets()->where('exam_id',Session::get('exam_id'))->first();

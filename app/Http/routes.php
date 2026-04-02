@@ -666,14 +666,14 @@ Route::group(array('middleware' => ['role:rci']), function ()
 });
 Route::group(array('middleware' => ['role:institute']), function ()
 {   
-Route::any('/eparivesh/{id}/{p}','EpariveshController@index');
+    Route::any('/eparivesh/{id}/{p}','EpariveshController@index');
 
-// Route::post('/eparivesh2','EpariveshController@index2');
+    // Route::post('/eparivesh2','EpariveshController@index2');
 
-Route::post('/verify-student/{id}', 'EpariveshController@verify');
-Route::post('/cancel-student/{id}', 'EpariveshController@cancel');
-Route::get('/eparivesh/addcandidate/{id}/{apid}', 'EpariveshController@addcandidate');
-Route::post('/eotp', 'EpariveshController@eotp');
+    Route::post('/verify-student/{id}', 'EpariveshController@verify');
+    Route::post('/cancel-student/{id}', 'EpariveshController@cancel');
+    Route::get('/eparivesh/addcandidate/{id}/{apid}', 'EpariveshController@addcandidate');
+    Route::post('/eotp', 'EpariveshController@eotp');
 
 
 
@@ -1033,31 +1033,31 @@ Route::post('/eotp', 'EpariveshController@eotp');
     
 // });
 Route::group(array('middleware' => ['role:examcenter']),function(){
-    // Route::resource('examcenter/questionpaperotp','Examcenter\Exam\QuestionpaperotpController');
-    // Route::post('examcenter/downloadqp','Examcenter\ExamController@downloadqp');
-    // Route::resource('examcenter/schedule','Examcenter\Exam\ExamController');
-    // Route::resource('examcenter/attendance','Examcenter\Exam\AttendanceController');
-    // Route::resource('examcenter/attendancesheet','Examcenter\Exam\AttendancesheetController');
-    // Route::resource('examcenter/questionpaper','Examcenter\Exam\QuestionPaperController');
-    // Route::get('examcenter/questionpapers/{sid}','Examcenter\ExamController@download');
+    Route::resource('examcenter/questionpaperotp','Examcenter\Exam\QuestionpaperotpController');
+    Route::post('examcenter/downloadqp','Examcenter\ExamController@downloadqp');
+    Route::resource('examcenter/schedule','Examcenter\Exam\ExamController');
+    Route::resource('examcenter/attendance','Examcenter\Exam\AttendanceController');
+    Route::resource('examcenter/attendancesheet','Examcenter\Exam\AttendancesheetController');
+    Route::resource('examcenter/questionpaper','Examcenter\Exam\QuestionPaperController');
+    Route::get('examcenter/questionpapers/{sid}','Examcenter\ExamController@download');
 
 
 
 
 
-    /*Route::post('examcenter/verifymobile','Examcenter\ExamController@verifymobile');
-    Route::post('examcenter/sendotp','Examcenter\ExamController@sendotp');
-    Route::get('examcenter/profile','Examcenter\ExamController@profile');
-    Route::post('examcenter/attendance/uploadsheet','Examcenter\ExamController@uploadsheet');
-    //Route::get('examcenter/attendance','Examcenter\ExamController@attendancemarkging');
-    Route::post('examcenter/saveattendance','Examcenter\ExamController@saveattendance');
-    Route::get('examcenter/attendance/{apid}/{subject_id}','Examcenter\ExamController@marktheattendance');
-    Route::get('examcenter','Examcenter\ExamController@index');
-    Route::get('studentlist','Examcenter\ExamController@list');
-    Route::get('printstudentlist','Examcenter\ExamController@printlist');
-    Route::get('examcenter/timetable','Examcenter\ExamController@timetable');
-    Route::get('examcenter/listofcandidates','Examcenter\ExamController@roomallocation');
-    Route::get('examcenter/institutes','Examcenter\ExamController@institutes'); */
+    // Route::post('examcenter/verifymobile','Examcenter\ExamController@verifymobile');
+    // Route::post('examcenter/sendotp','Examcenter\ExamController@sendotp');
+    // Route::get('examcenter/profile','Examcenter\ExamController@profile');
+    // Route::post('examcenter/attendance/uploadsheet','Examcenter\ExamController@uploadsheet');
+    // //Route::get('examcenter/attendance','Examcenter\ExamController@attendancemarkging');
+    // Route::post('examcenter/saveattendance','Examcenter\ExamController@saveattendance');
+    // Route::get('examcenter/attendance/{apid}/{subject_id}','Examcenter\ExamController@marktheattendance');
+    // Route::get('examcenter','Examcenter\ExamController@index');
+    // Route::get('studentlist','Examcenter\ExamController@list');
+    // Route::get('printstudentlist','Examcenter\ExamController@printlist');
+    // Route::get('examcenter/timetable','Examcenter\ExamController@timetable');
+    // Route::get('examcenter/listofcandidates','Examcenter\ExamController@roomallocation');
+    // Route::get('examcenter/institutes','Examcenter\ExamController@institutes'); 
 });
 Route::group(array('middleware' => ['role:student']), function (){
      
@@ -1431,8 +1431,11 @@ Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->
     Route::get('/nber/nber-dashboard','Nber\Verify\VerifyAttendanceNInternalsController@nber_dashboard');
     Route::get('/nber/practical','Nber\Verify\VerifyAttendanceNInternalsController@practical');
     Route::get('/nber/exam_timetable','Nber\Verify\VerifyAttendanceNInternalsController@exam_timetable');
+   
     Route::get('/nber/external_detail','Nber\Verify\VerifyAttendanceNInternalsController@external_detail');
-    Route::get('/nber/external_mark','Nber\Verify\VerifyAttendanceNInternalsController@external_mark');
+    Route::post('/nber/external_student','Nber\Verify\VerifyAttendanceNInternalsController@external_student');
+    Route::get('/nber/external_marks/{candidate_id}','Nber\Verify\VerifyAttendanceNInternalsController@external_marks');
+    Route::get('/nber/externals','Nber\Verify\VerifyAttendanceNInternalsController@externals');
 	 Route::post('/cropimageadmin','Nber\CandidateController@crop');
 	 Route::get('/programmeapplications', 'Nber\ApprovedprogrammeController@index');
 	 Route::get('/programme/{status_id}/{id}','Nber\ApprovedprogrammeController@changestatus');
