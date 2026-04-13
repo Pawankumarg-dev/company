@@ -6,7 +6,7 @@
             <?php $slno = 1; ?>
             <h3>{{$exam->name}} Examinations</h3>
             <div class="alert alert-success">
-                Click <a target="_blank" href="{{ url('files/director/SOP.pdf') }}">here</a> for SOP - uploading question papers for June exam 2025.
+                Click <a target="_blank" href="{{ url('files/director/SOP.pdf') }}">here</a> for SOP - uploading question papers.
             </div>
         </div>
     </div>

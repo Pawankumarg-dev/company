@@ -46,7 +46,7 @@
                             <li><a href="{{url('/institute/exam/home/26')}}" style="">January 2025 Supplementary Exam</a></li>
                             <li><a href="{{url('/institute/exam/home/27')}}" style="">June 2025 Exam</a></li>
 
-                            <li><a class="" href="{{url('/institute/exam/home/28')}}" style="">January 2026 Supplementary Exam</a></li>
+                            <li><a class="" href="{{url('/institute/exam/home/28')}}" style="">2026 Supplementary Exam</a></li>
                         </ul>
                     </li>
 
@@ -80,7 +80,7 @@
 
                 <li><a href="{{ url('reportissue') }}">Data Correction Requests </a></li>
                 <li><a href="{{ url('/institute/faculties') }}">Faculties </a></li>
-                <li><a href="{{ url('institute/examcenters') }}">Exam Centers </a></li>
+                {{-- <li><a href="{{ url('institute/examcenters') }}">Exam Centers </a></li> --}}
 
                 {{--
                     <li><a href="{{ url('/institute/class-attendance') }}">Class Attendance </a></li>

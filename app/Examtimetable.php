@@ -67,7 +67,7 @@ class Examtimetable extends Model
     }
 
     public function languages(){
-        return $this->belongsToMany('App\Language')->withPivot('rand_string','question_paper_1','question_paper_2','question_paper_3','alternativesubject_id');
+        return $this->belongsToMany('App\Language')->withPivot('rand_string','question_paper_1','question_paper_2','question_paper_3','alternativesubject_id','omr_code','password');
     }
 
 }

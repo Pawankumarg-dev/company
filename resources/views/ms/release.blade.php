@@ -87,13 +87,16 @@
                     @else
                         <form action="{{ url('qppublishfor') }}" method="post">
                             <input type="hidden" name="examschedule_id" value="{{ $schedule->id }}">
+
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="">Set</label>
                                 <select name="set" class="form-control" >
+                                    <option>--select--</option>
+
                                     <option @if($schedule->qpset == 1)  selected @endif value="1">Set #1</option>
                                     <option @if($schedule->qpset == 2)  selected @endif  value="2">Set #2</option>
-                                    <option @if($schedule->qpset == 3)  selected @endif  value="3">Set #3</option>
+                                    {{-- <option @if($schedule->qpset == 3)  selected @endif  value="3">Set #3</option> --}}
                                 </select>
                             </div>
                             <div class="form-group">

@@ -29,7 +29,7 @@ class InternalmarkentryController extends Controller
     }
 	
 	 public function index(Request $r){
-       
+
         if($r->has('institute_id')){
             $isntitute_id = $r->institute_id;
             $insitute_id = $r->institute_id;

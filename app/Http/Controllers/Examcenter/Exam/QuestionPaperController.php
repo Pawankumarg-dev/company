@@ -26,14 +26,17 @@ class QuestionPaperController extends Controller
         $this->middleware(['role:examcenter']);
         $this->examService = $exam;
         $this->helperService = $helper;
-        $this->exam_id = 27;
+        $this->exam_id = 28;
 
     }
      public function index(Request $r){
+
         $schedule_id = $r->examschedule_id;
-        if(!($schedule_id == 89)){
-            return back();
-        }
+        // if(!($schedule_id == 89)){
+        //     return back();
+        // }
+
+
         $schedule = \App\Examschedule::find($schedule_id);
 
         $date = \Carbon\Carbon::now()->toDateString();
@@ -46,8 +49,7 @@ class QuestionPaperController extends Controller
         //    !(
         //     $date  == $sdate && 
         //     $time > $opentime && 
-        //     $time < $closetime  &&
-        //     ($schedule_id == 81 || $schedule_id == 82)
+        //     $time < $closetime  
         //    )
         // ){
         //     Session::put('messages','Please wait');
@@ -63,22 +65,20 @@ class QuestionPaperController extends Controller
    
       
       //ENABLE OTP 
-        //  if(Auth::user()->id != 230363){
-            // if(is_null($otp)){
-            //     $sent = 0;
-            //     return view('examcenter.otp',compact('examschedule_id','sent'));
-            // }else{
-            //     $sent = $otp->id;
-            // }
-            // if($otp->verified == 0){
-            // //     return view('examcenter.otp',compact('examschedule_id','sent'));
-            // }
-        //  }
+            if(is_null($otp)){
+                $sent = 0;
+                return view('examcenter.otp',compact('examschedule_id','sent'));
+            }else{
+                $sent = $otp->id;
+            }
+            if($otp->verified == 0){
+                 return view('examcenter.otp',compact('examschedule_id','sent'));
+            }
+         
 
-        if(
-            $schedule->id == 89 
-        //|| Auth::user()->id == 134579 || ( $schedule->qpset > 0 && (  $schedule_id == 54 ) )
-            ){
+// open for only echedule exam
+
+        if($schedule->id != ''){
                 
             $externalexamcenter = $this->helperService->getExternalexamcenter();
             //return $externalexamcenter;
@@ -131,12 +131,15 @@ class QuestionPaperController extends Controller
                             'session_id'
                         ));
                     }else{
+                        
                     $exams = \App\Allexampaper::where('examschedule_id',$schedule_id)
                         ->where('externalexamcenter_id',$externalexamcenter->id)
+                        ->where('exam_id',$this->exam_id)
                         ->groupBy('omr_code')
-                        ->selectRaw('*, group_concat(distinct course) as courses,  group_concat(distinct scode) as subjectcode, sum(theory) as no_of_student')
+                        ->selectRaw('*, group_concat(distinct course) as courses, group_concat(distinct subject_id) as subject_id, group_concat(distinct scode) as subjectcode, sum(theory) as no_of_student')
                         ->get();
                     }
+
                     //  $alt1 = \App\Examtimetable::find(1701);
                     //  $alt2 = \App\Examtimetable::find(1652);
                     

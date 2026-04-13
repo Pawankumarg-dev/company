@@ -6,7 +6,7 @@
         TTI
     </th>
     <th style="width:60%;">
-        Examiner 
+        Examiner
     </th>
 @endsection
 
@@ -26,7 +26,7 @@
                     {{ $r->name }}
                 </td>
                 <td>
-                    <a href="javascript:addPE({{ $r->id }})" class="btn btn-primary  @if($r->additonal < 1 && $r->rci_code != 'WB005') hidden @endif btn-xs " >Add Practical Examiner</a>
+                    <a href="javascript:addPE({{ $r->id }})" class="btn btn-primary btn-xs " >Add Practical Examiner</a>
                     <div id="subjects_{{ $r->id }}">
                         <?php $cids = []; ?>
                         @foreach (json_decode('[' . $r->courses . ']', true) as $key => $value)

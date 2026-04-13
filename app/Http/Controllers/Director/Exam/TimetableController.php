@@ -35,7 +35,7 @@ class TimetableController extends Controller
         $this->middleware(['role:director']);
         $this->helper = $helper;
         //$this->exam_id = $this->helper->getScheduledExamID();
-        $this->exam_id = 27;
+        $this->exam_id = 28;
         $this->exam = Exam::find($this->exam_id);
         $this->timetableService = $timetable;
         $this->scheduleService = $schedule;
@@ -50,7 +50,7 @@ class TimetableController extends Controller
         $programmes = $this->helper->getProgrammes();
         $nber_id = \App\Director::where('user_id',Auth::user()->id)->first()->nber_id;
         $exam = $this->exam;
-        //$courses = $this->helper->getCourses();
+        $courses = $this->helper->getCourses();
         $sql = "SELECT 
                         if(char_length(omr_code)=4,'Common',c.name) as course, 
                         s.syear, 
@@ -59,7 +59,7 @@ class TimetableController extends Controller
                         s.sname,
                         if(char_length(omr_code)=4,'Multiple',ifnull(p.revision_year,'Old')) as revision 
                 FROM subjects s 
-                INNER JOIN programmes p ON p.id = s.programme_id
+                INNER JOIN programmes p ON p.id = s.programme_id and p.nber_id=$nber_id
                 INNER JOIN courses c on c.id = p.course_id 
             WHERE s.qp_required = 1  and  s.qp_prepared_by_nber_id = ". $nber_id ."  AND s.subjecttype_id = 1 AND s.is_external = 1 GROUP BY s.omr_code ORDER BY if(char_length(omr_code)=4,'Common',c.name), s.syear, s.sortorder, p.revision_year";
 
@@ -96,18 +96,27 @@ class TimetableController extends Controller
         ));
     }
 
-    public function store(StoreTimetableRequest $r){
-        Examtimetable::create($r->all());
-        return redirect('nber/exam/timetable?programme_id='.$r->programme_id);
-    }
+    // public function store(StoreTimetableRequest $r){
+    //     Examtimetable::create($r->all());
+    //     return redirect('nber/exam/timetable?programme_id='.$r->programme_id);
+    // }
 
     public function show($id, Request $r){
-        $subject_id = \App\Subject::where('omr_code',$id)->where('qp_required',1)->first()->id;
-        $timetable = Examtimetable::where('subject_id',$subject_id)->where('exam_id',27)->first();
+
+        $nber_id = \App\Director::where('user_id',Auth::user()->id)->first()->nber_id;
+        $subject_id = \App\Subject::join('programmes', 'subjects.programme_id', '=', 'programmes.id')
+    ->where('subjects.omr_code', $id)
+    ->where('subjects.qp_required', 1)
+    ->where('subjects.qp_prepared_by_nber_id', $nber_id)
+    ->where('programmes.nber_id', $nber_id)
+    ->select('subjects.id')
+    ->first();
+
+        // $subject_id = \App\Subject::where('omr_code',$id)->where('qp_required',1)->first()->id;
+        $timetable = Examtimetable::where('subject_id',$subject_id->id)->where('exam_id',$this->exam_id)->first();
         $omr_code = $id;
         $exam = $this->exam;
         Session::forget('errors');
-            
         //$languages = $this->timetableService->getLanguages($this->exam_id,$timetable->subject_id);
         $languages = \App\Language::all();
        // $notappliedlanguages = $this->timetableService->getNonLanguages();

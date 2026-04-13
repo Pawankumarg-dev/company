@@ -15,53 +15,31 @@ use PDF;
 class HomeController extends Controller
 {
     private $helperService;
+    private $exam_id;
 
     public function __construct(HelperService $help)
     {
         $this->middleware(['role:faculty']);
         $this->helperService = $help;
+                $this->exam_id = 28;
+
     }
     public function index(Request $r){
-      
-        $examstartdate = '2026-03-01';
-        $examenddate = '2026-03-30';
-       // $examstartdate =  \Carbon\Carbon::now()->subDay()->subDay()->subDay()->toDateString();
-        // $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
-         $practicalexaminer_id = 8058;
-        //dd($practicalexaminer_id);
-        $practicalexams = \App\Practicalexam::where('exam_id',27)->where('faculty_id',$practicalexaminer_id)->orderBy('institute_id')->get();
-       
-        foreach($practicalexams as $pe){
-            
-            $examstartdate= $pe->start_date;
-           
 
-            // if($pe->course_id == 1){
-            //     $examstartdate = '2025-05-20';
-            // }
-        }
+        $examstartdate = '2026-03-24';
+        $examenddate = '2026-04-06';
+        $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
+
         $date = \Carbon\Carbon::now()->toDateString();
-        if($date > $examenddate){
-            $date = $examenddate;
-        }
+    
         if(Session::has('date')){
-            $date = Session::get('date');
+            Session::put('date', $date);
         }
-        
-        if($r->has('date')){
-            $fromdate = \Carbon\Carbon::parse($examstartdate)->toDateString();
-            for ($i = 0; $i < 60; $i++) {
-                $fromdate = \Carbon\Carbon::parse($fromdate)->addDay()->toDateString();
-               // dd($fromdate);
-                $date =  $r->date == $fromdate ? $r->date : $date;
-            }
-           
-        }
-        // $job = (new \App\Jobs\GeneratePEPassword())->onQueue('gpepwd');
-        // $this->dispatch($job);
-        Session::put('date',$date);
-       // dd(Session::get('date'));
-        
+
+
+        $practicalexams = \App\Practicalexam::where('exam_id',$this->exam_id)->whereNull('deleted_at')->where('faculty_id',$practicalexaminer_id)->orderBy('institute_id')->get();
+       
+
         return view('practicalexaminer.home.index',compact(
             'practicalexams','practicalexaminer_id','examstartdate'
         ));
@@ -69,7 +47,7 @@ class HomeController extends Controller
 
 
      public function appointment(Request $r){
-// $nber = \App\Nber::where('id', 1)->first();
+            $exam = \App\Exam::where('id',$this->exam_id)->first();
                 $faculty =  \App\Faculty::where('user_id',Auth::user()->id)->first();
        $paractical = 'SELECT
        nbers.logo,
@@ -91,9 +69,6 @@ nbers.practical_exam_contact_3,
 	
 FROM
 	practicalexams
-    INNER JOIN awardlisttemplates als 
-    ON
-    practicalexams.id = als.practicalexam_id AND marksheet IS NOT NULL 
 	INNER JOIN
 	faculties AS f
 	ON 
@@ -109,32 +84,38 @@ FROM
 	INNER JOIN
 	nbers
 	ON 
-		( courses.nber_id = nbers.id AND courses.id not in (7,23) ) OR 
-        ( institutes.idd_under_nber_id = nbers.id AND courses.id in (7,23) ) 
+		courses.nber_id = nbers.id 
 WHERE
-	practicalexams.start_date IS NOT NULL AND practicalexams.exam_id=27 and
+	practicalexams.start_date IS NOT NULL and practicalexams.deleted_at is NULL AND practicalexams.exam_id='.$this->exam_id.' and
 	f.id ='.$faculty->id;
-
 		$paractical =  (new DBService)->fetch($paractical);
     view()->share('paractical', $paractical);
+view()->share('exam', $exam);
 
     return PDF::loadView('practicalexaminer.appointment')
 ->setPaper('a4', 'portrait')
               ->download('Examiner_Appointment_Letter.pdf');
-      return view('practicalexaminer.appointment',compact('paractical'));
+
+
+      return view('practicalexaminer.appointment',compact('paractical','exam'));
 
     }
 
+
+
+
+
     public function update($id,Request $request){
-        //return "Closed";
+       // return "Closed";
             $subject_id = $request->subject_id;
             $template = \App\Awardlisttemplate::find($id);
             
             $ap = \App\Approvedprogramme::find($template->approvedprogramme_id);
             $applications = \App\Allapplication::whereHas('candidate',function($q) use ($template){
                 $q->where('approvedprogramme_id',$template->approvedprogramme_id);
-            })->where('subject_id',$subject_id)->where('exam_id',27)
+            })->where('subject_id',$subject_id)->where('exam_id',$this->exam_id)
             ->get();
+
             foreach($applications as $application){
                 $key = 'mark_'.$application->id;
                 $absent = 'absent_'.$application->id;

@@ -50,7 +50,7 @@
 					</table>
 				</form>
 
-				
+{{-- 				
 				<form action="{{ url('nber/exam/examcenter/') }}" method="POST">
 					{{ csrf_field() }}
 					<h4>Add Exam Centers for District
@@ -138,7 +138,7 @@
 							</td>
 						</tr>
 					</table>
-				</form>
+				</form> --}}
 
 
             </div>

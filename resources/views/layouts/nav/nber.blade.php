@@ -77,9 +77,7 @@
                                 <ul class="dropdown-menu" role="menu">
                                 
                                 <li>
-                                        @if(Auth::user()->id == 88387)
-                                        <a href="{{url('nber/exam/examcenter')}}">Exam Centers</a>
-                                        @endif
+                                        <a href="{{url('nber/exam/examcenter')}}">Exam Centers Mapping</a>
                                     </li>
                                     <li>
                                         <a href="{{url('nber/exam/schedules')}}"> Schedule</a>
@@ -90,9 +88,12 @@
                                     <li>
                                         <a href="{{url('nber/exam/applicants')}}"> Applications</a>
                                     </li>
-                                    <li>
+                                <li><a href="{{ url('/nber/exam/candidate') }}">Application Summary</a></li>
+
+
+                                    {{-- <li>
                                         <a href="{{url('nber/exam/applicantsummary')}}"> Application Summary</a>
-                                    </li>
+                                    </li> --}}
                                     <li><a href="{{ url('/nber/examattendance') }}">Exam Attendance Tracker</a></li> 
                                     <li><a href="{{ url('/nber/exam/evaluationtracking') }}">Exam Evaluation Tracker</a></li> 
                                     <li>
@@ -122,13 +123,11 @@
                                         </li>
                                
                                         @endif
-                                        <li>
-                                            <a href="{{url('nber/practicalexaminer')}}">Practical Examiner Mapping</a>
 
-                                            
+                                        <li>
+                                            {{-- <a href="{{url('nber/practicalexaminer')}}">Practical Examiner Mapping</a> --}}
+                                            <a href="{{url('nber/practicalexammapping')}}">Practical Examiner Mapping</a>
                                         </li>
-                                        
-                                        
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -180,7 +179,16 @@
 
                                             
                                         </li>
+<li>
+                                            <a href="{{url('/nber/practicalverify-list')}}" class="">Verify External Practical Marks</a>
 
+                                            
+                                        </li>
+                                        <li>
+                                            <a href="{{url('/nber/tabill')}}" class="">TA Bills</a>
+
+                                            
+                                        </li>
 
 
                                 </ul>
@@ -191,13 +199,18 @@
                                     Evaluation <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                
+                                 <li>
+                                        <a href="{{url('nber/evalution_details')}}">Evalution center</a>
+                                    </li>
                                     <li>
+                                        <a href="{{url('nber/evalution-mapping-list')}}">Evalution center Mapping</a>
+                                    </li>
+                                    {{-- <li>
                                         <a href="{{url('nber/evaluation')}}">Summary</a>
                                     </li>
                                     <li>
                                         <a class='' href="{{url('nber/evaluationprogress')}}">Progress</a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </li>
                             
@@ -211,7 +224,9 @@
                                 <li><a href="{{ url('/nber/dashboard') }}">Dashboard </a></li>
                     
                                 <li><a href="{{ url('/issues/') }}">Grievances</a></li>     
-                                <li><a href="{{ url('/nber/excenter/') }}">Exam Centers</a></li>     
+                                <li><a href="{{ url('/nber/excenter/') }}">Exam Centers</a></li>
+                                
+                                
                                 <li><a href="{{ url('/nber/evaluationcenter/') }}">Evaluation Centers</a></li>     
                                 <li><a href="{{ url('/nber/examcenter/zone') }}">Zone</a></li>     
                                 <li><a href="{{ url('/nber/paymentreports?type=enrolment') }}">Enrolment Payments</a></li>     
@@ -224,10 +239,8 @@
                                 <li><a class="hidden" href="{{ url('/nber/track-payment') }}">Track Candidate Payment</a></li>   
     @if(Auth::user()->id==88387)
 
-                                <li><a href="{{ url('/nber/index') }}"> Notice </a></li>
-                                 <li><a href="{{ url('/nber/nber-dashboard') }}">Nber Dashboard</a></li>
-                                 <li><a href="{{ url('/nber/practical') }}"> Practical</a></li>   
-    @endif
+                                <li><a href="{{ url('/nber/index') }}"> Notice</a></li>   
+@endif
 
                                 
                                 </ul>

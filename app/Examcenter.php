@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Examcenter extends Model
 {
     protected $fillable = [
-        'exam_id', 'externalexamcenter_id', 'institute_id'
+        'exam_id', 'externalexamcenter_id', 'institute_id','nber_id'
     ];
 
 
@@ -34,6 +34,10 @@ class Examcenter extends Model
     public function scopeOnlyExam($query,$id)
     {
         return $query->where('exam_id', $id);
+    }
+
+    public function nber(){
+        return $this->belongsTo('App\Nber');
     }
 
     public function states(){

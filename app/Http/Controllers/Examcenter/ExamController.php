@@ -36,6 +36,10 @@ class ExamController extends Controller
         return view('examcenter.downloadqp',compact('examschedule'));
     }
     public function downloadqp(Request $r){
+
+//   Session::put('messages',"Please wait");
+//                 return back();
+
         $timetable = \App\Examtimetable::find($r->examtimetable_id);
         $schedule_id = $timetable->examschedule_id;
         $s = \App\Examschedule::find($schedule_id);
@@ -49,23 +53,23 @@ class ExamController extends Controller
         $closetime  = \Carbon\Carbon::parse($s->starttime)->addHours(3)->toTimeString();
       //  $opentime  = \Carbon\Carbon::parse($s->starttime)->subHours(3)->toTimeString(); for testing
            // return $opentime;
-        if(
-           !(
-            $date  == $sdate && 
-            $time > $opentime && 
-            $time < $closetime  &&
-            ($schedule_id == 89)
-           )
-        ){
-            Session::put('messages','Please wait');
-            return back();
-        }
-        
-        // if($r->password != 'n0tN0w'){
-        //     return 'Nah nah';
+
+
+        // if(
+        //    !(
+        //     $date  == $sdate && 
+        //     $time > $opentime && 
+        //     $time < $closetime
+        //    )
+        // ){
+        //     Session::put('messages','Please wait');
+        //     return back();
         // }
+        
+    
        $download = $this->qpService->downloadquestionpaper(6,$r);
-       //return $download;
+    //    return $download;
+
        if($download!=false){
             if($download ==  "processing"){
                 Session::put('messages',"Please wait");
@@ -80,7 +84,8 @@ class ExamController extends Controller
                 'Content-Description' => 'Question Paper'
                 
             ];
-            return response()->file(storage_path().$download,$header); 
+
+            return response()->file($download,$header); 
        }
        return back();
     }

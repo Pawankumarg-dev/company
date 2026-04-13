@@ -316,7 +316,7 @@
                     <small style="font-weight:100;"> Term</small>
                     <span class="red">{{$m->term}} </span>
                 </th>
-                <th style="background-color:#fcfcfc;">
+                {{-- <th style="background-color:#fcfcfc;">
                    
                     <form action="{{url('nber/adddocument')}}" method="post"  class="pull-right">
                         {{ csrf_field() }}
@@ -331,7 +331,7 @@
                         </button>
                     </form>
                     <small style="font-weight:100;"  class="pull-right">Add Document: </small>
-                </th>
+                </th> --}}
                 <th style="background-color:#fcfcfc;">
                    
                     <form action="{{url('nber/addsubject')}}" method="post"  class="pull-right">

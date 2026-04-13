@@ -12,6 +12,8 @@ method="post"   enctype="multipart/form-data" action="{{url('qp/questionpaperupl
      class="hidden upload"
       accept="application/pdf"
      >  </input>
+     <input type="hidden" name="omr_code" value='{{$omr_code}}'>
+     <input type="text" name="password" value='{{$timetable->password}}' required>
      <?php $qpset = 'question_paper_'.$set; ?>
     <button type="submit"  class="btn btn-xs btn-primary hidden">
             Re - Upload

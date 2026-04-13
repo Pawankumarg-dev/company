@@ -153,38 +153,38 @@ class InstituteController extends Controller
 
         $apids = \App\Approvedprogramme::where('institute_id',$institute->id)->where('academicyear_id',14)->get();
         
-        // $paractical = DB::table('practicalexams')
-        //     ->join('faculties', 'practicalexams.faculty_id', '=', 'faculties.id')
-        //     ->join('courses', 'practicalexams.course_id', '=', 'courses.id')
-        //     ->join('practicalexam_subject', 'practicalexams.id', '=', 'practicalexam_subject.practicalexam_id')
-        //     ->leftjoin('subjects', function ($join) {
-        //         $join->on('practicalexam_subject.subject_id', '=', 'subjects.id')
-        //             ->where('subjects.subjecttype_id', '=', 2);
-        //     })
-        //     ->select(
-        //                         'courses.id as course_id',
-        //         'courses.name as course_name',
-        //         DB::raw('GROUP_CONCAT(DISTINCT subjects.scode) as subjects'),
-        //         'faculties.name',
-        //         'faculties.mobileno',
-        //         'faculties.address',
-        //         'faculties.email',
-        //         'practicalexams.start_date',
-        //         'practicalexams.end_date',
-        //                         'practicalexams.id'
+        $paractical = DB::table('practicalexams')
+            ->join('faculties', 'practicalexams.faculty_id', '=', 'faculties.id')
+            ->join('courses', 'practicalexams.course_id', '=', 'courses.id')
+            ->join('practicalexam_subject', 'practicalexams.id', '=', 'practicalexam_subject.practicalexam_id')
+            ->leftjoin('subjects', function ($join) {
+                $join->on('practicalexam_subject.subject_id', '=', 'subjects.id')
+                    ->where('subjects.subjecttype_id', '=', 2);
+            })
+            ->select(
+                                'courses.id as course_id',
+                'courses.name as course_name',
+                DB::raw('GROUP_CONCAT(DISTINCT subjects.scode) as subjects'),
+                'faculties.name',
+                'faculties.mobileno',
+                'faculties.address',
+                'faculties.email',
+                'practicalexams.start_date',
+                'practicalexams.end_date',
+                                'practicalexams.id'
 
-        //     )
-        //     ->where('practicalexams.exam_id', 27)
-        //     ->where('practicalexams.institute_id', $institute->id)
-        //     ->groupBy('faculties.id','practicalexams.course_id')
-        //     ->get();
+            )
+            ->where('practicalexams.exam_id', 28)
+            ->where('practicalexams.institute_id', $institute->id)
+            ->where('practicalexams.deleted_at',null)
+            ->groupBy('faculties.id','practicalexams.course_id')
+            ->get();
 
 
 
 
         
 
-$paractical=[];
 
 
         return view('institute.notice',compact('af_paid','enf_paid','institute','paractical','apids'));

@@ -23,7 +23,7 @@ class AttendancesheetController extends Controller
         $this->middleware(['role:examcenter']);
         $this->helper = new HelperService;
         $this->exam_id = $this->helper->getScheduledExamID();
-        $this->exam_id = 27;
+        $this->exam_id = 28;
     }
 
     public function store(Request $r){

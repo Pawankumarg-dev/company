@@ -12,7 +12,7 @@
     <h5>
         <table class="table table-bordered " >
             <tr>
-                <td>Course</td>  <th>{{$ap->programme->abbreviation}}</th>
+                <td>Course</td>  <th>{{$ap->abbreviation}}</th>
                 <td>Batch</td><th>{{$batch}}</th>
                 <td>Term</td> <th>{{$term}}</th>
             </tr>
@@ -25,9 +25,16 @@
             <th>Subject</th>
             <th></th>
         </tr>
-        <?php $slno = 1; ?>
-        @foreach($ap->programme->subjects as $subject)
-            @if($subject->syear == $term && $subject->subjecttype_id == 2)
+        <?php $slno = 1; 
+        $data = \App\PracticalExamSubject::where('practicalexam_id', $exam->id)
+            ->pluck('subject_id')->toArray();
+        $subjects = \App\Subject::where('programme_id', $ap->programme_id)->get();
+        ?>
+
+        @foreach($subjects as $subject)
+            @if($subject->syear == $term && $subject->subjecttype_id == 2 && in_array($subject->id, $data))
+                        {{-- @if($subject->syear == $term && $subject->subjecttype_id == 2) --}}
+
                 <tr>
                     <td>{{$slno}} <?php $slno++ ; ?></td>
                     <td>{{$subject->scode}}</td>
@@ -36,8 +43,7 @@
                         <input 
                             type="checkbox"
                             class="chk_{{$ap->id}}_{{$term}}" 
-                            name="chk_{{$subject->id}}"
-                            
+                            name="chk_{{$subject->id}}"  
                         >
                     </td>
                 </tr>

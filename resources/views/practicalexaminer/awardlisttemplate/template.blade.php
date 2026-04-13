@@ -121,7 +121,7 @@
             <td>
                 <table border="0" cellpadding="2" cellspacing="0" width="100%" class="h8-text border-table" style="margin-top:15px;">
                     <tr>
-                        <td class="h7-text  blue-text" colspan="5" style="border-left:1px solid #aaa;border-top:1px solid #aaa;"><span class="h7-text bold-text bt">EXTERNAL PRACTICAL EXAMINATION MARK ENTRY FORM - JUNE 2024</span></td>
+                        <td class="h7-text  blue-text" colspan="5" style="border-left:1px solid #aaa;border-top:1px solid #aaa;"><span class="h7-text bold-text bt">EXTERNAL PRACTICAL EXAMINATION MARK ENTRY FORM - @if($exam_name->cbid_academicyear_id==$approvedprogramme->academicyear_id && $approvedprogramme->programme_id==57) Regular  {{$approvedprogramme->academicyear}} @else {{$exam_name->name}} @endif</span></td>
                         <td class="h7-text"> Date: {{$date}}</td>
                     </tr>
                 </table>
@@ -152,7 +152,7 @@
                                             }
                                         ?>
                                         
-                        <td class="h7-text blue-text" ><b>{{$batch}}</b></td>
+                        <td class="h7-text blue-text" ><b>@if($approvedprogramme->programme_id=57) {{$approvedprogramme->academicyear->year}} @else{{$batch}}@endif</b></td>
                         
                         <td class="h7-text  blue-text" >
                             Year

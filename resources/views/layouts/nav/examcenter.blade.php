@@ -34,6 +34,9 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/examcenter/schedule') }}">Examinations </a></li>
+                                        <li><a href="{{ url('examcenter/evalution-center') }}">Evalution Center</a></li>
+
+                    
                     <?php $ec_id =  \App\Externalexamcenter::where('user_id',Auth::user()->id)->first()->id; ?>
                      @if(!$ec_id==1584)
                
@@ -46,7 +49,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             
-                            <li><a target="_blank"  href="{{ url('/files/examcenter/Scheme_Exam_2024.pdf') }}">Scheme of Examination </a></li>
+                            <li><a target="_blank"  href="https://nber-rehabcouncil.gov.in/files/notice/SoE_NBER.pdf">Scheme of Examination </a></li>
                             <li><a target="_blank"  href="{{ url('/files/examcenter/CS.pdf') }}">Duties of Centre Superintendent (CS) </a></li>
                             <li><a target="_blank"  href="{{ url('/files/examcenter/CLO.pdf') }}">Duties of Central Level Observer (CLO)</a></li>
                             <li><a target="_blank"  href="{{ url('/files/examcenter/Invigilator.pdf') }}">Duties of Invigilator </a></li>

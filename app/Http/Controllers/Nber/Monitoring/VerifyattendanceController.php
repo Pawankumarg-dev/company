@@ -27,16 +27,22 @@ class VerifyattendanceController extends Controller
     public function show($id,Request $r){
         $exam_id = $this->exam_id;
         $approvedprogramme = \App\Approvedprogramme::find($id);
+        $subject = \App\Subject::find($r->subject_id);
 
         $applications =   $this->examService->getApplicantions($id,$r->subject_id,null,null,$this->exam_id,0);
-        if($r->approvedprogramme_id == 8837 ){
-            $ec_id = \App\Allexampaper::where('approvedprogramme_id',$id)->first()->externalexamcenter_id;
-            $district_id = \App\Externalexamcenter::find($ec_id)->district;
-            $applications =   $this->examService->getApplicantions($r->approvedprogramme_id,$r->subject_id,null,null,27,$district_id);
-        }
+
+            $applications =  \App\Allexamstudent::where('exam_id',$exam_id)->whereHas('candidate',function($q) use($id){
+            $q->where('approvedprogramme_id',$id);
+            })->where('alternativesubject_id',$subject->alternativesubject_id)->where('subject_id',$subject->id)->get();
+
+
+        // if($r->approvedprogramme_id == 8837 ){
+        //     $ec_id = \App\Allexampaper::where('approvedprogramme_id',$id)->first()->externalexamcenter_id;
+        //     $district_id = \App\Externalexamcenter::find($ec_id)->district;
+        //     $applications =   $this->examService->getApplicantions($r->approvedprogramme_id,$r->subject_id,null,null,27,$district_id);
+        // }
         $schedule_id = $r->examschedule_id;
         $schedule = \App\Examschedule::find($schedule_id);
-        $subject = \App\Subject::find($r->subject_id);
         $nber = $this->helperService->getNberID();
         $exampaper = \App\Allexampaper::where('subject_id',$r->subject_id)->where('approvedprogramme_id',$id)->where('exam_id',$this->exam_id)->first();
 

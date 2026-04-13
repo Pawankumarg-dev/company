@@ -5,7 +5,7 @@
 		<div class="col-md-6">
             <?php $slno = 1; ?>
             <h3>Time Table - Theory</h3>
-            <h4>June 2025 Examinations </h4>
+            <h4>Supplementary 2026 Examinations </h4>
             <br>
             <form action="{{url('/exam-timetable')}}" method="get">
                 {{csrf_field()}}

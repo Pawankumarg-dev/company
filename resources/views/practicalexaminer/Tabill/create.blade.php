@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h2 class="text-center mb-4">Add T.A Bill & CLO Report</h2>
+    <h2 class="text-center mb-4">Add T.A Bill & Report</h2>
     
     <form action="{{ url('/') }}/faculty/tabill" method="POST" enctype="multipart/form-data" id="schoolForm">
         {!! csrf_field() !!}
@@ -31,7 +31,7 @@
                 <label for="nber_id">Payment For</label>
                 <select class="form-control" name="payment_for" id="payment_for" required>
                     <option value="" selected disabled>Please select</option>
-                        <option value="Paractical Examiner">Paractical Examiner</option>
+                        <option value="Paractical Examiner" selected>Paractical Examiner</option>
                         {{-- <option value="Clo">Clo</option>
                         <option value="Evaluator">Evaluator</option>
                         <option value="Others">Others</option> --}}

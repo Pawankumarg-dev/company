@@ -11,7 +11,6 @@ use App\Services\Common\HelperService;
 use Session;
 use App\Exam;
 use PDF;
-use DB;
 
 use App\Http\Requests\Backlog\StoreApplicantRequest;
 
@@ -38,13 +37,13 @@ class ApplicantController extends Controller
     }
 
     private function initiate(){
-        $this->exam_id = 28;
+        $this->exam_id = Session::get('exam_id');
         $this->exam = Exam::find($this->exam_id);
         $this->ApplicantService->assignmodel($this->exam_id);
     }
     public function index(Request $r)
     {
-      
+        Session::put('exam_id',28); 
         if($r->has('exam_id')){
             Session::put('exam_id',$r->exam_id);
         }
@@ -73,12 +72,14 @@ class ApplicantController extends Controller
     }
 
     public function show($id,Request $r)
-    {         
-        //$applicant = $this->ApplicantService->getApplicant($id);
-        $applicant =  \App\Allapplicant::find($id);
-       // dd($applicant);
+    {              
+         
+        if($this->exam_id >28){
+            Session::flash('error','Please select valid exam');
+            return back();
+        }
+        $applicant = $this->ApplicantService->getApplicant($id);
         $candidate = \App\Candidate::find($applicant->candidate_id);
-       //dd($candidate);
         $institute = \App\Institute::find($this->helperService->getInstituteID());
         $exam = $this->exam;
         if($r->has('practical')){
@@ -88,22 +89,32 @@ class ApplicantController extends Controller
                 Session::flash('error','Please select Term');
                 return back();
             }
-          
-            // if($applicant->first_year_practical_ht < 1 && $applicant->second_year_practical_ht < 1 ){
-            //     Session::flash('error','Not Generated');
+            if($candidate->status_id !=2){
+                Session::flash('error','Document verification is pending contact to consern NBER');
+                return back();
+            }
+            // if ($applicant->payment_status != 1 || is_null($applicant->payment_status)) {
+            //     Session::flash('error', 'Payment not Done');
             //     return back();
             // }
-            // if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
-            //     Session::flash('error','Photo not found');
-            //     return back();
-            // }
-            // if(!file_exists(public_path().'/files/enrolment/signature/'.$applicant->candidate->signature)){
-            //     Session::flash('error','Signature not found');
-            //     return back();
-            // }
-            $ht = \App\Practicalhallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',28)->first();
-            //$ht->downloaded = 1;
-            //$ht->save();
+
+              if($applicant->first_year_practical_ht < 1 && $applicant->second_year_practical_ht < 1 ){
+                Session::flash('error','Not Generated contact to consern NBER');
+                return back();
+            }
+
+            if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
+                Session::flash('error','Photo not found contact to consern NBER');
+                return back();
+            }
+            if(!file_exists(public_path().'/files/enrolment/signature/'.$applicant->candidate->signature)){
+                Session::flash('error','Signature not found contact to consern NBER');
+                return back();
+            }
+            $ht = \App\Practicalhallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',$this->exam_id)->first();
+            $ht->downloaded = 1;
+            $ht->save();
+
             if($r->has('downloadht')){
                 $format = 'html';
 
@@ -116,8 +127,6 @@ class ApplicantController extends Controller
                         'applicant'
                     ));    
                 }
-              // dd( $applicant->applications->first());
-              
                 return view('common.exam.hallticket_p',compact(
                     'term',
                     'format',
@@ -130,19 +139,17 @@ class ApplicantController extends Controller
         }
 
 
-        //  $applicant = $this->ApplicantService->getApplicant($id);
+        $applicant = $this->ApplicantService->getApplicant($id);
         $district_id = $applicant->candidate->district_id;
-        $exam_center = $this->ApplicantService->getExamcenter($institute,2,$district_id);
-       // dd($exam_center->externalexamcenter);
+
         $exam = $this->exam;
-        
-        //$institute = \App\Institute::find($applicant->institute_id);
-        
+
+        $institute = \App\Institute::find($applicant->institute_id);
        /* if($applicant->candidate->approvedprogramme->transferred_to > 0){
             $institute = \App\Institute::find($applicant->candidate->approvedprogramme->transferred_to);
         }
         */
-        if($r->has('downloadht') && $applicant->blocked !=1){
+        if($r->has('downloadht') && $applicant->block !=1){
             
             $term = 0;
             $format = 'pdf';
@@ -175,10 +182,12 @@ class ApplicantController extends Controller
             //     Session::flash('error','Signature not found');
             //     return back();
             // }
-            $ht = \App\Hallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',28)->first();
-            //$ht->downloaded = 1;
-            //$ht->save();
-           // dd($exam_center);
+            $ht = \App\Hallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',$this->exam_id)->first();
+            $ht->downloaded = 1;
+            $ht->save();
+
+            $exam_center = \App\Examcenter::where('id',$ht->examcenter_id)->first();
+
             return view('common.exam.hallticket_new',compact(
                 'applicant',
                 'exam_center',

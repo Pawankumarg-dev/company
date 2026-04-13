@@ -12,29 +12,46 @@ use App\Http\Requests;
 class AwardlisttemplateController extends Controller
 {
     private $helperService;
+    private $exam_id;
 
     public function __construct(HelperService $help)
     {
         $this->middleware(['role:faculty']);
         $this->helperService = $help;
+                        $this->exam_id = 28;
+
     }
 
     public function store(Request $r){
-    
-       // $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
-        $practicalexaminer_id = 7467;
-       // dd($practicalexaminer_id);
+       
+        //dd($r->all());
+        $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
+
         // if($practicalexaminer_id != 1894){
         //     return redirect('/logoff');
         // }
         //$practicalexaminer  = \App\Practicalexaminer::find($practicalexaminer_id);
         $practicalexaminer  = \App\Faculty::find($practicalexaminer_id);
-       // dd($practicalexaminer);
-        //$date = \Carbon\Carbon::now()->toDateString();
-        $date = Session::get('date');
-      
+        $date = \Carbon\Carbon::now()->toDateString();
         $downloadTime = \Carbon\Carbon::now()->toDateTimeString();
         $term = $r->term;
+
+
+
+        // $templates = \App\Awardlisttemplate::where('faculty_id', $practicalexaminer_id)
+        //     ->where('exam_date', $date)
+        //     ->where('practicalexam_id', $r->practicalexam_id)
+        //     ->where('institute_id', $r->institute_id)
+        //     ->where('approvedprogramme_id', $r->approvedprogramme_id)
+        //     ->where('term', $term)
+        //     ->whereNotNull('marksheet')
+        //     ->get();
+
+        // if ($templates) {
+        //     return back()->with('templates', $templates);
+        // }
+
+
         $templates = \App\Awardlisttemplate::where('faculty_id',$practicalexaminer_id)
                     ->where('exam_date',$date)
                     ->where('practicalexam_id',$r->practicalexam_id)
@@ -42,12 +59,10 @@ class AwardlisttemplateController extends Controller
                     ->where('approvedprogramme_id',$r->approvedprogramme_id)
                     ->where('term',$term)
                     ->get();
-        //dd($templates);
         foreach($templates as $t){
             $t->subjects()->detach();
             $t->delete();
         }
-
         $template = \App\Awardlisttemplate::create([
             'faculty_id' => $practicalexaminer_id,
             'exam_date' => $date,
@@ -57,26 +72,30 @@ class AwardlisttemplateController extends Controller
             'term' => $term,
             'downloaded_at' => $downloadTime
         ]);
-      //  dd($template); 
+        
+        
         $approvedprogramme = \App\Approvedprogramme::find($r->approvedprogramme_id);
        // $practicalexam  = \App\Practicalexam::find($r->practicalexam_id);
         $subjects = \App\Subject::where('syear',$term)
                     ->where('subjecttype_id',2)
                     ->where('programme_id',$approvedprogramme->programme_id)
                     ->get();
-        
+       
         foreach($subjects as $subject){
             if($r->has('chk_'.$subject->id)){
                 $template->subjects()->attach($subject->id);
                 Session::put($subject->scode,'yes');
             }
+          
         }   
-
+        $exam_name  = \App\Exam::find($this->exam_id);
         $subject_ids =  $template->subjects()->pluck('id');
+        // dd( $subject_ids);
         $candidate_ids = \App\Allapplication::whereHas('candidate', function($q) use($r){
                     $q->where('approvedprogramme_id',$r->approvedprogramme_id);
-                })->whereIn('subject_id',$subject_ids)->where('exam_id',27)
+                })->whereIn('subject_id',$subject_ids)->where('exam_id', $this->exam_id)
                 ->pluck('candidate_id')->unique()->toArray();
+       // dd( $candidate_ids);
         $candidates = \App\Candidate::whereIn('id',$candidate_ids)->get();
         if($candidates->count()==0){
             $template->subjects()->detach();
@@ -91,16 +110,18 @@ class AwardlisttemplateController extends Controller
             'term',
             'template',
             'candidates',
-            'practicalexaminer'
+            'practicalexaminer',
+            'exam_name'
         ));  
     }
+
     public function show($id,Request $r){
         $subject_id = $r->subject_id;
         $template = \App\Awardlisttemplate::find($id);
         $ap = \App\Approvedprogramme::find($template->approvedprogramme_id);
         $applications = \App\Allapplication::whereHas('candidate',function($q) use ($template){
             $q->where('approvedprogramme_id',$template->approvedprogramme_id);
-        })->where('subject_id',$subject_id)->where('exam_id',27)
+        })->where('subject_id',$subject_id)->where('exam_id', $this->exam_id)
         ->get();
         $subject = \App\Subject::find($subject_id);
         if($subject->is_external == 0){
@@ -109,33 +130,56 @@ class AwardlisttemplateController extends Controller
         }
         return view('practicalexaminer.awardlisttemplate.show',compact('template','applications','ap','subject'));
     }
-    public function update($id,Request $request){
-        //return "Closed";
-      $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
 
-    //   if($practicalexaminer_id != 1894){
-    //     return redirect('/logoff');
-    // }
-        $file = $request->marksheet;
-        if(!is_file($file)){
-            Session::flash('error','Plese choose a file');
+   public function update($id, Request $request)
+    {
+        $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
+
+        // Check if file exists
+        if (!$request->hasFile('marksheet')) {
+            Session::flash('error', 'Please choose a file');
             return back();
         }
-        $datetime = \Carbon\Carbon::now()->toDateTimeString();
+
+        $file = $request->file('marksheet');
+
+        // Check if file is valid
+        if (!$file->isValid()) {
+            Session::flash('error', 'Invalid file upload');
+            return back();
+        }
+
+        // Safe datetime and filename
+        $datetime = \Carbon\Carbon::now()->format('Ymd_His');
+        $extension = $file->getClientOriginalExtension();
+        $fname = $id . '_' . $datetime . '.' . $extension;
+
+        // Destination folder
+        $destination = public_path('files/externalpractical');
+
+        // Create folder if not exists
+        if (!file_exists($destination)) {
+            mkdir($destination, 0755, true);
+        }
+
+        try {
+            // Move file
+            $file->move($destination, $fname);
+        } catch (\Exception $e) {
+            Session::flash('error', 'Upload Failed!');
+            return back();
+        }
+
+        // Save to database
+        $template = \App\Awardlisttemplate::find($id);
         
-        $fname = $id.'_'.$datetime;
-        $destination = public_path()."/files/externalpractical/".$fname;
-        try{
-            move_uploaded_file( $file, $destination);
-        }catch(Exception $e){
-            Session::flash('error','Upload Failed!');
-            return back();
+        if ($template) {
+            $template->marksheet_uploaded_at = $datetime;
+            $template->marksheet = $fname;
+            $template->save();
         }
-        $template= \App\Awardlisttemplate::find($id);
-        $template->marksheet_uploaded_at = $datetime;
-        $template->marksheet = $fname;
-        $template->save();
-        Session::flash('messages','File Uploaded');
+        //dd( $template);
+        Session::flash('messages', 'File Uploaded Successfully');
         return back();
     }
 }

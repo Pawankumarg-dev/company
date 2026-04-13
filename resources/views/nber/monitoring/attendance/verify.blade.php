@@ -161,8 +161,8 @@
                                     </td>
                                     <td>
                                         <input type="hidden" class="hiddenid" value="{{$a->id}}">
-                                        <input class="attn" disabled  data-id="{{$a->id}}"  type="radio" name="attendence_{{$a->id}}" value="1"  @if($a->attendance_ex == 1) checked @endif /> Present 
-                                        <input  class="attn" disabled data-id="{{$a->id}}" type="radio" name="attendence_{{$a->id}}" value="2" @if($a->attendance_ex == 2) checked @endif />  Absent 
+                                        <input class="attn" disabled  data-id="{{$a->id}}"  type="radio" name="attendence_{{$a->id}}" value="1"  @if($a->attendance == 1) checked @endif /> Present 
+                                        <input  class="attn" disabled data-id="{{$a->id}}" type="radio" name="attendence_{{$a->id}}" value="2" @if($a->attendance == 2) checked @endif />  Absent 
                                     </td>
                                         <td>
                                             {{--NB<input type="number" pattern="/^-?\d+\.?\d*$/"    onKeyPress="if(this.value.length==6) return false;" id="ansbookno_{{$a->id}}" name="ansbookno_{{$a->id}}"  value="{{$a->dummy_number}}" disabled> --}}

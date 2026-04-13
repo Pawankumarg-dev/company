@@ -75,7 +75,7 @@ if ($r->has('view')) {
             if ($r->view == 'examform') {
 
 
-
+ $date = \Carbon\Carbon::today()->toDateString();
         $Candidate = \App\Candidate::where('user_id', Auth::user()->id)->first();
             $theoty=1;
             $paractical=2;
@@ -99,18 +99,18 @@ if ($r->has('view')) {
 
 
 
-// $eligiable = DB::table('allexamresults')
-//     ->select(
-//         'candidate_id',
-//         DB::raw('COUNT(sl_no_marksheet_term_one) AS term_one_exam_count'),
-//         DB::raw('COUNT(sl_no_marksheet_term_two) AS term_two_exam_count')
-//     )
-//     ->where('candidate_id', $Candidate->id)
-//     ->groupBy('candidate_id')
-//     ->first(); // Use first() instead of get()
+$eligiable = DB::table('allexamresults')
+    ->select(
+        'candidate_id',
+        DB::raw('COUNT(sl_no_marksheet_term_one) AS term_one_exam_count'),
+        DB::raw('COUNT(sl_no_marksheet_term_two) AS term_two_exam_count')
+    )
+    ->where('candidate_id', $Candidate->id)
+    ->groupBy('candidate_id')
+    ->first(); // Use first() instead of get()
 
         if (
-            // ($eligiable->term_one_exam_count > 3 || $eligiable->term_two_exam_count > 3) ||
+            // ($eligiable->term_one_exam_count > 2 || $eligiable->term_two_exam_count > 2) ||
         ($Candidate->approvedprogramme->programme->numberofterms == 1 && $Candidate->approvedprogramme->academicyear_id<11) || ($Candidate->approvedprogramme->programme->numberofterms == 2 && $Candidate->approvedprogramme->academicyear_id<10)
 
         ) {
@@ -124,10 +124,9 @@ if ($r->has('view')) {
         $exam = $this->examService->getExam();
         $languages = \App\Language::all();
         $applicant =  $this->examService->getApplicant();
-        
         $reason = $this->examService->getReason();
         $exception =  0;
-       
+
             if (!is_null($allapplicant)) {
 
                 if($allapplicant->payment_status!=1){
@@ -194,9 +193,11 @@ WHERE
 
 ) t
 GROUP BY t.candidate_id;");
-           // dd($applicant->order->order_number);
-            // $orders  = \App\Order::where('id' , $applicant->order_id)->get();
-            return view('student.exam.application',compact(
+if($allapplicant->payment_status==1){
+
+
+
+                 return view('student.exam.applicationdownload',compact(
             'subjects',
             'exam',
             'languages',
@@ -206,6 +207,26 @@ GROUP BY t.candidate_id;");
             'Candidate',
             'internalpass'
         ));
+}elseif(($date < '2026-03-25' && $Candidate->approvedprogramme_id==8837) ||($date < '2026-03-28' && $Candidate->approvedprogramme->institute_id==987)){
+
+ return view('student.exam.application',compact(
+            'subjects',
+            'exam',
+            'languages',
+            'applicant',
+            'exception',
+            'reason',
+            'Candidate',
+            'internalpass'
+        ));
+
+}
+
+else{
+return "The exam form submission date is over. The form is now closed.";
+}
+
+
             }
         }else{
 
@@ -249,7 +270,8 @@ WHERE
     and subjecttype_id in ($theoty,$paractical)
 ) t
 GROUP BY t.candidate_id;");
-           //dd($subjects);
+
+if(($date < '2026-03-25' && $Candidate->approvedprogramme_id==8837) ||($date < '2026-03-28' && $Candidate->approvedprogramme->institute_id==987)){
             return view('student.exam.application',compact(
             'subjects',
             'exam',
@@ -260,6 +282,11 @@ GROUP BY t.candidate_id;");
              'Candidate',
             'internalpass'
         ));
+}
+else{
+
+    return "The exam form submission date is over. The form is now closed.";
+}
         }
 
 

@@ -65,7 +65,6 @@ class HelperService
     }
     public function getProgrammes($onlyNBER = null,$course_id = null){
         $programmes = \App\Programme::where('active_status',1);
-       
         if((Auth::user()->usertype_id == 1 || Auth::user()->usertype_id == 11) && ( !$this->isRCILogin() || !is_null($onlyNBER))){
             $programmes = $programmes->where('nber_id',$this->getNberID());
             
@@ -73,7 +72,6 @@ class HelperService
         if(!is_null($course_id)){
             $programmes = $programmes->where('course_id',$course_id);
         }
-       // dd($programmes->get());
         return $programmes->get();
     }
 
@@ -105,7 +103,6 @@ class HelperService
     }
 
     public function getExternalexamcenterID(){
-        // dd(Auth::user()->id);
         if(Auth::user()->usertype_id == 6){
             return \App\Externalexamcenter::where('user_id',Auth::user()->id)->first()->id;
         }

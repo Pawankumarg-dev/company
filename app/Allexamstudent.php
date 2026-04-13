@@ -57,6 +57,7 @@ public function alternativesubject(){
     return $this->belongsTo('App\Language');
 }
 
+
     public function status(){
         return $this->belongsTo('App\Status');
     }

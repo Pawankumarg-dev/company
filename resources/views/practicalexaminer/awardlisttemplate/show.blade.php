@@ -38,15 +38,26 @@
                                 {{$application->candidate->name}}
                             </td>
                             <td>
-                                <input 
-                                    name="mark_{{$application->id}}" 
-                                    type="text" style="width: 30px;border:solid 1px #ccc;" 
-                                    value="{{$application->mark_ex}}"
-                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'   
-                                    onkeyup="this.value = minmax(this.value, 0, {{$subject->emax_marks}})"
-                                >
-                                <input name="absent_{{ $application->id }}" @if($application->attendance_ex == 2)  checked @endif type="checkbox"> Absent
-                            </td>
+                            <input 
+                                id="mark_{{$application->id}}"
+                                name="mark_{{$application->id}}" 
+                                type="text" 
+                                required
+                                style="width: 30px;border:solid 1px #ccc;" 
+                                value="{{$application->mark_ex}}"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"   
+                                onkeyup="this.value = minmax(this.value, 0, {{$subject->emax_marks}})"
+                                @if($application->attendance_ex == 2) disabled @endif 
+                            >
+
+                            <input 
+                                type="checkbox" 
+                                name="absent_{{ $application->id }}"
+                                id="absent_{{$application->id}}"
+                                @if($application->attendance_ex == 2) checked @endif
+                                onchange="toggleAbsent({{$application->id}})"
+                            > Absent
+                        </td>
                         </tr>
                         
                     @endforeach
@@ -58,3 +69,18 @@
     </div>
 </div>
 @endsection
+
+
+    <script>
+function toggleAbsent(id) {
+    let checkbox = document.getElementById('absent_' + id);
+    let markInput = document.getElementById('mark_' + id);
+
+    if (checkbox.checked) {
+        markInput.value = '';   // optional: clear marks
+        markInput.disabled = true;
+    } else {
+        markInput.disabled = false;
+    }
+}
+</script>

@@ -3,10 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 use ApprovedProgram;
 class Faculty extends Model
-{
-    //
+{ 
+        use SoftDeletes;
+
     protected $fillable = [
         'institute_id', 
         'joining_date',

@@ -22,7 +22,7 @@
                         End Time
                     </th>
                     <th>Description</th>
-                    <th>Links</th>
+                    {{-- <th>Links</th> --}}
                 </tr>
                 @foreach($schedules as $schedule)
                 <tr>
@@ -42,9 +42,9 @@
                     <td>
                         {{$schedule->description}}
                     </td>
-                    <td>
+                    {{-- <td>
                         <a href="{{url('/nber/exam/schedules/')}}/{{$schedule->id}}" class="btn btn-xs btn-primary " >QP Pattern, Answer Keys & Evaluators</a>
-                    </td>
+                    </td> --}}
                 </tr>
                 @endforeach
         </div>

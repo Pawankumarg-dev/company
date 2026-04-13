@@ -16,7 +16,7 @@
             @if(!is_null($timetables))
             	<div class="row">
                     <div class="col-md-12">
-                <div class="alert alert-success ">No of Applicants: {{$timetables->count()}}</div>
+                <div class="alert alert-success ">No of Applicants: {{$countofcandidates}}</div>
             </div>
                 </div>
             	<div class="row">
@@ -57,7 +57,7 @@
                                 End Time
                             </th>
                             <th>Description</th>
-                            <th class="">Answer Keys, QP Pattern & Evaluators</th>
+                            {{-- <th class="">Answer Keys, QP Pattern & Evaluators</th> --}}
                             <th>Remarks</th>
                         </tr>
                         @foreach($timetables as $timetable)
@@ -94,10 +94,9 @@
                             <td>
                                 {{$timetable->examschedule->description}}
                             </td>
-                            <td>
-
+                            {{-- <td>
                                 <a class="btn btn-xs btn-primary " href="{{url('nber/exam/answerkeys/')}}/{{$timetable->id}}">Question Paper Pattern & Answer Keys</a>
-                            </td>
+                            </td> --}}
                             <td>
                                 <form action="{{ url('nber/exam/timetable')}}/{{  $timetable->id }}" method="POST">
                                     {{ method_field('DELETE') }}

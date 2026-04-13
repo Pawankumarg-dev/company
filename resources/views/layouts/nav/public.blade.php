@@ -43,7 +43,7 @@
                                 <li><a href="{{ url('track') }}">Grievance Status</a></li>
                         </ul>
                     </li>
-                    <li><a class="" href="{{ url('exam-timetable') }}">Exam Timetable - June 2025</a></li>
+                    <li><a class="" href="{{ url('exam-timetable') }}">Exam Timetable</a></li>
 
                 </ul>
 

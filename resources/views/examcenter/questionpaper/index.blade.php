@@ -31,7 +31,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3>JUNE 2025 EXAMINATION - QUESTION PAPERS
+                <h3>2026 EXAMINATION - QUESTION PAPERS
                 </h3>
                 @include('common.errorandmsg')
                 <h4>
@@ -138,59 +138,72 @@
                                 {{ $exam->no_of_student }}
                             </td>
                             <td>
-                                {{ $exam->programme->nber->name_code }}
+                                {{ $exam->programme->nber->name_code }} 
                             </td>
 
                             <td>
                                 <?php
                                     $omr_code = $exam->examtimetable->subject->omr_code;
+
+                                    
+                                if($omr_code == '38112'){
+                                $omr_code=39112;
+                                }
                                     $omr = \App\Omrcode::where('omr_code',$omr_code)->first();
-                                    $qplanguages = \App\Qplanguage::where('omr_code',$omr_code)->where('externalexamcenter_id',$externalexamcenter_id)->get();
-                                    $qplanguage_ids = \App\Qplanguage::where('omr_code',$omr_code)->where('externalexamcenter_id',$externalexamcenter_id)->pluck('language_id')->toArray();
-                                
-                                ?>
-                               @if($exam->programme_id == 70)
-                                    @foreach ($omr->languages as $paper)
-                                        <form target="_blank" action="{{ url('examcenter/downloadqp') }}" method="post"
-                                            class="">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" name="language_id" value="{{ $paper->pivot->language_id }}">
-                                            <input type="hidden" name="examtimetable_id" value="2689">
-                                            {{-- <input type="hidden" name="rand_string" value="{{ $paper->pivot->rand_string }}"> --}}
-                                            <input type="hidden" name="more" value="1">
-                                    <input type="hidden" name="password">
 
-                                            <input type="hidden" name="agent" class="agent">
-                                            <button type="submit" class="btn btn-xs btn-primary  "
-                                                style="margin-right:5px;margin-bottom:5px;float:left">
-                                                {{ $paper->language }}
-                                            </button>
-                                            {{--  <a target="_blank" class="btn btn-xs btn-primary @if (in_array($paper->id, $language_ids) || $paper->id == 1 || $paper->id == 2 || $paper->id == 14)  @else hide @endif " style="margin-right:5px;margin-bottom:5px" href="{{url('files/questionpapers/')}}/{{$paper->pivot->question_paper}}">{{$paper->language}}</a> --}}
-                                            </form>
-                                    @endforeach
-                                @else 
-                                
-                                @if($omr_code == 36115)
-                                            <a class="btn btn-xs btn-primary  " href="{{ url('files/36115') }}/dc_1_36115_2.pdf">English</a>
-                                            <a class="btn btn-xs btn-primary  " href="{{ url('files/36115') }}/dc_2_36115_2.pdf">Hindi</a>
-                                            <a class="btn btn-xs btn-primary  " href="{{ url('files/36115') }}/dc_4_36115_2.pdf">Telugu</a>
-                                            <a class="btn btn-xs btn-primary  " href="{{ url('files/36115') }}/dc_9_36115_2.pdf">Marathi</a>
-                                            <a class="btn btn-xs btn-primary  " href="{{ url('files/36115') }}/dc_11_36115_2.pdf">Tamil</a>
-                                            <a class="btn btn-xs btn-primary  " href="{{ url('files/36115') }}/dc_14_36115_2.pdf">Bilingual</a>
-                                @endif
+                                    
 
-                                @foreach ($qplanguages as $paper)
+
+                                    // $qplanguages = \App\Qplanguage::where('omr_code',$omr_code)->where('externalexamcenter_id',$externalexamcenter_id)->get();
+                                
+                            $apply_lang = \App\Subject::where('omr_code', $exam->examtimetable->subject->omr_code)
+                                    ->join('allexamstudents', function ($join) use ($externalexamcenter_id) {
+                                        $join->on('subjects.id', '=', 'allexamstudents.subject_id')
+                                            ->where('allexamstudents.externalexamcenter_id', '=', $externalexamcenter_id);
+                                    })
+                                    ->leftjoin('languages', 'allexamstudents.language_id', '=', 'languages.id')
+                                    ->select(
+                                        'languages.id',
+                                        'languages.language',
+                                        DB::raw('COUNT(*) as candidates')
+                                    )
+                                    ->groupBy('languages.id', 'languages.language')
+                                    ->get();
+                                    ?>
+
+                                
+                                @foreach ($apply_lang as $paper)
+
+                                <?php 
+
+                                        // $omr_codes=$exam->subject->omr_code;
+
+                                        // if($omr_codes==33111){
+                                        //     $omr_codes=34111;
+                                        // }elseif($omr_codes==33211){
+                                        //     $omr_codes=34211;
+                                        // }
+                              
+
+                                        ?>
+
+
+
+
                                     <form target="_blank" action="{{ url('examcenter/downloadqp') }}" method="post"
-                                        class="">
+                                        class="pre">
                                         {{ csrf_field() }}
-                                        <input type="hidden" name="language_id" value="{{ $paper->language_id }}">
+                                        <input type="hidden" name="language_id" value="{{ $paper->id }}">
                                         <input type="hidden" name="examtimetable_id" value="{{ $exam->examtimetable->id }}">
+                                        <input type="hidden" name="omr_code" value="{{ $omr_code }}">
+                                        <input type="hidden" name="allexampaper_id" value="{{ $exam->id }}">
+
                                         {{-- <input type="hidden" name="rand_string" value="{{ $paper->pivot->rand_string }}"> --}}
                                         <input type="hidden" name="agent" class="agent">
                                         <input type="hidden" name="password">
                                         <button type="submit" class="btn btn-xs btn-primary  "
                                             style="margin-right:5px;margin-bottom:5px;float:left">
-                                            {{ $paper->language->language }}
+                                            {{ $paper->language }} paper: {{$paper->candidates}}
                                         </button>
                                         {{--  <a target="_blank" class="btn btn-xs btn-primary @if (in_array($paper->id, $language_ids) || $paper->id == 1 || $paper->id == 2 || $paper->id == 14)  @else hide @endif " style="margin-right:5px;margin-bottom:5px" href="{{url('files/questionpapers/')}}/{{$paper->pivot->question_paper}}">{{$paper->language}}</a> --}}
                                     </form>
@@ -198,14 +211,33 @@
                                 <a href="javascript:unhide({{ $omr_code }})" class="show_{{ $omr_code }}" >Show more</a>
                                 <br />
                                 <br />
-                                <div class="more_{{ $omr_code }} hidden">
-                                    @foreach ($omr->languages as $paper)
-                                        @if(!in_array($paper->pivot->language_id,$qplanguage_ids))
+                           
+     <div class="more_{{ $omr_code }} hidden">
+
+<?php
+
+
+                                    
+                $qp = DB::table('examtimetable_language as etl')
+    ->join('languages as l', 'etl.language_id', '=', 'l.id')
+    ->where('etl.exam_id', 28)
+    ->where('etl.omr_code', $omr_code)
+    ->select('etl.*', 'l.language') // adjust columns as needed
+    ->get();
+
+   
+?>
+
+
+                                    @foreach ($qp as $paper)
                                             <form target="_blank" action="{{ url('examcenter/downloadqp') }}" method="post"
                                                 class="">
                                                 {{ csrf_field() }}
-                                                <input type="hidden" name="language_id" value="{{ $paper->pivot->language_id }}">
-                                                <input type="hidden" name="examtimetable_id" value="{{ $exam->examtimetable->id }}">
+                                                <input type="hidden" name="language_id" value="{{ $paper->language_id}}">
+                                                <input type="hidden" name="examtimetable_id" value="{{ $paper->examtimetable_id }}">
+                                                <input type="hidden" name="omr_code" value="{{ $omr_code }}">
+                                                <input type="hidden" name="allexampaper_id" value="{{ $exam->id }}">
+
                                                 {{-- <input type="hidden" name="rand_string" value="{{ $paper->pivot->rand_string }}"> --}}
                                                 <input type="hidden" name="more" value="1">
                                         <input type="hidden" name="password">
@@ -217,101 +249,9 @@
                                                 </button>
                                                 {{--  <a target="_blank" class="btn btn-xs btn-primary @if (in_array($paper->id, $language_ids) || $paper->id == 1 || $paper->id == 2 || $paper->id == 14)  @else hide @endif " style="margin-right:5px;margin-bottom:5px" href="{{url('files/questionpapers/')}}/{{$paper->pivot->question_paper}}">{{$paper->language}}</a> --}}
                                             </form>
-                                        @endif
                                     @endforeach
                                 </div>
-
-                                @if($exam->subject->omr_code == 14116)
-                                    <?php 
-
-                                        $omr_code = 14117;
-                                        $omr = \App\Omrcode::where('omr_code',$omr_code)->first();
-                                    ?>
-
-                                <div style="float:left;">
-
-                                        <hr />
-
-                                        <b>Alternative Paper</b>
-
-                                        <br />
-                                        <br />
-
-
-                                                @foreach ($qplanguages as $paper)
-                                                <form target="_blank" action="{{ url('examcenter/downloadqp') }}" method="post"
-                                                    class="">
-                                                    {{ csrf_field() }}
-                                                    <input type="hidden" name="language_id" value="{{ $paper->language_id }}">
-                                                    <input type="hidden" name="examtimetable_id" value="2466">
-                                                    {{-- <input type="hidden" name="rand_string" value="{{ $paper->pivot->rand_string }}"> --}}
-                                                    <input type="hidden" name="agent" class="agent">
-                                                    <input type="hidden" name="password">
-                                                    <button type="submit" class="btn btn-xs btn-primary  "
-                                                        style="margin-right:5px;margin-bottom:5px;float:left">
-                                                        {{ $paper->language->language }}
-                                                    </button>
-                                                    {{--  <a target="_blank" class="btn btn-xs btn-primary @if (in_array($paper->id, $language_ids) || $paper->id == 1 || $paper->id == 2 || $paper->id == 14)  @else hide @endif " style="margin-right:5px;margin-bottom:5px" href="{{url('files/questionpapers/')}}/{{$paper->pivot->question_paper}}">{{$paper->language}}</a> --}}
-                                                </form>
-                                                @endforeach 
-                                                <a href="javascript:unhide({{ $omr_code }})" class="show_{{ $omr_code }}" >Show more</a>
-                                                <br />
-                                                <br />
-                                                <div class="more_{{ $omr_code }} hidden">
-                                                @foreach ($omr->languages as $paper)
-                                                    @if(!in_array($paper->pivot->language_id,$qplanguage_ids))
-                                                        <form target="_blank" action="{{ url('examcenter/downloadqp') }}" method="post"
-                                                            class="">
-                                                            {{ csrf_field() }}
-                                                            <input type="hidden" name="language_id" value="{{ $paper->pivot->language_id }}">
-                                                            <input type="hidden" name="examtimetable_id" value="2466">
-                                                            {{-- <input type="hidden" name="rand_string" value="{{ $paper->pivot->rand_string }}"> --}}
-                                                            <input type="hidden" name="more" value="1">
-                                                    <input type="hidden" name="password">
-
-                                                            <input type="hidden" name="agent" class="agent">
-                                                            <button type="submit" class="btn btn-xs btn-primary  "
-                                                                style="margin-right:5px;margin-bottom:5px;float:left">
-                                                                {{ $paper->language }}
-                                                            </button>
-                                                            {{--  <a target="_blank" class="btn btn-xs btn-primary @if (in_array($paper->id, $language_ids) || $paper->id == 1 || $paper->id == 2 || $paper->id == 14)  @else hide @endif " style="margin-right:5px;margin-bottom:5px" href="{{url('files/questionpapers/')}}/{{$paper->pivot->question_paper}}">{{$paper->language}}</a> --}}
-                                                        </form>
-                                                    @endif
-                                                @endforeach
-                                                </div>
-
-                                            </div>
-
-
-
-
-
-
-                                @endif
-                                @endif
-
-                                @if($omr_code == 9113)
-                                            <br />
-                                            <b>45 Mraks Paper</b>
-                                            <br />
-                                            <a class="btn btn-xs btn-primary  " target="_blank" href="{{ url('files/9115') }}/dc_1_9115_2.pdf">English</a>
-                                            <a class="btn btn-xs btn-primary  "  target="_blank" href="{{ url('files/9115') }}/dc_2_9115_2.pdf">Hindi</a>
-                                            <a class="btn btn-xs btn-primary  " target="_blank" href="{{ url('files/9115') }}/dc_3_9115_2.pdf">Oriya</a>
-                                            <a class="btn btn-xs btn-primary  "  target="_blank" href="{{ url('files/9115') }}/dc_4_9115_2.pdf">Telugu</a>
-                                            
-
-                                            <a class="btn btn-xs btn-primary  "  target="_blank" href="{{ url('files/9115') }}/dc_5_9115_2.pdf">Malayalam</a>
-                                            <a class="btn btn-xs btn-primary  "  target="_blank" href="{{ url('files/9115') }}/dc_7_9115_2.pdf">Gujrathi</a>
-                                            <a class="btn btn-xs btn-primary  "  target="_blank" href="{{ url('files/9115') }}/dc_8_9115_2.pdf">Assamese</a>
-                                            <a class="btn btn-xs btn-primary  "  target="_blank" href="{{ url('files/9115') }}/dc_9_9115_2.pdf">Marathi</a>
-                                            <a class="btn btn-xs btn-primary  "  target="_blank" href="{{ url('files/9115') }}/dc_10_9115_2.pdf">Kannada</a>
-                                            <a class="btn btn-xs btn-primary  "  target="_blank" href="{{ url('files/9115') }}/dc_11_9115_2.pdf">Tamil</a>
-                                            <a class="btn btn-xs btn-primary  "  target="_blank" href="{{ url('files/9115') }}/dc_12_9115_2.pdf">Punjabi</a>
-                                            <a class="btn btn-xs btn-primary  "  target="_blank" href="{{ url('files/9115') }}/dc_14_9115_2.pdf">Bilingual</a>
-                                @endif
-
-
-
+                               
                             <td class="bg-success "><b class="text-red   ">{{ $exam->password }}</b></td>
                         </tr>
                     @endforeach

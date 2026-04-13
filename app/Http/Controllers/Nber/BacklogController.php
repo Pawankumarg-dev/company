@@ -292,6 +292,7 @@ class BacklogController extends Controller
 
     public function delete(Request $r){
                
+        return back();
 
         if(Auth::user()->id==87567){
             $exam_id = $r->exam_id;
@@ -352,7 +353,7 @@ public function mark_change_request(Request $r){
                     if($exam_id == '24'){
                         $application = \App\Supplimentaryapplication::find($r->id);
                     }else{
-                        if($exam_id == '26' || $exam_id == '27'){
+                        if($exam_id > '25'){
 
                             $application = \App\Allapplication::find($r->id);
 
@@ -455,7 +456,7 @@ $check = \App\Allapplication::where('id', $r->id)->where('exam_id', 27)->first()
                     if($exam_id == '24'){
                         $application = \App\Supplimentaryapplication::find($r->id);
                     }else{
-                        if($exam_id == '26' || $exam_id == '27'){
+                        if($exam_id > '25'){
 
 
                             $application = \App\Allapplication::find($r->id);
@@ -484,7 +485,7 @@ $check = \App\Allapplication::where('id', $r->id)->where('exam_id', 27)->first()
             // }
             if($r->edit=='Attendance'){
                 if($r->inex=='In'){
-                     if($exam_id == '26' || $exam_id == '27'){
+                     if($exam_id > '25'){
                         $application->attendance_in = $r->newdata;
                         }else{
                             $application->internalattendance_id = $r->newdata;;
@@ -492,7 +493,7 @@ $check = \App\Allapplication::where('id', $r->id)->where('exam_id', 27)->first()
 
                     
                 }else{
-                     if($exam_id == '26' || $exam_id == '27'){
+                     if($exam_id > '25'){
                         $application->attendance_ex = $r->newdata;
                         }else{
                             $application->externalattendance_id = $r->newdata;;
@@ -520,7 +521,7 @@ $check = \App\Allapplication::where('id', $r->id)->where('exam_id', 27)->first()
         
             if($r->edit=='Mark'){
                 if($r->inex=='In'){
-                    if($exam_id == '26' || $exam_id == '27'){
+                    if($exam_id > '25'){
                     $old_mark = $application->mark_in ;
                     $application->mark_in = $r->newdata;
                     }else{
@@ -539,7 +540,7 @@ $check = \App\Allapplication::where('id', $r->id)->where('exam_id', 27)->first()
 
 
 
-                          if($exam_id == '26' || $exam_id == '27'){
+                          if($exam_id >'25'){
                      $old_mark = $application->mark_ex ;
                         $application->mark_ex = $r->newdata;
                     }else{

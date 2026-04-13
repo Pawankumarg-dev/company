@@ -58,7 +58,7 @@
                             <input type="hidden" name="examtimetable_id" value="{{ $timetable->id }}">
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="password">Pdf  password:</label>
+                                <label for="password">Common Pdf  password:</label>
                                 <input type="text" name="password" id="password" value="{{$timetable->password}}" class="form-control">
                             </div>
                             <div class="form-group">
@@ -82,7 +82,7 @@
                                 Question papers should be in pdf format only.
                             </li>
                             <li>
-                                It is mandatory to upload 3 sets.
+                                It is mandatory to upload 2 sets.
                             </li>
                             <li>
                                 Translated versions of each sets should match.
@@ -120,7 +120,7 @@
                         <tr>
                             <td>Set #1</td>
                             <td>Set #2</td>
-                            <td>Set #3</td>
+                            {{-- <td>Set #3</td> --}}
                         </tr>
                         @foreach($languages->sortBy('language') as $language)
                             @if($language->language != 'Not_Applicable')

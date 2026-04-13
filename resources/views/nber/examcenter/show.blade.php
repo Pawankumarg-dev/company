@@ -8,7 +8,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<h4>Exam Center</h4>
+                <h4><strong>Note: Complete / Update the details for Mapping of Exam Centers and Save</strong></h4>
+				
 				@include('common.errorandmsg')
 				<a href="{{url('nber/excenter/')}}/{{$examcenter->id}}/edit" style="position: absolute;right:15px;top:10px;" class="btn  mb-2 btn-primary btn-xs pull-right">Edit</a>
 				<a href="{{url('nber/excenter/')}}" style="position: absolute;right:55px;top:10px;" class="btn btn-success btn-xs mb-2 pull-right">Back</a>
@@ -70,14 +71,14 @@
 						<th>User Name</th>
 						<td>{{$examcenter->user ? $examcenter->user->username : ''}}</td>
 					</tr>
-					<tr>
+					{{-- <tr>
 						<th>User Name</th>
 						<td>
 							<a href="{{url('nber/excenter/')}}/{{$examcenter->id}}/edit">
 								<small class="badge badge-xs">Edit to change the passwod</small>
 							</a>
 						</td>
-					</tr>
+					</tr> --}}
 				</table>
 			</div>
 		</div>

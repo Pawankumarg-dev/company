@@ -64,6 +64,9 @@ Route::group(array(
 
 
 
+
+
+
 Route::any('/trackadmission','PublicController@track_admission');
 
 Route::any('/sheet-vacnat','PublicController@sheet_vacnat');
@@ -189,10 +192,9 @@ Route::get('/password/resettootp','PublicController@resettootp');
 
 Route::post('/changepassword', 'PublicController@changePassword');
 
-//new routes
+
 Route::get('/notices-circulars', 'PublicController@notices_circulars');
 Route::get('/exam-timetable', 'PublicController@exam_timetable');
-
 
 
 
@@ -666,14 +668,14 @@ Route::group(array('middleware' => ['role:rci']), function ()
 });
 Route::group(array('middleware' => ['role:institute']), function ()
 {   
-    Route::any('/eparivesh/{id}/{p}','EpariveshController@index');
+Route::any('/eparivesh/{id}/{p}','EpariveshController@index');
 
-    // Route::post('/eparivesh2','EpariveshController@index2');
+// Route::post('/eparivesh2','EpariveshController@index2');
 
-    Route::post('/verify-student/{id}', 'EpariveshController@verify');
-    Route::post('/cancel-student/{id}', 'EpariveshController@cancel');
-    Route::get('/eparivesh/addcandidate/{id}/{apid}', 'EpariveshController@addcandidate');
-    Route::post('/eotp', 'EpariveshController@eotp');
+Route::post('/verify-student/{id}', 'EpariveshController@verify');
+Route::post('/cancel-student/{id}', 'EpariveshController@cancel');
+Route::get('/eparivesh/addcandidate/{id}/{apid}', 'EpariveshController@addcandidate');
+Route::post('/eotp', 'EpariveshController@eotp');
 
 
 
@@ -1033,31 +1035,35 @@ Route::group(array('middleware' => ['role:institute']), function ()
     
 // });
 Route::group(array('middleware' => ['role:examcenter']),function(){
-    Route::resource('examcenter/questionpaperotp','Examcenter\Exam\QuestionpaperotpController');
-    Route::post('examcenter/downloadqp','Examcenter\ExamController@downloadqp');
-    Route::resource('examcenter/schedule','Examcenter\Exam\ExamController');
-    Route::resource('examcenter/attendance','Examcenter\Exam\AttendanceController');
+    
+     Route::resource('examcenter/schedule','Examcenter\Exam\ExamController');
+     Route::resource('examcenter/attendance','Examcenter\Exam\AttendanceController');
+     Route::get('examcenter/evalution-center','Examcenter\Exam\ExamController@evalution_center');
     Route::resource('examcenter/attendancesheet','Examcenter\Exam\AttendancesheetController');
+
+// qp doenload url
     Route::resource('examcenter/questionpaper','Examcenter\Exam\QuestionPaperController');
+    Route::post('examcenter/downloadqp','Examcenter\ExamController@downloadqp');
+// end qp doenload url
+
+
     Route::get('examcenter/questionpapers/{sid}','Examcenter\ExamController@download');
+    Route::resource('examcenter/questionpaperotp','Examcenter\Exam\QuestionpaperotpController');
 
 
-
-
-
-    // Route::post('examcenter/verifymobile','Examcenter\ExamController@verifymobile');
-    // Route::post('examcenter/sendotp','Examcenter\ExamController@sendotp');
-    // Route::get('examcenter/profile','Examcenter\ExamController@profile');
-    // Route::post('examcenter/attendance/uploadsheet','Examcenter\ExamController@uploadsheet');
-    // //Route::get('examcenter/attendance','Examcenter\ExamController@attendancemarkging');
-    // Route::post('examcenter/saveattendance','Examcenter\ExamController@saveattendance');
-    // Route::get('examcenter/attendance/{apid}/{subject_id}','Examcenter\ExamController@marktheattendance');
-    // Route::get('examcenter','Examcenter\ExamController@index');
-    // Route::get('studentlist','Examcenter\ExamController@list');
-    // Route::get('printstudentlist','Examcenter\ExamController@printlist');
-    // Route::get('examcenter/timetable','Examcenter\ExamController@timetable');
-    // Route::get('examcenter/listofcandidates','Examcenter\ExamController@roomallocation');
-    // Route::get('examcenter/institutes','Examcenter\ExamController@institutes'); 
+    /*Route::post('examcenter/verifymobile','Examcenter\ExamController@verifymobile');
+    Route::post('examcenter/sendotp','Examcenter\ExamController@sendotp');
+    Route::get('examcenter/profile','Examcenter\ExamController@profile');
+    Route::post('examcenter/attendance/uploadsheet','Examcenter\ExamController@uploadsheet');
+    //Route::get('examcenter/attendance','Examcenter\ExamController@attendancemarkging');
+    Route::post('examcenter/saveattendance','Examcenter\ExamController@saveattendance');
+    Route::get('examcenter/attendance/{apid}/{subject_id}','Examcenter\ExamController@marktheattendance');
+    Route::get('examcenter','Examcenter\ExamController@index');
+    Route::get('studentlist','Examcenter\ExamController@list');
+    Route::get('printstudentlist','Examcenter\ExamController@printlist');
+    Route::get('examcenter/timetable','Examcenter\ExamController@timetable');
+    Route::get('examcenter/listofcandidates','Examcenter\ExamController@roomallocation');
+    Route::get('examcenter/institutes','Examcenter\ExamController@institutes'); */
 });
 Route::group(array('middleware' => ['role:student']), function (){
      
@@ -1119,64 +1125,66 @@ Route::group(array('middleware' => ['role:student']), function (){
 });
 Route::group(array('middleware' => ['role:faculty']), function ()
 {   
+     Route::resource('/faculty/tabill','Practicalexaminer\TABillController');
+    Route::get('/appointment', 'Practicalexaminer\HomeController@appointment');
     Route::resource('/practicalexam/home','Practicalexaminer\HomeController');
     Route::resource('practicalexam/awardlisttemplate','Practicalexaminer\AwardlisttemplateController');
     Route::resource('practicalexaminer/geotaggedphotos','Practicalexaminer\GeotaggedphotoController');
-    Route::resource('/faculty/tabill','Practicalexaminer\TABillController');
-Route::get('/appointment', 'Practicalexaminer\HomeController@appointment');
-
 });
+
+
+
 Route::group(array('middleware'=>['role:director']),function(){
     Route::resource('qp/exam/timetable', 'Director\Exam\TimetableController');
     Route::post('/qp/questionpaperupload/{ttid}/{lid}','Director\Exam\QuestionpaperController@questionpaperupload');
     Route::post('qp/updatepwd','Director\Exam\QuestionpaperController@savepassword');
-    Route::post('/qp/updatequestionpaperupload/{ttid}/{lid}','Director\Exam\QuestionpaperController@updatequestionpaperupload');
+    // Route::post('/qp/updatequestionpaperupload/{ttid}/{lid}','Director\Exam\QuestionpaperController@updatequestionpaperupload');
     Route::post('/qp/deletequestionpaperupload/{ttid}/{lid}','Director\Exam\QuestionpaperController@deletequestionpaperupload');
 });
 
 Route::group(array('middleware'=>['role:ms']),function(){
+
     Route::get('qpstatus','Ms\QpController@index');
     Route::get('qppublish','Ms\QpController@releaseqp');
     Route::get('testqpms','Ms\QpController@releaseqp');
     Route::post('qppublishfor','Ms\QpController@publish');
     Route::get('ms/questionpapers/{id}','Ms\QpController@show');
+
 });
 Route::get('nber/checkcbid','PublicController@cbid');
 Route::group(array('middleware' => ['role:nber']), function ()
 {   
 
 
-    Route::get('generatemainmarge2025','Nber\Exam\NewresultController@june2025');
-    Route::get('send_csemail','Nber\EvalutorController@send_csemail');
+Route::get('send_csemail_create_pwd','Nber\EvalutorController@send_csemail');
 
 
-    
+
 
 Route::get('marks-verification-course', 'Nber\EvalutorController@course')->name('marks-verification-course');
+
+// vertfication url
     Route::post('verify-external','Nber\EvalutorController@verify_external');
     Route::post('evaluationcenter/verify-marks','Nber\EvalutorController@verify_marks');
 
-        Route::get('reevaluationcenter/verify-marks','Nber\MarkVerifyController@verify_marks_re');
-                Route::post('reevaluationcenter/verify-marks/show','Nber\MarkVerifyController@verify_marks_re_show');
+    Route::get('reevaluationcenter/verify-marks','Nber\MarkVerifyController@verify_marks_re');
+     Route::post('reevaluationcenter/verify-marks/show','Nber\MarkVerifyController@verify_marks_re_show');
 
-                Route::post('reevaluationcenter/verify','Nber\MarkVerifyController@verify_marks_rev');
-
-
+    Route::post('reevaluationcenter/verify','Nber\MarkVerifyController@verify_marks_rev');
 
     Route::get('verify-external-paractical','Nber\EvalutorController@verify_external_paractical');
 
-        Route::get('nber/update-marks','Nber\EvalutorController@update_marks');
+    Route::get('nber/update-marks','Nber\EvalutorController@update_marks');
 
-
-
-
-    Route::get('send_csemail','Nber\EvalutorController@send_csemail');
-
-
+// end vertfication url
         Route::get('/nber/track-payment','Nber\CandidateController@track_payment');
 
     Route::get('omrsheet','OmrController@index');
+
+
+    // water marking blank page
     Route::get('processqp','Nber\EvalutorController@processqp');
+    // end water marking blank page
 
     
     Route::get('/nber/notice','Nber\DashboardController@insert_notice')->name('notice_insert');
@@ -1190,6 +1198,27 @@ Route::get('marks-verification-course', 'Nber\EvalutorController@course')->name(
     Route::post('/nber/exam/verifyattendancedata/{program_id}/{id}','Nber\Verify\VerifyAttendanceNInternalsController@verify_attendance')->name('verifyattendancedata');
     Route::post('/nber/exam/notverifyattendancedata/{program_id}/{id}','Nber\Verify\VerifyAttendanceNInternalsController@not_verify_attendance')->name('notverifyattendancedata');
 
+
+//external practical
+    Route::get('nber/practicalexammapping','Nber\Mapping\PracticalexaminerController@institute_course');
+    Route::post('nber/practicalexammappingadd','Nber\Mapping\PracticalexaminerController@practicalexammappingadd');
+    Route::post('nber/practicalexammapping-mail','Nber\Mapping\PracticalexaminerController@practicalexammappingmail');
+    Route::post('nber/practicalexammapping-mail','Nber\Mapping\PracticalexaminerController@practicalexammappingmail');
+    Route::get('nber/practicalverify-list','Nber\Mapping\PracticalexaminerController@practicalverify_list');
+    Route::get('nber/practicalverify-details/{id}','Nber\Mapping\PracticalexaminerController@practicalverify_details');
+    Route::post('/marks/verify/{id}','Nber\Mapping\PracticalexaminerController@verify')->name('marks.verify');
+    Route::post('/marks/notverify/{id}','Nber\Mapping\PracticalexaminerController@notverify')->name('marks.notverify');
+
+//end practical
+
+//ta Bills
+    Route::resource('/nber/tabill','Nber\CloController@tabill');
+    Route::post('/tabills/accept/{id}', 'Nber\CloController@accept');
+    Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->name('rejectRequest');
+//end ta bills
+    
+    Route::post('nber/savepracticalmap','Nber\Mapping\PracticalexaminerController@savePracticalMapping');
+    Route::post('nber/savepracticalmap-remove','Nber\Mapping\PracticalexaminerController@PracticalMappingRemove');
 
     Route::resource('nber/practicalexaminer','Nber\Mapping\PracticalexaminerController');
     Route::resource('nber/evaluation','Nber\Monitoring\EvaluationController');
@@ -1214,15 +1243,12 @@ Route::get('marks-verification-course', 'Nber\EvalutorController@course')->name(
      Route::post('/nber/evaluators/send-password','Nber\EvalutorController@sendPassword');
 
 
-    Route::resource('/nber/tabill','Nber\CloController@tabill');
 
 
     Route::resource('/nber/clo','Nber\CloController');
     Route::get('/nber/clo/details/{id}','Nber\CloController@details');
     Route::post('/nber/clo/approve-payment','Nber\CloController@approve_payment');
-Route::post('/tabills/accept/{id}', 'Nber\CloController@accept');
-Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->name('rejectRequest');
-
+    
 
     
     Route::post('/nber/clo/verify','Nber\CloController@clo_verify');
@@ -1271,10 +1297,25 @@ Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->
     Route::get('nber/marksheetregen/{cid}/{term}/{mark}','Nber\MarksheetController@regenrate');
     Route::get('nber/certificate/{cid}','Nber\MarksheetController@certificate');
     Route::get('generatemain2025/{cid}/{terms}/{exam_id}/{mark}','Nber\Exam\NewresultController@generatesup2025');
+    Route::get('generateallmainreevaluation','Nber\Exam\NewresultController@generateallreevaluation');
+    Route::get('generatemainmarge2025','Nber\Exam\NewresultController@june2025');
+
     // end  generate url
 
 
-    Route::get('generateallmainreevaluation','Nber\Exam\NewresultController@generateallreevaluation');
+    //evalution center
+
+    Route::get('nber/evalution_details','Nber\Evaluationcenter\EvaluationcenterController@evalution_details');
+    Route::post('nber/evalution/store','Nber\Evaluationcenter\EvaluationcenterController@evalution_store');
+    Route::get('nber/evalutionedit/{id}', 'Nber\Evaluationcenter\EvaluationcenterController@evalution_edit');
+    Route::post('nber/evalutionupdate/{id}' , 'Nber\Evaluationcenter\EvaluationcenterController@evalution_update');
+    Route::get('nber/evalution/add','Nber\Evaluationcenter\EvaluationcenterController@evalution_add');
+    Route::get('nber/evalution-mapping-add','Nber\Evaluationcenter\EvaluationcenterController@magging_add');
+    Route::post('nber/evalution-mapping-store','Nber\Evaluationcenter\EvaluationcenterController@magging_store');
+    Route::get('nber/evalution-mapping-list','Nber\Evaluationcenter\EvaluationcenterController@magging_list');
+
+    //end evalution center
+
 
     Route::get('/nber/verify/attendance','Nber\Exam\InternalExamController@index');
     Route::post('/nber/verify/attendance/institute','Nber\Exam\InternalExamController@attandance_internal');
@@ -1283,8 +1324,6 @@ Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->
 
     Route::post('/nber/internal-marksheet-details', 'Nber\Verify\VerifyAttendanceNInternalsController@showInternalMarksheet_details');
     Route::post('/nber/internal-marksheet-verify', 'Nber\Verify\VerifyAttendanceNInternalsController@InternalMarksheetverify');
-    //external marks routes
-    
 
 
     Route::resource('/nber/exam/verifyattnninternal','Nber\Verify\VerifyAttendanceNInternalsController');
@@ -1312,8 +1351,14 @@ Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->
     Route::resource('nber/exam/subjectofevaluator', 'Nber\Exam\SubjectofevaluatorController');
     Route::resource('nber/examcenter/zone', 'Nber\Examcenter\ZoneController');
     Route::resource('nber/excenter', 'Nber\Examcenter\ExamcenterController');
+
+    Route::post('/fetch-rci', 'Nber\Examcenter\ExamcenterController@fetchRCI');
+    Route::get('nber/exam/candidate','Nber\Examcenter\ExamcenterController@subject_by_candidate');
+    
     Route::resource('nber/evaluationcenter', 'Nber\Evaluationcenter\EvaluationcenterController');
     Route::resource('nber/exam/examcenter', 'Nber\Exam\ExamcenterController');
+        Route::get('nber/exam/examcenter/{id}', 'Nber\Exam\ExamcenterController@show');
+
     Route::post('nber/exam/examcenterstatus','Nber\Exam\ExamcenterStatusController@update');
     Route::resource('nber/exam/evaluationcenter', 'Nber\Exam\EvaluationcenterController');
     Route::resource('nber/exam/timetable', 'Nber\Exam\TimetableController');
@@ -1321,10 +1366,10 @@ Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->
     Route::post('nber/adddocument','Nber\BacklogController@adddocument');
     Route::post('nber/applicant/store','Nber\Backlog\ApplicantController@store');
     Route::post('/nber/marks/update','Nber\BacklogController@updatedata');
-    Route::post('/nber/marks/update/cancel','Nber\BacklogController@updatedata_cancel');
+        Route::post('/nber/marks/update/cancel','Nber\BacklogController@updatedata_cancel');
 
     
-    Route::post('/nber/marks/change_request','Nber\BacklogController@mark_change_request');
+        Route::post('/nber/marks/change_request','Nber\BacklogController@mark_change_request');
 
     Route::post('/nber/marks/delete','Nber\BacklogController@delete');
     Route::get('nber/rechecksupp/{batch}','Nber\ExamController@recheckpaymentstatus');
@@ -1427,15 +1472,6 @@ Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->
      Route::get('/nber/settings','Nber\DashboardController@settings');
      Route::get('/nber/settings/update','Nber\DashboardController@updatesettings');
      Route::get('/nber/dashboard', 'Nber\DashboardController@index');
-     //newroute
-    Route::get('/nber/nber-dashboard','Nber\Verify\VerifyAttendanceNInternalsController@nber_dashboard');
-    Route::get('/nber/practical','Nber\Verify\VerifyAttendanceNInternalsController@practical');
-    Route::get('/nber/exam_timetable','Nber\Verify\VerifyAttendanceNInternalsController@exam_timetable');
-   
-    Route::get('/nber/external_detail','Nber\Verify\VerifyAttendanceNInternalsController@external_detail');
-    Route::post('/nber/external_student','Nber\Verify\VerifyAttendanceNInternalsController@external_student');
-    Route::get('/nber/external_marks/{candidate_id}','Nber\Verify\VerifyAttendanceNInternalsController@external_marks');
-    Route::get('/nber/externals','Nber\Verify\VerifyAttendanceNInternalsController@externals');
 	 Route::post('/cropimageadmin','Nber\CandidateController@crop');
 	 Route::get('/programmeapplications', 'Nber\ApprovedprogrammeController@index');
 	 Route::get('/programme/{status_id}/{id}','Nber\ApprovedprogrammeController@changestatus');
@@ -1704,7 +1740,9 @@ Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->
     Route::post('/nber/examquestionpapers/update', 'Nber\QuestionpaperController@updateQuestionPaperDetails');
 
     Route::get('/nber/evaluations/', 'Nber\EvaluationController@index');
+
     Route::get('/nber/evaluations/examinationcenterlists/{eid}', 'Nber\EvaluationController@examinationcenterlists');
+
     Route::get('/nber/evaluations/evaluationcenterlists/{eid}', 'Nber\EvaluationController@evaluationcenterlists');
     Route::get('/nber/evaluations/evaluationcenter/bundles/{eid}/{evcid}', 'Nber\EvaluationController@evaluationcentershowbundles');
     Route::get('/nber/evaluations/evaluationcenter/viewfoilsheets/{eid}/{evcid}/{bno}', 'Nber\EvaluationController@evaluationcenterviewfoilsheets');
@@ -1837,7 +1875,7 @@ Route::post('/tabills/reject-request/{id}','Nber\CloController@rejectRequest')->
     
 });
 Route::group(array('middleware' => ['role:clo']), function ()
-{  
+{   
     Route::get('clo',function(){return view('clo.welcome');});
 
     Route::resource('/clo/tabill','Clo\TABillController');

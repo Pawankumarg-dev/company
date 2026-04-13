@@ -9,7 +9,7 @@ class Evaluationcenter extends Model
     //
     protected $fillable = [
         "code", "name", "password", "address", "state", "pincode", "active_status", "evaluationcenteruser_id",'enable_markentry','lgstate_id',
-        'contactnumber1','contactnumber2','email1','email2','contactperson','deuser_id'
+        'contactnumber1','contactnumber2','email1','email2','contactperson','deuser_id','exam_id'
     ];
 
     public function evaluationcenteruser() {
@@ -30,5 +30,7 @@ class Evaluationcenter extends Model
     public function lgstate(){
         return $this->belongsTo('App\Lgstate');
     }
-
+public function exam(){
+        return $this->belongsTo('App\Exam');
+    }
 }

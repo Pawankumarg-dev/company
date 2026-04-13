@@ -149,7 +149,7 @@ class ExamService
 
     public function getStudentList($exam_id, $externalexamcenter_id,$schedule_id,$order){
         if($schedule_id == 93){
-            $schedul = \App\Allexampaper::where('exam_id',27)->where('externalexamcenter_id',$externalexamcenter_id)->where('examschedule_id','<>',93)->first();
+            $schedul = \App\Allexampaper::where('exam_id',28)->where('externalexamcenter_id',$externalexamcenter_id)->where('examschedule_id','<>',93)->first();
             if(!is_null($schedul)){
                 $schedule_id = $schedul->examschedule_id;
             }
@@ -223,7 +223,7 @@ class ExamService
         }
         return $subject_ids;
     }
-    public function getApplicantions($approvedprogramme_id,$subject_id,$present_only=null,$language_id = null,$exam_id = 27,$district_id =0){
+    public function getApplicantions($approvedprogramme_id,$subject_id,$present_only=null,$language_id = null,$exam_id = 28,$district_id =0){
         //$subject_ids = $this->addAlternative($subject_id);
         $subject = \App\Subject::find($subject_id);
         if($subject->selective ==1 ){
@@ -258,7 +258,7 @@ class ExamService
     }
 
 
-    public function getApplicantions_evalution($approvedprogramme_id,$subject_id,$present_only=null,$language_id = null,$exam_id = 27){
+    public function getApplicantions_evalution($approvedprogramme_id,$subject_id,$present_only=null,$language_id = null,$exam_id = 28){
         //$subject_ids = $this->addAlternative($subject_id);
         $subject = \App\Subject::find($subject_id);
 
@@ -266,7 +266,7 @@ class ExamService
         $externalexamcenter_ids =  $this->evaluationService->getExternalexamcenterIDs($id);
 
         
-                $approvedprogramme_id =  \App\Allexampaper::whereIn('externalexamcenter_id',$examcenter_ids)->where('exam_id',27)->pick('approvedprogramme_id');
+                $approvedprogramme_id =  \App\Allexampaper::whereIn('externalexamcenter_id',$examcenter_ids)->where('exam_id',28)->pick('approvedprogramme_id');
 
         if($subject->selective ==1 ){
             
@@ -289,7 +289,7 @@ class ExamService
         return $applications->get();
     }
 
-    public function getAllApplications($institute_ids,$subject_id,$present_only=null,$exam_id = 27){
+    public function getAllApplications($institute_ids,$subject_id,$present_only=null,$exam_id = 28){
        // $subject_ids = $this->addAlternative($subject_id);
         $applications =  \App\Allapplication::where('blocked',0)->whereHas('candidate',function($q) use($institute_ids){
             $q->whereHas('approvedprogramme',function($r) use($institute_ids){
@@ -303,7 +303,7 @@ class ExamService
     }
 
     public function getAllApplicationsofTheDay($subject_ids,$exam_id = 26){
-        return \App\Allapplication::where('blocked',0)->whereIn('subject_id',$subject_ids)->where('exam_id',27)
+        return \App\Allapplication::where('blocked',0)->whereIn('subject_id',$subject_ids)->where('exam_id',28)
         ->get();
     }
 

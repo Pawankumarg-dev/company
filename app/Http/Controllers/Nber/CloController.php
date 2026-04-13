@@ -37,7 +37,7 @@ class CloController extends Controller
   
 
      public function tabill() {
-        //         $nber_id = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
+               $nber_id = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
 
         // $tabills = Tabill::where('nber_id',$nber_id)->get();
 
@@ -58,11 +58,16 @@ $tabills = DB::table('tabills')
         'tabills.created_at',
         'tabills.id',
                 'tabills.payment_status',
+                'tabills.reason',
 
         'nbers.name_code'
-    )->where('payment_status', '!=', 'Success')->where('tabills.exam_id',27)
+    )
+    // ->where('payment_status', '!=', 'Success')
+    // ->where('tabills.exam_id',27)
+     ->where('tabills.nber_id',$nber_id)
 
-    ->get();
+
+->orderBy('tabills.created_at', 'desc')->get();
         return view('nber.clo.tabill', compact('tabills'));
     }
 public function accept(Request $request, $id)

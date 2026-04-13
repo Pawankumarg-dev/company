@@ -54,13 +54,18 @@
 
 
 	<td>
+        @if($tabill->payment_status=='Under Processing')
                     <button class="btn btn-danger btn-xs" onclick="reject({{ $tabill->id }})">
                         Reject
                     </button>
 					<button class="btn btn-success btn-xs" onclick="handleAccept({{ $tabill->id }})">
                         Accept
                     </button>
-    
+    @elseif($tabill->payment_status=='reject')
+            {{$tabill->reason}}
+    @elseif($tabill->payment_status=='Success')
+{{$tabill->transaction_details}}
+    @endif
                 </td>
                     </tr>
                 @endforeach

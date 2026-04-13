@@ -23,9 +23,9 @@
     </style>
     <div class="container">
             
-        <form method="GET" action="{{ url('/nber/nber-dashboard') }}">
+        <form method="GET" action="{{ url('nber/exam/candidate') }}">
             <div class="row" style="margin-bottom:10px">
-                <div class="col-md-5"> 
+                <div class="col-md-4"> 
                     <label>Course :</label>
                     @php
                         $uniqueCourses = collect($nber_details)->unique('abbreviation');
@@ -41,7 +41,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-4"> 
+                <div class="col-md-3"> 
                     <label>States :</label>
                     @php
                         $uniquestates = collect($nber_details)->unique('state_id');
@@ -56,29 +56,51 @@
                         @endforeach
                     </select>
                 </div>
+
+                     <div class="col-md-3"> 
+                    <label>Subject Type :</label>
+                  
+                    <select name="subject_type" id="states" class="single-select form-control">
+                        <option value="">--Select Subject Type--</option>
+                            <option value="1"
+                               {{ request('subject_type') == 1 ? 'selected' : '' }}>
+                                Theory
+                            </option>  
+                    <option value="2"
+                               {{ request('subject_type') == 2 ? 'selected' : '' }}>
+                                Practical
+                            </option>
+                    </select>
+                </div>
                 
                 <div class="col-md-2">
                     <input type="submit" value="Show" class="btn btn-primary" style="margin-top:20px">
-                    <a href="{{ url('/nber/nber-dashboard') }}" class="btn btn-info" style="margin-top:20px"> Reset</a>
+                    <a href="{{ url('nber/exam/candidate') }}" class="btn btn-info" style="margin-top:20px"> Reset</a>
                 </div>
                 <div class="col-md-1">
                       <button class="print btn btn-success" onclick="printResult()" style="margin-top:20px" >
                         Print 
                     </button> 
                 </div>
+                <div class="col-md-2">
+    <button onclick="exportTableToExcel()" class="btn btn-success" style="margin-top:20px">
+        Export Excel
+    </button>
+</div>
             </div>
         </form>
     <div id="printArea">
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover" id="candidateTable">
             <thead>
                 <tr>
                     <th>SL NO.</th>
                     <th>Course</th>
+                    <th>Institute</th>
                     <th>Subjects</th>
                     <th>States</th>
-                    <th>Total Theory Students</th>
-                    <th>Total Practical Students</th>
-                    <th >Total students</th>
+                    <th>Subject Type</th>
+                    <th>language</th>
+                    <th>Total Students</th>
                 </tr>
             </thead>
             <tbody>
@@ -87,11 +109,12 @@
                 <tr>
                     <td>{{ $index + 1  }}</td>
                     <td>{{$nber_detail->abbreviation ?? '' }}</td>
-                    <td>{{$nber_detail->sname ?? '' }}</td>
+                    <td>{{$nber_detail->rci_code ?? '' }}: {{$nber_detail->name ?? '' }}</td>
+                    <td>{{$nber_detail->scode ?? '' }}: {{$nber_detail->sname ?? '' }}</td>
                     <td>{{$nber_detail->state_name ?? '' }}</td>
+                    <td>@if($nber_detail->subjecttype_id==1) Theory @else Practical @endif</td>
+                    <td>{{$nber_detail->language}}</td>
                     <td>{{$nber_detail->theory_students ?? ''}}</td>
-                    <td>{{$nber_detail->practical_students ?? ''}}</td>
-                    <td>{{$nber_detail->student_count ?? ''}}</td>
                 </tr>
                 @endforeach
             @else
@@ -134,4 +157,23 @@
 
     });
     </script>
+
+
+<script>
+function exportTableToExcel() {
+    var table = document.getElementById("candidateTable");
+    var html = table.outerHTML;
+
+    var url = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+
+    var downloadLink = document.createElement("a");
+    document.body.appendChild(downloadLink);
+
+    downloadLink.href = url;
+    downloadLink.download = "candidate_report.xls";
+    downloadLink.click();
+
+    document.body.removeChild(downloadLink);
+}
+</script>
 @endsection 

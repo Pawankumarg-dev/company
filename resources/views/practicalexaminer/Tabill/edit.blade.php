@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h2 class="text-center">Update T.A Bill & CLO Report</h2>
+    <h2 class="text-center">Update T.A Bill & Report</h2>
     <form action="{{url('/')}}/clo/tabill/update" method="POST" id="schoolForm" enctype="multipart/form-data">
 
         {!! csrf_field() !!}

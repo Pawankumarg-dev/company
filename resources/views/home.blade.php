@@ -22,7 +22,7 @@
             
 <div class="alert alert-success ">
                 <h4>
-                    <a href="https://nber-rehabcouncil.gov.in/files/notice/SupplementarycircularTTIstudents_0001.pdf" target="_blank">Circular for Supplementary exam 2026</a>
+                    <a href="https://nber-rehabcouncil.gov.in/files/notice/NBER_supp_2026addendum.pdf" target="_blank">Addendum:Circular for Supplementary exam 2026</a>
                 </h4>
              </div>
             

@@ -9,7 +9,6 @@
         public function fetch($sql, $paginate = false){
             ini_set('memory_limit','-1');
             $result = DB::select($sql);
-
             return 
                 (!($paginate) || $this->getperPage() == 0)  ? 
                 collect($result) : 

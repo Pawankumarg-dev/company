@@ -40,7 +40,6 @@ class ApplicantController extends Controller
     }
     public function index(Request $r)
     {
-       
         $nber_id = $this->helperService->getNberID();
         if($r->has('ttiwiseexcel')){
 	        ini_set('memory_limit','-1');
@@ -99,6 +98,7 @@ class ApplicantController extends Controller
         //$applicants= $this->ApplicantService->getApplicants(100);
         //$programme_ids = $this->ApplicantService->getProgrammeIDs();
         //return 'B4';
+        $nber_id = $this->helperService->getNberID();
         if($r->has('programme_id')){
             $programme_id = $r->programme_id;
             $applicants = \App\Allapplicant::where('exam_id',$this->exam_id)->whereHas('candidate',function($q) use($nber_id, $programme_id) {
@@ -142,14 +142,14 @@ class ApplicantController extends Controller
         //return $applicants->paginate(100);
 
         $programmes = $this->helperService->getProgrammes();
-       // dd($programmes);
+        
         //$programme_ids = $this->helperService->getProgrammes(1)->pluck('id')->toArray();
 
         $institute_ids = \App\Approvedprogramme::whereHas('programme', function($q) use ($nber_id){
             $q->where('nber_id',$nber_id);
             $q->where('academicyear_id','>',8);
         })->pluck('institute_id')->unique()->toArray();
-        //dd($institute_ids );
+
         
         $institutes = \App\Institute::whereIn('id',$institute_ids)->get();
 
@@ -158,8 +158,6 @@ class ApplicantController extends Controller
         $exam = $this->exam;
         $nber = $this->helperService->getNberShortCode();
         $case = $this->case;
-        
-        //return $case;
         return view('nber.exam.applicants.index',compact(
             'applicants',
             'programmes',
@@ -176,18 +174,14 @@ class ApplicantController extends Controller
 
     public function show($id,Request $r)
     {
-    
-       // $applicant = $this->ApplicantService->getApplicant($id);
-        $applicant = \App\Allapplicant::find($id);
-        //dd($applicant->candidate->approvedprogramme->institute->id);
-      //  dd($applicant);
+        $applicant = $this->ApplicantService->getApplicant($id);
+
         $exam_center = null;
 
         //$exam_center = $this->ApplicantService->getExamcenter($applicant->institute,2);
         $exam = $this->exam;
 
-        $institute = \App\Institute::find($applicant->candidate->approvedprogramme->institute->id);
-       
+        $institute = \App\Institute::find($applicant->institute_id);
         if($applicant->candidate->approvedprogramme->transferred_to > 0){
             $institute = \App\Institute::find($applicant->candidate->approvedprogramme->transferred_to);
         }
@@ -199,24 +193,32 @@ class ApplicantController extends Controller
                 Session::flash('error','Please select Term');
                 return back();
             }
+              if (
+                $applicant->candidate->status_id != 2 ||
+                is_null($applicant->candidate->enrolmentno) ||
+                $applicant->candidate->enrolmentno == '' ||
+                !is_null($applicant->candidate->deleted_at)
+            ) {
+                Session::flash('error','Document Not verified');
+                            return back();
+            } 
 
             if($applicant->first_year_practical_ht < 1 && $applicant->second_year_practical_ht < 1 ){
                 Session::flash('error','Not Generated');
                 return back();
             }
-            // if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
-            //     Session::flash('error','Photo not found');
-            //     return back();
-            // }
-            $ht = \App\Practicalhallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',27)->first();
-          //  $ht->downloaded += 2;
-           // $ht->save();
-           // $exam_center = $this->ApplicantService->getExamcenter($applicant->institute,2);
+            if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
+                Session::flash('error','Photo not found');
+                return back();
+            }
+            $ht = \App\Practicalhallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',28)->first();
+           $ht->downloaded += 2;
+           $ht->save();
+           $exam_center = $this->ApplicantService->getExamcenter($applicant->institute,2);
             $exam = $this->exam;
-
             if($r->has('downloadht')){
                 $format = 'html';
-                if($applicant->candidate->approvedprogramme->institute_id == 1057){
+                if($applicant->candidate->approvedprogramme->programme_id == 57){
                     return view('common.exam.hallticket_p_cbid',compact(
                         'term',
                         'format',
@@ -256,37 +258,48 @@ class ApplicantController extends Controller
             //         'institute'
             //     ));    
             // }
+            if (
+                $applicant->candidate->status_id != 2 ||
+                is_null($applicant->candidate->enrolmentno) ||
+                $applicant->candidate->enrolmentno == '' ||
+                !is_null($applicant->candidate->deleted_at)
+            ) {
+                Session::flash('error','Document Not verified');
+                            return back();
+            }            
 
-            // if($applicant->first_year_theory_ht == 0 && $applicant->second_year_theory_ht == 0 ){
-            //     Session::flash('error','Not Generated');
-            //     return back();
-            // }
-            // if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
-            //     Session::flash('error','Photo not found');
-            //     return back();
-            // }
-            // if(!file_exists(public_path().'/files/enrolment/signature/'.$applicant->candidate->signature) || is_null($applicant->candidate->signature) || $applicant->candidate->signature == ''){
-            //     Session::flash('error','Signature not found');
-            //     return back();
-            // }
+            if($applicant->first_year_theory_ht == 0 && $applicant->second_year_theory_ht == 0 ){
+                Session::flash('error','please check application details');
+                return back();
+            }
+            if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
+                Session::flash('error','Photo not found');
+                return back();
+            }
+            if(!file_exists(public_path().'/files/enrolment/signature/'.$applicant->candidate->signature) || is_null($applicant->candidate->signature) || $applicant->candidate->signature == ''){
+                Session::flash('error','Signature not found');
+                return back();
+            }
             
-                $ht = \App\Hallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',27)->first();
-              // $ht->downloaded += 2;
-               // $ht->save();
+                $ht = \App\Hallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',28)->first();
+              $ht->downloaded += 1;
+               $ht->save();
             
             
             $district_id = $applicant->candidate->district_id;
-          
-            $exam_center = $this->ApplicantService->getExamcenter($applicant->institute,2,$district_id);
+            // $exam_center = $this->ApplicantService->getExamcenter($applicant->institute,2,$district_id);
+                    $exam_center = \App\Examcenter::where('id',$ht->examcenter_id)->first();
+
             $exam = $this->exam;
-           // dd( $exam_center);
+    
             return view('common.exam.hallticket_new',compact(
                 'applicant',
                 'exam_center',
                 'term',
                 'format',
                 'exam',
-                'institute'
+                'institute',
+                'ht'
             ));
 
             view()->share('applicant',$applicant);
@@ -294,7 +307,8 @@ class ApplicantController extends Controller
             view()->share('term',$term);
             view()->share('format',$format);
             view()->share('exam',$exam);
-            
+                        view()->share('ht',$ht);
+
             $headers = array(
                 'Content-Type: application/pdf',
             );

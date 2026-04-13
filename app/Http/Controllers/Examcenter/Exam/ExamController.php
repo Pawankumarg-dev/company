@@ -26,7 +26,7 @@ class ExamController extends Controller
         $this->examService = $exam;
         $this->helperService = $helper;
         $this->exam_id =  $this->helperService->getScheduledExamID();
-        $this->exam_id = 27;
+        $this->exam_id = 28;
 
     }
     public function index(){
@@ -34,25 +34,24 @@ class ExamController extends Controller
             return redirect(url('logoff'));
         }
         $externalexamcenter_id = $this->helperService->getExternalexamcenterID();
-       //return $externalexamcenter_id;
         $externalexamcenter = $this->helperService->getExternalexamcenter();
-       // dd($externalexamcenter);
-      //$exam_id = $this->helperService->getScheduledExamID();
-        $exam_id= $this->exam_id;
-      
 
-    //     //old code 
+
+    //$exam_id = $this->helperService->getScheduledExamID();
+       // $schedules = $this->examService->getSchedules($exam_id,$externalexamcenter_id);
+
     //     $schedule_ids = \App\Allexampaper::where('exam_id',$this->exam_id)->where('externalexamcenter_id',$externalexamcenter_id)->pluck('examschedule_id')->toArray();
-    //   // return $schedule_ids;
+    //    // return $schedule_ids;
     //     $schedules = \App\Examschedule::whereIn('id',$schedule_ids)->where('exam_id',$this->exam_id)->orderBy('examdate')->orderBy('starttime')->get();
-    //     //dd($schedules);
     //     $count = [];
     //     foreach($schedules as $s){
     //         //$s['count'] = $this->examService->getStudentCount($exam_id,$externalexamcenter_id,$s->id);
     //         $s['count'] = \App\Allexampaper::where('exam_id',$this->exam_id)->where('examschedule_id',$s->id)->where('externalexamcenter_id',$externalexamcenter_id)->sum('theory');
     //     }
 
-        //new code 
+         //new code 
+                 $exam_id=  $this->exam_id;
+
         $schedules = DB::table('allexamstudents')
         ->join('externalexamcenters', function ($join) use($exam_id) {
             $join->on('allexamstudents.externalexamcenter_id', '=', 'externalexamcenters.id')
@@ -74,10 +73,11 @@ class ExamController extends Controller
             'examschedules.examtype_id'
         )
         ->groupBy('examschedules.id')
-        ->orderBy('examschedules.examdate')
+        ->orderBy('examschedules.examdate', 'ASC')
+        ->orderBy('examschedules.starttime', 'ASC')
         ->get();
-       // dd( $schedules);
-       
+
+        
         return view('examcenter.schedule',compact(
             'schedules',
             'externalexamcenter'
@@ -85,12 +85,15 @@ class ExamController extends Controller
     }
 
     public function show($id,Request $r){
+
+
+
         $examcenter = $this->helperService->getExternalexamcenter();
-        //return $applications;
+                $exam = \App\Exam::find($this->exam_id);
+
         $schedule = \App\Examschedule::find($id);
         set_time_limit(300);
         $format = 'html';
-      
         // if($r->has('format') && !($r->format=='html')){
         //     $format = 'pdf';
         //     view()->share('applications',$applications);
@@ -104,23 +107,71 @@ class ExamController extends Controller
         if($r->has('roomallocation')){
             
             if($format=='html'){
-                $applications = $this->examService->getStudentList($this->exam_id,$examcenter->id,$id,'approvedprogramme_id');
-                //dd( $applications);
+
+
+                 $applications = $this->examService->getStudentList($this->exam_id,$examcenter->id,$id,'approvedprogramme_id');
+
+        
+
                 return view('examcenter.roomallocation',compact(
-                    'applications','schedule','examcenter','format'
+                    'applications','schedule','examcenter','format','exam'
                 ));
             }
             $pdf = PDF::loadView('examcenter.roomallocation')->setPaper('a4', 'portrait');   
             return $pdf->download('room_allocation_'.$schedule->examdate.'.pdf'); 
         }
         if($format=='html'){
+           // return $applications;
            $applications = $this->examService->getStudentList($this->exam_id,$examcenter->id,$id,'approvedprogramme_id');
            //return $applications;
             return view('examcenter.attendancesheet',compact(
-                'applications','schedule','examcenter','format'
+                'applications','schedule','examcenter','format','exam'
             ));
         }
         $pdf = PDF::loadView('examcenter.attendancesheet')->setPaper('a4', 'portrait');
         return $pdf->download('attendance_sheet_'.$schedule->examdate.'.pdf');
+    }
+
+
+    public function evalution_center(){
+        $externalexamcenter_id = $this->helperService->getExternalexamcenterID();
+
+$data = DB::table('evaluationcenterdetails')
+    ->join('nbers', 'evaluationcenterdetails.nber_id', '=', 'nbers.id')
+    ->join('programmes', 'programmes.nber_id', '=', 'nbers.id')
+->join('allexamstudents', function ($join) {
+    $join->on('allexamstudents.externalexamcenter_id', '=', 'evaluationcenterdetails.externalexamcenter_id')
+         ->on('allexamstudents.exam_id', '=', 'evaluationcenterdetails.exam_id');
+})
+
+->join('subjects', 'subjects.id', '=', 'allexamstudents.subject_id')
+    ->join('evaluationcenters', 'evaluationcenterdetails.evaluationcenter_id', '=', 'evaluationcenters.id')
+    
+    ->where('evaluationcenterdetails.exam_id', $this->exam_id)
+        ->where('evaluationcenterdetails.externalexamcenter_id', $externalexamcenter_id)
+
+
+    ->select(
+        'nbers.name_code',
+        'evaluationcenters.name',
+        'evaluationcenters.address',
+        'evaluationcenters.state',
+        'evaluationcenters.active_status',
+        'evaluationcenters.contactnumber1',
+        'evaluationcenters.contactnumber2',
+        'evaluationcenters.email1',
+        'evaluationcenters.email2',
+                'evaluationcenters.pincode',
+
+        DB::raw('GROUP_CONCAT(distinct(subjects.scode)) as scodes'),
+        DB::raw('GROUP_CONCAT(distinct(subjects.omr_code)) as omr_codes')
+    )
+
+    ->groupBy('evaluationcenters.id')
+    
+    ->get();
+
+            return view('examcenter.evalutioncenter',compact('data'));
+
     }
 }

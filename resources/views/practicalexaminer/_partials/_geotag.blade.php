@@ -11,11 +11,7 @@
         <input type="hidden" name="practicalexam_id" value="{{$exam->id}}">
         <input type="file" id="file_{{$exam->id}}" name="photo" >
         <input type="text" name="comment" style="border:1px solid #ccc;margin-top:2px;" placeholder="Description">
-        <button
-            type="submit"
-            class="btn btn-xs btn-primary pull-right"
-            id="btnup_{{$exam->id}}"
-        >
+        <button type="submit" class="btn btn-xs btn-primary pull-right" id="btnup_{{$exam->id}}" >
             <img src="{{url('images/loading1.gif')}}" class="hidden uploading" style="width: 18px;margin-right: 10px;">                
             <span class="uploadfile">Upload</span>
         </button>

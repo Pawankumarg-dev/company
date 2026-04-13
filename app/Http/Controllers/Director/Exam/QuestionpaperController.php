@@ -18,12 +18,15 @@ use App\Services\Common\QuestionpaperdownloadService;
 class QuestionpaperController extends Controller
 {
     private $qpService;
-    
+        private $exam_id;
+
 
     public function __construct(QuestionpaperdownloadService $qp)
     {
         $this->middleware(['role:director']);
         $this->qpService = $qp;
+        $this->exam_id = 28;
+
     }
 
     function generateRandomString($length = 10) {
@@ -36,19 +39,21 @@ class QuestionpaperController extends Controller
         return $randomString;
     }
     public function getFileName($ttid,$lid,$set,$randstring){
-        return "27_".$ttid.'_'.$lid.'_'.$set.'_'.$randstring.'.pdf';
+        return $this->exam_id."_".$ttid.'_'.$lid.'_'.$set.'_'.$randstring.'.pdf';
     }
     public function savepassword(Request $r){
         // Session::flash('error','QP Under process');
         // return back();
-        $error = $this->checkPassword($r->password);
-        if($error != ''){
+        $error=$this->checkPassword($r->password);
+                                      if($error != ''){
             Session::put('error',$error);
             return back();
         }
         $timetable = \App\Examtimetable::find($r->examtimetable_id);
         $timetable->password = $r->password;
         $timetable->save();
+
+        
         Session::put('messages','Password saved');
         return back();
     }
@@ -75,12 +80,22 @@ class QuestionpaperController extends Controller
         
         // Session::flash('error','QP Under process');
         // return back();
+
+         $error=$this->checkPassword($request->password);
+                                      if($error != ''){
+            Session::put('error',$error);
+            return back();
+        }
        
         try{
             $file = $request->file;
+            $password = $request->password;
+            $omr_code = $request->omr_code;
+
+
             $randstring = $this->generateRandomString();
             $filename =$this->getFileName($ttid,$lid,$request->set,$randstring);
-            $saveas = "files/questionpapers/27/".$filename;
+            $saveas = "files/questionpapers/".$this->exam_id."/".$filename;
             move_uploaded_file($file,$saveas);
             chmod($saveas, 400);
             //chown($saveas,"root");
@@ -88,11 +103,15 @@ class QuestionpaperController extends Controller
             $timetable = \App\Examtimetable::find($ttid);
             $exsisting = $timetable->languages()->where('id',$lid)->first();
             if(is_null($exsisting)){
-                $timetable->languages()->attach([$lid=>['question_paper_'.$request->set =>$filename,'rand_string'=>$randstring]]);
+
+                $timetable->languages()->attach([$lid=>['question_paper_'.$request->set =>$filename,'rand_string'=>$randstring,'password'=>$password,'omr_code'=>$omr_code]]);
             }else{
                 $field = 'question_paper_'.$request->set;
                 //return $exsisting;
                 $exsisting->pivot->$field = $filename;
+                $exsisting->pivot->password = $password;
+                $exsisting->pivot->omr_code = $omr_code;
+
                 $exsisting->pivot->save();
             }
         }catch(Exception $e){
@@ -117,7 +136,7 @@ class QuestionpaperController extends Controller
                 'Content-Type'=> 'application/pdf',
                 'Content-Description' => 'Question Paper'
             ];
-            return response()->file(public_path().'/files/questionpapers/27/'.$download,$header); 
+            return response()->file(public_path().'/files/questionpapers/'.$this->exam_id.'/'.$download,$header); 
        }
        return back();
     }
@@ -126,7 +145,7 @@ class QuestionpaperController extends Controller
             $file = $request->file;
             $timetable = \App\Examtimetable::find($ttid);
             $filename = $timetable->languages()->where('id',$lid)->first()->pivot->question_paper;
-            move_uploaded_file($file,"/var/www/html/rcinber/public/files/questionpapers/27/".$filename);
+            move_uploaded_file($file,"/var/www/html/rcinber/public/files/questionpapers/'.$this->exam_id.'/".$filename);
             Session::flash('messages','Success');
         }catch(Exception $e){
             Session::flash('error','Could not upload');
@@ -198,7 +217,7 @@ class QuestionpaperController extends Controller
 
             $filename = $examtimetable->id."_".$examtimetable->subject->scode.".".$file->getClientOriginalExtension();
 
-            $destination = public_path()."/files/questionpapers/27/";
+            $destination = public_path()."/files/questionpapers/".$this->exam_id."/";
 
             if ($file->move($destination, $filename)) {
                 $examtimetable->update([

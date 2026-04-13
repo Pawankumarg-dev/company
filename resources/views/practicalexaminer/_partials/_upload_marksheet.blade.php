@@ -1,18 +1,17 @@
 
 <a 
     href="javascript:uploadms({{$template->id}})" 
-    class="btn btn-xs @if($ap->academicyear_id == (13-$term)) btn-primary @else btn-info @endif upload_link_{{$template->id}}"
+    class="btn btn-xs upload_link_{{$template->id}}"
     style="margin-bottom:5px;"
 >
-    @if($ap->academicyear_id == (13-$term)) Regular @else Backlog  @endif 
+
     ( Term {{$term}})   - Upload Singed Scan copy of the marksheet
     
 </a>
 
     
 <div class=" alert alert-danger pull-right hidden upload_{{$template->id}}" style="margin-bottom:0px;">
-    <h5>Upload Marksheet -  @if($ap->academicyear_id == (13-$term)) Regular @else Backlog  @endif 
-        ( Term {{$term}})  </b></h5>
+    <h5>Upload Marksheet ( Term {{$term}})  </b></h5>
     
     <form id="msupload_form_{{$template->id}}" action="{{url('practicalexam/awardlisttemplate')}}/{{$template->id}}" method="POST" enctype="multipart/form-data" >
         {{ csrf_field() }}
@@ -24,11 +23,8 @@
             class="btn btn-xs btn-primary pull-right"
             id="btnmsu_{{$template->id}}"
         >
-            
-
             <img src="{{url('images/loading1.gif')}}" class="hidden msupload" style="width: 18px;margin-right: 10px;">                
             <span class="uploadmarksheet">@if(!is_null($template->marksheet))  Re - @endif Upload </span>
-
         </button>
     </form>
 </div>
@@ -43,6 +39,7 @@
             <th>Subject Code</th>
             <th>Marks</th>
         </tr>
+    
     @foreach($template->subjects as $subject)
         <tr><td>
         {{$subject->scode}}  

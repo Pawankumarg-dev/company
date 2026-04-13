@@ -737,7 +737,7 @@ $c->approvedprogramme->programme->id==57
 
 @foreach($after_2025_allresults as $examGroup)
     @foreach($examGroup as $result)
-                @if(!is_null($result->comment) && (Auth::user()->id == 88387 || Auth::user()->id == 239776))
+                @if(!is_null($result->comment))
 
     <tr>
                             <td>{{ $result->comment }}</td>  

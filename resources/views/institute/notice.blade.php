@@ -12,7 +12,7 @@
 
 
 
-<div class="container">
+<div class="container hidden">
     <div class="alert alert-success ">
                 <h4>
                     <a href="https://nber-rehabcouncil.gov.in/files/notice/SupplementarycircularTTIstudents_0001.pdf" target="_blank">Circular for Supplementary exam 2026</a>
@@ -103,7 +103,7 @@
 
     
 
-{{-- <div class="container">
+<div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h3>Practical Examiner</h3>
@@ -174,7 +174,7 @@
 
             </div>
         </div>
-    </div> --}}
+    </div> 
 
 
 

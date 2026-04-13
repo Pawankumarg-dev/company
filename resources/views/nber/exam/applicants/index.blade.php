@@ -270,14 +270,16 @@
                                    <td class="">
                                          {{-- PRACTICAL--}}
                                          <?php 
-                                         $hallticket  =    $applicant->practicalhalltickets()->where('exam_id',Session::get('exam_id'))->first();
+                                         
+                                                $hallticketp= \App\Practicalhallticket::where('exam_id',$exam->id)->where('candidate_id',$applicant->candidate_id)->first();
                                      ?>
-                                            @if(!is_null($hallticket))
+
+                                            @if(!is_null($hallticketp))
                                      
-                                         @if($hallticket->first_year > 0)
+                                         @if($hallticketp->first_year > 0)
                                              <a target="_blank" href="{{url('nber/exam/applicants/')}}/{{$applicant->id}}?downloadht=yes&term=1&practical=yes"  class="btn btn-xs btn-primary ">First Year Hall Ticket (Practical)</a>
                                          @endif
-                                         @if($hallticket->second_year > 0)
+                                         @if($hallticketp->second_year > 0)
                                              <a target="_blank" href="{{url('nber/exam/applicants/')}}/{{$applicant->id}}?downloadht=yes&term=2&practical=yes"  class="btn btn-xs btn-primary ">Second Year Hall Ticket (Practical)</a>
                                          @endif 
                                          @endif
@@ -285,23 +287,22 @@
                                 
                                     <td class="">
                                         {{-- THEORY--}}
-                                            <?php 
-                                                //$hallticket  =    $applicant->halltickets()->where('exam_id',Session::get('exam_id'))->first();
-                                                $hallticket= \App\Hallticket::where('exam_id',27)->where('candidate_id',$applicant->candidate_id)->first();
-                                            ?>
+                                            @php 
+                                                $hallticket= \App\Hallticket::where('exam_id',$exam->id)->where('candidate_id',$applicant->candidate_id)->first();
+                                            @endphp
                                             @if(!is_null($hallticket))
                                                 @if(!is_null($applicant->hallticket_no))
                                                     Hallticket Number: {{ $applicant->hallticket_no }} <br />
-                                                    {{-- @if($applicant->payment_status == 1  ) --}}
                                                         @if($hallticket->first_year > 0)
                                                             <a target="_blank" href="{{url('nber/exam/applicants/')}}/{{$applicant->id}}?downloadht=yes&term=1"  class="btn btn-xs btn-primary ">First Year Hall Ticket (Theory)</a>
                                                         @endif
                                                         @if($hallticket->second_year > 0)
                                                             <a target="_blank" href="{{url('nber/exam/applicants/')}}/{{$applicant->id}}?downloadht=yes&term=2"  class="btn btn-xs btn-primary ">Second Year Hall Ticket (Theory)</a>
                                                         @endif 
-                                                    {{-- @else
+                                                    @if($applicant->payment_status != 1  )
+
                                                         Payment pending
-                                                    @endif --}}
+                                                    @endif
                                                 @else
                                                     Pending Hallticket Generation
                                                 @endif

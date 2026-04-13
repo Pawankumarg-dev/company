@@ -33,7 +33,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-12">
-            <h3>JUNE 2025  EXAMINATION - ATTENDANCE
+            <h3>{{$exam->name }} EXAMINATION - ATTENDANCE
             </h3>
 
             @if (Session::has('messages') )

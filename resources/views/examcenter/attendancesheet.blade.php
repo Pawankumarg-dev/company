@@ -1,76 +1,67 @@
 <style>
-    .page-break {
+     .page-break {
         page-break-after: always;
     }
-
-    .table,
-    .table th,
-    .table td {
+    .table, .table th, .table td{
         border: 1px solid #ccc;
-        border-collapse: collapse;
+          border-collapse: collapse;
         font-size: 10px;
     }
-
-    table,
-    .table {
-        width: 100%;
+    table, .table{
+        width:100%;
     }
-
-    .center-text {
+    .center-text{
         text-align: center !important;
     }
-
-    .bt {
+    .bt{
         font-weight: 200;
     }
-
-    .mt-2 {
-        margin-top: 3px;
+    .mt-2{
+        margin-top:3px;
     }
 </style>
-@if ($format == 'html')
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            window.print();
-        });
-    </script>
+@if ($format=='html')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        window.print();
+    }); 
+</script>
 @endif
-<?php $approvedprogramme_id = 0;
-$slno = 1; ?>
+<?php $approvedprogramme_id = 0;  $slno = 1;?>
 @foreach ($applications->sortBy('approvedprogramme_id')->sortBy('candidate.enrolmentno') as $a)
-    @if ($approvedprogramme_id != $a->approvedprogramme_id)
-        <?php $slno = 1; ?>
-        @if ($approvedprogramme_id != 0)
+    @if($approvedprogramme_id != $a->approvedprogramme_id)
+    <?php $slno= 1; ?>
+        @if($approvedprogramme_id != 0)
             @include('examcenter._parts.bottom')
         @endif
-        <div class="page-break" style="margin-top:100px">
+        <div class="page-break">
             @include('examcenter._parts.header')
-            <h5>{{ \Carbon\Carbon::parse($schedule->examdate)->format('F Y') }} EXAMINATION - ATTENDNACE SHEET</h5>
+            <h5>{{$exam->name}} EXAMINATION - ATTENDNACE SHEET</h5>
             @include('examcenter._parts.heading')
-
+           
             <table class="table mt-2">
                 <tr>
                     <td>
                         Institute Code
                     </td>
                     <td>
-                        @if ($schedule->description != 'Mockdrill')
-                            {{ $a->institute->rci_code }}
+                        @if($schedule->description != 'Mockdrill')
+                        {{$a->institute->rci_code}}
                         @else
                             DEMO
                         @endif
                     </td>
-                </tr>
+                </tr> 
                 <tr>
                     <td>
                         Institute Name
                     </td>
                     <td>
-                        @if ($schedule->description != 'Mockdrill')
-                            {{ $a->institute->name }}
+                        @if($schedule->description != 'Mockdrill')
+                        {{$a->institute->name}}
                         @else
-                            DEMO
-                        @endif
+                        DEMO
+                    @endif
                     </td>
                 </tr>
                 <tr>
@@ -78,9 +69,9 @@ $slno = 1; ?>
                         Programme
                     </td>
                     <td>
-                        {{ $a->programme->common_name }} -
-                        {{ $a->programme->name }} -
-                        @if ($a->subject->syear == 2)
+                        {{$a->programme->common_name}} - 
+                        {{$a->programme->name}} - 
+                        @if($a->subject->syear==2)
                             II Year
                         @else
                             I Year
@@ -92,21 +83,21 @@ $slno = 1; ?>
                         Subject Code
                     </td>
                     <td>
-                        {{ $a->subject->scode }}
+                        {{$a->subject->scode}}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Subject
+                        Subject 
                     </td>
                     <td>
-                        {{ $a->subject->sname }}
+                        {{$a->subject->sname}}
                     </td>
                 </tr>
             </table>
             <table class="table mt-2">
-                <tr style="text-align: center;">
-                    <th class="center-text">
+                <tr>
+                    <th class="center-text"> 
                         Slno
                     </th>
                     <th>
@@ -114,6 +105,9 @@ $slno = 1; ?>
                     </th>
                     <th>
                         Enrolment Number
+                    </th>
+                    <th>
+                        Hall Ticket Number
                     </th>
                     <th>
                         Batch
@@ -129,49 +123,51 @@ $slno = 1; ?>
                     </th>
                 </tr>
     @endif
+    
 
+                <tr style="height:18px;">
+                    <th class="center-text"> 
+                        {{$slno}}
+                        <?php $slno++ ; ?>
+                    </td>
+                    <td>
+                        @if($schedule->description != 'Mockdrill')
+                        {{$a->candidate->name}}
+                        @else
+                        DEMO
+                    @endif
+                    </td>
 
-    <tr style="height:18px; ">
-        <th class="center-text">
-            {{ $slno }}
-            <?php $slno++; ?>
-            </td>
-        <td>
-            @if ($schedule->description != 'Mockdrill')
-                {{ $a->candidate->name }}
-            @else
-                DEMO
-            @endif
-        </td>
+                    <td  class="center-text">
+                        @if($schedule->description != 'Mockdrill')
+                        {{$a->candidate->enrolmentno}}
+                        @else
+                        DEMO
+                    @endif
+                    </td>
+                             <td>{{$a->applicant->hallticket_no}}</td>
 
-        <td class="center-text">
-            @if ($schedule->description != 'Mockdrill')
-                {{ $a->candidate->enrolmentno }}
-            @else
-                DEMO
-            @endif
-        </td>
-        <td class="center-text">
-            @if ($schedule->description != 'Mockdrill')
-                {{ $a->candidate->approvedprogramme->academicyear->year }}
-            @else
-                DEMO
-            @endif
-        </td>
-        <td class="center-text">
-            @if (!is_null($a->applicant))
-                @if ($a->applicant->language_id > 0)
-                    {{ $a->applicant->language->language }}
-                @endif
-            @endif
-
-        </td>
-        <td style="width:130px;height:30px;">
-
-        </td>
-        <td style="width:130px;height:30px;">
-        </td>
-    </tr>
-    <?php $approvedprogramme_id = $a->approvedprogramme_id; ?>
+                    <td  class="center-text">
+                        @if($schedule->description != 'Mockdrill')
+                        {{$a->candidate->approvedprogramme->academicyear->year}}
+                        @else
+                        DEMO
+                    @endif
+                    </td>
+                    <td>
+                        @if(!is_null($a->applicant))
+                        @if($a->applicant->language_id > 0)
+                            {{$a->applicant->language->language}}
+                        @endif
+                        @endif
+                        
+                    </td>
+                    <td style="width:130px;height:30px;">
+                
+                    </td>
+                    <td style="width:130px;height:30px;">
+                    </td>
+                </tr>
+        <?php $approvedprogramme_id  = $a->approvedprogramme_id; ?>
 @endforeach
 @include('examcenter._parts.bottom')

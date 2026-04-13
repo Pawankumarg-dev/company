@@ -48,7 +48,7 @@ class FacultyController extends Controller
     }
 
     public function remove(Request $r){
-                            return response()->json(['error'=>'Could not delete during exam time']);
+                             return response()->json(['error'=>'Could not delete during exam time']);
 
         $institute_id = Institute::where('user_id',Auth::user()->id)->first()->id;
         $faculty = Faculty::find($r->faculty_id);
@@ -110,7 +110,8 @@ class FacultyController extends Controller
     public function store(Request $r){
         $institute_id = Institute::where('user_id',Auth::user()->id)->first()->id;
         if($r->typeoffaculty == 'withcrr'){
-            $faculty = Faculty::where('crr_no',$r->crrno)->first();
+        $faculty = Faculty::where('crr_no',$r->crrno)->whereNull('deleted_at')->first();
+
             if(is_null($faculty)){
                 try{
                 $ch = curl_init('https://rciregistration.nic.in/rehabcouncil/api/findbycrrno.jsp?id='.$r->crrno);

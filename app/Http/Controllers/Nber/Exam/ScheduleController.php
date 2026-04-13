@@ -26,16 +26,14 @@ class ScheduleController extends Controller
 
     public function __construct(ScheduleService $schedule)
     {
-        $this->middleware(['role:nber']);
+       $this->middleware(['role:nber']);
         $this->exam_id = Session::get('exam_id');
-       // dd($this->exam_id);
         $this->exam = Exam::find($this->exam_id);
         $this->scheduleService = $schedule;
     }
 
     public function index(){
         $schedules = $this->scheduleService->getSchedule($this->exam_id);
-       // dd($schedules);
         $exam = $this->exam;
         return view('nber.exam.schedule.index',compact('schedules','exam'));
     }
@@ -47,8 +45,7 @@ class ScheduleController extends Controller
 
     public function store(StoreScheduleRequest $r){
         //return "";
-       $data = Examschedule::create($r->all());
-       // dd($data);
+        Examschedule::create($r->all());
         return redirect('nber/exam/schedules');
     }
 
@@ -74,7 +71,6 @@ class ScheduleController extends Controller
 
 
     public function show($id,Request $r){
-        //dd($id);
         $exam = $this->exam;
         $nber_id = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
         $schedule = Examschedule::find($id);

@@ -18,12 +18,10 @@ class TimetableService
 
     }
     public function getTimetable($programme_id,$exam_id){
-        
         return \App\Examtimetable::where('exam_id',$exam_id)
         ->whereHas('subject',function($q) use($programme_id){
             $q->where('programme_id',$programme_id);
-        })->get();
-        
+        });
     }
     public function getSubjectIDs($schedule_id){
         $nber_id = $this->helperService->getNberID();

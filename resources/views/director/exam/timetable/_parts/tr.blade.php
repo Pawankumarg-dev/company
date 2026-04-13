@@ -11,7 +11,7 @@
 
 ?>
    
-    <?php      for($set=1;$set<4;$set++){ ?>
+    <?php      for($set=1;$set<3;$set++){ ?>
         @include("director.exam.timetable._parts.upload")
     <?php } ?>
 

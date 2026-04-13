@@ -135,12 +135,12 @@ class NewresultController extends Controller
       
 // $sas = \App\Reevaluationapplication::where('exam_id', $exam_id)
 //     ->where('orderstatus_id', 1)
-//     ->whereIn('candidate_id', [76039,76806,77119,90853,97410,128421,134712,136522,137030,137056,137305,143723,155227,158683,159141,161010,164132,164134,162418,136072])
+//     ->whereIn('candidate_id', $sa->candidate_id)
 //     ->get();
-//           foreach($sas as $sa){
-//         $job = (new \App\Jobs\Generate_after_Jan2025SuppMarksheet_rev($sa->candidate_id,$exam_id))->onQueue('june2025first');
-//         $this->dispatch($job);
-//       }
+          foreach($sas as $sa){
+        $job = (new \App\Jobs\Generate_after_Jan2025SuppMarksheet_rev($sa->candidate_id,$exam_id))->onQueue('june2025first');
+        $this->dispatch($job);
+      }
 
 
       return 'done';

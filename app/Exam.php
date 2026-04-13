@@ -8,7 +8,7 @@ class Exam extends Model
 {
     protected $fillable = [
         'name', 'date','examtype_id','academicyear_id','status_id', 'exam_application', 'institute_markentry',
-        'attendance_upload', 'hallticket_download', 'questionpaper_download', 'exambundle_status','nber_markentry','evaluation_status','reevaluation_status','examination_status'
+        'attendance_upload', 'hallticket_download', 'questionpaper_download', 'exambundle_status','nber_markentry','evaluation_status','reevaluation_status','examination_status','cbid_academicyear_id'
     ];
 
     protected $dates = [

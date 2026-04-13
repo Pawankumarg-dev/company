@@ -9,6 +9,9 @@
     <th>
         Enrolment Number
     </th>
+     <th>
+        Hall Ticket Number
+    </th>
     <th>Institute Code</th>
     <th>
         Course

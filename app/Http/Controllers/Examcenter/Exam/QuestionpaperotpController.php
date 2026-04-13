@@ -28,7 +28,7 @@ class QuestionpaperotpController extends Controller
         $this->examService = $exam;
         $this->helperService = $helper;
         //$this->exam_id =  $this->helperService->getScheduledExamID();
-        $this->exam_id = 27;
+        $this->exam_id = 28;
         $this->externalexamcenter_id= \App\Externalexamcenter::where('user_id',Auth::user()->id)->first()->id;
         $this->examschedule_id = app()->request->has('examschedule_id') ? app()->request->examschedule_id : null;
 

@@ -3,13 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Practicalexam extends Model
 {
-    //
+        use SoftDeletes;
+
     protected $fillable = [
         "exam_id", "institute_id", "common_code", "exam_date", "exam_date2", "coursecoordinator_name", "coursecoordinator_contactnumber",
-        "coursecoordinator_whatsappnumber", "coursecoordinator_email", "status_id", "to_instituteemail", "active_status",'practicalexaminer_id','faculty_id','programme_id','course_id','emailed'
+        "coursecoordinator_whatsappnumber", "coursecoordinator_email", "status_id", "to_instituteemail", "active_status",'practicalexaminer_id','faculty_id','programme_id','course_id','emailed','reason','end_date','start_date'
     ];
 
     protected $dates = ["exam_date", "exam_date2"];

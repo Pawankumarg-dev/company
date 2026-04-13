@@ -119,9 +119,9 @@ class RoleMiddleware
             if ( $usertype_id == 14) 
             {
                 $faculty =  \App\Faculty::where('user_id',Auth::user()->id)->first();
-                $practicalexam = \App\Practicalexam::where('faculty_id',$faculty->id)->where('exam_id',27)->get();
+                $practicalexam = \App\Practicalexam::where('faculty_id',$faculty->id)->where('exam_id',28)->get();
                 if($practicalexam->count() > 0){
-                    Session::put('role','practicalexaminer');
+                    Session::put('role','faculty');
                 }
                 if(!Session::get('username')){
                     $username = $faculty->name;

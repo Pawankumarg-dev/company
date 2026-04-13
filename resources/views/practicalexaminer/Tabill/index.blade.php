@@ -3,9 +3,26 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<h4>Bill</h4>
+				<h4>TA Claim Details</h4>
 				@include('common.errorandmsg')
-              
+                          <div class="alert alert-danger" >
+                <ul>
+					<li>
+						You can apply for the TA bill online through the portal.
+					</li>
+					<li> 
+						Please fill in all the details with correct information.
+					</li>
+					<li>
+						Download the TA bill form and fill it with a proper signature.
+					</li>
+					<li>
+						Upload the exam report.
+					</li>
+				</ul>
+
+            </div>
+            
 
 				<a href="{{url('/faculty/tabill/create')}}" style="position: absolute;right:15px;top:10px;" class="btn  mb-2 btn-primary btn-xs pull-right">Apply For T.A</a>
 				<table class="table table-bordered table-condensed">

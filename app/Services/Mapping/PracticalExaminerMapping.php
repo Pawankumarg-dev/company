@@ -28,13 +28,11 @@
 
         public function getPracticalExaminers(){
             $sp = "getPracticalExaminers(".$this->exam_id."," .$this->nber_id.",'".$this->getType()."')";
-          // dd($sp);
             return Grammer::returnIfNotNull((new DBService)->callSP($sp,true),$this->getType());
         }
 
         public function getFacultyList(){
             $sp = "getAllFacultyList(".$this->nber_id.",'PE')";
-           
             return Grammer::returnIfNotNull((new DBService)->callSP($sp,true),$this->getType());
         }
 

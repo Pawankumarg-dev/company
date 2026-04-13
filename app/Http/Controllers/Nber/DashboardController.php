@@ -126,18 +126,18 @@ class DashboardController extends Controller
 
     public function store_notice(Request $request) 
         {
-            $validator = Validator::make($request->all(), [
-                'file_title'   => 'required|string|max:255',
-                'file_name'    => 'required|file|mimes:pdf,doc,docx,txt|max:2048', 
-                'publish_date' => 'required|date',
-                'status'       => 'required|in:1,0',
-            ]);
+            // $validator = Validator::make($request->all(), [
+            //     'file_title'   => 'required|string|max:255',
+            //     'file_name'    => 'required|file|mimes:pdf,doc,docx,txt|max:2048', 
+            //     'publish_date' => 'required|date',
+            //     'status'       => 'required|in:1,0',
+            // ]);
 
-            if ($validator->fails()) {
-                return redirect()->back()
-                                ->withErrors($validator)  
-                                ->withInput();            
-            }
+            // if ($validator->fails()) {
+            //     return redirect()->back()
+            //                     ->withErrors($validator)  
+            //                     ->withInput();            
+            // }
 
             if($request->hasFile('file_name')){
                 $file = $request->file('file_name');

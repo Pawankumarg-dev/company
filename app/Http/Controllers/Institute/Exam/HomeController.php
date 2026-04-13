@@ -43,7 +43,8 @@ class HomeController extends Controller
 
         $approvedprogrammes = Approvedprogramme::where('institute_id',$institute->id)
         //->where('academicyear_id','<=',$current_ay_id)
-                ->where('academicyear_id','<',$current_ay_id)
+                ->where('academicyear_id','<',16)
+                ->where('academicyear_id','!=',14)
 
         ->where('academicyear_id','>',$current_ay_id - 5)
         

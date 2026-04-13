@@ -30,7 +30,7 @@
                 @if(Auth::user()->confirmed ==1)
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/qppublish') }}">Release Question Papers </a></li>
-                    <li><a href="{{ url('/qpstatus') }}">All Question Papers </a></li>
+                    {{-- <li><a href="{{ url('/qpstatus') }}">All Question Papers </a></li> --}}
                 </ul>
                 @endif
                 <!-- Right Side Of Navbar -->

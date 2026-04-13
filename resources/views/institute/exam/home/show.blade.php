@@ -53,18 +53,16 @@
                                 }
                             ?>
                             <tr class="{{$class}}">
-                                
                                <?php
                                $kk=0;
                                $date = \Carbon\Carbon::today()->toDateString();
-$record = \App\Internalmarksheet::where('approvedprogramme_id', $approvedprogramme->id)
-    ->where('exam_id', $exam->id)
-    ->first();
-if ($record && $record->verified==2 && $date < '2026-02-26') {
-$kk=1;
-}
+                                $record = \App\Internalmarksheet::where('approvedprogramme_id', $approvedprogramme->id)
+                                    ->where('exam_id', $exam->id)
+                                    ->first();
+                                if (($record && $record->verified==2 && $date < '2026-02-26')|| ($approvedprogramme->institute_id==987 && $date < '2026-03-25')) {
+                                $kk=1;
+                                }
                                 ?>
-
                                 <td class="center-text">{{ $year }}</td>
                                 <td>{{ $approvedprogramme->programme->course_name }}</td>
                                 <td class="center-text ">
@@ -74,7 +72,7 @@ $kk=1;
                                     </a>
                                     @endif--}}
                                    {{-- @if($exam->attendance_upload == 1) --}}
-                                    @if($exam->id == 28 && $approvedprogramme->academicyear_id <= 13 && $kk==1)
+                                    @if($exam->id == 28 && $approvedprogramme->academicyear_id <= 16 && $kk==1)
                                         <a href="{{url('attendanceupload/'.$approvedprogramme->id).'/'.$exam->id.'/1'}}" class="btn btn-primary btn-xs"><i class="fa fa-th"></i> &nbsp;&nbsp;Term 1</a>
                                         @if($approvedprogramme->programme->numberofterms==2 && $approvedprogramme->academicyear_id < 12 )
 

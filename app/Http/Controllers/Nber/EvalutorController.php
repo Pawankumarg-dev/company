@@ -13,9 +13,15 @@ use App\District;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests;
 use App\User;
-
+use File;
+use App\Examcenter;
+use App\Allexampaper;
+use App\Examtimetable;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use DB;
 class EvalutorController extends Controller
 {
     private $exam_id;
@@ -26,14 +32,105 @@ class EvalutorController extends Controller
         $this->exam_id = Session::get('exam_id');
     }
 
-    public function processqp(){
+    public function processqp(Request $request){
         //  //$courses = \App\Course::all();
+         set_time_limit(7000);
+
+
+        
+
+
+
+
+
+        
+        $examcenters = \App\Externalexamcenter::where('exam_id',28)->whereNotNull('code')->get();
+
+        foreach($examcenters as $ec){
+        // if(file_exists( public_path('files/watermark/overlays/'.$ec->id.'.pdf'))){
+        //    echo 'exist';
+        // }else{
+
+        // $text = $ec->code.' ' . $ec->lgstate->code;
+        // $options = new Options();
+        // $options->set('isHtml5ParserEnabled', true);
+        // $options->set('isPhpEnabled', true);
+        // $pdf = new Dompdf($options);
+        // $htmlWithWatermark = '<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 60px; color: rgba(91, 91, 91, 0.5);white-space:nowrap;">'.$text.'</div>';
+        // $pdf->loadHtml($htmlWithWatermark);
+        // $pdf->setPaper('A4', 'portrait');
+        // $pdf->render();
+        // $file = public_path('files/watermark/overlays/'.$ec->id.'.pdf'); 
+        // file_put_contents($file, $pdf->output());
+        // }
+
+        }
+
+//step2
+// $qps = DB::table('examtimetable_language')
+//     ->where('exam_id', 28)
+//     ->whereIn('omr_code', [
+//         '19111','22111','30111','32111','9111','17111','23111','27111',
+//         '28111','33111','34111','36111','44111','46111','47111'
+//     ])
+//     ->get();
+
+        
+$qps = DB::table('examtimetable_language')
+    ->where('exam_id', 28)
+    ->whereIn('omr_code', [
+        // '9213','9217','9219','33211','34211','36111','38211',
+        // '40211','44211','46211','19111','22111','30111','32111','9111','17111','23111','27111'
+  '28111','33111','34111','36111','44111','46111','47111'
+    ])
+    ->get();
+$set=2;
+
+
+foreach($qps as $qp){
+
+$field = 'question_paper_' . $set;
+
+
+ 
+
+$inputFile  = public_path('files/questionpapers/28/' . $qp->$field);
+$inputnopass = public_path('files/watermark/without-en/'.$set.'/' . $qp->$field);
+$password = $qp->password;
+
+$script = app_path('processpdf/decryptfileonly.sh');
+chmod($script, 0755);
+
+$command = "sh " . escapeshellarg($script)
+    . " " . escapeshellarg($inputFile)
+    . " " . escapeshellarg($inputnopass)
+    . " " . escapeshellarg($password); // ✅ missing semicolon fixed
+
+$output = shell_exec($command . " 2>&1");
+
+// if ($output === null) {
+//     return response()->json([
+//         'status' => false,
+//         'message' => 'Shell execution failed'
+//     ]);
+// }
+
+// return response()->json([
+//     'status' => true,
+//     'message' => $output
+// ]);
+
+}
+
+
+return 'ss';
+
         
         // $job = (new \App\Jobs\Encryptwatermarked(27,75))->onQueue('encrypt75');
         // $this->dispatch($job);
         // // return "Job Created";
-        // $job = (new \App\Jobs\Extractallqp(27,0))->onQueue('extract');
-        // $this->dispatch($job);
+        $job = (new \App\Jobs\Extractallqp(27,0))->onQueue('extract');
+        $this->dispatch($job);
         $job = (new \App\Jobs\Processqpgenpwd(27,89))->onQueue('genpwd89');
         $this->dispatch($job);
         // $job = (new \App\Jobs\Processqpgenpwd(27,86))->onQueue('genpwd86');
@@ -120,10 +217,60 @@ class EvalutorController extends Controller
         return "Job Created";
     }
 
-   public function send_csemail(){
-  
-         $job =  (new \App\Jobs\GenerateEVCPassword())->onQueue('resetpwd'); 
-             $this->dispatch($job);
+   public function send_csemail(){ 
+
+
+    $examcenters = \App\Examcenter::where('exam_id',28)
+    ->pluck('externalexamcenter_id')
+    ->unique();
+
+        foreach($examcenters as $ec){
+
+            $characters = '123456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
+            $password = substr(str_shuffle($characters), 0, 10);
+
+            $eec  = \App\Externalexamcenter::find($ec);
+            $user = \App\User::where('username',$eec->code)->first();
+
+//         if (is_null($eec->user_id) && is_null($user)) {
+//             $user = \App\User::create([
+//                 'username' => $eec->code,
+//                 'password' => Hash::make($password),
+//                 'confirmed' => 0,
+//                 'confirmation_code' => '111zzza',
+//                 'usertype_id' => 6,
+//                 'email' => $eec->email1
+//             ]);
+//             $eec->password = $password;
+
+//             $eec->user_id = $user->id;
+//             $eec->save();
+//         }
+//         else{
+// echo $eec->code;
+
+//         }
+
+
+
+            $eec  = \App\Externalexamcenter::find($ec);
+            if($eec->resend_mail == 1){
+                $to = $eec->email1;
+                $contactname = $eec->principal_name;
+                $code = $eec->code;
+                $address = $eec->name;
+                $username = $eec->user->username;
+                $password = $eec->password;
+                echo $url = "https://rciregistration.nic.in/rehabcouncil/api/examcenter_email_send_nber.jsp?to=".urlencode($to)."&contactname=".urlencode($contactname)."&code=".urlencode($code)."&address=".urlencode($address)."&username=".urlencode($username)."&password=".urlencode($password);    
+                $is_ok = $this->http_response($url);
+                echo $is_ok.PHP_EOL;
+                echo $is_ok; 
+                echo $eec->code . " ".PHP_EOL;
+                echo 'not send';
+            }
+        }
+        //  $job =  (new \App\Jobs\GenerateEVCPassword())->onQueue('resetpwd'); 
+        //      $this->dispatch($job);
 
         //  $job =  (new \App\Jobs\GenerateECPassword())->onQueue('resendpwd'); 
         //       $this->dispatch($job);
@@ -279,11 +426,16 @@ public function http_response($url, $status = null, $wait = 3)
 
 
 public function course(){
+
+
         $exam_id = Session::get('exam_id');
         $nber_id = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
         $programmes = \App\Programme::where('nber_id',$nber_id)->where('active_status',1)->get();
         $year =Session::get('academicyear_id');
         $evaluationcenters = \App\Evaluationcenter::where('exam_id',$exam_id)->get();
+
+
+
         return view('nber.evaluations.programmes', compact('programmes','year','evaluationcenters'));
 
 }
@@ -325,7 +477,7 @@ public function verify_marks(Request $r){
         //     $application->verified = 1;
         //     $application->save();
         // }
-    Session::put('messages','Verified marks updated successfully.');
+                        Session::put('messages','Verified marks updated successfully.');
 
 return redirect()->route('marks-verification-course');
 
@@ -334,6 +486,11 @@ return redirect()->route('marks-verification-course');
 
 public function update_marks(Request $request)
 {
+  
+
+
+
+
 
     $nber_id = \App\Nberstaff::where('user_id', Auth::id())->value('nber_id');
         $access = Session::get('admin');

@@ -954,7 +954,7 @@ public function cbid_gen(){
    public function exam_timetable(Request $r){
         $timetables = null;
         $course = null;
-        $exam = \App\Exam::find(27);
+        $exam = \App\Exam::find(28);
         $academicyear_id = 12;
         $syear = 1;
         $revision_year = null;

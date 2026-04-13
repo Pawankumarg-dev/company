@@ -23,7 +23,6 @@
             $this->candidate = $this->helperService->getCandidate();
             //$this->exam = $this->helperService->getScheduledExam();
             $this->exam = \App\Exam::find(28);
-            //dd($this->exam);
             $this->applicant = Allapplicant::where('candidate_id',$this->candidate->id)->where('exam_id',$this->exam->id)->first();
             $this->request = app()->request;
             $this->subjects =  $this->getSubjects();

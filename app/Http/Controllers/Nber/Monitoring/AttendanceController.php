@@ -39,7 +39,10 @@ class AttendanceController extends Controller
     }
     public function show($id,Request $r){
 
-
+if($r->examschedule_id == 'all'){
+     Session::put('messages','Select Exam Schedule Date Time From Dropdown');
+            return back();
+}
 
 
      
@@ -63,7 +66,11 @@ class AttendanceController extends Controller
       if(!is_null($schedule_id)){
         $schedule = \App\Examschedule::find($schedule_id);
       }else{
-        $schedule = null;
+
+
+
+
+        return 'Select Exam Schedule';
       }
       // $examcenter = $this->page->getExamCenter($id);
 $examcenter =\App\Externalexamcenter::find($id);
@@ -77,4 +84,3 @@ $examcenter =\App\Externalexamcenter::find($id);
       ));
     }
 }
-// NBERrciapp##1616

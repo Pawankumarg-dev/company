@@ -17,25 +17,28 @@ use App\Http\Requests;
 
 class TABillController extends Controller
 {
+    private $exam_id;
 	public function __construct()
     {
 		$this->middleware(['role:faculty']);
-		$this->exam_id = Session::get('exam_id');
+		//$this->exam_id = Session::get('exam_id');
+        		$this->exam_id = 28;
+
     }
 	public function index() {
-        $bill = Tabill::where('user_id',Auth::id())->where('exam_id',27)->get(); 
+        $bill = Tabill::where('user_id',Auth::id())->get(); 
         return view('practicalexaminer.Tabill.index', compact('bill'));
     }
 
 	public function create() {
 		$banks = Paymentbank::get();
-                $nbers = \App\Nber::all();
+        $nbers = \App\Nber::all();
         return view('practicalexaminer.Tabill.create',compact('banks','nbers'));
     }
     public function store(Request $request)
     {
         try{
-        $exam_id =27;
+        $exam_id =$this->exam_id;
         $randomString1 = $request->nber_id.$request->payment_for.Auth::id().'ta'.$exam_id;
         if ($request->hasFile('ta_form')) {
             $image = $request->file('ta_form');
@@ -76,7 +79,7 @@ class TABillController extends Controller
 
     public function update(Request $request)
 {
-    $exam_id =27;
+    $exam_id =$this->exam_id;
     $id=$request->id;
     $tabill = Tabill::findOrFail($id);
         $randomString1 = $request->nber_id.$request->payment_for.Auth::id().'ta'.$exam_id;

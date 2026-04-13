@@ -56,10 +56,12 @@ class AuthController extends Controller
         $tab = $request->input('tab'); // 'student', 'institute', etc.
         $userInput = $request->input('captcha');
 
-        $sessionCode = Session::get("captcha_code_$tab");        
-        if (!$sessionCode || strtolower($userInput) !== strtolower($sessionCode)) {
-             return back()->with('error', 'Invalid CAPTCHA');
-        }
+        $sessionCode = Session::get("captcha_code_$tab");    
+        
+        
+        // if (!$sessionCode || strtolower($userInput) !== strtolower($sessionCode)) {
+        //      return back()->with('error', 'Invalid CAPTCHA');
+        // }
 
         
         \App\LoginAttempt::create([
