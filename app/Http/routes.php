@@ -1123,13 +1123,17 @@ Route::group(array('middleware' => ['role:student']), function (){
 //	Route::get('/hallticketdownload','Student\HallticketController@download');
 //	Route::get('/examtimetable','Student\HallticketController@timetable');
 });
+
 Route::group(array('middleware' => ['role:faculty']), function ()
 {   
      Route::resource('/faculty/tabill','Practicalexaminer\TABillController');
     Route::get('/appointment', 'Practicalexaminer\HomeController@appointment');
     Route::resource('/practicalexam/home','Practicalexaminer\HomeController');
     Route::resource('practicalexam/awardlisttemplate','Practicalexaminer\AwardlisttemplateController');
+    Route::post('practicalexam/subject-marksheet-upload','Practicalexaminer\AwardlisttemplateController@subjectMarksheetUpload');
     Route::resource('practicalexaminer/geotaggedphotos','Practicalexaminer\GeotaggedphotoController');
+    Route::post('/practicalexam/awardlisttemplate/download','Practicalexaminer\AwardlisttemplateController@downloadSubjectPdf');
+    Route::post('/practicalexam/awardlisttemplate/upload_entry','Practicalexaminer\AwardlisttemplateController@upload_entry');
 });
 
 

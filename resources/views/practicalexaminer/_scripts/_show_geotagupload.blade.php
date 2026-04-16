@@ -7,6 +7,5 @@
         $('.upload_'+e).removeClass('hidden');
         $('.upload_link_'+e).addClass('hidden');
     }
-
-    
+   
 </script>

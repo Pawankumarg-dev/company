@@ -29,7 +29,7 @@ class HomeController extends Controller
         $examstartdate = '2026-03-24';
         $examenddate = '2026-04-06';
         $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
-
+       // dd($practicalexaminer_id);
         $date = \Carbon\Carbon::now()->toDateString();
     
         if(Session::has('date')){
@@ -38,7 +38,7 @@ class HomeController extends Controller
 
 
         $practicalexams = \App\Practicalexam::where('exam_id',$this->exam_id)->whereNull('deleted_at')->where('faculty_id',$practicalexaminer_id)->orderBy('institute_id')->get();
-       
+       //dd($practicalexams);
 
         return view('practicalexaminer.home.index',compact(
             'practicalexams','practicalexaminer_id','examstartdate'
@@ -102,9 +102,6 @@ view()->share('exam', $exam);
     }
 
 
-
-
-
     public function update($id,Request $request){
        // return "Closed";
             $subject_id = $request->subject_id;
@@ -115,7 +112,6 @@ view()->share('exam', $exam);
                 $q->where('approvedprogramme_id',$template->approvedprogramme_id);
             })->where('subject_id',$subject_id)->where('exam_id',$this->exam_id)
             ->get();
-
             foreach($applications as $application){
                 $key = 'mark_'.$application->id;
                 $absent = 'absent_'.$application->id;
@@ -127,6 +123,7 @@ view()->share('exam', $exam);
                         $application->mark_ex = $request->$key;
                         $application->attendance_ex = 1;
                     }
+                   
                     $application->save();
                 //}
             }

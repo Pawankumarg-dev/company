@@ -29,7 +29,7 @@
                 });
             return false;
         }
-        if($(".chk_{{$ap->id}}_{{$term}}:checked").length > 3 ){
+        if($(".chk_{{$ap->id}}_{{$term}}:checked").length >5 ){
             swal({
                 type: 'warning',
                 title: 'Maximum only three subjets can be selected',

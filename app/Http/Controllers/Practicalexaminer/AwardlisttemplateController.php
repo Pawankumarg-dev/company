@@ -23,8 +23,7 @@ class AwardlisttemplateController extends Controller
     }
 
     public function store(Request $r){
-       
-        //dd($r->all());
+
         $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
 
         // if($practicalexaminer_id != 1894){
@@ -36,7 +35,7 @@ class AwardlisttemplateController extends Controller
         $downloadTime = \Carbon\Carbon::now()->toDateTimeString();
         $term = $r->term;
 
-
+       
 
         // $templates = \App\Awardlisttemplate::where('faculty_id', $practicalexaminer_id)
         //     ->where('exam_date', $date)
@@ -59,6 +58,7 @@ class AwardlisttemplateController extends Controller
                     ->where('approvedprogramme_id',$r->approvedprogramme_id)
                     ->where('term',$term)
                     ->get();
+        //dd($templates);
         foreach($templates as $t){
             $t->subjects()->detach();
             $t->delete();
@@ -71,8 +71,9 @@ class AwardlisttemplateController extends Controller
             'approvedprogramme_id' => $r->approvedprogramme_id,
             'term' => $term,
             'downloaded_at' => $downloadTime
+           
         ]);
-        
+       // dd($template);
         
         $approvedprogramme = \App\Approvedprogramme::find($r->approvedprogramme_id);
        // $practicalexam  = \App\Practicalexam::find($r->practicalexam_id);
@@ -80,7 +81,6 @@ class AwardlisttemplateController extends Controller
                     ->where('subjecttype_id',2)
                     ->where('programme_id',$approvedprogramme->programme_id)
                     ->get();
-       
         foreach($subjects as $subject){
             if($r->has('chk_'.$subject->id)){
                 $template->subjects()->attach($subject->id);
@@ -90,29 +90,33 @@ class AwardlisttemplateController extends Controller
         }   
         $exam_name  = \App\Exam::find($this->exam_id);
         $subject_ids =  $template->subjects()->pluck('id');
-        // dd( $subject_ids);
+        //dd( $subject_ids);
         $candidate_ids = \App\Allapplication::whereHas('candidate', function($q) use($r){
                     $q->where('approvedprogramme_id',$r->approvedprogramme_id);
                 })->whereIn('subject_id',$subject_ids)->where('exam_id', $this->exam_id)
                 ->pluck('candidate_id')->unique()->toArray();
        // dd( $candidate_ids);
         $candidates = \App\Candidate::whereIn('id',$candidate_ids)->get();
-        if($candidates->count()==0){
-            $template->subjects()->detach();
-            $template->delete();
-            Session::flash('error','No Applications found');
-            $practicalexams = \App\Practicalexam::where('faculty_id',$practicalexaminer_id)->orderBy('institute_id')->get();
-            return redirect('practicalexam/home');
-        }
+        Session::flash('messages', 'File Uploaded Successfully');
+        return back();
+
+        // if($candidates->count()==0){
+        //     $template->subjects()->detach();
+        //     $template->delete();
+        //     Session::flash('error','No Applications found');
+        //     $practicalexams = \App\Practicalexam::where('faculty_id',$practicalexaminer_id)->orderBy('institute_id')->get();
+        //     return redirect('practicalexam/home');
+        // }
+
         
-        return view('practicalexaminer.awardlisttemplate.template',compact(
-            'approvedprogramme',
-            'term',
-            'template',
-            'candidates',
-            'practicalexaminer',
-            'exam_name'
-        ));  
+        // return view('practicalexaminer.awardlisttemplate.template',compact(
+        //     'approvedprogramme',
+        //     'term',
+        //     'template',
+        //     'candidates',
+        //     'practicalexaminer',
+        //     'exam_name'
+        // ));  
     }
 
     public function show($id,Request $r){
@@ -180,6 +184,114 @@ class AwardlisttemplateController extends Controller
         }
         //dd( $template);
         Session::flash('messages', 'File Uploaded Successfully');
+        
         return back();
     }
+
+
+     public function downloadSubjectPdf(Request $r)
+        {
+          // dd($r->all()); 
+            $term = $r->input('term');
+            session(['term' => $term]);
+            //dd($term);
+            // $data = $r->except('_token');
+            // session(['download_data' => $data]); 
+           $data = $r->except('_token');
+           // dd($r->practicalexam_id);
+            $key = $r->practicalexam_id . '_' . $r->approvedprogramme_id . '_' . $r->term;
+           // dd($key);
+            $downloadData = session('download_data', []);
+         
+            $downloadData[$key] = $data;
+          
+            session(['download_data' => $downloadData]);
+            //dd(session(['download_data' => $data]));
+            $subject_ids = collect($r->subject_ids)->map(fn($id) => (int) $id);
+            $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
+            $practicalexaminer  = \App\Faculty::find($practicalexaminer_id);
+            $date = \Carbon\Carbon::now()->toDateString();
+            $term = $r->term;
+            $approvedprogramme = \App\Approvedprogramme::find($r->approvedprogramme_id);
+        // $practicalexam  = \App\Practicalexam::find($r->practicalexam_id);
+            $subjects = \App\Subject::where('syear',$term)
+                        ->where('subjecttype_id',2)
+                        ->where('programme_id',$approvedprogramme->programme_id)
+                        ->whereIn('id', $subject_ids)
+                        ->get(); 
+            $exam_name  = \App\Exam::find($this->exam_id);
+            $candidate_ids = \App\Allapplication::whereHas('candidate', function($q) use($r){
+                        $q->where('approvedprogramme_id',$r->approvedprogramme_id);
+                    })->whereIn('subject_id',$subject_ids)->where('exam_id', $this->exam_id)
+                    ->pluck('candidate_id')->unique()->toArray();
+        // dd( $candidate_ids);
+            $candidates = \App\Candidate::whereIn('id',$candidate_ids)->get();
+            return view('practicalexaminer.awardlisttemplate.template',compact(
+                'approvedprogramme',
+                'term',
+                'subjects',
+                'candidates',
+                'practicalexaminer',
+                'exam_name'
+            ));
+
+        }
+
+
+    public function upload_entry(Request $r)
+    {
+        $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
+        $practicalexaminer  = \App\Faculty::find($practicalexaminer_id);
+
+        $date = \Carbon\Carbon::now()->toDateString();
+        $downloadTime = \Carbon\Carbon::now()->toDateTimeString();
+        $term = $r->term;
+
+        $file = $r->file('marksheet');
+
+        if (!$file) {
+            Session::flash('error', 'No file selected');
+            return back();
+        }
+
+        $datetime = \Carbon\Carbon::now()->format('Ymd_His');
+        $extension = $file->getClientOriginalExtension();
+        $fname = $practicalexaminer_id . '_' . $datetime . '.' . $extension;
+
+        $destination = public_path('files/externalpractical');
+
+        if (!file_exists($destination)) {
+            mkdir($destination, 0755, true);
+        }
+
+        try {
+            $file->move($destination, $fname);
+        } catch (\Exception $e) {
+            Session::flash('error', 'Upload Failed!');
+            return back();
+        }
+
+        // ✅ Create template
+        $template = \App\Awardlisttemplate::create([
+            'faculty_id' => $practicalexaminer_id,
+            'exam_date' => $date,
+            'marksheet' => $fname,
+            'practicalexam_id' => $r->practicalexam_id,
+            'institute_id' => $r->institute_id,
+            'approvedprogramme_id' => $r->approvedprogramme_id,
+            'term' => $term,
+            'downloaded_at' => $downloadTime,
+            'marksheet_uploaded_at' => $datetime
+        ]);
+
+        // ✅ Attach subject with pivot data
+        $template->subjects()->attach($r->subject_id, [
+            'marks_upload' => 1,
+            'date_uploaded' => now()
+        ]);
+
+        Session::flash('messages', 'File Uploaded Successfully');
+        return back();
+    }
+
 }

@@ -117,6 +117,7 @@
                     // }
                     ?>
                     @foreach ($practicalexams as $exam)
+                        {{-- {{$exam}}  --}}
                         @if ($institute_id != $exam->institute_id)
                             <tr>
                                 <th class="institute" colspan="5">
@@ -211,10 +212,10 @@
                                     @php
 
                                         $now = \Carbon\Carbon::now()->format('Y-m-d');
-                                    //    $start = \Carbon\Carbon::parse($exam->start_date)->format('Y-m-d');
-                                    //    $end = \Carbon\Carbon::parse($exam->end_date)->addDay()->format('Y-m-d');
+                                        //    $start = \Carbon\Carbon::parse($exam->start_date)->format('Y-m-d');
+                                        //    $end = \Carbon\Carbon::parse($exam->end_date)->addDay()->format('Y-m-d');
                                         $start = '2026-04-12';
-                                        $end = '2026-04-15';
+                                        $end = '2026-04-17';
 
                                     @endphp
                                     @if ($now >= $start && $now <= $end)
@@ -233,10 +234,137 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($exam->faculty_id == $practicalexaminer_id)
-                                                {{--    @if ($geotagged == true && $exam->institute_id == $gtinstitute_id && $exam->awardlisttemplates()->where('approvedprogramme_id', $ap->id)->count() > 0 && $exam->practicalexaminer_id == $practicalexaminer_id)    --}}
-                                                @include('practicalexaminer._partials._buttons._uploadlinks')
-                                            @endif
+                                            {{-- @if ($exam->faculty_id == $practicalexaminer_id) --}}
+                                            {{-- {{$data}} --}}
+                                            {{--    @if ($geotagged == true && $exam->institute_id == $gtinstitute_id && $exam->awardlisttemplates()->where('approvedprogramme_id', $ap->id)->count() > 0 && $exam->practicalexaminer_id == $practicalexaminer_id)    --}}
+                                            {{-- @include('practicalexaminer._partials._buttons._uploadlinks')
+                                            @endif --}}
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Subject Code</th>
+                                                        <th>Term</th>
+                                                        <th>Upload Marksheet</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    @php
+                                                        $subjectIds = \App\PracticalExamSubject::where(
+                                                            'practicalexam_id',
+                                                            $exam->id,
+                                                        )
+                                                            ->pluck('subject_id')
+                                                            ->toArray();
+
+                                                        $subjects = \App\Subject::where(
+                                                            'programme_id',
+                                                            $ap->programme_id,
+                                                        )
+                                                            ->whereIn('id', $subjectIds)
+                                                            ->where('subjecttype_id', 2)
+                                                            ->orderBy('syear')
+                                                            ->get();
+                                                    @endphp
+
+                    @forelse($subjects as $subject)
+                        <tr>
+                            <td>
+                                <strong>{{ $subject->scode }}</strong>
+                            </td>
+
+                            <td>
+                                {{ $subject->syear }}
+                            </td>
+
+                            <td>
+                                <form
+                                    action="{{ url('/practicalexam/awardlisttemplate/upload_entry') }}"
+                                    method="POST" enctype="multipart/form-data"
+                                    class="upload-form">
+
+                                    {{ csrf_field() }}
+
+                                    <input type="hidden" name="practicalexam_id"
+                                        value="{{ $exam->id }}">
+                                    <input type="hidden" name="approvedprogramme_id"
+                                        value="{{ $ap->id }}">
+                                    <input type="hidden" name="institute_id"
+                                        value="{{ $ap->institute_id }}">
+                                    <input type="hidden" name="term"
+                                        value="{{ $term }}">
+                                    <input type="hidden" name="subject_id"
+                                        value="{{ $subject->id }}">
+                                    <input type="file" name="marksheet"
+                                        class="file-input d-none">
+                                        
+                                    @php
+                                        $template = $exam->awardlisttemplates()->where('approvedprogramme_id',$ap->id)->where('exam_date',\Carbon\Carbon::parse($date)->toDateString())->whereHas('subjects', function($q) use ($subject){
+                                            $q->where('subject_id', $subject->id);
+                                        })->first();
+                                        // echo "<pre>";
+                                        // print_r($template);
+                                    @endphp
+
+                                    @if (!empty($template->marksheet))
+                                        <div class="uploaded-block upload-block">
+                                            <a target="_blank"
+                                                href="{{ url('files/externalpractical') }}/{{ $template->marksheet }}">
+                                                Download (Term {{ $subject->syear }})
+                                            </a>
+                                            <div class="alert alert-warning">
+                                                @if ($template->subjects->count() > 0)
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th>Subject Code</th>
+                                                            <th>Marks</th>
+                                                        </tr>
+
+                                                        @foreach ($template->subjects as $subject)
+                                                            <tr>
+                                                                <td>{{ $subject->scode }}</td>
+                                                                <td>
+                                                                    <a href="{{ url('practicalexam/awardlisttemplate') }}/{{ $template->id }}?subject_id={{ $subject->id }}"
+                                                                        class="btn btn-xs btn-primary">
+                                                                        Enter Marks
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </table>
+                                                @endif
+                                            </div>
+                                            <div class="mt-2">
+                                                <button type="button"
+                                                    class="btn btn-sm btn-warning upload-btn">
+                                                    Re-upload marksheet
+                                                </button>
+                                                <span class="uploading hidden text-info small">Uploading, please wait...</span>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="upload-block">
+                                            <button type="button"
+                                                class="btn btn-sm btn-success upload-btn">
+                                                Upload
+                                            </button>
+                                          
+                                            <span class="uploading hidden text-info small">Uploading, please wait...</span>
+                                        </div>
+                                    @endif
+
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                                                        <tr>
+                                                            <td colspan="3" class="text-center text-muted">
+                                                                No subjects available
+                                                            </td>
+                                                        </tr>
+                                                    @endforelse
+                                                </tbody>
+                                            </table>
                                         </td>
                                     @else
                                         <td></td>
@@ -257,4 +385,44 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            document.querySelectorAll('.upload-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    let form = this.closest('form');
+                    let fileInput = form.querySelector('.file-input');
+                    fileInput.click();
+                });
+            });
+
+            document.querySelectorAll('.file-input').forEach(function(input) {
+                input.addEventListener('change', function() {
+                    if (!this.files || this.files.length === 0) {
+                        return;
+                    }
+
+                    let file = this.files[0];
+                    if (file.size > 1000000) {
+                        alert('Please choose a file smaller than 1MB.');
+                        this.value = '';
+                        return;
+                    }
+
+                    let form = this.closest('form');
+                    let uploadBlock = form.querySelector('.upload-block');
+                    let uploadingText = form.querySelector('.uploading');
+                    if (uploadBlock) {
+                        uploadBlock.classList.add('hidden');
+                    }
+                    if (uploadingText) {
+                        uploadingText.classList.remove('hidden');
+                    }
+
+                    form.submit();
+                });
+            });
+
+        });
+    </script>
 @endsection

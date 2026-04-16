@@ -180,21 +180,21 @@
                         <th class="h7-text  blue-text"  rowspan="3">
                             Student Name
                         </th>
-                        @foreach($template->subjects as $subject)
+                        @foreach($subjects as $subject)
                             <th style="width:120px;">
                                 {{$subject->scode}}
                             </th>
                         @endforeach
                     </tr>
                     <tr>
-                        @foreach($template->subjects as $subject)
+                        @foreach($subjects as $subject)
                         <td style="width:120px;">
                             {{$subject->sname}}
                         </td>
                         @endforeach
                     </tr>
                     <tr>
-                        @foreach($template->subjects as $subject)
+                        @foreach($subjects as $subject)
                         <td style="width:120px;">
                             Min: {{$subject->emin_marks}}, 
                             Max: {{$subject->emax_marks}}
@@ -206,7 +206,7 @@
                             <td class="center-text">{{$slno}}<?php $slno++; ?></td>
                             <td>{{$c->enrolmentno}}</td>
                             <td>{{$c->name}}</td>
-                            @foreach($template->subjects as $subject)
+                            @foreach($subjects as $subject)
                             <td style="width:120px;">
                                 
                             </td>
