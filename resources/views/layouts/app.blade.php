@@ -351,6 +351,20 @@
             justify-content: center;
             align-items: center;
         }
+        /* Ensure Bootstrap modals appear above other content and show correctly */
+        /* .modal.show {
+            display: block !important;
+            opacity: 1 !important;
+        }
+
+        .modal {
+            z-index: 999999 !important;
+        }
+
+        .modal-backdrop {
+            z-index: 99999 !important;
+        } */
+         
     </style>
 </head>
 <body id="app-layout">

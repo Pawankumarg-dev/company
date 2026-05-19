@@ -11,7 +11,7 @@
                     @foreach($courses as $p)
                         <li>
                             <a href="{{url('nber/publishresult')}}/{{$p->id}}?attendance={{$attendance}}">
-                            {{$p->course_name}} 
+                                {{$p->abbreviation}}
                             </a>
                         </li>
                     @endforeach

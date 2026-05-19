@@ -50,16 +50,12 @@ class HallticketController extends Controller
 
     public function index($id,$exam_id,$term){
         //return 'Closed';
+
         $ap = Approvedprogramme::with('candidates')->find($id);
-
-        if($ap){
-            if($ap->institute->user_id==Auth::user()->id){
-
-
-
-
-    $candidates = Candidate::where('approvedprogramme_id', $ap->id)
-    ->leftJoin('attendances', function ($join) use ($exam_id, $term) {
+        if($ap){ 
+        if($ap->institute->user_id==Auth::user()->id){
+        $candidates = Candidate::where('approvedprogramme_id', $ap->id)
+        ->leftJoin('attendances', function ($join) use ($exam_id, $term) {
         $join->on('candidates.id', '=', 'attendances.candidate_id')
              ->where('attendances.exam_id', '=', $exam_id)
              ->where('attendances.term', '=', $term);
@@ -69,7 +65,7 @@ class HallticketController extends Controller
     ->select('candidates.*', 'attendances.*')
     ->get();
 
-
+//dd($candidates);
     // print_r($candidates[0]);
     // die();
     //$exam = Exam::find($exam_id);
@@ -87,6 +83,7 @@ class HallticketController extends Controller
         //return 'Closed';
         $ap = Approvedprogramme::find($request->approvedprogramme_id);
         $exam_id = $request->exam_id;
+       
         $rules = [
             'document_t' => 'required',
             'document_p' => 'required',
@@ -110,9 +107,11 @@ class HallticketController extends Controller
             $filename_p = $ap->id.'_exam_'.$exam_id.'_practical'.$request->term.'.'.$extn ;
             move_uploaded_file($file_p,'files/attendance/'.$filename_p);
         }
+       
         foreach($ap->candidates as $c){
-
+           
             $attendance = Attendance::where('candidate_id',$c->id)->where('exam_id',$exam_id)->where('term',$request->term);
+        
             if($attendance->count()>0){
                 $attendance = $attendance->first();
               //  if($attendance->id > 267362 || $attendance->enable_edit == 1){
@@ -131,7 +130,6 @@ class HallticketController extends Controller
                //     return back();
                // }
             }else{
-
                 Attendance::create([
                     'candidate_id'=>$c->id,
                     'exam_id'=>$exam_id,
@@ -146,6 +144,7 @@ class HallticketController extends Controller
                 ]);
             }
         }
+        
         Session::put('messages','Uploaded');
         return back();
     }

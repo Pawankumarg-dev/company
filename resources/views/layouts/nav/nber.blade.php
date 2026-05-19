@@ -179,10 +179,13 @@
 
                                             
                                         </li>
-<li>
+                                        <li>
                                             <a href="{{url('/nber/practicalverify-list')}}" class="">Verify External Practical Marks</a>
 
                                             
+                                        </li>
+                                        <li>
+                                            <a href="{{url('/nber/exam/payment')}}" class="">Verify Exam Payments</a>
                                         </li>
                                         <li>
                                             <a href="{{url('/nber/tabill')}}" class="">TA Bills</a>

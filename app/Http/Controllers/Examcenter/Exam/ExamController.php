@@ -76,7 +76,7 @@ class ExamController extends Controller
         ->orderBy('examschedules.examdate', 'ASC')
         ->orderBy('examschedules.starttime', 'ASC')
         ->get();
-
+       
         
         return view('examcenter.schedule',compact(
             'schedules',

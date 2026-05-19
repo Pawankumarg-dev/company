@@ -100,7 +100,7 @@ class ExamcenterController extends Controller
 }
     public function create(){
 
-    return 'closed';
+    //return 'closed';
 
         $nber_id=  \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
         $externalexamcenters = Externalexamcenter::where('exam_id',$this->exam_id)->get();
@@ -159,8 +159,7 @@ class ExamcenterController extends Controller
     
         public function show($id){
 
-
-        return 'closed';
+       // return 'closed';
              $nber = \App\Nberstaff::where('user_id', Auth::user()->id)->first();
             if (!$nber) {
                 return back()->with('error', 'NBER staff not found');

@@ -31,6 +31,7 @@ class HelperService
     }
     
     public function getCandidateID(){
+      
         return $this->getCandidate()->id;
     }
     

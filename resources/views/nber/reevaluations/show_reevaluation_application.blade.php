@@ -331,7 +331,7 @@ $allapplicant = \App\Allapplicant::where('exam_id',$subject->exam_id)->where('ca
                         @endif
                     </td>
                     <td class="center-text">
-                        {{$subject->application}}
+                        {{$subject->application->bundle_number ?? ''}}
                     <?php
                         
                            $lcode = $allapplicant->language->code;
@@ -394,8 +394,8 @@ $allapplicant = \App\Allapplicant::where('exam_id',$subject->exam_id)->where('ca
                         
                         @if($subject->active_status == 0)
                             @if(
-                                $subject->subject->imin_marks <= $subject->$application->internal_mark && 
-                                ($exmarks +  $subject->$application->grace ) >= $subject->subject->emin_marks
+                                $subject->subject->imin_marks <= $allapplication->internal_mark && 
+                                ($exmarks +  $allapplication->grace ) >= $subject->subject->emin_marks
                                 )
                                 <span style="color:green">Pass</span>
                             @else

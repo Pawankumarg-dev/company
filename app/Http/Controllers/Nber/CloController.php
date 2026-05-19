@@ -58,7 +58,7 @@ $tabills = DB::table('tabills')
         'tabills.created_at',
         'tabills.id',
                 'tabills.payment_status',
-                'tabills.reason',
+               
 
         'nbers.name_code'
     )

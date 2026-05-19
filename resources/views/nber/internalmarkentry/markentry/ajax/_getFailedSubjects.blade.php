@@ -1,5 +1,6 @@
 <script>
     function getFailedSubjects(candidate_id){
+        
         var token = $('input[name=_token]');
         var formData = new FormData();
         formData.append('candidate_id', candidate_id); 

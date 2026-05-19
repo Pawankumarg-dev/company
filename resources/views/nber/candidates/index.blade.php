@@ -242,8 +242,6 @@
 									<input type="hidden" value="{{$c->id}}">
 									<a  class="btn btn-default btn-xs"  href="{{url('nber/candidate')}}/{{$c->id}}"><i class="fa fa-eye"></i> &nbsp;Details</a>
 
-
-						
 									{{-- {{\App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id}} --}}
 									<?php $nid = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id ; ?>
 									{{-- @if( $nid == 2 )

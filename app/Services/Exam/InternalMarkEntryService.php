@@ -99,11 +99,11 @@ class InternalMarkEntryService
     }
     public function getInternalFailedSubject($r,$programme_id){
         $candidate_id = $r->candidate_id;
-
+        
         $sql = ' select s.id, s.scode, st.type as type, s.sname, s.syear, s.has_alternative, s.imax_marks, im.internal, im.attendance from subjects s 
         left join programmes p on p.id = s.programme_id
         left join subjecttypes st on st.id = s.subjecttype_id
-        left join newinternalmarks im on im.candidate_id = ' . $candidate_id.' and im.subject_id = s.id  and im.exam_id = 27  
+        left join newinternalmarks im on im.candidate_id = ' . $candidate_id.' and im.subject_id = s.id  and im.exam_id = 28  
         where  s.syear = '.$r->syear.' and   s.subjecttype_id = '.$r->subjecttype_id.' and   p.id = '.$programme_id.'  and  s.id  not in (
         select distinct t2.subject_id  from (
             select   subject_id,  sum(if(result_id=1,1,0)) as result_id from
@@ -137,10 +137,10 @@ class InternalMarkEntryService
     public function getSubjetsSQL($subjects){
         $subjectsql = '';
         foreach($subjects as $subject){
-            $subjectsql .= " sum(if(im.subject_id=". $subject->id." , 
-                            if(im.attendance=1,if(im.internal=0,-1,im.internal),-2), 0)) as '".$subject->scode . "'
+            $subjectsql .= " sum(if(im.subject_id=". $subject->id." ,  if(im.attendance=1,if(im.internal=0,-1,im.internal),-2), 0)) as '".$subject->scode . "'
                              , " ;
         }
+       
         return $subjectsql;
     }
 
@@ -153,10 +153,13 @@ class InternalMarkEntryService
     }   
     
     public function getCandidates($subjects,$id,$r,$supplementary = null){
+       
         $subjectsql = $this->getSubjetsSQL($subjects);
+
         $clause ='';
         if($supplementary == 'Yes'){
             $clause = $this->getSupplementaryClause($r->subjecttype_id,$r->syear);
+            
         }
         $sql = 'select ';
         $sql .= $subjectsql;
@@ -183,7 +186,7 @@ class InternalMarkEntryService
             group by c.id
             order by c.enrolmentno
         ';
-// echo $sql;
+  //echo $sql;
 // die();
         $result  = DB::select($sql);
         $candidates = array_map(function ($value) {
@@ -191,7 +194,7 @@ class InternalMarkEntryService
         }, $result); 
         return $candidates;
     }
-
+    // change 
     public function getSupplementaryClause($subjecttype_id,$syear){
         $clause = ' and ';
         if($syear == 1){
@@ -215,6 +218,7 @@ class InternalMarkEntryService
     }
 
     public function getSubjects($programme_id,$r){
+       
         if($programme_id != 70){
         return \App\Subject::where('programme_id',$programme_id)
                         ->where('subjecttype_id',$r->subjecttype_id)
@@ -247,6 +251,7 @@ class InternalMarkEntryService
         $approvedprogramme = \App\Approvedprogramme::find($id);
         $programme_id = $approvedprogramme->programme_id;
         $subjects = $this->getSubjects($programme_id,$r);
+        
         foreach($approvedprogramme->candidates as $c){
             //if(!$this->helperService->checkIfPublished($c->id)){
                 foreach($subjects as $s){
@@ -257,6 +262,7 @@ class InternalMarkEntryService
                                         ->where('exam_id',$r->exam_id)
                                         ->where('subject_id',$s->id)
                                         ->first();
+                       // dd($internal_mark);
                         $attendace = 1;
                         if($r->has($attendance_field)){
                             $attendace = 2;
@@ -265,6 +271,7 @@ class InternalMarkEntryService
                         if($attendace == 2){
                             $mark = null;
                         }
+                       
                         if(is_null($internal_mark)){
                             \App\Newinternalmark::create([
                                 'exam_id' => $r->exam_id,

@@ -43,6 +43,7 @@ class ApplicantController extends Controller
     }
     public function index(Request $r)
     {
+       
         Session::put('exam_id',28); 
         if($r->has('exam_id')){
             Session::put('exam_id',$r->exam_id);
@@ -73,12 +74,13 @@ class ApplicantController extends Controller
 
     public function show($id,Request $r)
     {              
-         
+    
         if($this->exam_id >28){
             Session::flash('error','Please select valid exam');
             return back();
         }
         $applicant = $this->ApplicantService->getApplicant($id);
+       // dd( $applicant);
         $candidate = \App\Candidate::find($applicant->candidate_id);
         $institute = \App\Institute::find($this->helperService->getInstituteID());
         $exam = $this->exam;
@@ -98,19 +100,19 @@ class ApplicantController extends Controller
             //     return back();
             // }
 
-              if($applicant->first_year_practical_ht < 1 && $applicant->second_year_practical_ht < 1 ){
-                Session::flash('error','Not Generated contact to consern NBER');
-                return back();
-            }
+            //   if($applicant->first_year_practical_ht < 1 && $applicant->second_year_practical_ht < 1 ){
+            //     Session::flash('error','Not Generated contact to consern NBER');
+            //     return back();
+            // }
 
-            if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
-                Session::flash('error','Photo not found contact to consern NBER');
-                return back();
-            }
-            if(!file_exists(public_path().'/files/enrolment/signature/'.$applicant->candidate->signature)){
-                Session::flash('error','Signature not found contact to consern NBER');
-                return back();
-            }
+            // if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
+            //     Session::flash('error','Photo not found contact to consern NBER');
+            //     return back();
+            // }
+            // if(!file_exists(public_path().'/files/enrolment/signature/'.$applicant->candidate->signature)){
+            //     Session::flash('error','Signature not found contact to consern NBER');
+            //     return back();
+            // }
             $ht = \App\Practicalhallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',$this->exam_id)->first();
             $ht->downloaded = 1;
             $ht->save();
@@ -196,6 +198,7 @@ class ApplicantController extends Controller
                 'exam',
                 'institute'
             ));
+           
             view()->share('applicant',$applicant);
             view()->share('exam_center',$exam_center);
             view()->share('term',$term);
@@ -232,13 +235,12 @@ class ApplicantController extends Controller
         $sy_count = $this->ApplicantService->getNumberOfPapers(2);
 
 
-  
+         
         
-
+        // dd($applicant->candidate->approvedprogramme->institute->state->state_name);
         return view('institute.exam.applicants.show',compact(
             'applicant',
             'exam',
-            'exam_center',
             'fy_count',
             'sy_count'
         ));

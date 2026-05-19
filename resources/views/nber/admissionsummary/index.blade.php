@@ -48,6 +48,7 @@
 						<th></th>
 					</tr>
 					@foreach ($summary as $s )
+
 						<tr>
 							<td>
 								{{$slno}}
@@ -60,7 +61,8 @@
 								{{$s['name']}}
 							</td>
 							<td>
-								{{$s['coursename']}}
+								{{$s['abbreviation']}}
+								{{-- {{$s['coursename']}} --}}
 							</td>
 							<td>
 								{{$s['maxintake']}}

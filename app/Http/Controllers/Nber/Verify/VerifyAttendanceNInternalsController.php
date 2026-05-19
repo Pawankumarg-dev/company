@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Common\HelperService;
 use App\Services\Exam\VerifyAttendanceNInternalsService;
 use App\Services\Common\Downloadable;
+use App\Affiliationfee;
 use Session;
 use DB;
 use Auth;
@@ -24,8 +25,9 @@ class VerifyAttendanceNInternalsController extends Controller
        $this->middleware(['role:nber']);
        $this->helperService = $help;
        $this->type = app()->request->has('type') ? app()->request->type : 'all';
-      $this->forms =  (new VerifyAttendanceNInternalsService($this->helperService->getNberORRCIID(),$this->type));
-              $this->nber_id = $this->helperService->getNberID();
+       $this->forms =  (new VerifyAttendanceNInternalsService($this->helperService->getNberORRCIID(),$this->type));
+       $this->nber_id = $this->helperService->getNberID();
+        
         $this->exam_id = Session::get('exam_id');
     }
     public function index(Request $r){
@@ -75,9 +77,7 @@ class VerifyAttendanceNInternalsController extends Controller
 
 public function showInternalMarksheet(Request $request)
 {
-
-
-
+//    dd( $this->nber_id);
     $query = DB::table('internalmarksheets')
     ->join('approvedprogrammes', 'internalmarksheets.approvedprogramme_id', '=', 'approvedprogrammes.id')
     ->join('institutes', 'approvedprogrammes.institute_id', '=', 'institutes.id')
@@ -142,6 +142,7 @@ $institutes = DB::table('institutes')
 
 public function showInternalMarksheet_details(Request $request)
 {
+
 $approvedprogrammeId = $request->approvedprogramme_id;
 $term = $request->term;
 $subjecttype_id = $request->subjecttype_id;
@@ -301,5 +302,95 @@ public function attendance_index(Request $r)
         ");
         return view('nber.verify.classroomattendanceandinternals.attendanceInternal' , compact('internal_details'));
     }
+
+
+    public function payment(Request $request)
+        {
+            $query = "
+                SELECT
+                    affiliationfees.id AS affiliationfees_id,
+                    affiliationfees.institute_id,
+                    affiliationfees.orderstatus_id,
+                    institutes.code,
+                    institutes.name,
+                    academicyears.year,
+                    affiliationfees.order_id,
+                    orders.total_amount,
+                    orders.payment_date,
+                    affiliationfees.amount AS affiliationfees_amount,
+                    affiliationfees.transaction_date AS affiliationfees_date,
+                    programmes.nber_id
+                FROM affiliationfees
+                INNER JOIN institutes
+                    ON affiliationfees.institute_id = institutes.id
+
+                INNER JOIN academicyears
+                    ON affiliationfees.academicyear_id = academicyears.id
+
+                LEFT JOIN orders
+                    ON affiliationfees.order_id = orders.id
+
+                LEFT JOIN approvedprogrammes
+                    ON affiliationfees.institute_id = approvedprogrammes.institute_id
+                    AND affiliationfees.academicyear_id = approvedprogrammes.academicyear_id 
+
+                LEFT JOIN programmes
+                    ON approvedprogrammes.programme_id = programmes.id
+
+                WHERE 1=1
+                AND programmes.nber_id = '" . $this->nber_id . "'
+            ";
+
+            if ($request->institute_id) {
+                $query .= " AND affiliationfees.institute_id = " . (int)$request->institute_id;
+            }
+
+            if ($request->status_id !== null && $request->status_id !== '') {
+                $query .= " AND affiliationfees.orderstatus_id = " . (int)$request->status_id;
+            }
+
+            $query .= " GROUP BY affiliationfees.id";
+
+            $payments = DB::select($query);
+
+            return view('nber.verify.payment.index', compact('payments'));
+        }
+
+        public function payment_details($id)
+            {
+                $payment = DB::table('affiliationfees')
+                    ->select(
+                        'affiliationfees.id',
+                        'affiliationfees.institute_id',
+                        'affiliationfees.orderstatus_id',
+                        'affiliationfees.amount',
+                        'affiliationfees.transaction_date',
+                        'affiliationfees.order_id',
+                        'institutes.code',
+                        'institutes.name',
+                        'academicyears.year',
+                        'orders.total_amount',
+                        'orders.payment_date',
+                        'orders.order_number'
+                    )
+                    ->leftJoin('institutes', 'affiliationfees.institute_id', '=', 'institutes.id')
+                    ->leftJoin('academicyears', 'affiliationfees.academicyear_id', '=', 'academicyears.id')
+                    ->leftJoin('orders', 'affiliationfees.order_id', '=', 'orders.id')
+                    ->where('affiliationfees.id', $id)
+                    ->first();
+
+                return view('nber.verify.payment.show', compact('payment'));
+            }
+
+    public function payment_update($id)
+        {
+            
+            $payment = Affiliationfee::findOrFail($id);
+
+            $payment->update([
+                'orderstatus_id' => 1
+            ]);
+            return redirect('nber/exam/payment')->with('success', 'Payment verified successfully.');
+        }
 
 }

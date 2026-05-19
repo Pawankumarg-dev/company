@@ -583,7 +583,13 @@ class IncidentalchargeController extends Controller
                     if($sortorder == $currentorder){
                         $count = \App\Incidentalfee::where('programme_id',$ap->programme_id)->where('academicyear_id',$academicyear_id)->where('term',$i)->count();
                         //if($count>0){
-                            $fee = \App\Incidentalfee::where('programme_id',$ap->programme_id)->where('academicyear_id',$academicyear_id)->where('term',$i)->first()->fee; 
+                            // $fee = \App\Incidentalfee::where('programme_id',$ap->programme_id)->where('academicyear_id',$academicyear_id)->where('term',$i)->first()->fee; 
+                            $incidental = \App\Incidentalfee::where('programme_id', $ap->programme_id)
+                                ->where('academicyear_id', $academicyear_id)
+                                ->where('term', $i)
+                                ->first();
+
+                            $fee = $incidental ? $incidental->fee : 0; // or null / default value
                             $total += $fee;
 //                        }
                     }
@@ -591,8 +597,9 @@ class IncidentalchargeController extends Controller
                 }
        //     }
         }
+       //dd($academicyear);
         Session::put('total',$total);
-        return view('institute.incidentalpayments.showdetails', compact('academicyear_id','academicyearname','institute', 'currentorder','billing_notes','affiliationfee'));
+        return view('institute.incidentalpayments.showdetails', compact('academicyear_id','academicyearname','institute', 'currentorder','billing_notes','affiliationfee','academicyear'));
     }
  
     public function uattest(){

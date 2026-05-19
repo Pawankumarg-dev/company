@@ -38,17 +38,18 @@ class HomeController extends Controller
     {
         Session::put('exam_id',$id);
         $institute = $this->helperService->getInstitute();
+       
         $current_ay_id = Academicyear::where('current',1)->first()->id;
+        
         $exam = Exam::find($id);
-
+    
         $approvedprogrammes = Approvedprogramme::where('institute_id',$institute->id)
-        //->where('academicyear_id','<=',$current_ay_id)
+        // ->where('academicyear_id','<=',$current_ay_id)
                 ->where('academicyear_id','<',16)
                 ->where('academicyear_id','!=',14)
-
         ->where('academicyear_id','>',$current_ay_id - 5)
-        
         ->orderBy('academicyear_id','desc')->get();
+        
         return view('institute.exam.home.show',compact('approvedprogrammes','exam','current_ay_id')); 
     }
 
@@ -75,3 +76,5 @@ class HomeController extends Controller
         //
     }
 }
+
+//RJ066

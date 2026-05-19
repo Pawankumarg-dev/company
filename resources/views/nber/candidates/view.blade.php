@@ -14,7 +14,7 @@
         <form action="{{url('/nber/rejectcandidate')}}" method="post" >
             {{csrf_field()}}
             <div class="form-group pull-left" style="width:500px;">
-								<input type="text" id="comment" name="comment" placeholder="Reason for pending"  class="form-control"  >
+								<input type="text" id="comment{{$c->id}}" name="comment" placeholder="Reason for pending"  class="form-control"  >
                {{--  @if( 
                   $c->approvedprogramme->programme->id==57 
                   || 

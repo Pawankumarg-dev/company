@@ -1036,9 +1036,9 @@ Route::post('/eotp', 'EpariveshController@eotp');
 // });
 Route::group(array('middleware' => ['role:examcenter']),function(){
     
-     Route::resource('examcenter/schedule','Examcenter\Exam\ExamController');
-     Route::resource('examcenter/attendance','Examcenter\Exam\AttendanceController');
-     Route::get('examcenter/evalution-center','Examcenter\Exam\ExamController@evalution_center');
+    Route::resource('examcenter/schedule','Examcenter\Exam\ExamController');
+    Route::resource('examcenter/attendance','Examcenter\Exam\AttendanceController');
+    Route::get('examcenter/evalution-center','Examcenter\Exam\ExamController@evalution_center');
     Route::resource('examcenter/attendancesheet','Examcenter\Exam\AttendancesheetController');
 
 // qp doenload url
@@ -1126,7 +1126,7 @@ Route::group(array('middleware' => ['role:student']), function (){
 
 Route::group(array('middleware' => ['role:faculty']), function ()
 {   
-     Route::resource('/faculty/tabill','Practicalexaminer\TABillController');
+    Route::resource('/faculty/tabill','Practicalexaminer\TABillController');
     Route::get('/appointment', 'Practicalexaminer\HomeController@appointment');
     Route::resource('/practicalexam/home','Practicalexaminer\HomeController');
     Route::resource('practicalexam/awardlisttemplate','Practicalexaminer\AwardlisttemplateController');
@@ -1201,7 +1201,10 @@ Route::get('marks-verification-course', 'Nber\EvalutorController@course')->name(
     Route::get('/nber/exam/verifattendance/{program_id}/{id}','Nber\Verify\VerifyAttendanceNInternalsController@attendance_details')->name('verifyattendance');
     Route::post('/nber/exam/verifyattendancedata/{program_id}/{id}','Nber\Verify\VerifyAttendanceNInternalsController@verify_attendance')->name('verifyattendancedata');
     Route::post('/nber/exam/notverifyattendancedata/{program_id}/{id}','Nber\Verify\VerifyAttendanceNInternalsController@not_verify_attendance')->name('notverifyattendancedata');
-
+    Route::get('/nber/exam/payment','Nber\Verify\VerifyAttendanceNInternalsController@payment');
+    Route::get('/nber/exam/paymentdetails/{id}','Nber\Verify\VerifyAttendanceNInternalsController@payment_details');
+    Route::post('/nber/exam/payment_update/{id}','Nber\Verify\VerifyAttendanceNInternalsController@payment_update');
+    
 
 //external practical
     Route::get('nber/practicalexammapping','Nber\Mapping\PracticalexaminerController@institute_course');
@@ -1449,7 +1452,7 @@ Route::get('marks-verification-course', 'Nber\EvalutorController@course')->name(
      Route::post('nber/updateeno','Nber\CandidateController@updateeno');
      Route::post('/updatekv','Nber\AcademicController@updatekv');
      Route::get('/nber/hallticket/{cid}','Nber\HallticketController@newhallticket');
-     Route::get('/nber/admissions/','Nber\AcademicController@index');
+     Route::get('nber/admissions/','Nber\AcademicController@index');
      Route::get('/nber/candidates/{id}','Nber\CandidateController@listCandidates');
      Route::get('/nber/candidate/{id}','Nber\CandidateController@show');
      Route::get('/nber/changeayid/{id}','Nber\AcademicyearController@changeayid');

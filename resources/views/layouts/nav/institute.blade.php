@@ -161,8 +161,7 @@
 
 @if($institute_location->coordinate=='' || $institute_location->coordinate == null || $institute_location->newaddress=='' || $institute_location->newaddress==null)
 
-<div id="myModal" class="modal fade in modal fade show" style="display: block;  background: linear-gradient(white 0%, rgb(231, 233, 221) 90%, white 100%);
-" aria-modal="true" role="dialog">
+<div id="instituteLocationModal" class="modal fade" aria-modal="true" role="dialog" style="background: linear-gradient(white 0%, rgb(231, 233, 221) 90%, white 100%);">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <!-- Modal content-->
         <div class="modal-content">
@@ -336,6 +335,16 @@ document.getElementById("imageUpload").addEventListener("change", function(event
 
     </div>
 </div>
+
+<script>
+    (function(){
+        $(function(){
+            var $m = $('#instituteLocationModal');
+            $m.appendTo('body');
+            $m.modal('show');
+        });
+    })();
+</script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <script

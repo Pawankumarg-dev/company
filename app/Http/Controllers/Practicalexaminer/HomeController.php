@@ -103,6 +103,7 @@ view()->share('exam', $exam);
 
 
     public function update($id,Request $request){
+        //dd($request->all());
        // return "Closed";
             $subject_id = $request->subject_id;
             $template = \App\Awardlisttemplate::find($id);
@@ -112,12 +113,14 @@ view()->share('exam', $exam);
                 $q->where('approvedprogramme_id',$template->approvedprogramme_id);
             })->where('subject_id',$subject_id)->where('exam_id',$this->exam_id)
             ->get();
+           // dd($applications);
             foreach($applications as $application){
                 $key = 'mark_'.$application->id;
                 $absent = 'absent_'.$application->id;
                // if($application->applicant->block == 1){
                     if($request->has($absent)){
                         $application->attendance_ex = 2;
+                        $application->mark_ex = null;
                     }
                     if($request->has($key)){
                         $application->mark_ex = $request->$key;
@@ -127,6 +130,7 @@ view()->share('exam', $exam);
                     $application->save();
                 //}
             }
+           // dd($application);
             $subject = $template->subjects()->where('subject_id',$subject_id)->first();
             $subject->pivot->marks_upload = 1;
             $subject->pivot->date_uploaded = $date = \Carbon\Carbon::now()->toDateTimeString();

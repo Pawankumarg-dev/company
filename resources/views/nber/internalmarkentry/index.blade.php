@@ -11,7 +11,7 @@
 				<?php $slno = 1;  ?>
 				<table  id="myTable"  class="table table-bordered">
                     <tr>
-                        <th>Slno</th>
+                        <th>Slno </th>
                         <th>Institute Code</th>
                         <th>Institute Name</th>
                         <th>Link</th>

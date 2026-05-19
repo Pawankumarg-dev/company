@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php $date = Session::get('date'); ?>
+    <?php   $date = Session::get('date'); ?>
+   
     <title>{{$approvedprogramme->programme->common_name}} Term {{$term}} {{$date}}</title>
     <style>
           @media print {
@@ -121,7 +122,7 @@
             <td>
                 <table border="0" cellpadding="2" cellspacing="0" width="100%" class="h8-text border-table" style="margin-top:15px;">
                     <tr>
-                        <td class="h7-text  blue-text" colspan="5" style="border-left:1px solid #aaa;border-top:1px solid #aaa;"><span class="h7-text bold-text bt">EXTERNAL PRACTICAL EXAMINATION MARK ENTRY FORM - @if($exam_name->cbid_academicyear_id==$approvedprogramme->academicyear_id && $approvedprogramme->programme_id==57) Regular  {{$approvedprogramme->academicyear}} @else {{$exam_name->name}} @endif</span></td>
+                        <td class="h7-text  blue-text" colspan="5" style="border-left:1px solid #aaa;border-top:1px solid #aaa;"><span class="h7-text bold-text bt">EXTERNAL PRACTICAL EXAMINATION MARK ENTRY FORM - @if($exam_name->cbid_academicyear_id==$approvedprogramme->academicyear_id && $approvedprogramme->programme_id==57) Regular  {{$approvedprogramme->academicyear->year}} @else {{$exam_name->name}} @endif</span></td>
                         <td class="h7-text"> Date: {{$date}}</td>
                     </tr>
                 </table>

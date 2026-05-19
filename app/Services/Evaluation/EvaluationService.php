@@ -123,7 +123,7 @@ class EvaluationService
     public function getInstituteIDs($examcenter_ids,$course_id = null){
         //return \App\Institute::whereIn('examcenter_se_24',$examcenter_ids)->pluck('id')->toArray();
         $papers =  \App\Exampaper::whereIn('externalexamcenter_id',$examcenter_ids);
-        if(is_null($course_id)){
+        if(!is_null($course_id)){
             $programme_ids = $this->getProgammeIDs($course_id);
             $papers= $papers->whereIn('programme_id',$programme_ids);                
         }

@@ -241,7 +241,7 @@
                                     <?php if($alt==0) { $alt = 1;} else {$alt = 0;} ?>
                                 @endforeach
                                 <th class="rotate ">GT</th>
-                            <th  class="rotate "> Pass/Fail</th>
+                                <th  class="rotate "> Pass/Fail</th>
 
                             </tr>
                         </thead>
@@ -443,9 +443,7 @@
                                 External
                             </th>
                         </tr>
-
-                        
-                        <?php echo $countoftheorysubjects = $subjects->where('subjecttype_id',1)->count(); $intheory = true; $ss = 0;?>
+                        <?php $countoftheorysubjects = $subjects->where('subjecttype_id',1)->count(); $intheory = true; $ss = 0;?>
 
                         @foreach($subjects as $s)
                          @if($s->subjecttype_id==1)
@@ -481,13 +479,14 @@
                         @endforeach
                    
 
-                        <?php $countofpracticalsubjects = $subjects->where('subjecttype_id',2)->count(); $inpractical = true;  $ss = 0;?>
+                        <?php  $countofpracticalsubjects = $subjects->where('subjecttype_id',2)->count(); $inpractical = true;  $ss = 0;?>
                         @foreach($subjects as $s)
                          @if($s->subjecttype_id==2)
                           <?php $ss++?>
                         @endif
                         @endforeach
                         @foreach($subjects as $s)
+                      
                          @if($s->subjecttype_id==2)
                             <tr>
                                 <td>{{$s->scode}}</td>

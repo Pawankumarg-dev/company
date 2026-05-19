@@ -42,7 +42,7 @@ $finalArray = array_values($finalArray);
                 @foreach ($institutes as $institute)
                 <tr>
                     <input type="hidden" value="{{ $institute->institute_id }}" name="institute_id[]">
-                    <td>{{ $institute->rci_code }}</td>
+                    <td>{{ $institute->rci_code ?? '' }}</td>
                     <td>{{ $institute->name }}</td>
                     <td>
                         @foreach (explode(',', $institute->programmes) as $programme)
@@ -121,17 +121,18 @@ $finalArray = array_values($finalArray);
                 @endforeach
             </tbody>
         </table>
-
+       
         <div class="form-group">
             <label for="faculty_id">Faculty / Examiner</label>
             <select class="form-control selectpicker" name="faculty_id" id="faculty_id" data-header="Select a faculty"
                 data-live-search="true" required>
                 <option value="">Please select Faculty</option>
+                
                 @foreach ($faculties as $f)
                 <option value="{{ $f->id }}" data-content="
                         <b>{{ $f->name }}</b>
                         <div class='small'>CRR No: {{ $f->crr_no }}, Qualification: {{ $f->qualification }}</div>
-                        <div class='small'>TTI Code: {{ $f->rci_code }}- {{ $f->inst_name }}</div>
+                        <div class='small'>TTI Code: {{ $f->rci_code ?? '' }}- {{ $f->inst_name ?? '' }}</div>
                         <div class='small'>Address: {{ $f->address }}</div>
                         <div class='small'>Email: {{ $f->email }}, Mobile: {{ $f->mobileno }}</div>
                         <div class='small'>Languages: {{ $f->languagenonhtml }}</div>

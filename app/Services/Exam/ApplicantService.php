@@ -215,7 +215,8 @@ class ApplicantService
     }
     
     public function getApplicant($id){
-        $this->applicant = $this->model::find($id);
+        // $this->applicant = $this->model::find($id);
+         $this->applicant =\App\Allapplicant::find($id);
         return $this->applicant;
     }
 

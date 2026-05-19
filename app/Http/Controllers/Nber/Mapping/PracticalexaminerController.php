@@ -218,7 +218,7 @@ $nid = $this->nber_id;  // nber_id
     ->groupBy('faculties.id')
     ->get();
 
-
+    //dd($faculties);
         return view('nber.mapping.practical-course-subject', compact('institutes','faculties','min_date','max_date','mapped'));
     }
 
@@ -449,11 +449,12 @@ $data = DB::table('practicalexams')
         'awardlisttemplates.marksheet',
         'programmes.abbreviation',
         'faculties.crr_no',
+        'faculties.id as faculty_id',
         'faculties.name as faculty_name',
         'faculties.mobileno',
         'faculties.email',
         'awardlisttemplates.id',
-                'awardlisttemplates.verified'
+        'awardlisttemplates.verified'
 
     )
     ->join('faculties', 'faculties.id', '=', 'practicalexams.faculty_id')
@@ -473,46 +474,48 @@ $data = DB::table('practicalexams')
     })
     ->where('practicalexams.exam_id', $examId)
     ->where('programmes.nber_id', $this->nber_id)
-    
     ->groupBy('awardlisttemplates.id')
     ->get();
+   // dd($data);
     return view('nber.verify.practicalexam-list',compact('data'));
     }
         
    public function practicalverify_details($id)
-{
-// $examId = $this->exam_id; 
-$examId =28;
-$data = DB::table('awardlisttemplates')
-    ->join('awardlisttemplate_subject', 'awardlisttemplates.id', '=', 'awardlisttemplate_subject.awardlisttemplate_id')
-    ->join('candidates', 'awardlisttemplates.approvedprogramme_id', '=', 'candidates.approvedprogramme_id')
-    ->join('allapplications', 'candidates.id', '=', 'allapplications.candidate_id')
-    ->join('subjects', function ($join) {
-        $join->on('awardlisttemplate_subject.subject_id', '=', 'subjects.id')
-             ->on('allapplications.subject_id', '=', 'subjects.id');
-    })
-    ->where('awardlisttemplates.id', $id)
-    ->where('allapplications.exam_id', $examId)
-    ->select(
-        DB::raw("GROUP_CONCAT(CONCAT(subjects.id, ':', allapplications.mark_ex) ORDER BY subjects.id SEPARATOR ',') as subject_marks"),
-        DB::raw("GROUP_CONCAT(DISTINCT subjects.id) as subjects"),
-        'allapplications.attendance_ex',
-        'awardlisttemplates.marksheet',
-        'candidates.enrolmentno',
-        'awardlisttemplates.id',
-                        'awardlisttemplates.verified'
+    {
+        
+    // $examId = $this->exam_id; 
+    $examId =28;
+    $data = DB::table('awardlisttemplates')
+        ->join('awardlisttemplate_subject', 'awardlisttemplates.id', '=', 'awardlisttemplate_subject.awardlisttemplate_id')
+        ->join('candidates', 'awardlisttemplates.approvedprogramme_id', '=', 'candidates.approvedprogramme_id')
+        ->join('allapplications', 'candidates.id', '=', 'allapplications.candidate_id')
+        ->join('subjects', function ($join) {
+            $join->on('awardlisttemplate_subject.subject_id', '=', 'subjects.id')
+                ->on('allapplications.subject_id', '=', 'subjects.id');
+        })
+        ->where('awardlisttemplates.id', $id)
+        ->where('allapplications.exam_id', $examId)
+        ->select(
+            DB::raw("GROUP_CONCAT(CONCAT(subjects.id, ':', allapplications.mark_ex) ORDER BY subjects.id SEPARATOR ',') as subject_marks"),
+            DB::raw("GROUP_CONCAT(DISTINCT subjects.id) as subjects"),
+            'allapplications.attendance_ex',
+            'awardlisttemplates.marksheet',
+            'candidates.enrolmentno',
+            'candidates.name as candidate_name',
+            'awardlisttemplates.id',
+            'awardlisttemplates.verified'
 
-    )
-    ->groupBy('allapplications.candidate_id', 'allapplications.attendance_ex')
-    ->get();
+        )
+        ->groupBy('allapplications.candidate_id', 'allapplications.attendance_ex')
+        ->get();
 
 
-$subjectIds = explode(',', $data[0]->subjects);
+    $subjectIds = explode(',', $data[0]->subjects);
 
-$subjects = \App\Subject::whereIn('id', $subjectIds)->get();
+    $subjects = \App\Subject::whereIn('id', $subjectIds)->get();
 
-    return view('nber.verify.practicalexam-details', compact('data', 'subjects'));
-}
+        return view('nber.verify.practicalexam-details', compact('data', 'subjects'));
+    }
  public function verify($id)
     {
         $mark = \App\Awardlisttemplate::findOrFail($id);
@@ -526,7 +529,7 @@ $subjects = \App\Subject::whereIn('id', $subjectIds)->get();
         $mark = \App\Awardlisttemplate::findOrFail($id);
         $mark->verified = 2;
         $mark->save();
-        return redirect()->back()->with('success', 'Student marks verified successfully!');
+        return redirect()->back()->with('success', 'Student marks not verified!');
     }
 
 

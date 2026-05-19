@@ -17,7 +17,7 @@ class ApplicationController extends Controller
 
     private $examService;
     private $helperService;
-
+   
     public function __construct(Request $r)
     {
         $this->examService = new MainExamService();
@@ -26,12 +26,12 @@ class ApplicationController extends Controller
 
     public function index(Request $r)
     {
-
+        
         if ($r->has('view')) {
             if ($r->view == 'result') {
 
             $allapplicant = \App\Allapplicant::where('candidate_id', $this->helperService->getCandidateID())->where('exam_id', 27)->first();
-
+         
                 if($allapplicant->blocked==0 || $allapplicant->blocked==2){
                                 $allapplications = \App\Allapplication::where('candidate_id', $this->helperService->getCandidateID())->where('exam_id', 27)->where('blocked', 0)->get();
 

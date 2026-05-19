@@ -13,7 +13,13 @@
 
     <meta http-equiv="Cache-Control" content="private, no-store"> --}}
     <title>RCI NBER </title>
-
+    <link rel="stylesheet" href="{{asset('packages/bootstrap-3.3.7/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('packages/sweetalert/sweetalert.min.css')}}">
+    <link rel="stylesheet"  href="{{asset('packages/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')}}" />
+    <link rel="stylesheet"  href="{{asset('css/style.css')}}" />
+    <link rel="stylesheet" href="{{ asset('packages/font-awesome/4.5.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet"  href="{{asset('packages/bootstrap-imageupload/dist/css/bootstrap-imageupload.css')}}" />
+    <link href="{{('/css/select2.min.css')}}" rel="stylesheet" />
 
    <!-- Fonts -->
    <link rel="stylesheet" href="{{asset('css/bootstrap33.min.css')}}">
@@ -143,6 +149,7 @@
                 </form>
                 <script>
                     function edit(id){
+                        alert(id);
                         $('#id').val(id);
                         @yield('editscript')
                         $('#{{$link}}_edit_modal').modal('show');

@@ -2,7 +2,7 @@
     {{$slno}} 
 </td>
 <td id="enrolmentno_{{$internal['cid']}}">
-    {{$internal['enrolmentno']}}
+    {{$internal['enrolmentno']}} 
 </td>
 <td id="name_{{$internal['cid']}}">
     {{ $internal['name'] }}

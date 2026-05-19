@@ -33,11 +33,21 @@
                                         <td>{{$i}} ({{$ap->academicyear->year}} Batch)</td>
                                         <td>
                                             
-                                            <?php $count = \App\Incidentalfee::where('programme_id',$ap->programme_id)->where('academicyear_id',$academicyear->id)->where('term',$i)->count() ?>
-                                                <?php 
-                                                    $fee = \App\Incidentalfee::where('programme_id',$ap->programme_id)->where('academicyear_id',$academicyear->id)->where('term',$i)->first()->fee; 
-                                                //   $total += $fee;
-                                                ?>
+                                           <?php 
+$count = \App\Incidentalfee::where('programme_id', $ap->programme_id)
+    ->where('academicyear_id', $academicyear->id)
+    ->where('term', $i)
+    ->count();
+
+$fee = 0;
+
+if ($count > 0) {
+    $fee = \App\Incidentalfee::where('programme_id', $ap->programme_id)
+        ->where('academicyear_id', $academicyear->id)
+        ->where('term', $i)
+        ->first()->fee;
+}
+?>
                                                 ₹ {{number_format($fee,2)}}
                                         </td>
                                     </tr>      

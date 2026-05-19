@@ -22,6 +22,10 @@ class Affiliationfee extends Model
         return $this->belongsTo('App\Academicyear');
     }
 
+    public function institute(){
+        return $this->belongsTo('App\Institute');
+    }
+
     public function orders(){
         return $this->belongsToMany('App\Order');
     }

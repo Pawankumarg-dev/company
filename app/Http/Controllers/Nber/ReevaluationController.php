@@ -317,6 +317,16 @@ class ReevaluationController extends Controller
         
         $reevaluationapplication = Reevaluationapplication::find($id);
         $reevaluationfee = Reevaluationapplicationfee::where('exam_id',$exam_id)->first();
+        
+        // If no fee record found, create a default object to prevent view errors
+        if (!$reevaluationfee) {
+            $reevaluationfee = (object) [
+                'reevaluation_fee' => 0,
+                'retotalling_fee' => 0,
+                'photocopying_fee' => 0
+            ];
+        }
+        
         return view('nber.reevaluations.show_reevaluation_application', compact('reevaluationapplication','reevaluationfee'));
     }
 

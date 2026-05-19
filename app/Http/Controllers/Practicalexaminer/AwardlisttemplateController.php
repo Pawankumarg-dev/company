@@ -18,7 +18,7 @@ class AwardlisttemplateController extends Controller
     {
         $this->middleware(['role:faculty']);
         $this->helperService = $help;
-                        $this->exam_id = 28;
+        $this->exam_id = 28;
 
     }
 
@@ -100,23 +100,23 @@ class AwardlisttemplateController extends Controller
         Session::flash('messages', 'File Uploaded Successfully');
         return back();
 
-        // if($candidates->count()==0){
-        //     $template->subjects()->detach();
-        //     $template->delete();
-        //     Session::flash('error','No Applications found');
-        //     $practicalexams = \App\Practicalexam::where('faculty_id',$practicalexaminer_id)->orderBy('institute_id')->get();
-        //     return redirect('practicalexam/home');
-        // }
+        if($candidates->count()==0){
+            $template->subjects()->detach();
+            $template->delete();
+            Session::flash('error','No Applications found');
+            $practicalexams = \App\Practicalexam::where('faculty_id',$practicalexaminer_id)->orderBy('institute_id')->get();
+            return redirect('practicalexam/home');
+        }
 
         
-        // return view('practicalexaminer.awardlisttemplate.template',compact(
-        //     'approvedprogramme',
-        //     'term',
-        //     'template',
-        //     'candidates',
-        //     'practicalexaminer',
-        //     'exam_name'
-        // ));  
+        return view('practicalexaminer.awardlisttemplate.template',compact(
+            'approvedprogramme',
+            'term',
+            'template',
+            'candidates',
+            'practicalexaminer',
+            'exam_name'
+        ));  
     }
 
     public function show($id,Request $r){
@@ -191,24 +191,11 @@ class AwardlisttemplateController extends Controller
 
      public function downloadSubjectPdf(Request $r)
         {
-          // dd($r->all()); 
+           
             $term = $r->input('term');
-            session(['term' => $term]);
-            //dd($term);
-            // $data = $r->except('_token');
-            // session(['download_data' => $data]); 
-           $data = $r->except('_token');
-           // dd($r->practicalexam_id);
-            $key = $r->practicalexam_id . '_' . $r->approvedprogramme_id . '_' . $r->term;
-           // dd($key);
-            $downloadData = session('download_data', []);
-         
-            $downloadData[$key] = $data;
-          
-            session(['download_data' => $downloadData]);
-            //dd(session(['download_data' => $data]));
             $subject_ids = collect($r->subject_ids)->map(fn($id) => (int) $id);
             $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
+           // dd( $practicalexaminer_id);
             $practicalexaminer  = \App\Faculty::find($practicalexaminer_id);
             $date = \Carbon\Carbon::now()->toDateString();
             $term = $r->term;
@@ -226,6 +213,8 @@ class AwardlisttemplateController extends Controller
                     ->pluck('candidate_id')->unique()->toArray();
         // dd( $candidate_ids);
             $candidates = \App\Candidate::whereIn('id',$candidate_ids)->get();
+            $date = \Carbon\Carbon::now()->toDateString();
+            Session::put('date', $date);
             return view('practicalexaminer.awardlisttemplate.template',compact(
                 'approvedprogramme',
                 'term',
@@ -241,8 +230,6 @@ class AwardlisttemplateController extends Controller
     public function upload_entry(Request $r)
     {
         $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
-        $practicalexaminer  = \App\Faculty::find($practicalexaminer_id);
-
         $date = \Carbon\Carbon::now()->toDateString();
         $downloadTime = \Carbon\Carbon::now()->toDateTimeString();
         $term = $r->term;
@@ -255,7 +242,14 @@ class AwardlisttemplateController extends Controller
         }
 
         $datetime = \Carbon\Carbon::now()->format('Ymd_His');
-        $extension = $file->getClientOriginalExtension();
+        $extension = strtolower($file->getClientOriginalExtension());
+        $mime = $file->getMimeType();
+        
+        if ($extension !== 'pdf' || $mime !== 'application/pdf') {
+            Session::flash('error', 'Only PDF files are allowed');
+            return back();
+        }
+
         $fname = $practicalexaminer_id . '_' . $datetime . '.' . $extension;
 
         $destination = public_path('files/externalpractical');
@@ -271,27 +265,56 @@ class AwardlisttemplateController extends Controller
             return back();
         }
 
-        // ✅ Create template
-        $template = \App\Awardlisttemplate::create([
-            'faculty_id' => $practicalexaminer_id,
-            'exam_date' => $date,
-            'marksheet' => $fname,
-            'practicalexam_id' => $r->practicalexam_id,
-            'institute_id' => $r->institute_id,
-            'approvedprogramme_id' => $r->approvedprogramme_id,
-            'term' => $term,
-            'downloaded_at' => $downloadTime,
-            'marksheet_uploaded_at' => $datetime
-        ]);
+        if (!empty($r->awardlist_id)) {
 
-        // ✅ Attach subject with pivot data
-        $template->subjects()->attach($r->subject_id, [
-            'marks_upload' => 1,
-            'date_uploaded' => now()
-        ]);
+            $template = \App\Awardlisttemplate::find($r->awardlist_id);
+
+            if (!$template) {
+                Session::flash('error', 'Record not found');
+                return back();
+            }
+
+            $template->update([
+                'marksheet' => $fname,
+                'exam_date' => $date,
+                'downloaded_at' => $downloadTime,
+                'marksheet_uploaded_at' => \Carbon\Carbon::now(),
+                'longitude_latitude' =>  \DB::raw("POINT({$r->longitude} , {$r->latitude})")
+            ]);
+
+            // Subject pivot update
+            $template->subjects()->syncWithoutDetaching([
+                $r->subject_id => [
+                    'marks_upload' => 1,
+                    'date_uploaded' => \Carbon\Carbon::now()
+                ]
+            ]);
+
+        } else {
+            $template = \App\Awardlisttemplate::create([
+                'faculty_id' => $practicalexaminer_id,
+                'exam_date' => $date,
+                'marksheet' => $fname,
+                'practicalexam_id' => $r->practicalexam_id,
+                'institute_id' => $r->institute_id,
+                'approvedprogramme_id' => $r->approvedprogramme_id,
+                'term' => $term,
+                'downloaded_at' => $downloadTime,
+                'marksheet_uploaded_at' => \Carbon\Carbon::now(),
+                'longitude_latitude' =>  \DB::raw("POINT({$r->longitude}, {$r->latitude})")
+            ]);
+
+            // attach subject
+            $template->subjects()->attach($r->subject_id, [
+                'marks_upload' => 1,
+                'date_uploaded' => \Carbon\Carbon::now()
+            ]);
+        }
 
         Session::flash('messages', 'File Uploaded Successfully');
         return back();
     }
 
 }
+
+//A25515

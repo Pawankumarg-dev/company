@@ -27,9 +27,11 @@ class ExamCenterController extends Controller
     }
     public function index()
     {
-
+       
         $schools = Externalexamcenter::where('institute_id', $this->helperService->getInstituteID())->where('exam_id',27)->get();
+        //dd($schools);
 $ss= $this->helperService->getInstituteID();
+//dd($ss);
         if($ss=='1004'){
              $schools = Externalexamcenter::where('exam_id',27)->get();
         }

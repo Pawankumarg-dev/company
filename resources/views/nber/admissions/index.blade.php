@@ -1,5 +1,4 @@
 @extends('layouts.smalltable')
-
 @section('content')
 <?php 
 $search_text ='';

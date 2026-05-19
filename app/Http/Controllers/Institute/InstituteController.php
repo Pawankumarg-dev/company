@@ -180,13 +180,6 @@ class InstituteController extends Controller
             ->groupBy('faculties.id','practicalexams.course_id')
             ->get();
 
-
-
-
-        
-
-
-
         return view('institute.notice',compact('af_paid','enf_paid','institute','paractical','apids'));
     }
     public function verifyotp(Request $r){

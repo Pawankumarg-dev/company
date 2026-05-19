@@ -1,20 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
+ 
 <div class="container">
-    <div class="row">
+   <div class="row">
+    <a class="btn btn-primary btn-sm pull-right" href="{{url('nber/practicalverify-list')}}">Back </a>
+   </div>
+    <div class="row"> 
     <div class="col-lg-6">
         <table class="table table-bordered text-center">
     <thead class="table-dark">
         <tr>
             <th>SL</th>
             <th>Enrollment No</th>
+            <th>Name</th>
             @foreach ($subjects as $sub)
                 <th>
                     {{ $sub->scode }}
                     <br>
-                    <small>smin: {{ $sub->emin }}</small>
-                    <small>smax: {{ $sub->emax }}</small>
+                    <small>smin: {{ $sub->emin_marks }}</small>
+                    <small>smax: {{ $sub->emax_marks}}</small>
                 </th>
             @endforeach
         </tr>
@@ -24,9 +29,8 @@
         @foreach ($data as $index => $row)
             <tr>
                 <td>{{ $index + 1 }}</td>
-                                <td>{{ $row->enrolmentno}}</td>
-
-
+                <td>{{ $row->enrolmentno}}</td>
+                <td>{{ $row->candidate_name}}</td>
                 @php
                     // Convert subject_marks string "1136:56,1137:57" into array ['1136'=>56, '1137'=>57]
                     $marksArray = [];

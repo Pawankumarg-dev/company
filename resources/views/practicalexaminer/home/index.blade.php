@@ -11,7 +11,7 @@
                 <div class="alert alert-danger">
                     <h4>Important Notice</h4>
                     <ul>
-                        <li>
+                        <li>    
                             <h3>Uploading of marks to the portal has to be completed on the same day of practicl
                                 examination. </h3>
                         </li>
@@ -35,106 +35,30 @@
                     </ul>
 
                 </div>
-
-
                 @include('practicalexaminer._partials._style')
                 <table class="table table-bordered">
                     <?php $institute_id = 0;
-                    $date = Session::get('date'); ?>
-                    <form action="{{ url('practicalexam/home') }}" method="GET">
-
-                        {{ csrf_field() }}
-                        <div class="alert alert-info hidden">
-                            <h5 style="display: none;"><b>This option to backlog the previous days marks is only availble
-                                    today. Please change the date to upload marks of previous days.</b></h5>
-                            <br>
-                            Exam Date:
-                            <?php
-                            $date = \Carbon\Carbon::now();
-                            
-                            ?>
-
-                            <select name="date" id="date">
-                                <?php 
-                                $fromdate = \Carbon\Carbon::parse($examstartdate)->toDateString();
-                                for ($i = 0; $i < 20; $i++) {
-                                   $fromdate = \Carbon\Carbon::parse($fromdate)->addDay()->toDateString();
-                            ?>
-                                <option value="{{ $fromdate }}" @if ($date == $fromdate) selected @endif>
-                                    {{ \Carbon\Carbon::parse($fromdate)->format('D,  d M Y') }}</option>
-                                <?php } ?>
-                            </select>
-                            <button class="btn btn-xs btn-primary">Go</button>
-                        </div>
-                    </form>
-
-                    <?php
+                    $date = Session::get('date'); 
                     $geotagged = false;
-                    $gtinstitute_id = 0;
-                    $markuploadstatus = false;
-                    $countoffalse = 0;
-                    // $geotagged = false; $gtinstitute_id = 0;$markuploadstatus = false; $countoffalse = 0;
-                    // foreach($practicalexams as $exam){
-                    
-                    //     if($exam->geotaggedphotos()->where('exam_date',\Carbon\Carbon::parse($date)->toDateString())->where('faculty_id',$practicalexaminer_id)->count() > 0){
-                    
-                    //         $geotagged = true;
-                    
-                    //         $markupload = true;
-                    //         if($exam->awardlisttemplates()->count() == 0){
-                    //             $markupload = false;
-                    //         }
-                    //         else{
-                    //             foreach($exam->awardlisttemplates()->get() as $template){
-                    //                 if(is_null($template->marksheet)){
-                    //                     $markupload = false;
-                    //                 }
-                    //                 foreach($template->subjects()->get() as $subject){
-                    //                     if($subject->pivot->marks_upload!=1){
-                    //                         $markupload = false;
-                    //                     }
-                    //                 }
-                    //             }
-                    //         }
-                    //         if(!$markupload){
-                    //             $countoffalse++;
-                    //             if(!is_null($gtinstitute_id = $exam->geotaggedphotos()->where('exam_date',\Carbon\Carbon::parse($date)->toDateString())->where('faculty_id',$practicalexaminer_id)->first())){
-                    //                 $gtinstitute_id = $exam->geotaggedphotos()
-                    //                         ->where('exam_date',\Carbon\Carbon::parse($date)->toDateString())
-                    //                         ->where('faculty_id',$practicalexaminer_id)
-                    //                         ->first()->institute_id;
-                    //             }
-                    //         }else{
-                    //             if($countoffalse == 0){
-                    //                 $gtinstitute_id = $exam->geotaggedphotos()->where('exam_date',\Carbon\Carbon::parse($date)->toDateString())->where('faculty_id',$practicalexaminer_id)->first()->institute_id;
-                    //             }
-                    //         }
-                    
-                    //     }
-                    // }
-                    // if($countoffalse==0){
-                    //     $markuploadstatus = true;
-                    // }
                     ?>
                     @foreach ($practicalexams as $exam)
                         {{-- {{$exam}}  --}}
                         @if ($institute_id != $exam->institute_id)
                             <tr>
-                                <th class="institute" colspan="5">
+                                <th class="institute" colspan="4">
                                     {{ $exam->institute->rci_code }} - {{ $exam->institute->name }}
                                     @include('practicalexaminer._partials._geotag')
                                 </th>
                             </tr>
                             <tr>
-                                <th>Cousre</th>
+                                <th>Course</th>
                                 <th>Exam Date</th>
                                 <th>Batch / Candidates</th>
-                                <th>Download format for Marksheet</th>
-                                <th>Upload marks</th>
+                                {{-- <th>Download format for Marksheet</th> --}}
+                                <th></th>
                             </tr>
                         @endif
                         <?php $institute_id = $exam->institute_id;
-                        
                         $approvedprogrammes = DB::table('allapplications')
                             ->join('candidates', 'candidates.id', '=', 'allapplications.candidate_id')
                             ->join('subjects', function ($join) {
@@ -146,8 +70,7 @@
                             ->join('academicyears', 'approvedprogrammes.academicyear_id', '=', 'academicyears.id')
                             ->where('allapplications.exam_id', $exam->exam_id)
                             ->where('approvedprogrammes.institute_id', $institute_id)
-                            ->where('approvedprogrammes.programme_id', $exam->programme_id)
-                        
+                            ->where('approvedprogrammes.programme_id', $exam->programme_id)                        
                             ->select(
                                 'courses.name',
                                 'academicyears.year',
@@ -159,13 +82,11 @@
                                 'programmes.course_id',
                                 'approvedprogrammes.academicyear_id',
                                 'approvedprogrammes.institute_id',
-                                'programmes.abbreviation',
-                        
+                                'programmes.abbreviation',                 
                                 'approvedprogrammes.id',
                                 'programmes.id as programme_id',
                             )
-                            ->groupBy('approvedprogrammes.id')
-                        
+                            ->groupBy('approvedprogrammes.id')                       
                             ->get();
                         // echo "<pre>";
                         // print_r( $approvedprogrammes);
@@ -174,22 +95,7 @@
 
 
                         @foreach ($approvedprogrammes as $ap)
-                            {{-- @php 
-                        $candidate_count = \App\AllApplication::join('candidates', 'candidates.id', '=', 'allapplications.candidate_id')
-                            ->join('subjects', function($join) {
-                                $join->on('subjects.id', '=', 'allapplications.subject_id')
-                                    ->where('subjects.subjecttype_id','=', 2)
-                                    ->where('subjects.is_external','=', 1);
-                            })
-                            ->where('candidates.approvedprogramme_id', $ap->id)
-                            ->where('allapplications.exam_id', 28)
-                            ->count();
-
-
-                            //cha
-                        @endphp --}}
-
-
+                           
                             @if ($ap->course_id == $exam->course_id || $ap->alternative_of == $exam->course_id)
                                 <tr>
                                     <td>
@@ -214,35 +120,23 @@
                                         $now = \Carbon\Carbon::now()->format('Y-m-d');
                                         //    $start = \Carbon\Carbon::parse($exam->start_date)->format('Y-m-d');
                                         //    $end = \Carbon\Carbon::parse($exam->end_date)->addDay()->format('Y-m-d');
-                                        $start = '2026-04-12';
-                                        $end = '2026-04-17';
+                                        $start = '2026-05-04';
+                                        $end = '2026-05-12';
 
                                     @endphp
                                     @if ($now >= $start && $now <= $end)
-                                        <td>
-                                            <?php
-                                            $geotagged = \App\Geotaggedphoto::where('faculty_id', $exam->faculty_id)->where('institute_id', $exam->institute_id)->where('faculty_id', $exam->faculty_id)->count() > 0 ? true : false;
-                                            ?>
-                                            @if ($geotagged == true)
-                                                @include('practicalexaminer._partials._buttons._formlinks')
-                                                <?php $term = 1; ?>
-                                                @include('practicalexaminer._partials._show_subjects')
-                                                @if ($ap->academicyear_id < 12 && $ap->numberofterms == 2)
-                                                    <?php $term = 2; ?>
-                                                    @include('practicalexaminer._partials._show_subjects')
-                                                @endif
-                                            @endif
-                                        </td>
-                                        <td>
-                                            {{-- @if ($exam->faculty_id == $practicalexaminer_id) --}}
-                                            {{-- {{$data}} --}}
-                                            {{--    @if ($geotagged == true && $exam->institute_id == $gtinstitute_id && $exam->awardlisttemplates()->where('approvedprogramme_id', $ap->id)->count() > 0 && $exam->practicalexaminer_id == $practicalexaminer_id)    --}}
-                                            {{-- @include('practicalexaminer._partials._buttons._uploadlinks')
-                                            @endif --}}
-                                            <table class="table table-bordered table-striped">
+                                     <?php
+                                    $geotagged = \App\Geotaggedphoto::where('faculty_id', $exam->faculty_id)->where('institute_id', $exam->institute_id)->where('faculty_id', $exam->faculty_id)->count() > 0 ? true : false;
+                                    ?>
+                                       
+                                        <td style="padding: 0px">
+                                            
+                                            @if ($geotagged == true && $exam->faculty_id == $practicalexaminer_id)
+                                            <table class="table table-bordered table-striped" >
                                                 <thead>
                                                     <tr>
-                                                        <th>Subject Code</th>
+                                                        <th> Awardlist Formate</th>
+                                                        <th>Subject Code / <small>Name</small></th>
                                                         <th>Term</th>
                                                         <th>Upload Marksheet</th>
                                                     </tr>
@@ -250,6 +144,7 @@
 
                                                 <tbody>
                                                     @php
+                                                  
                                                         $subjectIds = \App\PracticalExamSubject::where(
                                                             'practicalexam_id',
                                                             $exam->id,
@@ -267,96 +162,97 @@
                                                             ->get();
                                                     @endphp
 
-                    @forelse($subjects as $subject)
-                        <tr>
-                            <td>
-                                <strong>{{ $subject->scode }}</strong>
-                            </td>
+                                    @forelse($subjects as $subject)
+                                        <tr>
+                                            <td>
+                                                <form action="{{url('practicalexam/awardlisttemplate/download')}}" method="POST">
+                                                        {{ csrf_field() }}
+                                                <input type="hidden" name="practicalexam_id" value="{{$exam->id}}">
+                                                <input type="hidden" name="approvedprogramme_id" value="{{$ap->id}}">
+                                                <input type="hidden" name="institute_id" value="{{$ap->institute_id}}">
+                                                <input type="hidden" name="term" value="{{$subject->syear}}">
+                                                    <input type="hidden" name="subject_ids" value="{{ $subject->id }}">
+                                                    <button type="submit" class="btn btn-sm btn-primary">Download</button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <strong>{{ $subject->scode }}:</strong> {{ $subject->sname }}
+                                            </td>
 
-                            <td>
-                                {{ $subject->syear }}
-                            </td>
+                                            <td>
+                                                {{ $subject->syear }}
+                                            </td>
 
-                            <td>
-                                <form
-                                    action="{{ url('/practicalexam/awardlisttemplate/upload_entry') }}"
-                                    method="POST" enctype="multipart/form-data"
-                                    class="upload-form">
+                                                <td>
+                                                    <form
+                                                        action="{{ url('/practicalexam/awardlisttemplate/upload_entry') }}"
+                                                        method="POST" enctype="multipart/form-data"
+                                                        class="upload-form">
+                                                        {{ csrf_field() }}
+                                                        <input type="hidden" name="practicalexam_id" value="{{ $exam->id }}">
+                                                        <input type="hidden" name="approvedprogramme_id" value="{{ $ap->id }}">
+                                                        <input type="hidden" name="institute_id" value="{{ $ap->institute_id }}">
+                                                        <input type="hidden" name="term" value="{{ $subject->syear }}">
+                                                        <input type="hidden" name="subject_id" value="{{ $subject->id }}">
+                                                        <input type="file" name="marksheet" class="file-input hidden" accept="application/pdf">
+                                                        <input type="hidden" name="latitude">
+                                                        <input type="hidden" name="longitude">
+                                                        @php
+                                                            // ->where('exam_date',\Carbon\Carbon::parse($date)->toDateString())
+                                                            $template = $exam->awardlisttemplates()->where('approvedprogramme_id',$ap->id)->whereHas('subjects', function($q) use ($subject){
+                                                                $q->where('subject_id', $subject->id);
+                                                            })->first(); 
+                                                            // echo "<pre>";
+                                                            // print_r($template);
+                                                        @endphp
+                                                        <input type="hidden" name="awardlist_id"  value="{{ $template->id ?? '' }}">
+                                                        @if (!empty($template->marksheet))
+                                                            @if ($template->verified ==1)
+                                                                <div >
+                                                                   <strong style="color: green">Verified</strong> 
+                                                                </div>
+                                                                
+                                                            @else
+                                                              <div class="uploaded-block upload-block text-center">
+                                                                <a target="_blank"
+                                                                    href="{{ url('files/externalpractical') }}/{{ $template->marksheet }}">
+                                                                    Download (Term {{ $subject->syear }})
+                                                                </a>
+                                                                <div >
+                                                                    <button  type="button"
+                                                                        class="btn btn-xs btn-warning upload-btn ">
+                                                                        Re-upload
+                                                                    </button>
+                                                                    <span class="uploading hidden text-info small">Uploading, please wait...</span>
+                                                                </div>
+                                                                <div style="margin-top:5px;" >
+                                                                    @if ($template->subjects->count() > 0)
+                                                                            @foreach ($template->subjects as $subject)
+                                                                            
+                                                                            <a href="{{ url('practicalexam/awardlisttemplate') }}/{{ $template->id }}?subject_id={{ $subject->id }}"
+                                                                                class="btn btn-xs btn-primary ">
+                                                                                Enter Marks
+                                                                            </a>                                                            
+                                                                            @endforeach                                                    
+                                                                    @endif
+                                                                </div>
+                                                                
+                                                            </div>  
+                                                            @endif
+                                                        @else
+                                                            <div class="upload-block col-form-label-sm text-center">
+                                                                <button type="button"
+                                                                    class="btn btn-sm btn-success upload-btn">
+                                                                    Upload
+                                                                </button>
+                                                                <span class="uploading hidden text-info small">Uploading, please wait...</span>
+                                                            </div>
+                                                        @endif
 
-                                    {{ csrf_field() }}
-
-                                    <input type="hidden" name="practicalexam_id"
-                                        value="{{ $exam->id }}">
-                                    <input type="hidden" name="approvedprogramme_id"
-                                        value="{{ $ap->id }}">
-                                    <input type="hidden" name="institute_id"
-                                        value="{{ $ap->institute_id }}">
-                                    <input type="hidden" name="term"
-                                        value="{{ $term }}">
-                                    <input type="hidden" name="subject_id"
-                                        value="{{ $subject->id }}">
-                                    <input type="file" name="marksheet"
-                                        class="file-input d-none">
-                                        
-                                    @php
-                                        $template = $exam->awardlisttemplates()->where('approvedprogramme_id',$ap->id)->where('exam_date',\Carbon\Carbon::parse($date)->toDateString())->whereHas('subjects', function($q) use ($subject){
-                                            $q->where('subject_id', $subject->id);
-                                        })->first();
-                                        // echo "<pre>";
-                                        // print_r($template);
-                                    @endphp
-
-                                    @if (!empty($template->marksheet))
-                                        <div class="uploaded-block upload-block">
-                                            <a target="_blank"
-                                                href="{{ url('files/externalpractical') }}/{{ $template->marksheet }}">
-                                                Download (Term {{ $subject->syear }})
-                                            </a>
-                                            <div class="alert alert-warning">
-                                                @if ($template->subjects->count() > 0)
-                                                    <table class="table table-bordered">
-                                                        <tr>
-                                                            <th>Subject Code</th>
-                                                            <th>Marks</th>
-                                                        </tr>
-
-                                                        @foreach ($template->subjects as $subject)
-                                                            <tr>
-                                                                <td>{{ $subject->scode }}</td>
-                                                                <td>
-                                                                    <a href="{{ url('practicalexam/awardlisttemplate') }}/{{ $template->id }}?subject_id={{ $subject->id }}"
-                                                                        class="btn btn-xs btn-primary">
-                                                                        Enter Marks
-                                                                    </a>
-                                                                </td>
+                                                    </form>
+                                                </td>
                                                             </tr>
-                                                        @endforeach
-                                                    </table>
-                                                @endif
-                                            </div>
-                                            <div class="mt-2">
-                                                <button type="button"
-                                                    class="btn btn-sm btn-warning upload-btn">
-                                                    Re-upload marksheet
-                                                </button>
-                                                <span class="uploading hidden text-info small">Uploading, please wait...</span>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="upload-block">
-                                            <button type="button"
-                                                class="btn btn-sm btn-success upload-btn">
-                                                Upload
-                                            </button>
-                                          
-                                            <span class="uploading hidden text-info small">Uploading, please wait...</span>
-                                        </div>
-                                    @endif
-
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
+                                                        @empty
                                                         <tr>
                                                             <td colspan="3" class="text-center text-muted">
                                                                 No subjects available
@@ -366,9 +262,7 @@
                                                 </tbody>
                                             </table>
                                         </td>
-                                    @else
-                                        <td></td>
-                                        <td></td>
+                                  @endif
                                     @endif
                                 </tr>
                             @endif
@@ -385,44 +279,84 @@
             </div>
         </div>
     </div>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.upload-btn').forEach(btn => {
 
-            document.querySelectorAll('.upload-btn').forEach(function(button) {
-                button.addEventListener('click', function() {
-                    let form = this.closest('form');
+                btn.addEventListener('click', function () {
+
+                    let form = btn.closest('form');
                     let fileInput = form.querySelector('.file-input');
-                    fileInput.click();
-                });
-            });
-
-            document.querySelectorAll('.file-input').forEach(function(input) {
-                input.addEventListener('change', function() {
-                    if (!this.files || this.files.length === 0) {
-                        return;
-                    }
-
-                    let file = this.files[0];
-                    if (file.size > 1000000) {
-                        alert('Please choose a file smaller than 1MB.');
-                        this.value = '';
-                        return;
-                    }
-
-                    let form = this.closest('form');
-                    let uploadBlock = form.querySelector('.upload-block');
                     let uploadingText = form.querySelector('.uploading');
-                    if (uploadBlock) {
-                        uploadBlock.classList.add('hidden');
-                    }
-                    if (uploadingText) {
-                        uploadingText.classList.remove('hidden');
-                    }
 
-                    form.submit();
+                    let latInput = form.querySelector('input[name="latitude"]');
+                    let lngInput = form.querySelector('input[name="longitude"]');
+
+                    const getLocation = () => {
+                        return new Promise((resolve, reject) => {
+                            if (!navigator.geolocation) {
+                                reject("Geolocation not supported");
+                            } else {
+                                navigator.geolocation.getCurrentPosition(resolve, reject, {
+                                    enableHighAccuracy: true,
+                                    timeout: 10000
+                                });
+                            }
+                        });
+                    };
+
+                    fileInput.click();
+
+                    fileInput.onchange = async function () {
+
+                        // Client-side: allow only PDF files
+                        const file = fileInput.files && fileInput.files[0];
+                        if (!file) return;
+                        const name = file.name || '';
+                        const ext = name.split('.').pop().toLowerCase();
+                        const mime = file.type || '';
+                        if (ext !== 'pdf' && mime !== 'application/pdf') {
+                            alert('Please choose a PDF file');
+                            fileInput.value = '';
+                            return;
+                        }
+
+                        if (!fileInput.files || fileInput.files.length === 0) return;
+                        if (fileInput.files[0].size > 1000000) {
+                            alert('Please choose file under 1MB');
+                            fileInput.value = '';
+                            return;
+                        }
+                        try {
+                            const position = await getLocation();
+
+                            let latitude = position.coords.latitude;
+                            let longitude = position.coords.longitude;
+
+                            if (!latitude || !longitude) {
+                                throw "Location not found";
+                            }
+                            latInput.value = latitude;
+                            lngInput.value = longitude;
+                        } catch (error) {
+            
+                            alert("Please allow location access and ensure your device can fetch location");
+
+                            fileInput.value = '';
+                            return; 
+                        }
+                        if (uploadingText) {
+                            uploadingText.classList.remove('hidden');
+                        }
+                        btn.style.display = 'none';
+                        form.submit();
+                    };
+
                 });
+
             });
 
         });
-    </script>
+</script>
 @endsection

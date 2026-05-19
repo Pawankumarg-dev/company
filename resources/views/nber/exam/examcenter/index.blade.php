@@ -135,10 +135,10 @@
 													<td>{{ $mapped_at[$key] ?? 'Na' }}</td>
 
 													<td>
-														<a href="{{url('/')}}/nber/exam/examcenter/{{$edit_id[$key]}}">Remove</a>
+														<a href="{{url('/')}}/nber/exam/examcenter/{{$edit_id[$key] ?? 0}}">Remove</a>
 													</td>
 
-												<?php $total= $total+$maxCandidates[$key]; ?>
+												<?php $total= $total + (isset($maxCandidates[$key]) ? intval($maxCandidates[$key]) : 0); ?>
 												</tr>
 											@endforeach
 											<tr>
