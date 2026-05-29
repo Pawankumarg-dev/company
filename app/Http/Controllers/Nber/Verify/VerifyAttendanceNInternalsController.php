@@ -27,8 +27,7 @@ class VerifyAttendanceNInternalsController extends Controller
        $this->type = app()->request->has('type') ? app()->request->type : 'all';
        $this->forms =  (new VerifyAttendanceNInternalsService($this->helperService->getNberORRCIID(),$this->type));
        $this->nber_id = $this->helperService->getNberID();
-        
-        $this->exam_id = Session::get('exam_id');
+       $this->exam_id = Session::get('exam_id');
     }
     public function index(Request $r){
       
@@ -251,7 +250,8 @@ public function attendance_index(Request $r)
             programmes.abbreviation,
             programmes.id as program_id ,   
             academicyears.year,
-            attendances.enable_edit
+            attendances.enable_edit,
+            GROUP_CONCAT(DISTINCT subjects.syear) AS terms
         FROM approvedprogrammes 
         INNER JOIN academicyears 
             ON academicyears.id = approvedprogrammes.academicyear_id
@@ -263,6 +263,8 @@ public function attendance_index(Request $r)
             ON candidates.approvedprogramme_id = approvedprogrammes.id
         INNER JOIN attendances 
             ON attendances.candidate_id = candidates.id
+         INNER JOIN subjects 
+            ON programmes.id = subjects.programme_id
         WHERE attendances.exam_id = ? 
         AND programmes.nber_id = ?
     ";
@@ -289,19 +291,76 @@ public function attendance_index(Request $r)
 
 
     public function attendance_details($program_id ,$id){
+        // dd($program_id , $id);
          ini_set('max_execution_time', 300);
         $exam_id = $this->exam_id ;
 
         $internal_details = DB::select("
-        select approvedprogrammes.id , candidates.enrolmentno , attendances.enable_edit, candidates.name  ,  programmes.numberofterms as terms, candidates.contactnumber , candidates.email , programmes.abbreviation  ,  attendances.document_t , attendances.document_p ,attendances.attendance_t , attendances.attendance_p   from approvedprogrammes
+        select approvedprogrammes.id , candidates.enrolmentno , attendances.enable_edit, candidates.name  ,  programmes.numberofterms, candidates.contactnumber , candidates.email , programmes.abbreviation  ,  attendances.document_t , attendances.document_p ,attendances.attendance_t , attendances.attendance_p , subjects.syear as term from approvedprogrammes
         INNER JOIN candidates on candidates.approvedprogramme_id =approvedprogrammes.id
         INNER JOIN attendances on attendances.candidate_id = candidates.id and attendances.exam_id =".$exam_id."
         INNER JOIN programmes on programmes.id = approvedprogrammes.programme_id
-        WHERE attendances.exam_id =".$exam_id."  and approvedprogrammes.id =".$program_id." GROUP BY candidates.id
+        INNER JOIN subjects 
+            ON programmes.id = subjects.programme_id
+        WHERE attendances.exam_id =".$exam_id."  and approvedprogrammes.id =".$program_id." and subjects.syear = ".$id."
+        GROUP BY candidates.id
 
         ");
         return view('nber.verify.classroomattendanceandinternals.attendanceInternal' , compact('internal_details'));
     }
+
+
+    public function verify_attendance($program_id ,$id)
+        {
+            // dd($program_id , $id);
+             ini_set('max_execution_time', 300);
+            $exam_id = $this->exam_id;
+
+            DB::table('attendances')
+                ->join('candidates', 'attendances.candidate_id', '=', 'candidates.id')
+                ->where('candidates.approvedprogramme_id', $program_id)
+                ->where('attendances.term', $id)
+                ->where('attendances.exam_id', $exam_id)
+                ->update([
+                    'attendances.enable_edit' => 1
+                ]);
+
+            return redirect()->back()->with('success', 'Attendance verified successfully.');
+        }
+
+    public function addAttendance(Request $request)
+    {
+        $exam_id = $this->exam_id;
+        $candidate = \App\Candidate::where('enrolmentno', $request->enrolmentno)->first();
+        if (!$candidate) {
+            return response()->json(['error' => 'Candidate not found'], 404);
+        }
+
+        $attendance = \App\Attendance::where('candidate_id', $candidate->id)
+            ->where('exam_id', $exam_id)
+            ->where('term', $request->term)
+            ->first();
+
+        if (!$attendance) {
+            return response()->json(['error' => 'Attendance record not found'], 404);
+        }
+
+        $field = $request->type === 'theory' ? 'attendance_t' : 'attendance_p';
+        $current = $attendance->$field ?? 0;
+        $new = $current + floatval($request->value);
+        if ($new > 100) {
+            $new = 100;
+        } 
+        $attendance->$field = $new;
+        $attendance->save();
+
+        return response()->json(['success' => true, 'new' => $attendance->$field]);
+    }
+
+        
+
+
+
 
 
     public function payment(Request $request)

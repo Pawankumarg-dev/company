@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Malpractice extends Model
 {
     protected $fillable = [
-        'description','exam_id','title','clo_id'
+        'description','exam_id','title','clo_id' , 'candidate_id', 'active' , 'malpractice_report' , 'malpractice_committee_decision','committee_decision_report'
     ];
 
      public function exam(){

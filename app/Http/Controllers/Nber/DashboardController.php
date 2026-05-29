@@ -8,7 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
-
+use App\Services\Common\HelperService;
 use App\Notice;
 use App\Http\Requests;
 use App\Programme;
@@ -17,14 +17,26 @@ use App\Configuration;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use Illuminate\Support\Facades\DB;
+use App\Malpractice;
+use App\Candidate;
+use App\Exam;
 
 
 class DashboardController extends Controller
 {
-    public function __construct()
+
+
+    private $nber_id;
+    private $exam_id;
+
+    public function __construct(HelperService $help)
     {
        $this->middleware(['role:nber']);
+       $this->helperService = $help;
+       $this->nber_id = $this->helperService->getNberID();
+       $this->exam_id = Session::get('exam_id');
     }
+    
     public function index(){
         $nber_id = Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
 
@@ -199,4 +211,106 @@ class DashboardController extends Controller
 
             return redirect()->route('notice_index')->with('success', 'Notice Updated Successfully!');
         }
+
+        public function malpractice_add(){
+            $exams = Exam::all();
+            return view('nber.malpractice.malpractice_add', compact('exams'));
+        }
+
+        public function malpractice_store(Request $request)
+        {
+
+            $candidate = Candidate::where('enrolmentno', $request->candidate_enrolment)->first();
+
+            if(!$candidate)
+                {
+                    return response()->json([
+                        'status' => false,
+                        'errors' => [
+                            'candidate_enrolment' => 'Please fill correct enrolment number'
+                        ]
+                    ]);
+                }
+
+            $fileName = '';
+            if($request->hasFile('malpractice_report'))
+                {
+                    $file = $request->file('malpractice_report');
+
+                    $fileName = time().'_'.$file->getClientOriginalName();
+
+                    $destinationPath = public_path('/files/malpractice');
+
+                    $file->move($destinationPath, $fileName);
+                }
+
+            Malpractice::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'exam_id' => $request->exam_id,
+                'candidate_id' => $candidate->id,
+                'malpractice_report' => $fileName
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Malpractice Added Successfully'
+            ]);
+        }
+
+        public function malpractice_show(){
+           $malpractices = DB::table('malpractices')
+            ->join('candidates', 'malpractices.candidate_id', '=', 'candidates.id')
+           ->join ('approvedprogrammes','approvedprogrammes.id','=','candidates.approvedprogramme_id')
+           ->join('programmes','programmes.id','=','approvedprogrammes.programme_id')
+            ->select(
+                'malpractices.id',
+                'candidates.name',
+                'candidates.enrolmentno',
+                'malpractices.exam_id',
+                'malpractices.description',
+                'malpractices.title',
+                'malpractices.malpractice_report',
+                'malpractices.malpractice_committee_decision',
+                'malpractices.candidate_id',
+                'malpractices.active',
+                'malpractices.committee_decision_report',
+                'programmes.nber_id',
+                'programmes.abbreviation',
+                'programmes.code',
+                'programmes.name as programmename'
+            )
+            // ->where('malpractices.exam_id', $this->exam_id)
+            ->where('programmes.nber_id', $this->nber_id)
+            ->get(); 
+            //dd($malpractices);
+            return view('nber.malpractice.malpractice_view', compact('malpractices'));
+        }
+
+        public function malpractice_decision($id){
+            $malpractice = Malpractice::findOrFail($id);
+            
+            return view('nber.malpractice.malpractice_report', compact('malpractice'));
+        }
+
+        public function malpractice_decision_store(Request $request, $id)
+            {
+                $malpractice = Malpractice::findOrFail($id);
+                $fileName = '';
+                if ($request->hasFile('committee_decision_report')) {
+                    $file = $request->file('committee_decision_report');
+                    $fileName = time() . '_' . $file->getClientOriginalName();
+                    $destinationPath = public_path('/files/malpractice');
+                    $file->move($destinationPath, $fileName);
+                }
+                $malpractice->malpractice_committee_decision =  $request->malpractice_committee_decision;
+                $malpractice->active =$request->committee_action ;
+                if ($fileName) {
+                    $malpractice->committee_decision_report = $fileName;
+                }
+                $malpractice->save();
+                return redirect('/nber/malpractice/view') ->with('success', 'Decision Added Successfully');
+            }
+
+      
 }

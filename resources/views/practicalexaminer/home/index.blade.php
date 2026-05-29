@@ -120,8 +120,8 @@
                                         $now = \Carbon\Carbon::now()->format('Y-m-d');
                                         //    $start = \Carbon\Carbon::parse($exam->start_date)->format('Y-m-d');
                                         //    $end = \Carbon\Carbon::parse($exam->end_date)->addDay()->format('Y-m-d');
-                                        $start = '2026-05-04';
-                                        $end = '2026-05-12';
+                                        $start = '2026-05-25';
+                                        $end = '2026-05-30';
 
                                     @endphp
                                     @if ($now >= $start && $now <= $end)

@@ -1197,10 +1197,18 @@ Route::get('marks-verification-course', 'Nber\EvalutorController@course')->name(
     Route::get('/notices/edit/{id}', 'Nber\DashboardController@edit_notice')->name('notice_edit');
     Route::post('/notices/update/{id}','Nber\DashboardController@update_notice')->name('notice_update');
     
+    // New Route for malpractice
+    Route::get('/nber/malpractice/add','Nber\DashboardController@malpractice_add');
+    Route::get('/nber/malpractice/view','Nber\DashboardController@malpractice_show');
+    Route::post('/nber/malpractice/store','Nber\DashboardController@malpractice_store');
+    Route::get('/nber/malpractice/decision/{id}','Nber\DashboardController@malpractice_decision');
+    Route::post('/nber/malpractice/decision/store/{id}','Nber\DashboardController@malpractice_decision_store');
+    
     Route::get('/nber/exam/verifyattnn-internal','Nber\Verify\VerifyAttendanceNInternalsController@attendance_index')->name('verifyattnninternal');
     Route::get('/nber/exam/verifattendance/{program_id}/{id}','Nber\Verify\VerifyAttendanceNInternalsController@attendance_details')->name('verifyattendance');
-    Route::post('/nber/exam/verifyattendancedata/{program_id}/{id}','Nber\Verify\VerifyAttendanceNInternalsController@verify_attendance')->name('verifyattendancedata');
-    Route::post('/nber/exam/notverifyattendancedata/{program_id}/{id}','Nber\Verify\VerifyAttendanceNInternalsController@not_verify_attendance')->name('notverifyattendancedata');
+    Route::get('/nber/exam/verifyattendancedata/{program_id}/{id}','Nber\Verify\VerifyAttendanceNInternalsController@verify_attendance');
+    Route::post('/nber/exam/add-attendance','Nber\Verify\VerifyAttendanceNInternalsController@addAttendance');
+    // Route::post('/nber/exam/notverifyattendancedata/{program_id}/{id}','Nber\Verify\VerifyAttendanceNInternalsController@not_verify_attendance')->name('notverifyattendancedata');
     Route::get('/nber/exam/payment','Nber\Verify\VerifyAttendanceNInternalsController@payment');
     Route::get('/nber/exam/paymentdetails/{id}','Nber\Verify\VerifyAttendanceNInternalsController@payment_details');
     Route::post('/nber/exam/payment_update/{id}','Nber\Verify\VerifyAttendanceNInternalsController@payment_update');

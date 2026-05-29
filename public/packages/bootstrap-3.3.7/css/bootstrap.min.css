@@ -8,4 +8,7 @@
   .modal.show {
             opacity: 1 !important;
         }
+    .modal-content{
+            margin-top: 250px !important;
+        }
 /*# sourceMappingURL=bootstrap.min.css.map */

@@ -85,6 +85,7 @@ class HelperService
         return $courses;
     }
     public function getScheduledExamID(){
+      
         return $this->getScheduledExam()->id;
     }
 

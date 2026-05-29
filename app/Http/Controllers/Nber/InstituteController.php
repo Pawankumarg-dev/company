@@ -163,10 +163,12 @@ class InstituteController extends Controller
         return redirect('/issues');
     }
 	 public function index(){
+        set_time_limit(300);
     //	$instituteCount = Institute::where('active_status', 1)->count();
    // 	$courseCoordinatorCount = Coursecoordinator::where('active_status', 1)->count();
         //$institutes = Institute::whereNull('deleted_at')->get();
-        $institutes = Institute::all();
+        // $institutes = Institute::all();
+        $institutes = Institute::limit(50)->get();
         return view('nber.institutes.index',compact('institutes'));
     }
 	public function show($id){

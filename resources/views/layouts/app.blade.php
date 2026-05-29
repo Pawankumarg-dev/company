@@ -364,7 +364,10 @@
         .modal-backdrop {
             z-index: 99999 !important;
         } */
+        /* Ensure SweetAlert2 popups appear above other overlays (modals, navbars) */
+        
          
+        
     </style>
 </head>
 <body id="app-layout">

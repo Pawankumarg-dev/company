@@ -237,6 +237,7 @@
                                 <li><a href="{{ url('/nber/paymentreports?type=reevaluation') }}">Revaluation Payments</a></li>  
                                 <li><a href="{{ url('/nber/faculties') }}">Faculties </a></li>   
                                 <li><a href="{{ url('/nber/clo') }}">Clo Report & Payment </a></li>   
+                                
                                 {{-- <li><a href="{{ url('/nber/evaluators') }}">Evalutors</a></li>    --}}
                                 <li><a class="hidden" href="{{ url('/nber/tabill') }}">TABILL</a></li>   
                                 <li><a class="hidden" href="{{ url('/nber/track-payment') }}">Track Candidate Payment</a></li>   
@@ -244,7 +245,7 @@
 
                                 <li><a href="{{ url('/nber/index') }}"> Notice</a></li>   
 @endif
-
+                                <li><a href="{{ url('/nber/malpractice/view') }}">Malpractice </a></li> 
                                 
                                 </ul>
                             </li>   
