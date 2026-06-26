@@ -48,7 +48,7 @@ class FacultyController extends Controller
     }
 
     public function remove(Request $r){
-                             return response()->json(['error'=>'Could not delete during exam time']);
+                            //  return response()->json(['error'=>'Could not delete during exam time']);
 
         $institute_id = Institute::where('user_id',Auth::user()->id)->first()->id;
         $faculty = Faculty::find($r->faculty_id);

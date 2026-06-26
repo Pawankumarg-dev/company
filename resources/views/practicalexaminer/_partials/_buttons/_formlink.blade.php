@@ -6,5 +6,5 @@
     style="margin-bottom: 5px;"
     id="modalbtn"
 >
- Subjects   ( Term {{$term}})       
+ Download   ( Term {{$term}})       
 </button>

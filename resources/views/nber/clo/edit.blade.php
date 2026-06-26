@@ -3,8 +3,9 @@
 @section('content')
 <div class="container">
     <h2 class="text-center">CLO Details Update</h2>
-    <form action="{{ url('/') }}/nber/clo/update" method="POST" id="schoolForm" enctype="multipart/form-data">
-        {!! csrf_field() !!}
+    <form action="{{ url('nber/clo/'.$clo->id) }}" method="POST" id="schoolForm" enctype="multipart/form-data">
+        {{ csrf_field() }}
+        {{ method_field('PUT') }}
         <div class="row">
 
             <input type="hidden" name="nber_id" value="{{$nber_id}}">
@@ -29,12 +30,23 @@
             </div>
             
             <!-- Institute -->
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-6">
                 <label for="state">Institute</label>
                 <select name="institute_id" class="form-control" id="institute_id" required>
                     <option value="">Please Select</option>
                     @foreach ($institutes as $institute)
                         <option <?php if($clo->institute_id==$institute->id) { echo "selected";} ?> value="{{$institute->id}}">{{$institute->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+
+            <div class="form-group col-md-6">
+                <label for="state">Exam Center</label>
+                <select name="examcenter" class="form-control" id="examcenter" required>
+                    <option value="">Please Select</option>
+                    @foreach ($externalExamCenters as $externalExamCenter)
+                       <option value="{{$externalExamCenter->id}}" {{ $clo->externalexamcenter_id == $externalExamCenter->id ? 'selected' : '' }}>{{$externalExamCenter->code}}: {{$externalExamCenter->name}}</option>
                     @endforeach
                 </select>
             </div>

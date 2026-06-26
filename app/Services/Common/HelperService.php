@@ -31,7 +31,6 @@ class HelperService
     }
     
     public function getCandidateID(){
-      
         return $this->getCandidate()->id;
     }
     
@@ -85,7 +84,6 @@ class HelperService
         return $courses;
     }
     public function getScheduledExamID(){
-      
         return $this->getScheduledExam()->id;
     }
 

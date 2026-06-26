@@ -954,8 +954,8 @@ public function cbid_gen(){
    public function exam_timetable(Request $r){
         $timetables = null;
         $course = null;
-        $exam = \App\Exam::find(28);
-        $academicyear_id = 12;
+        $exam = \App\Exam::find(29);
+        $academicyear_id = 14;
         $syear = 1;
         $revision_year = null;
         if($r->has('course_id')){
@@ -1307,7 +1307,115 @@ return view('notices.vacant', compact('approvedprogramme','course'));
 
 }
 
+public function networkInfo()
+{
+    $ipAddress  = $this->getLocalIpAddress();
+    $hostName   = gethostname() ?: 'Unknown';
+    $macAddress = $this->getMacAddress();
 
+    return response()->json([
+        'host_name'   => $hostName,
+        'ip_address'  => $ipAddress,
+        'mac_address' => $macAddress,
+    ]);
+}
 
+private function getLocalIpAddress(): string
+{
+    // Method 1: UDP socket trick
+    if (function_exists('socket_create')) {
+        $socket = @socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+        if ($socket !== false) {
+            @socket_connect($socket, '8.8.8.8', 53);
+            socket_getsockname($socket, $ip);
+            socket_close($socket);
+            if (!empty($ip) && $ip !== '0.0.0.0') {
+                return $ip;
+            }
+        }
+    }
+
+    // Method 2: gethostbyname
+    $hostname = gethostname();
+    if ($hostname) {
+        $ip = gethostbyname($hostname);
+        if ($ip !== $hostname) { // returns hostname itself on failure
+            return $ip;
+        }
+    }
+
+    // Method 3: SERVER variables
+    foreach (['SERVER_ADDR', 'LOCAL_ADDR'] as $key) {
+        if (!empty($_SERVER[$key]) && $_SERVER[$key] !== '127.0.0.1') {
+            return $_SERVER[$key];
+        }
+    }
+
+    return '127.0.0.1';
+}
+
+private function getMacAddress(): string
+{
+    // Method 1: exec-based (if available)
+    if (function_exists('exec') && is_callable('exec')) {
+        $output = [];
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            exec('getmac /fo csv /nh 2>NUL', $output);
+            foreach ($output as $line) {
+                if (preg_match('/([0-9A-F]{2}-){5}[0-9A-F]{2}/i', $line, $matches)) {
+                    return $matches[0];
+                }
+            }
+        } else {
+            // Try ip command first
+            exec('ip link show 2>/dev/null', $output);
+            if (!empty($output)) {
+                $skipNext = false;
+                foreach ($output as $line) {
+                    if (preg_match('/^\d+:\s+lo:/i', $line)) {
+                        $skipNext = true;
+                        continue;
+                    }
+                    if ($skipNext) {
+                        $skipNext = false;
+                        continue;
+                    }
+                    if (preg_match('/link\/ether\s+([0-9a-f]{2}(?::[0-9a-f]{2}){5})/i', $line, $matches)) {
+                        return $matches[1];
+                    }
+                }
+            }
+
+            // Fallback: ifconfig
+            $output = [];
+            exec('ifconfig 2>/dev/null', $output);
+            foreach ($output as $line) {
+                if (preg_match('/ether\s+([0-9a-f]{2}(?::[0-9a-f]{2}){5})/i', $line, $matches)) {
+                    return $matches[1];
+                }
+            }
+        }
+    }
+
+    // Method 2: Read directly from /sys (Linux only, no exec needed)
+    if (PHP_OS_FAMILY !== 'Windows' && is_dir('/sys/class/net')) {
+        foreach (scandir('/sys/class/net') as $iface) {
+            if ($iface === '.' || $iface === '..' || $iface === 'lo') {
+                continue;
+            }
+            $macFile = "/sys/class/net/{$iface}/address";
+            if (is_readable($macFile)) {
+                $mac = trim(file_get_contents($macFile));
+                // Skip null MACs
+                if ($mac && $mac !== '00:00:00:00:00:00') {
+                    return $mac;
+                }
+            }
+        }
+    }
+
+    return 'Not Found';
+}
 
 }

@@ -5,7 +5,7 @@
             var filename = '.filename_'+btn;
             var ext = $(filename).val().split('.').pop().toLowerCase();
             if ($.inArray(ext, ['pdf','png','jpg','jpeg']) == -1){
-                swal("Error Occurred!!!", "Please upload the scanned file in .pdf/.png/.jpg/.jpeg format only.", "error");
+                swal("Error Occurred!!!", df/.png/.jpg/.jpeg format only.", "error");
                 $(filename).val(null);
                 return false;
             }

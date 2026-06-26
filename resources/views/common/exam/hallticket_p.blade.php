@@ -206,7 +206,7 @@
                         $table = \App\Examtimetable::where('subject_id',$subject->id)->where('exam_id',$exam->id); 
                     ?>
                     
-                    @if($subject->subjecttype_id==2 && $show == 1 && $application->mark_as_deleted != 1)
+                    @if($subject->subjecttype_id==2 && $show == 1 && $application->mark_as_deleted != 1 && $subject->is_external == 1)
                     <tr>
                         <td class="center-text blue-text">{{ $sno }}</td>
                         <td class="center-text blue-text bold-text">

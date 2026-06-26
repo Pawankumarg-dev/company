@@ -40,7 +40,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <h6>June 2025 Examinations - Mark Entry</h6>
+      <h6>{{$exam->name}} Examinations - Mark Entry</h6>
       <h3>{{ $subject->scode }}</h3>
 
       @if (Session::has('error'))

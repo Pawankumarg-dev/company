@@ -32,6 +32,10 @@
                                 target="_blank" href="{{ url('files/GUIDELINES - EXTERNAL PRACTICAL.pdf') }}">here</a>.
                         </li>
 
+                        <li>
+                            Please follow scheme of Examination 2026 <a
+                                target="_blank" href="https://nber-rehabcouncil.gov.in/files/notice/SoE_NBER.pdf">here</a>.
+                        </li>
                     </ul>
 
                 </div>
@@ -84,7 +88,7 @@
                                 'approvedprogrammes.institute_id',
                                 'programmes.abbreviation',                 
                                 'approvedprogrammes.id',
-                                'programmes.id as programme_id',
+                                'programmes.id as programme_id'
                             )
                             ->groupBy('approvedprogrammes.id')                       
                             ->get();
@@ -113,20 +117,20 @@
                                             $batch = $ap->display_name_one_year;
                                         }
                                         ?>
-                                        {{ $batch }} / Candidate: {{ $ap->total_candidate }}
+                                        {{ $batch }} / Candidate: {{ $ap->total_candidate }} 
                                     </td>
                                     @php
 
                                         $now = \Carbon\Carbon::now()->format('Y-m-d');
-                                        //    $start = \Carbon\Carbon::parse($exam->start_date)->format('Y-m-d');
-                                        //    $end = \Carbon\Carbon::parse($exam->end_date)->addDay()->format('Y-m-d');
-                                        $start = '2026-05-25';
-                                        $end = '2026-05-30';
+                                        $start = \Carbon\Carbon::parse($exam->start_date)->format('Y-m-d');
+                                         $end = \Carbon\Carbon::parse($exam->end_date)->addDay()->format('Y-m-d');
+                                        // $start = '2026-06-08';
+                                        // $end = '2026-06-30';
 
                                     @endphp
                                     @if ($now >= $start && $now <= $end)
                                      <?php
-                                    $geotagged = \App\Geotaggedphoto::where('faculty_id', $exam->faculty_id)->where('institute_id', $exam->institute_id)->where('faculty_id', $exam->faculty_id)->count() > 0 ? true : false;
+                                    $geotagged = \App\Geotaggedphoto::where('faculty_id', $exam->faculty_id)->where('institute_id', $exam->institute_id)->where('faculty_id', $exam->faculty_id)->where('exam_date',$now)->count() > 0 ? true : false;
                                     ?>
                                        
                                         <td style="padding: 0px">
@@ -144,20 +148,20 @@
 
                                                 <tbody>
                                                     @php
-                                                  
                                                         $subjectIds = \App\PracticalExamSubject::where(
                                                             'practicalexam_id',
-                                                            $exam->id,
+                                                            $exam->id
                                                         )
                                                             ->pluck('subject_id')
                                                             ->toArray();
 
                                                         $subjects = \App\Subject::where(
                                                             'programme_id',
-                                                            $ap->programme_id,
+                                                            $ap->programme_id
                                                         )
                                                             ->whereIn('id', $subjectIds)
                                                             ->where('subjecttype_id', 2)
+                                                            ->where('is_external',1)
                                                             ->orderBy('syear')
                                                             ->get();
                                                     @endphp
@@ -211,7 +215,6 @@
                                                                 <div >
                                                                    <strong style="color: green">Verified</strong> 
                                                                 </div>
-                                                                
                                                             @else
                                                               <div class="uploaded-block upload-block text-center">
                                                                 <a target="_blank"
@@ -284,7 +287,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.upload-btn').forEach(btn => {
 
-                btn.addEventListener('click', function () {
+                btn.addEventListener('click', async function () {
 
                     let form = btn.closest('form');
                     let fileInput = form.querySelector('.file-input');
@@ -293,24 +296,76 @@
                     let latInput = form.querySelector('input[name="latitude"]');
                     let lngInput = form.querySelector('input[name="longitude"]');
 
-                    const getLocation = () => {
+                    const getLocation = (attempts = 1) => {
                         return new Promise((resolve, reject) => {
                             if (!navigator.geolocation) {
-                                reject("Geolocation not supported");
-                            } else {
-                                navigator.geolocation.getCurrentPosition(resolve, reject, {
-                                    enableHighAccuracy: true,
-                                    timeout: 10000
-                                });
+                                return reject('Geolocation not supported');
                             }
+
+                            let tries = 0;
+
+                            const tryOnce = () => {
+                                tries++;
+                                navigator.geolocation.getCurrentPosition(function (position) {
+                                    if (position && position.coords && isFinite(position.coords.latitude) && isFinite(position.coords.longitude)) {
+                                        return resolve(position);
+                                    }
+                                    if (tries < attempts) {
+                                        setTimeout(tryOnce, 500 * tries);
+                                    } else {
+                                        reject('Invalid position');
+                                    }
+                                }, function (error) {
+                                    if (error && error.code === error.PERMISSION_DENIED) {
+                                        return reject('Permission denied');
+                                    }
+                                   
+                                    if (tries < attempts) {
+                                        setTimeout(tryOnce, 500 * tries);
+                                    } else {
+                                        try {
+                                            let watchId = navigator.geolocation.watchPosition(function (pos) {
+                                                navigator.geolocation.clearWatch(watchId);
+                                                return resolve(pos);
+                                            }, function (err2) {
+                                                try { navigator.geolocation.clearWatch(watchId); } catch (e) {}
+                                                return reject('Unable to get position');
+                                            }, { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 });
+                                        } catch (e) {
+                                            return reject('Unable to get position');
+                                        }
+                                    }
+                                }, { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 });
+                            };
+
+                            tryOnce();
                         });
                     };
 
+                    // Try to get location first (more reliable UX) before opening file dialog
+                    try {
+                        const position = await getLocation(1);
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        latInput.value = Number(latitude);
+                        lngInput.value = Number(longitude);
+                    } catch (err) {
+                        console.log(err)
+                        if (typeof err === 'string' && err.toLowerCase().includes('permission')) {
+                            alert('Location permission denied. Please enable location for this site and try again.');
+                        } else {
+                            alert('Could not get location. Please ensure location services are enabled and retry.');
+                        }
+
+                        latInput.value ='';
+                        lngInput.value = '';
+                    }
+
+                    // Now open file picker
                     fileInput.click();
 
-                    fileInput.onchange = async function () {
+                    fileInput.onchange = function () {
 
-                        // Client-side: allow only PDF files
                         const file = fileInput.files && fileInput.files[0];
                         if (!file) return;
                         const name = file.name || '';
@@ -328,24 +383,16 @@
                             fileInput.value = '';
                             return;
                         }
-                        try {
-                            const position = await getLocation();
 
-                            let latitude = position.coords.latitude;
-                            let longitude = position.coords.longitude;
+                        // Final sanity check: coordinates exist and look valid
+                        const latVal = parseFloat(latInput.value);
+                        const lngVal = parseFloat(lngInput.value);
+                        // if (!isFinite(latVal) || !isFinite(lngVal)) {
+                        //     alert('Location not available. Please try again.');
+                        //     fileInput.value = '';
+                        //     return;
+                        // }
 
-                            if (!latitude || !longitude) {
-                                throw "Location not found";
-                            }
-                            latInput.value = latitude;
-                            lngInput.value = longitude;
-                        } catch (error) {
-            
-                            alert("Please allow location access and ensure your device can fetch location");
-
-                            fileInput.value = '';
-                            return; 
-                        }
                         if (uploadingText) {
                             uploadingText.classList.remove('hidden');
                         }
@@ -358,5 +405,5 @@
             });
 
         });
-</script>
+    </script>
 @endsection

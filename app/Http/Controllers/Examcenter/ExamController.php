@@ -53,21 +53,28 @@ class ExamController extends Controller
         $closetime  = \Carbon\Carbon::parse($s->starttime)->addHours(3)->toTimeString();
       //  $opentime  = \Carbon\Carbon::parse($s->starttime)->subHours(3)->toTimeString(); for testing
            // return $opentime;
+        $open_allredy_downloaded = \Carbon\Carbon::parse($s->starttime)->subMinutes(1)->toTimeString();
 
 
-        // if(
-        //    !(
-        //     $date  == $sdate && 
-        //     $time > $opentime && 
-        //     $time < $closetime
-        //    )
-        // ){
-        //     Session::put('messages','Please wait');
-        //     return back();
-        // }
+        if(
+           !(
+            $date  == $sdate && 
+            $time > $opentime && 
+            $time < $closetime
+           )
+        ){
+            Session::put('messages','Please wait');
+            return back();
+        }
+
+        $nohistory=0;
+        if($time >=$open_allredy_downloaded){
+            $nohistory=1;
+        }
+
         
     
-       $download = $this->qpService->downloadquestionpaper(6,$r);
+       $download = $this->qpService->downloadquestionpaper(6,$r,$nohistory);
     //    return $download;
 
        if($download!=false){

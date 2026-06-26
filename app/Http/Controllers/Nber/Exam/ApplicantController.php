@@ -12,6 +12,7 @@ use Session;
 use App\Exam;
 use PDF;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Attendance;
 
 use App\Http\Requests\Backlog\StoreApplicantRequest;
 
@@ -211,9 +212,26 @@ class ApplicantController extends Controller
                 Session::flash('error','Photo not found');
                 return back();
             }
-            $ht = \App\Practicalhallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',28)->first();
-           $ht->downloaded += 2;
-           $ht->save();
+
+//    $atten = Attendance::where('candidate_id', $applicant->candidate_id)
+//                 ->where('attendance_p', '>=', 75)
+//                 ->count();
+//             $numberOfTerms = $applicant->candidate->approvedprogramme->programme->numberofterms ?? 0;
+//             if ($atten < $numberOfTerms && $applicant->candidate->approvedprogramme->academicyear_id != 14){ 
+//                 Session::flash('error', 'Attendance is less than 75%');
+//                 return back();
+//             }
+          
+//              if ($applicant->candidate->approvedprogramme->academicyear_id == 14 && $atten < 1){ 
+//                 Session::flash('error', 'Attendance is less than 75%');
+//                 return back();
+//             }
+
+
+
+        //     $ht = \App\Practicalhallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',29)->first();
+        //    $ht->downloaded += 2;
+        //    $ht->save();
            $exam_center = $this->ApplicantService->getExamcenter($applicant->institute,2);
             $exam = $this->exam;
             if($r->has('downloadht')){

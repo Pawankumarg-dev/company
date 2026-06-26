@@ -29,7 +29,7 @@ class ExamcenterController extends Controller
     
 
     public function index(Request $r){
-        $examcenters = Externalexamcenter::where('exam_id',28)->orderBy('code', 'ASC')->get();
+        $examcenters = Externalexamcenter::where('coe',1)->orwhere('exam_id',29)->orderBy('code', 'ASC')->get();
         return view('nber.examcenter.index',
             compact(
                 'examcenters'
@@ -111,11 +111,11 @@ class ExamcenterController extends Controller
 
     public function update($id,Request $r){
         
-        if(Auth::user()->id == 88387){
+        // if(Auth::user()->id == 88387){
 
 
         $examcenter = Externalexamcenter::find($id);
-        $examcenter->update($r->except('username','password'));
+        $examcenter->update($r->except('username','password','code'));
         // $user = \App\User::where('username',$r->username)->first();
         // if(!is_null($user)){
         //     $user->password =  Hash::make($r->password);
@@ -137,9 +137,9 @@ class ExamcenterController extends Controller
         $examcenter->save();
         Session::flash('messages','Updated');
         return redirect('/nber/excenter/') ;
-        }else{
-return "closed";
-        }
+//         }else{
+// return "closed";
+//         }
         
         
         return view('nber.examcenter.show',compact('examcenter'));

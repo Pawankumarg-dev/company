@@ -18,8 +18,11 @@
 <!-- JavaScripts -->
     <script src="{{asset('js/2.2.3/jquery.min.js')}}" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="{{ asset('packages/moment/moment.min.js') }}"></script>
-    <script src="{{asset('packages/bootstrap-3.3.7/js/bootstrap.min.js')}}"></script>
+    {{-- <script src="{{asset('packages/bootstrap-4.0.0/js/bootstrap.min.js')}}"></script> --}}
 
+        <script src="{{asset('packages/bootstrap-4.0.0/bootstrap.min.js')}}"></script>
+
+    
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     <script src="{{asset('js\chosen.jquery.min.js')}}"></script>
     {{-- <script src="{{asset('js/notify.min.js')}}"></script> --}}

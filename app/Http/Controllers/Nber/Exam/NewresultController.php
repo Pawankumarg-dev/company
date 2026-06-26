@@ -124,9 +124,9 @@ class NewresultController extends Controller
 
     public function june2025(){
 
-      $exam_id=27;
+      $exam_id=28;
 
-        $sas = Allresult::where('exam_id',$exam_id)->where('allresults.status_id',5)->get();
+        $sas = Allresult::where('exam_id',$exam_id)->get();
       foreach($sas as $sa){
         $job = (new \App\Jobs\Generate_after_Jan2025SuppMarksheet($sa->candidate_id,$exam_id))->onQueue('june2025first');
         $this->dispatch($job);
@@ -137,10 +137,10 @@ class NewresultController extends Controller
 //     ->where('orderstatus_id', 1)
 //     ->whereIn('candidate_id', $sa->candidate_id)
 //     ->get();
-          foreach($sas as $sa){
-        $job = (new \App\Jobs\Generate_after_Jan2025SuppMarksheet_rev($sa->candidate_id,$exam_id))->onQueue('june2025first');
-        $this->dispatch($job);
-      }
+      //     foreach($sas as $sa){
+      //   $job = (new \App\Jobs\Generate_after_Jan2025SuppMarksheet_rev($sa->candidate_id,$exam_id))->onQueue('june2025first');
+      //   $this->dispatch($job);
+      // }
 
 
       return 'done';

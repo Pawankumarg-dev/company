@@ -29,7 +29,9 @@ class Allexampaper extends Model
         'password',
         'attn_verification',
         'attn_rej_reason',
-        'encrypted'
+        'encrypted',
+        'reason',
+        'updated_by'
     ];
 
     public function Approvedprogramme()

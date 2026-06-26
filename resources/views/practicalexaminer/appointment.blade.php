@@ -28,7 +28,7 @@
             <p>Madam/Sir,</p>
 
             <p>
-This is to inform you that the Practical External Examination for all RCI Recognised Diploma and Certificate Courses are being conducted by NBERs at the respective exam centers/TTIs across the country from 30th March to April 06th, 2026.            
+This is to inform you that the Practical External Examination for all RCI Recognised Diploma and Certificate Courses are being conducted by NBERs at the respective exam centers/TTIs across the country from 11th june to june 24th for slot 1 and 10 July to 31 July slot 2, 2026.            
             </p>
 
             <table style="border: 1px solid black; border-collapse: collapse; width: 100%; margin-top: 15px;">
@@ -66,7 +66,7 @@ This is to inform you that the Practical External Examination for all RCI Recogn
 
             <div style="margin-top: 20px;">
                 Yours faithfully,<br><br>
-                <strong>Director</strong><br>
+                <strong>Incharge</strong><br>
                 National Board of Examination in Rehabilitation<br>
                 {{ $data->short_name_code }}, (NBER)
             </div>

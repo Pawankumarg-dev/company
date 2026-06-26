@@ -39,7 +39,6 @@ class EvaluationcenterController extends Controller
     }
 
     public function index(Request $r){
-        
         $evaluationcenters = Evaluationcenterdetail::where('exam_id',$this->exam_id)->groupBy('evaluationcenter_id')->get();
         if($r->has('download')){
         $sql = "
@@ -77,12 +76,10 @@ class EvaluationcenterController extends Controller
     }
 
     public function show($id,Request $r){
-        
         if($r->has('downloadall')){
             $externalexamcenter_ids =  $this->evaluationService->getExternalexamcenterIDs($id);
             $examcenter_ids = $this->evaluationService->getExamcenterIDs($externalexamcenter_ids);
             $institute_ids  = $this->evaluationService->getInstituteIDs($examcenter_ids);
-          
             $applications =\App\Supplimentaryapplication::whereHas('supplimentaryapplicant',function($q) use($institute_ids){
                 $q->where('block',null);
                 $q->whereIn('institute_id',$institute_ids);
@@ -138,7 +135,6 @@ class EvaluationcenterController extends Controller
         $sa = $this->evaluationService->getStats($institute_ids,$this->nber_id,'subject_id');
         $courses = $this->evaluationService->getStats($institute_ids,$this->nber_id);
         $examname = \App\Exam::find(Session::get('exam_id'))->name;
-      
         return view('nber.exam.evaluationcenter.show',
                         compact(
                             'examcenters',

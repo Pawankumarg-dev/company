@@ -1,7 +1,15 @@
 Redirecting to Payment Gateway.. Please do not close the window.
+
+
+
+
+
+
 <form style="display:none" name="redirect" class="form-horizontal"
-                    action="{{ url('/institute/enrolmentpayments/ccavenuepaymentgatewayrequesthandler/') }}"
+                    action="{{ url('/student/enrolmentpayments/ccavenuepaymentgatewayrequesthandler') }}"
                     method="post"  enctype="multipart/form-data">
+                                    {{csrf_field()}}
+
                 <input type="hidden" name="id" value="{{ $row->id }}">
                 <input type="hidden" id="order_number" name="order_number" value="{{ Session::get('order_number') }}" />
                 <input type="hidden" id="ref_num" name="ref_num" value="" />
@@ -12,7 +20,6 @@ Redirecting to Payment Gateway.. Please do not close the window.
                 <input type="hidden" name="tid" id="tid">
                 <input type="hidden" name="language" value="EN"/>
                 <input type="hidden" name="nber_id" value="{{$nber_id}}">
-                {{csrf_field()}}
                 <div class="row">
                     <div class="col-12">
                         <div style="padding-left:15px;padding-bottom:20px;">

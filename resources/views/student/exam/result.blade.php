@@ -61,7 +61,8 @@
         </a>
     </div>
 </div>
-                    <h3 style="text-align: center">Result - June 2025</h3>
+<h3 style="text-align: center">Result - April 2026</h3>
+@if(!empty($allapplications))
 
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
@@ -78,13 +79,30 @@
                 </thead>
                 <tbody>
                     @foreach($allapplications as $index => $application)
+                      @php 
+                                    $altsubject = null;
+                                    $subject = $application->subject;
+                                    if(!is_null($application->alternativesubject_id)){
+                                        $altsubject  = \App\Alternativesubject::find($application->alternativesubject_id);
+                                    }
+                                @endphp
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $application->subject->scode }}</td>
+                            <td> @if(!is_null($application->alternativesubject_id))
+                                                {{$altsubject->scode}}
+                                            @else
+                                                {{$subject->scode}}
+                                            @endif
+
+                            </td>
 
                             {{-- <td>{{ $application->subject }} </td> --}}
 
-                            <td>{{ $application->subject->sname }} </td>
+                            <td>@if(!is_null($application->alternativesubject_id))
+                                                {{$altsubject->sname}}
+                                            @else
+                                                {{$subject->sname}}
+                                            @endif</td>
   
                             <td>{{ $application->subject->subjecttype->type }}</td>
                             <td>@if($application->attendance_in==2) Absent @else {{ $application->mark_in }}@endif</td>
@@ -99,7 +117,8 @@
                     @endforeach
                 </tbody>
             </table>
-
+@endif
+@if(!empty($allapplicantrev))
 
                     <h3 style="text-align: center">Result - June 2025 Re-evaluation</h3>
  
@@ -158,11 +177,12 @@
                     @endforeach
                 </tbody>
             </table>
+            @endif
             <div> 
 
+<p><strong>Note:</strong> marksheet and Certificate will be available within a week.</p>
                 
-                
-                <p><strong>Note:</strong>Best of marks acquired through re-evaluation/re-totaling or initial marks will be considered.</p>
+                {{-- <p><strong>Note:</strong>Best of marks acquired through re-evaluation/re-totaling or initial marks will be considered.</p> --}}
             </div>
         </div>
     </div>

@@ -13,6 +13,17 @@ class Affiliationfee extends Model
         'academicyear_id',
         'order_id',
         'orderstatus_id',
+        'approvedprogramme_id',
+    'bank_name',
+    'branch_address',
+    'account_number',
+    'account_name',
+    'ifsc_code',
+    'transaction_details',
+    'transaction_no',
+    'amount',
+    'term',
+    'transaction_date'
     ];
 
     public function order(){
@@ -22,12 +33,11 @@ class Affiliationfee extends Model
         return $this->belongsTo('App\Academicyear');
     }
 
-    public function institute(){
-        return $this->belongsTo('App\Institute');
-    }
-
     public function orders(){
         return $this->belongsToMany('App\Order');
     }
+    public function approvedprogramme(){
+		return $this->belongsTo('App\Approvedprogramme');
+	}
     
 }

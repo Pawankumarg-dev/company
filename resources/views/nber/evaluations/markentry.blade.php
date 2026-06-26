@@ -15,7 +15,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <h6>June 2025 Examinations - Mark Entry</h6>
+      <h6>{{$exam->name}} Examinations - Marks</h6>
       <h3>{{ $subject->scode }}</h3>
     </div>
   </div>
@@ -59,16 +59,16 @@
 
 
         
-          {{-- <form action="{{ url('evaluationcenter/verify-marks') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ url('evaluationcenter/verify-marks') }}" method="post" enctype="multipart/form-data">
         {{csrf_field()}}
         <input type="hidden" name="externalexamcenter_id" value="{{ $applications[0]->externalexamcenter_id }}">
         <input type="hidden" name="subject_id" value="{{ $subject->id }}">
 
         <button type="submit" class="btn btn-primary btn-sm mb-4">Verify</button>
-          </form> --}}
+        </form> 
     </div>
 @php
-    $pdfPath = 'files/markfiles/27_' . $applications[0]->externalexamcenter_id . '_' . $subject->id . '.pdf';
+    $pdfPath = 'files/markfiles/'.$exam_id.'_' . $applications[0]->externalexamcenter_id . '_' . $subject->id . '.pdf';
 @endphp
 
 

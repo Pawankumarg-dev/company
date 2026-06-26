@@ -24,7 +24,7 @@ use Illuminate\Support\Str;
 use App\Exam;
 use Illuminate\Support\Facades\Mail;
 use App\Tabill;
-               use DB;
+use DB;
 
 class CloController extends Controller
 {
@@ -58,7 +58,7 @@ $tabills = DB::table('tabills')
         'tabills.created_at',
         'tabills.id',
                 'tabills.payment_status',
-               
+                'tabills.reason',
 
         'nbers.name_code'
     )
@@ -99,27 +99,40 @@ public function rejectRequest(Request $request, $id)
 
     public function index() {
         $nber_id = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
-
+       // dd($this->exam_id);
         $clos = Clo::where("exam_id", $this->exam_id)->where('nber_id',$nber_id)->get();
-        return view('nber.clo.index', compact('exam', 'clos'));
+        //dd($externalExamCenters);
+        return view('nber.clo.index', compact( 'clos'));
     }
 
     public function create(Request $r){
+        $nber_id = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
         $states = Lgstate::get();
         $institutes  = Institute::get();
         $districts = \App\District::all();
-
-        $nber_id = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
-
-        return view('nber.clo.create',compact('states','institutes','nber_id','districts'));
+      
+         $externalExamCenters = DB::table('examcenters')
+        ->join('externalexamcenters', 'examcenters.externalexamcenter_id', '=', 'externalexamcenters.id')
+        ->where('examcenters.exam_id', $this->exam_id)
+        ->where('examcenters.nber_id','=', $nber_id)
+        ->select('externalexamcenters.*')
+        ->groupby('externalexamcenters.id')
+        ->get();
+        //dd($examcenter);
+       
+        return view('nber.clo.create',compact('states','institutes','nber_id','districts','externalExamCenters'));
     }
+
+
     public function store(Request $request)
     {
+       
         $clo = new clo();
         $clo->name = $request->name;
         $clo->crr_no = $request->crr_no;
         $clo->designation = $request->designation;
         $clo->institute_id = $request->institute_id;
+        $clo->externalexamcenter_id = $request->examcenter;
         $clo->email = $request->email;
         $clo->mobile = $request->mobile;
         $clo->lgstate_id = $request->lgstate_id;
@@ -128,33 +141,40 @@ public function rejectRequest(Request $request, $id)
         $clo->nber_id = $request->nber_id;
         
         $clo->save();
-
         Session::flash('messages','clo added successfully');
 
-        return redirect('nber/clo')->with('success', 'clo added successfully!');
+        return redirect(url('nber/clo'))->with('success', 'clo added successfully!');
 
-
-  
     }
-    public function show($id)
-{
-    $nber_id = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
-    $clo = clo::findOrFail($id);
-    $institutes = Institute::all(); 
-    $states = Lgstate::all();  
-    $districts = District::get();  
 
-    return view('nber.clo.edit', compact('clo', 'institutes', 'states', 'districts','nber_id'));
-}
+    public function show($id)
+        {
+            $nber_id = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
+            $externalExamCenters = DB::table('examcenters')
+            ->join('externalexamcenters', 'examcenters.externalexamcenter_id', '=', 'externalexamcenters.id')
+            ->where('examcenters.exam_id', $this->exam_id)
+            ->where('examcenters.nber_id','=', $nber_id)
+            ->select('externalexamcenters.*')
+            ->groupby('externalexamcenters.id')
+            ->get();
+            $clo = clo::findOrFail($id);
+            $institutes = Institute::all(); 
+            $states = Lgstate::all();  
+            $districts = District::get();  
+
+            return view('nber.clo.edit', compact('clo', 'institutes', 'states', 'districts','nber_id','externalExamCenters'));
+        }
 
 public function update(Request $request)
 {
+    // dd($request->all());
     $id=$request->id;
     $clo = clo::findOrFail($id);
     $clo->name = $request->name;
     $clo->crr_no = $request->crr_no;
     $clo->designation = $request->designation;
     $clo->institute_id = $request->institute_id;
+    $clo->externalexamcenter_id = $request->examcenter ;
     $clo->email = $request->email;
     $clo->mobile = $request->mobile;
     $clo->lgstate_id = $request->lgstate_id;
@@ -178,10 +198,12 @@ public function details($id){
     return view('nber.clo.details', compact('clo', 'bill'));
 }
 public function approve_payment(Request $request){
+    $nber_id = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
     $payment = Tabill::find($request->id);
     if($request->payment_type=='success'){
         $payment->amount = $request->amount;
         $payment->transaction_details = $request->transaction_details;
+        $payment->nber_id =$nber_id;
         $payment->payment_status = $request->payment_type;
         $payment->reason = '';
         $payment->save();
@@ -190,6 +212,7 @@ public function approve_payment(Request $request){
     }
     else {
         $payment->amount = $request->amount;
+        $payment->nber_id =$nber_id;
         $payment->transaction_details = $request->transaction_details;
         $payment->payment_status = $request->payment_type;
         $payment->reason = $request->reason;
@@ -215,17 +238,16 @@ public function sendPassword(Request $request)
             $user->save();
             $clo->user_id = $user->id;
             $clo->save();
-
-
             $url = "https://rciregistration.nic.in/rehabcouncil/api/exam_email_send_nber.jsp?email=" . urlencode($clo->email) . "&name=CLO&password=" . urlencode($password) . "&user_id=" . urlencode($clo->crr_no.$clo->email);
             $is_ok = $this->http_response($url);
             return response()->json(['message' => 'mail sent']);
         } else {
-            $user = User::where('user_id', $clo->user_id)->where('usertype_id', 4)->first();
+            $user = User::where('id', $clo->user_id)->where('usertype_id', 4)->first();
             if ($user) {
-                $user->password = Hash::make($password);
+                $clo->password = $password;
                 $user->save();
-                $email='sk306842@gmail.com';
+                // $email= $clo->email ;
+                $clo->save();
                 $url = "https://rciregistration.nic.in/rehabcouncil/api/exam_email_send_nber.jsp?email=" . urlencode($clo->email) . "&name=CLO&password=" . urlencode($password) . "&user_id=" . urlencode($clo->crr_no.$clo->email);
                 $is_ok = $this->http_response($url);
                 return response()->json(['message' => 'mail sent']);
@@ -240,11 +262,7 @@ public function sendPassword(Request $request)
 public function http_response($url, $status = null, $wait = 3)
 
     {
-    
-         
-    
-    
-    
+
             // we fork the process so we don't have to wait for a timeout
     
     
@@ -268,10 +286,27 @@ public function http_response($url, $status = null, $wait = 3)
 
                 return $httpCode;
     
-                
-    
-    
-    
-          
         }
+
+    public function report(Request $request){
+        $clo = clo::findOrFail($request->id);
+        $results = DB::table('clos')
+            ->join('clo_reports', 'clos.user_id', '=', 'clo_reports.user_id')
+            ->select(
+                'clos.exam_id',
+                'clos.nber_id',
+                'clo_reports.day',
+                'clo_reports.title',
+                'clo_reports.description',
+                'clo_reports.file',
+                'clo_reports.vidio',
+                'clos.user_id'
+            )
+            ->where('clos.user_id', $request->user_id)
+            ->where('clos.exam_id', $request->exam_id)
+            ->where('clos.nber_id', $request->nber_id)
+            ->get();
+            return view('nber.clo.clo_reports',compact('results','clo'));
+    }
+   
 }

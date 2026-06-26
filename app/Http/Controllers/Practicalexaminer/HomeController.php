@@ -21,15 +21,14 @@ class HomeController extends Controller
     {
         $this->middleware(['role:faculty']);
         $this->helperService = $help;
-                $this->exam_id = 28;
+        $this->exam_id = 29;
 
     }
     public function index(Request $r){
 
-        $examstartdate = '2026-03-24';
-        $examenddate = '2026-04-06';
-        $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
-       // dd($practicalexaminer_id);
+        
+       $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
+
         $date = \Carbon\Carbon::now()->toDateString();
     
         if(Session::has('date')){
@@ -38,16 +37,16 @@ class HomeController extends Controller
 
 
         $practicalexams = \App\Practicalexam::where('exam_id',$this->exam_id)->whereNull('deleted_at')->where('faculty_id',$practicalexaminer_id)->orderBy('institute_id')->get();
-       //dd($practicalexams);
+       
 
         return view('practicalexaminer.home.index',compact(
-            'practicalexams','practicalexaminer_id','examstartdate'
+            'practicalexams','practicalexaminer_id'
         ));
     }
 
 
      public function appointment(Request $r){
-            $exam = \App\Exam::where('id',$this->exam_id)->first();
+ $exam = \App\Exam::where('id',$this->exam_id)->first();
                 $faculty =  \App\Faculty::where('user_id',Auth::user()->id)->first();
        $paractical = 'SELECT
        nbers.logo,
@@ -65,6 +64,7 @@ nbers.practical_exam_contact_3,
 	f.address, 
 	f.email, 
 	f.crr_no AS username, 
+    practicalexams.slot,
 	f.`password` AS `password`
 	
 FROM
@@ -102,9 +102,11 @@ view()->share('exam', $exam);
     }
 
 
+
+
+
     public function update($id,Request $request){
-        //dd($request->all());
-       // return "Closed";
+        //return "Closed";
             $subject_id = $request->subject_id;
             $template = \App\Awardlisttemplate::find($id);
             
@@ -113,28 +115,27 @@ view()->share('exam', $exam);
                 $q->where('approvedprogramme_id',$template->approvedprogramme_id);
             })->where('subject_id',$subject_id)->where('exam_id',$this->exam_id)
             ->get();
-           // dd($applications);
+
+            
+            
             foreach($applications as $application){
                 $key = 'mark_'.$application->id;
                 $absent = 'absent_'.$application->id;
                // if($application->applicant->block == 1){
                     if($request->has($absent)){
                         $application->attendance_ex = 2;
-                        $application->mark_ex = null;
                     }
                     if($request->has($key)){
                         $application->mark_ex = $request->$key;
                         $application->attendance_ex = 1;
                     }
-                   
                     $application->save();
                 //}
             }
-           // dd($application);
-            $subject = $template->subjects()->where('subject_id',$subject_id)->first();
-            $subject->pivot->marks_upload = 1;
-            $subject->pivot->date_uploaded = $date = \Carbon\Carbon::now()->toDateTimeString();
-            $subject->pivot->save();
+            // $subject = $template->subjects()->where('subject_id',$subject_id)->first();
+            // $subject->pivot->marks_upload = 1;
+            // $subject->pivot->date_uploaded = $date = \Carbon\Carbon::now()->toDateTimeString();
+            // $subject->pivot->save();
             Session::flash('messages','Uploaded');
             return back();
     }

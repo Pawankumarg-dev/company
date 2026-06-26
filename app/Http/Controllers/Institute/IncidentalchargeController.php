@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Configuration;
 use Session;
 use App\Enrolmentfeepayment;
-
+use DB;
 class IncidentalchargeController extends Controller
 {
     //
@@ -300,26 +300,34 @@ class IncidentalchargeController extends Controller
         return back();
     }
     public function ccavenuePaymentGatewayRequestHandler(Request $request) {
+
         
         $institute = Institute::where('user_id',Auth::user()->id)->first();
-        $academicyear_id = \App\Academicyear::where('current',1)->first()->id;
         $data = $request->except('_token');
 
-        $affiliationfee  = Affiliationfee::where('institute_id',$institute->id)->where('academicyear_id',$academicyear_id)->first();
+
+        $affiliationfee  = Affiliationfee::where('id',$request->affiliationfee_id)->first();
         
         $merchant_id = Configuration::where('attribute','ccavenue_merchant_id')->first()->value;
+ 
+        
 
         $merchant_param1 = $request->affiliationfee_id.','.$request->institute_id.','.$request->affiliationfee_id.','.$request->academicyear_id;
 
-        $data += ['redirect_url' => "https://rcinber.org.in/institute/incidentalpayments/ccavenuepaymentgatewayresponsehandler"];
-        $data += ['cancel_url' => "https://rcinber.org.in/institute/incidentalpayments/ccavenuepaymentgatewayresponsehandler"];
+        // $data += ['redirect_url' => "https://rcinber.org.in/institute/incidentalpayments/ccavenuepaymentgatewayresponsehandler"];
+        // $data += ['cancel_url' => "https://rcinber.org.in/institute/incidentalpayments/ccavenuepaymentgatewayresponsehandler"];
       //  $data += ['cancel_url' => "https://beta.rcinber.org.in/institute/incidentalpayments/ccavenuepaymentgatewayfailpage/"];
+
+       $data += ['redirect_url' => url("/institute/incidentalpayments/ccavenuepaymentgatewayresponsehandler")];
+        $data += ['cancel_url' => url("/institute/incidentalpayments/ccavenuepaymentgatewayresponsehandler")];
 
         $data += ['currency' => 'INR'];
         $data += ['merchant_id' => $merchant_id];
         $data += ['merchant_param1' => $merchant_param1];
         $data += ['merchant_param2' => 'Affiliation Fee'];
         $data['amount'] = Session::get('total');
+
+            $data['order_number']= Session::get('order_number');
 
         $order = Order::where('order_number',Session::get('order_number'))->count();
         if($order > 0){
@@ -346,14 +354,34 @@ class IncidentalchargeController extends Controller
             "billing_email" => $data["billing_email"],
         ]);
 
-        $affiliationfee->orders()->attach($order->id);
+// if ($affiliationfee) {
+//     $affiliationfee->orders()->attach($order->id);
+// } else {
+//     return back()->with('error', 'Affiliation fee not found.');
+// }
+
+DB::table('affiliationfees')
+    ->where('id', $request->affiliationfee_id)
+    ->update([
+        'order_id' => $order->id
+    ]);
+
+// $affiliationfee->orders()->attach($order->id);
+        $data += ['order_id' => $order->id];
+            Session::put('order_number',$data["order_number"]);
+
         Session::put('data',$data);
-        Session::put('order_number',$data["order_number"]);
+        Session::put('order_id',$order->id);
+        Session::put('academicyear_id',$request->academicyear_id);
+        Session::put('af_id',$request->affiliationfee_id);
+
+
      //   Session::put('merchant_id',$merchant_id);
       //  Session::put('merchant_param1',$merchant_param1);
 
         return view('institute.incidentalpayments.paymentgateway_request_handler');
     }
+    
     public function recheckStatus($oid){
         set_time_limit(0);
 
@@ -433,7 +461,9 @@ class IncidentalchargeController extends Controller
         $academicyear_id = Session::get('academicyear_id');
         $access_code = \App\Configuration::where('attribute','ccavenue_access_code')->first()->value;
 
-        $affiliationfee  = Affiliationfee::where('institute_id',$institute->id)->where('academicyear_id',$academicyear_id)->first();
+        $af_id=Session::get('af_id');
+        // $affiliationfee  = Affiliationfee::where('institute_id',$institute->id)->where('academicyear_id',$academicyear_id)->first();
+        $affiliationfee  = Affiliationfee::where('id',$af_id)->first();
 
         if(count($request->all() > 0)) {
             if($request->has('encResp')) {

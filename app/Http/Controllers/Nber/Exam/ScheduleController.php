@@ -44,7 +44,7 @@ class ScheduleController extends Controller
     }
 
     public function store(StoreScheduleRequest $r){
-        //return "";
+        return "closed";
         Examschedule::create($r->all());
         return redirect('nber/exam/schedules');
     }

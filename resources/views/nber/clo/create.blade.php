@@ -29,12 +29,22 @@
             </div>
             
             <!-- Institute -->
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-6">
                 <label for="state">Institute</label>
                 <select name="institute_id" class="form-control" id="institute_id" required>
                     <option value="">Please Select</option>
                     @foreach ($institutes as $institute)
                         <option value="{{$institute->id}}">{{$institute->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+             <div class="form-group col-md-6">
+                <label for="examcenter">Exam Center</label>
+                <select name="examcenter" class="form-control" id="examcenter" required>
+                    <option value="">Please Select</option>
+                    @foreach ($externalExamCenters as $externalExamCenter)
+                        <option value="{{$externalExamCenter->id}}">{{$externalExamCenter->code}}: {{$externalExamCenter->name}}</option>
                     @endforeach
                 </select>
             </div>
@@ -103,6 +113,12 @@
     $(document).ready(function() {
         $('#institute_id').select2({
             placeholder: "Search for an Institute",
+            allowClear: true 
+        });
+    });
+    $(document).ready(function() {
+        $('#examcenter').select2({
+            placeholder: "Search for an examcenter",
             allowClear: true 
         });
     });

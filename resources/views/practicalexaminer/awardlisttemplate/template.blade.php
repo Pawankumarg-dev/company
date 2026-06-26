@@ -122,7 +122,7 @@
             <td>
                 <table border="0" cellpadding="2" cellspacing="0" width="100%" class="h8-text border-table" style="margin-top:15px;">
                     <tr>
-                        <td class="h7-text  blue-text" colspan="5" style="border-left:1px solid #aaa;border-top:1px solid #aaa;"><span class="h7-text bold-text bt">EXTERNAL PRACTICAL EXAMINATION MARK ENTRY FORM - @if($exam_name->cbid_academicyear_id==$approvedprogramme->academicyear_id && $approvedprogramme->programme_id==57) Regular  {{$approvedprogramme->academicyear->year}} @else {{$exam_name->name}} @endif</span></td>
+                        <td class="h7-text  blue-text" colspan="5" style="border-left:1px solid #aaa;border-top:1px solid #aaa;"><span class="h7-text bold-text bt">EXTERNAL PRACTICAL EXAMINATION MARK ENTRY FORM -  {{$exam_name->name}}</span></td>
                         <td class="h7-text"> Date: {{$date}}</td>
                     </tr>
                 </table>
@@ -182,17 +182,13 @@
                             Student Name
                         </th>
                         @foreach($subjects as $subject)
-                            <th style="width:120px;">
+                            <th style="width:220px;">
                                 {{$subject->scode}}
                             </th>
                         @endforeach
                     </tr>
                     <tr>
-                        @foreach($subjects as $subject)
-                        <td style="width:120px;">
-                            {{$subject->sname}}
-                        </td>
-                        @endforeach
+                       
                     </tr>
                     <tr>
                         @foreach($subjects as $subject)
@@ -201,17 +197,28 @@
                             Max: {{$subject->emax_marks}}
                         </td>
                         @endforeach
+                     
                     </tr>
                     @foreach ($candidates as $c)
                         <tr>
                             <td class="center-text">{{$slno}}<?php $slno++; ?></td>
-                            <td>{{$c->enrolmentno}}</td>
-                            <td>{{$c->name}}</td>
-                            @foreach($subjects as $subject)
-                            <td style="width:120px;">
-                                
-                            </td>
-                            @endforeach
+                            <td>{{$c->candidate->enrolmentno}}</td>
+                            <td>{{$c->candidate->name}}</td>
+<td>
+ @if($c->alternativesubject_id == NULL)
+
+@else
+<?php 
+$alternativeSubject = DB::table('alternativesubjects')
+    ->where('id', $c->alternativesubject_id)
+    ->first();
+    ?>
+    {{$alternativeSubject->scode}} mark:
+@endif 
+
+</td>
+                                                          
+                           
                         </tr>
                     @endforeach
                 </table>

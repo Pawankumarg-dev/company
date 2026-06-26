@@ -2,7 +2,7 @@
 <form class="form-horizontal form_{{$form}}"  autocomplete="off" role="form" method="POST" action="{{ url('/login') }}" >
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                            <label for="username" class="col-md-4 control-label">{{$ulbl}}</label>
+                            <label for="username" class="col-md-4 control-label">User Name</label>
 
                             <div class="col-md-6">
                                 <input id="text" type="username" autocomplete="off"  class="form-control"  name="username" value="{{ old('username') }}">

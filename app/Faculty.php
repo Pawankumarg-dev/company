@@ -34,7 +34,8 @@ class Faculty extends Model
         'user_id',
         'password',
         'emailed',
-        'nber_id'
+        'nber_id',
+        'api'
     ];
 
     public function user(){
@@ -67,6 +68,9 @@ class Faculty extends Model
     {
         return $this->hasMany('App\FacultyResponsibility');
     }
-    
+    public function institute()
+    {
+        return $this->belongsTo('App\Institute');
+    }
 }
 

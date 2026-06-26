@@ -8,7 +8,7 @@ class Newinternalmark extends Model
 {
     //
     protected $fillable = [
-        'exam_id', 'application_id', 'candidate_id', 'subject_id', 'internal', 'active_status','approvedprogramme_id','attendance'
+        'exam_id', 'application_id', 'candidate_id', 'subject_id', 'internal', 'active_status','approvedprogramme_id','attendance','user_id'
     ];
 
     public function exam(){

@@ -22,45 +22,39 @@
                 </tr>
                 <tr>
                     <th>Course</th>
-                    <td>{{$applicant['applications'][0]['subject']['programme']['course_name']}}</td>
-                    {{-- <td>{{$applicant->programme->course_name}}</td> --}}
+                    <td>{{$applicant->programme->course_name}}</td>
                 </tr>
                 <tr>
                     <th>Admission Year</th>
-                    {{-- <td>{{$applicant['applications'][0]['subject']['programme']['course_name']}}</td> --}}
-                    
-                    <td>{{$applicant->candidate->approvedprogramme->academicyear->year}}</td>
+                    <td>{{$applicant->approvedprogramme->academicyear->year}}</td>
                 </tr>
                 <tr>
                     <th>State </th>
-                    {{-- <td>{{$applicant->institute->state ? $applicant->institute->state->state_name : ''}} </td> --}}
-                    <td>{{$applicant->candidate->approvedprogramme->institute->state ? $applicant->candidate->approvedprogramme->institute->state->state_name : ''}} </td>
-                   
+                    <td>{{$applicant->institute->state ? $applicant->institute->state->state_name : ''}} </td>
                 </tr>
                 <tr>
                     <th>District </th>
-                    {{-- <td> {{$applicant->institute->rci_district }}</td> --}}
-                    <td> {{$applicant->candidate->approvedprogramme->institute->rci_district }}</td>
+                    <td> {{$applicant->institute->rci_district }}</td>
                 </tr>
                 <tr style="display: none;">
                     <th>Exam Center</th>
                     <td>
-                        {{-- @if(!is_null($exam_center) && !is_null($exam_center->externalexamcenter))
+                        @if(!is_null($exam_center) && !is_null($exam_center->externalexamcenter))
                         {{$exam_center->externalexamcenter->code}} - {{$exam_center->externalexamcenter->name}}
                         <br>
                         {{$exam_center->externalexamcenter->address}}
-                        @endif --}}
+                        @endif
                     </td>
                 </tr>
                 <tr style=";">
                     <th>Download Hallticket</th>
                     <td>
-                        {{-- @if(is_null($exam_center) ) --}}
-                            {{-- <span class="badge badge-xs">Exam Center Not assigned</span> --}}
-                        {{-- @else
-                            @if($applicant->block == 1) --}}
+                        @if(is_null($exam_center) )
+                            <span class="badge badge-xs">Exam Center Not assigned</span>
+                        @else
+                            @if($applicant->block == 1)
                                 {{--<span class="badge badge-xs">Blocked due to n+2</span> --}}
-                            {{-- @else --}}
+                            @else
                                     {{-- THEORY --}}
                                     {{--
                                     @if($fy_count > 0)
@@ -80,8 +74,8 @@
                                         <a  target="_blank" href="{{url('institute/exam/applicants/')}}/{{$applicant->id}}?downloadht=yes&term=2&practical=yes" class="btn btn-xs btn-primary">Second Year</a>
                                     @endif --}}
 
-                            {{-- @endif
-                        @endif --}}
+                            @endif
+                        @endif
                     </td>
                 </tr>
             </table>

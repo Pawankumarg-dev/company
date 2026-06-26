@@ -13,6 +13,7 @@ use App\Tabill;
 use App\Paymentbank;
 use App\Exam;
 use App\Http\Requests;
+use App\Models\CloReport;
 
 
 class TABillController extends Controller
@@ -21,7 +22,7 @@ class TABillController extends Controller
     {
 		$this->middleware(['role:clo']);
 		$this->exam_id = Session::get('exam_id');
-
+        
     }
 	public function index() {
        
@@ -80,40 +81,84 @@ class TABillController extends Controller
     }
 
     public function update(Request $request)
-{
-    $exam_id = Exam::where('scheduled_exam',1)->first()->id;
-    $id=$request->id;
-    $tabill = Tabill::findOrFail($id);
+    {
+        $exam_id = Exam::where('scheduled_exam',1)->first()->id;
+        $id=$request->id;
+        $tabill = Tabill::findOrFail($id);
 
-    $randomString1 = 'ta'.uniqid(time(), true).Auth::id();
-    if ($request->hasFile('ta_form')) {
-        $image = $request->file('ta_form');
-        $ta_form = $randomString1 . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('files/examcenter/TABILL'), $ta_form);
-        $tabill->ta_form = $ta_form;
+        $randomString1 = 'ta'.uniqid(time(), true).Auth::id();
+        if ($request->hasFile('ta_form')) {
+            $image = $request->file('ta_form');
+            $ta_form = $randomString1 . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('files/examcenter/TABILL'), $ta_form);
+            $tabill->ta_form = $ta_form;
 
+        }
+        $randomString2 = 'ta'.$exam_id;
+        if ($request->hasFile('clo_report')) {
+            $image = $request->file('clo_report');
+            $clo_report = $randomString2 . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('files/examcenter/Clo-report'), $clo_report);
+            $tabill->clo_report = $clo_report;
+
+        }
+        $tabill->reason = '';
+        // $tabill->demand_amount = $request->demand_amount;
+        // $tabill->bank_name = $request->bank_name;
+        // $tabill->account_holder_name = $request->account_holder_name;
+        // $tabill->account_number = $request->account_number;
+        // $tabill->branch = $request->branch;
+        // $tabill->ifsc_code = $request->ifsc_code;
+        $tabill->payment_status = 'Under Processing';
+        $tabill->save();
+        Session::flash('messages','T.A Bill detail updated successfully!');
+        return redirect('/clo/tabill')->with('success', 'clo detail updated successfully!');
     }
-    $randomString2 = 'ta'.$exam_id;
-    if ($request->hasFile('clo_report')) {
-        $image = $request->file('clo_report');
-        $clo_report = $randomString2 . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('files/examcenter/Clo-report'), $clo_report);
-        $tabill->clo_report = $clo_report;
 
+ public function dailyReport(){
+    $user_id = Auth::user()->id;
+    $cloreports = CloReport::where('user_id',$user_id )->get();
+    //dd( $cloreports );
+    return view('clo.cloreport' ,compact('cloreports'));
+ }
+
+ public function insert_clo(){
+    //dd('test');
+    return view('clo.cloinsert');
+ }
+
+ public function store_clo(Request $request){
+        $exam_id = 29;
+        $user_id = Auth::user()->id;
+        $nber_id = Clo::select('nber_id')->where('user_id', $user_id)->first();
+//dd( $nber_id->nber_id);
+            $fileName = '';
+            if ($request->hasFile('malpractice_report')) {
+                $file = $request->file('malpractice_report');
+                $fileName = $user_id . '_clo_' . $exam_id . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('files/examcenter/Clo-report'), $fileName);
+            }
+
+            $videoName = '';
+            if ($request->hasFile('video')) {
+                $video = $request->file('video');
+                $videoName = $user_id . '_clo_vid_' . $exam_id . '_' . time() . '.' . $video->getClientOriginalExtension();
+                $video->move(public_path('files/examcenter/Clo-videos'), $videoName);
+            }
+
+            CloReport::create([
+                'user_id' => $user_id,
+                'exam_id' => $exam_id ,
+                'nber_id' => $nber_id->nber_id,
+                'day' => $request->input('day'),
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+                'file' => $fileName,
+                'vidio' => $videoName,
+            ]);
+            Session::flash('messages', 'CLO report added successfully');
+            return redirect('/clo/dailyreport')->with('success', 'CLO report added successfully!');
     }
-    $tabill->reason = '';
-    // $tabill->demand_amount = $request->demand_amount;
-    // $tabill->bank_name = $request->bank_name;
-    // $tabill->account_holder_name = $request->account_holder_name;
-    // $tabill->account_number = $request->account_number;
-    // $tabill->branch = $request->branch;
-    // $tabill->ifsc_code = $request->ifsc_code;
-    $tabill->payment_status = 'Under Processing';
-    $tabill->save();
-    Session::flash('messages','T.A Bill detail updated successfully!');
-    return redirect('/clo/tabill')->with('success', 'clo detail updated successfully!');
-}
-
 
 
 }

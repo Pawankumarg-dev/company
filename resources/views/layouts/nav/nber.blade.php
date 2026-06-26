@@ -95,16 +95,23 @@
                                         <a href="{{url('nber/exam/applicantsummary')}}"> Application Summary</a>
                                     </li> --}}
                                     <li><a href="{{ url('/nber/examattendance') }}">Exam Attendance Tracker</a></li> 
-                                    <li><a href="{{ url('/nber/exam/evaluationtracking') }}">Exam Evaluation Tracker</a></li> 
+                                    
                                     <li>
-                                        <a href="{{url('nber/geotaggedphotos')}}">Practical Exam Progress</a>
+                                        <a href="{{url('/nber/practical_exam_report_today')}}">Practical Exam Progress</a>
                                     </li>
+                                    {{-- <li>
+                                        <a href="{{url('nber/geotaggedphotos')}}">Practical Exam Progress</a>
+                                    </li> --}}
                                     <li>
                                         <a href="{{url('nber/internalmarkentry')}}">Internal Mark Entry</a>
                                     </li>
-                                    <li>
+                                    
+                                         <li>
+                                            <a href="{{url('/nber/internal-marksheet-reupload')}}" class="">Upload Internal Before Exam Application</a>
+                                        </li>
+                                    {{-- <li>
                                         <a href="{{url('nber/exam/evaluationcenter')}}">Evaluation Centers</a>
-                                    </li>
+                                    </li> --}}
                                        <li><a href="{{ url('/nber/markentry') }}">Marks</a></li> 
                                        <li><a href="{{ url('/nber/publishresult') }}">Missing Results</a></li> 
                                        {{--
@@ -179,19 +186,17 @@
 
                                             
                                         </li>
-                                        <li>
+<li>
                                             <a href="{{url('/nber/practicalverify-list')}}" class="">Verify External Practical Marks</a>
 
                                             
-                                        </li>
-                                        <li>
-                                            <a href="{{url('/nber/exam/payment')}}" class="">Verify Exam Payments</a>
                                         </li>
                                         <li>
                                             <a href="{{url('/nber/tabill')}}" class="">TA Bills</a>
 
                                             
                                         </li>
+
 
 
                                 </ul>
@@ -208,6 +213,8 @@
                                     <li>
                                         <a href="{{url('nber/evalution-mapping-list')}}">Evalution center Mapping</a>
                                     </li>
+                                    <li><a href="{{ url('/nber/exam/evaluationtracking') }}">Exam Evaluation Tracker</a></li> 
+
                                     {{-- <li>
                                         <a href="{{url('nber/evaluation')}}">Summary</a>
                                     </li>
@@ -237,16 +244,15 @@
                                 <li><a href="{{ url('/nber/paymentreports?type=reevaluation') }}">Revaluation Payments</a></li>  
                                 <li><a href="{{ url('/nber/faculties') }}">Faculties </a></li>   
                                 <li><a href="{{ url('/nber/clo') }}">Clo Report & Payment </a></li>   
-                                
                                 {{-- <li><a href="{{ url('/nber/evaluators') }}">Evalutors</a></li>    --}}
                                 <li><a class="hidden" href="{{ url('/nber/tabill') }}">TABILL</a></li>   
                                 <li><a class="hidden" href="{{ url('/nber/track-payment') }}">Track Candidate Payment</a></li>   
-    @if(Auth::user()->id==88387)
-
-                                <li><a href="{{ url('/nber/index') }}"> Notice</a></li>   
-@endif
-                                <li><a href="{{ url('/nber/malpractice/view') }}">Malpractice </a></li> 
-                                
+                                <li><a class="" href="{{ url('/nber/malpractice/view') }}">Malpractice</a></li>   
+                                @if(Auth::user()->id==88387)
+                                <li><a href="{{ url('/nber/index') }}"> Notice</a></li> 
+                                <li><a href="{{ url('/nber/device') }}">Device Details</a></li>   
+                                @endif
+                               
                                 </ul>
                             </li>   
                             <li>

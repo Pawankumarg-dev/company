@@ -85,8 +85,19 @@ class CandidateController extends Controller
 
 
     public function msncert(){
+
+
+
         Session::put('use_password','-1');
         $candidate = Candidate::where('user_id',Auth::user()->id)->first();
+        $malpractice = \App\Malpractice::where('active', '1')
+            ->where('candidate_id', $candidate->id)
+            ->first();
+
+                if ($malpractice) {
+                    return 'Malpractice Case, contact to consern NBER';
+                }
+
         $use_password = User::find(Auth::user()->id)->use_password;
         $currentapplications = \App\Currentapplication::where('candidate_id',$candidate->id)->get();
         if($use_password != 1  ){

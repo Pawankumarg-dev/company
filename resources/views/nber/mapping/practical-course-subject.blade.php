@@ -4,6 +4,9 @@
 <div class="container">
     <h2>Practical Exam Subject Mapping</h2>
 
+    <div class="alert alert-info">
+    <strong>Note:</strong> Before mapping, please ensure the faculty member is free during the Mapping date.
+</div>
     @if (session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -42,7 +45,7 @@ $finalArray = array_values($finalArray);
                 @foreach ($institutes as $institute)
                 <tr>
                     <input type="hidden" value="{{ $institute->institute_id }}" name="institute_id[]">
-                    <td>{{ $institute->rci_code ?? '' }}</td>
+                    <td>{{ $institute->rci_code }}</td>
                     <td>{{ $institute->name }}</td>
                     <td>
                         @foreach (explode(',', $institute->programmes) as $programme)
@@ -121,18 +124,36 @@ $finalArray = array_values($finalArray);
                 @endforeach
             </tbody>
         </table>
-       
+
+
+    {{-- <div class="form-group">
+    <label for="faculty_id">
+        Slot {{ isset($mapped[0]) ? $mapped[0]->slot : '' }}
+    </label>
+
+    <select class="form-control" name="slot" id="slot">
+        @if(isset($mapped[0]) && !empty($mapped[0]->slot))
+            <option value="{{ $mapped[0]->slot }}">
+                Slot {{ $mapped[0]->slot }}
+            </option>
+        @else
+            <option value="">Please select Slot</option>
+            <option value="1">Slot 1</option>
+            <option value="2">Slot 2</option>
+        @endif
+    </select>
+</div> --}}
+
         <div class="form-group">
             <label for="faculty_id">Faculty / Examiner</label>
             <select class="form-control selectpicker" name="faculty_id" id="faculty_id" data-header="Select a faculty"
                 data-live-search="true" required>
                 <option value="">Please select Faculty</option>
-                
                 @foreach ($faculties as $f)
                 <option value="{{ $f->id }}" data-content="
                         <b>{{ $f->name }}</b>
                         <div class='small'>CRR No: {{ $f->crr_no }}, Qualification: {{ $f->qualification }}</div>
-                        <div class='small'>TTI Code: {{ $f->rci_code ?? '' }}- {{ $f->inst_name ?? '' }}</div>
+                        <div class='small'>TTI Code: {{ $f->rci_code }}- {{ $f->inst_name }}</div>
                         <div class='small'>Address: {{ $f->address }}</div>
                         <div class='small'>Email: {{ $f->email }}, Mobile: {{ $f->mobileno }}</div>
                         <div class='small'>Languages: {{ $f->languagenonhtml }}</div>
@@ -142,14 +163,39 @@ $finalArray = array_values($finalArray);
             </select>
         </div>
 
-        <div class="form-group">
+        {{-- <div class="form-group">
             <label for="start_date">From Date</label>
             <input type="date" name="start_date" id="start_date" class="form-control" required min="{{ $min_date }}"
                 max="{{ $max_date }}">
             <label for="end_date">To Date</label>
             <input type="date" name="end_date" id="end_date" class="form-control" required min="{{ $min_date }}"
                 max="{{ $max_date }}">
-        </div>
+        </div> --}}
+
+
+        <select class="form-control" name="slot" id="slot" required>
+    @if(isset($mapped[0]) && !empty($mapped[0]->slot))
+        <option value="{{ $mapped[0]->slot }}">
+            Slot {{ $mapped[0]->slot }}
+        </option>
+    @else
+        <option value="">Please select Slot</option>
+        <option value="1">Slot 1</option>
+        <option value="2">Slot 2</option>
+    @endif
+</select>
+
+<input type="hidden" value="{{ $institute->institute_id }}" id="ins_data">
+
+<div class="form-group">
+    <label for="start_date">From Date</label>
+    <input type="date" name="start_date" id="start_date" class="form-control" required 
+        min="{{ $min_date }}" max="{{ $max_date }}">
+    
+    <label for="end_date">To Date</label>
+    <input type="date" name="end_date" id="end_date" class="form-control" required>
+</div>
+
 
         <button type="submit" class="btn btn-primary">Save Mapping</button>
     </form>
@@ -163,6 +209,8 @@ $finalArray = array_values($finalArray);
         <table class="table table-bordered mb-4">
             <thead>
                 <tr>
+                                        <th>Slot</th>
+
                     <th>Examiner</th>
                     <th>Exam Date</th>
 
@@ -176,12 +224,13 @@ $finalArray = array_values($finalArray);
             </thead>
             <tbody>
                 @foreach ($mapped as $faculty)
-                <tr>
-                    <td><b>Name:</b> {{ $faculty->name }} <br>
 
+                <tr>
+                    <td>{{ $faculty->slot }}</td>
+                    <td><b>CRR No:</b> {{ $faculty->crr_no }} <br>
+                        <b>Name:</b> {{ $faculty->name }} <br>
                         <b>Mobile:</b> {{ $faculty->mobileno }} <br>
                         <b>Email:</b> {{ $faculty->email }} <br>
-                        <b>CRR No:</b> {{ $faculty->crr_no }}
                     </td>
                     <td>{{ $faculty->start_date }} to {{ $faculty->end_date }}</td>
                     <td>
@@ -206,11 +255,11 @@ $finalArray = array_values($finalArray);
                         </ul>
                     </td>
                     <td>
-                    <button onclick="sendmail({{ $faculty->faculty_id }})">Send Password Mail</button>
+                    <button class="btn btn-info" onclick="sendmail({{ $faculty->faculty_id }})">Send Password Mail</button>
                         
                     </td>
                     <td>
-                    <button onclick="removeItem({{ $faculty->del_id }})">Delete</button>
+                    <button class="btn btn-danger" onclick="removeItem({{ $faculty->del_id }})">Delete</button>
 
                     </td>
                 </tr>
@@ -302,11 +351,12 @@ $finalArray = array_values($finalArray);
 
         // AJAX form submission
         $('#practical-map-form').on('submit', function(e) {
-
             e.preventDefault();
             var formData = {
                 _token: $('input[name="_token"]').val(),
                 faculty_id: $('#faculty_id').val(),
+                slot: $('#slot').val(),
+                ins_data: $('#ins_data').val(),
                 start_date: $('#start_date').val(),
                 end_date: $('#end_date').val(),
                 subjects_year1: {},
@@ -335,7 +385,7 @@ $finalArray = array_values($finalArray);
                 success: function(response) {
                     console.log(response);
                     alert(response.message || "Mapping saved successfully!");
-                    location.reload();
+                   location.reload();
                 },
                 error: function(xhr) {
                     alert("Error saving mapping: " + xhr.responseText);
@@ -401,4 +451,58 @@ function confirmUncheck(checkbox) {
         padding: 0 0 0 35px;
     }
 </style>
+<script>
+    const slotDates = {
+        1: { start: '{{ $slot1_start ?? "2026-06-11" }}', end: '{{ $slot1_end ?? "2026-06-24" }}' },
+        2: { start: '{{ $slot2_start ?? "2026-07-10" }}', end: '{{ $slot2_end ?? "2026-07-31" }}' }
+    };
+
+    function applySlotDates(selected) {
+        const startInput = document.getElementById('start_date');
+        const endInput   = document.getElementById('end_date');
+
+        if (slotDates[selected]) {
+            const { start, end } = slotDates[selected];
+
+            startInput.min   = start;
+            startInput.max   = end;
+            startInput.value = '';
+
+            endInput.min     = start;
+            endInput.max     = end;
+            endInput.value   = '';
+
+        } else {
+            startInput.min   = '{{ $min_date }}';
+            startInput.max   = '{{ $max_date }}';
+            startInput.value = '';
+
+            endInput.min     = '{{ $min_date }}';
+            endInput.max     = '{{ $max_date }}';
+            endInput.value   = '';
+        }
+    }
+
+    // Trigger on change
+    document.getElementById('slot').addEventListener('change', function () {
+        applySlotDates(this.value);
+    });
+
+    // ✅ Trigger on page load for default selected slot
+    window.addEventListener('DOMContentLoaded', function () {
+        const defaultSlot = document.getElementById('slot').value;
+        if (defaultSlot) {
+            applySlotDates(defaultSlot);
+        }
+    });
+
+    // Ensure end_date min updates when start_date changes
+    document.getElementById('start_date').addEventListener('change', function () {
+        const endInput = document.getElementById('end_date');
+        if (endInput.value && this.value > endInput.value) {
+            endInput.value = '';
+        }
+        endInput.min = this.value;
+    });
+</script>
 @endsection

@@ -24,6 +24,8 @@
                         <th>SlNo</th>
                         <th>Enrolmentno</th>
                         <th>Name</th>
+                                                <th>Subject</th>
+
                         <th>Obtained marks</th>
                     </tr>
                     @foreach($applications->sortBy('candidate.enrolmentno') as $application)
@@ -37,7 +39,25 @@
                             <td>
                                 {{$application->candidate->name}}
                             </td>
+
                             <td>
+                               @if($application->alternativesubject_id == NULL)
+    {{ $application->subject->scode }}
+@else
+<?php 
+$alternativeSubject = DB::table('alternativesubjects')
+    ->where('id', $application->alternativesubject_id)
+    ->first();
+    ?>
+    {{$alternativeSubject->scode}}
+@endif 
+                                
+
+
+
+
+                            </td>
+                         <td>
                             <input 
                                 id="mark_{{$application->id}}"
                                 name="mark_{{$application->id}}" 

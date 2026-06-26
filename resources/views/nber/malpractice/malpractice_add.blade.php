@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('content')
@@ -10,7 +11,7 @@
                 <div class="panel panel-primary">
 
                     <div class="panel-heading text-center">
-                        <h3 class="panel-title">Add Malpractice</h3>
+                        <h3 class="panel-title">Register Malpractice and Upload details</h3>
                     </div>
 
                     <div class="panel-body">
@@ -21,7 +22,7 @@
 
                             <div class="form-group">
 
-                                <label>Title</label>
+                                <label>Malpractice Title</label>
 
                                 <input type="text" name="title" id="title" class="form-control">
 
@@ -31,7 +32,7 @@
 
                             <div class="form-group">
 
-                                <label>Description</label>
+                                <label>Malpractice Details</label>
 
                                 <textarea name="description" id="description" class="form-control" rows="4"></textarea>
 
@@ -42,14 +43,15 @@
                             <div class="form-group">
 
                                 <label>Exam Name</label>
-                                <select name="exam_id" id="exam_id" class="form-control">
-
-                                    <option value="">Select Exam</option>
-
+                                <select name="exam_id" id="" class="form-control">
                                     @foreach ($exams as $exam)
-                                        <option value="{{ $exam->id }}"
-                                            @if ($exam->id == session('exam_id')) selected @endif>{{ $exam->name }}</option>
+                                <option value="{{ $exam->id }}" {{ session('exam_id') == $exam->id ? 'selected' : '' }}>
+                                    {{ $exam->name }}
+                                </option>
                                     @endforeach
+
+
+
                                 </select>
 
                                 {{-- <input type="hidden" name="exam_id" value="{{ session('exam_id') }}">
@@ -81,6 +83,16 @@
                                 <span id="malpractice_report_error" style="color:red;"></span>
 
                             </div>
+
+                            <div class="form-group">
+
+                                <label>Clo Details</label>
+
+                               
+                               <input type="text" name="clo" id=""
+                                    class="form-control">
+                            </div>
+
                             <div class="form-group">
 
                                 <input type="submit" value="Submit" class="btn btn-primary btn-block">
@@ -111,7 +123,7 @@
             $('#description_error').html('');
             $('#candidate_enrolment_error').html('');
             $('#malpractice_report_error').html('');
-          
+            $('#malpractice_committee_decision_error').html('');
 
             var title = $('#title').val();
 
@@ -121,23 +133,23 @@
 
             var report = $('#malpractice_report').val();
 
-           
+            var decision = $('#malpractice_committee_decision').val();
 
             var valid = true;
 
-          
+            // Title Validation
             if (title == '') {
                 $('#title_error').html('Please enter title');
                 valid = false;
             }
 
-         
+            // Description Validation
             if (description == '') {
                 $('#description_error').html('Please enter description');
                 valid = false;
             }
 
-         
+            // Enrolment Validation
             if (enrolment == '') {
                 $('#candidate_enrolment_error')
                     .html('Please enter enrolment number');
@@ -145,35 +157,47 @@
                 valid = false;
             }
 
-
+           
             // File Validation
-            var file = $('#malpractice_report')[0].files[0];
+                var file = $('#malpractice_report')[0].files[0];
 
-            if (file == undefined) {
-                $('#malpractice_report_error')
+                if(file == undefined)
+                {
+                    $('#malpractice_report_error')
                     .html('Please upload malpractice report');
 
-                valid = false;
-            } else {
-              
-                var extension = file.name.split('.').pop().toLowerCase();
+                    valid = false;
+                }
+                else
+                {
+                    // Check PDF
+                    var extension = file.name.split('.').pop().toLowerCase();
 
-                if (extension != 'pdf') {
-                    $('#malpractice_report_error')
+                    if(extension != 'pdf')
+                    {
+                        $('#malpractice_report_error')
                         .html('Only PDF file allowed');
 
-                    valid = false;
-                }
+                        valid = false;
+                    }
 
-                if (file.size > 2097152) {
-                    $('#malpractice_report_error')
+                    // Check File Size (2MB)
+                    if(file.size > 2097152)
+                    {
+                        $('#malpractice_report_error')
                         .html('File size must be less than 2 MB');
 
-                    valid = false;
+                        valid = false;
+                    }
                 }
-            }
 
-            
+            // Committee Decision Validation
+            if (decision == '') {
+                $('#malpractice_committee_decision_error')
+                    .html('Please enter committee decision');
+
+                valid = false;
+            }
 
             if (valid == false) {
                 return false;
@@ -188,13 +212,13 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
+                console.log(response);
                     // Wrong enrolment number
                     if (response.status == false) {
                         $('#candidate_enrolment_error')
                             .html(response.errors.candidate_enrolment);
                     } else {
-                        window.location.href =
-                            "/nber/malpractice/view?success=Malpractice Added Successfully";
+                        window.location.href = "/nber/malpractice/view?success=Malpractice Added Successfully" ;
                     }
 
                 }

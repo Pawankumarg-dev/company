@@ -50,177 +50,13 @@ class EvaluationController extends Controller
     }
 
     public function index(Request $r){
-        // $ecid =  $this->helperService->getEvaluationcenterID();
-    //     if($r->has('download')){
-         
-
-    //         $sql = '
-    //         select 
-    //                 es.description,
-    //                 es.examdate,
-    //                 es.starttime,
-    //                 es.endtime,
-    //                 lgs.state_name as state,
-    //                 eec.code,
-    //                 eec.name,
-    //                 i.rci_code,
-    //                 i.name as institute,
-    //                 p.abbreviation,
-    //                 s.scode,
-    //                 s.sname,
-    //                 c.enrolmentno,
-    //                 c.name as student,
-    //                 a.answerbooklet_no,
-    //                 if(ep.attn_verification = 1, "Verified", "Pending") as attendance_verification,
-    //                 if(
-    //                     abs.id is null, 
-    //                     "Pending", 
-    //                     if(
-    //                         abs.scanned = 1, 
-    //                         "Scanned", 
-    //                         if(
-    //                             pe.id is not null,
-    //                             "Evaluator requested rescan",
-    //                             "Pending"
-    //                         )
-    //                     )
-    //                 ) as scanning_status,
-    //                 if(
-    //                     abs.id is null, 
-    //                     "Pending", 
-    //                     if(
-    //                         abs.verified = 1, 
-    //                         "Verified", 
-    //                         "Pending"
-    //                     )
-    //                 ) as verification_status,
-    //                 if(
-    //                     abs.id is null, 
-    //                     "Pending", 
-    //                     if(
-    //                         abs.uploaded = 1, 
-    //                         "Verified", 
-    //                         "Pending"
-    //                     )
-    //                 ) as upload_status,
-    //                 if(
-    //                     abs.id is null, 
-    //                     "Pending", 
-    //                     if(
-    //                         abs.evaluated = 1, 
-    //                         "Evaluated", 
-    //                         "Pending"
-    //                     )
-    //                 ) as evaluation_status
-    //         from 
-    //             allapplications a
-    //         left join 
-    //             answerbookletscans abs
-    //         on 
-    //             abs.allapplication_id = a.id
-    //         left join 
-    //             pendingevaluations pe
-    //         on 
-    //             pe.allapplication_id = a.id and pe.reason_id = 1
-    //         inner join
-    //             candidates c
-    //         on
-    //             c.id = a.candidate_id
-    //         inner join 
-    //             approvedprogrammes ap 
-    //         on 
-    //             ap.id = c.approvedprogramme_id
-    //         inner join
-    //             programmes p
-    //         on 
-    //             p.id = ap.programme_id
-    //         inner join 
-    //             subjects s 
-    //         on
-    //             s.id = a.subject_id
-    //         inner join
-    //             examtimetables tt
-    //         on
-    //             tt.subject_id = s.id and tt.exam_id = ' . $this->exam_id . '
-    //         inner join
-    //             examschedules es 
-    //         on 
-    //             es.id = tt.examschedule_id
-    //         inner join 
-    //             institutes i
-    //         on 
-    //             i.id = ap.institute_id
-    //         inner join
-    //             examcenters ec 
-    //         on 
-    //             ec.exam_id =  ' . $this->exam_id . ' and ec.institute_id = ap.institute_id
-
-    //         inner join
-    //             externalexamcenters eec
-    //         on 
-    //             eec.id = ec.externalexamcenter_id
-    //         inner join
-    //             lgstates lgs
-    //         on 
-    //             lgs.id = eec.lgstate_id
-    //         left join 
-    //             evaluationcenterdetails evcd
-    //         on
-    //             evcd.evaluationcenter_id =  ' . $ecid . ' 
-    //         and 
-    //             evcd.externalexamcenter_id = ec.externalexamcenter_id
-    //         and 
-    //             evcd.exam_id =  ' . $this->exam_id . '
-    //         inner join
-    //             allexampapers ep
-    //         on 
-    //             ep.subject_id = s.id 
-    //         and 
-    //             ep.approvedprogramme_id = ap.id
-    //         where
-    //             a.blocked = 0
-    //         and
-    //             a.attendance_ex = 1
-    //         and
-    //         (
-    //             (
-    //                 '. $ecid .' = 64 and
-    //                 (evcd.evaluationcenter_id = '. $ecid  .' or p.id = 57  )
-    //             ) or 
-    //             (
-    //                 '. $ecid .' = 65 and
-    //                 (evcd.evaluationcenter_id = '. $ecid  .' and  p.id != 57  )
-    //             )
-    //         )   
-    //         group by 
-    //             a.id
-    //         order by
-    //             es.examdate, es.starttime,es.endtime, lgs.state_name, eec.code, i.rci_code, c.enrolmentno;
-    //         ';
-
-
-
-
-
-    //         $results = (new DBService())->fetch($sql);
-    //         Excel::create("AnswerBooklets", function ($excel) use ($results){
-    //             $excel->sheet("AnswerBooklets", function ($sheet) use ($results){
-    //                 $sheet->loadview("evaluationcenters/excel",compact('results'));
-    //             });
-    //         })->export('xlsx');
-    //     }
-    //     $sp= "evaluationcenterdashboard(".$this->exam_id.",".$ecid.",'summary')";
-    //     $dashboard = (new DBService)->callSP($sp);
-    //     $sp= "evaluationcenterdashboard(".$this->exam_id.",".$ecid.",'nber')";
-    //     $courses = (new DBService)->callSP($sp);
-    //    return view('evaluationcenters.notice',compact(
-    //     'dashboard',
-    //     'courses'
-    //    ));
+     
 
         $id =  $this->helperService->getEvaluationcenterID();
         $externalexamcenter_ids =  $this->evaluationService->getExternalexamcenterIDs($id);
-
+$nber_id= \App\Evaluationcenterdetail::where('exam_id',$this->exam_id)
+                        ->where('evaluationcenter_id',$id)
+                        ->pluck('nber_id')->toArray();
 
 
         //$examcenter_ids = $this->evaluationService->getExamcenterIDs($externalexamcenter_ids);
@@ -234,10 +70,12 @@ class EvaluationController extends Controller
             //return $subjects;
             $is_deo = $this->is_deo;
             $course = \App\Course::find($course_id);
-            //return $exampapers;
-            return view('evaluationcenters.index',compact('exampapers','is_deo','course'));
+
+            $exam_id=$this->exam_id;
+            // return $exampapers;
+            return view('evaluationcenters.index',compact('exampapers','is_deo','course','exam_id'));
         }
-        $courses = $this->evaluationService->getCourses($externalexamcenter_ids);
+        $courses = $this->evaluationService->getCourses($externalexamcenter_ids,$nber_id);
         //return $courses;
         return view('evaluationcenters.home',compact('courses'));
         
@@ -273,7 +111,7 @@ class EvaluationController extends Controller
       
 
 
-        $applications =  \App\Allexamstudent::whereIn('externalexamcenter_id',$externalexamcenter_ids)->where('exam_id',27)->where('subject_id',$id)->where('attendance','!=',1)->get();
+        $applications =  \App\Allexamstudent::whereIn('externalexamcenter_id',$externalexamcenter_ids)->where('exam_id',$this->exam_id)->where('subject_id',$id)->where('attendance','!=',1)->get();
 
 
         // foreach($exampapers as $ep){
@@ -303,7 +141,7 @@ class EvaluationController extends Controller
         $subject_id = $r->subject_id;
         $message = '';
 
-        $applications =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',27)->where('subject_id',$subject_id)->where('attendance',1)->orderBy('language_id','candidate_id')->get();
+        $applications =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',$this->exam_id)->where('subject_id',$subject_id)->where('attendance',1)->orderBy('language_id','candidate_id')->get();
  
         $subject = \App\Subject::where('id',$subject_id)->first();
         $max_mark = $subject->emax_marks;
@@ -314,7 +152,7 @@ class EvaluationController extends Controller
     // }
 
     $file = $r->file('uploaded_file');
-    echo $fileName = '27_' . $externalexamcenter_id . '_' . $subject_id . '.' . $file->getClientOriginalExtension();
+    echo $fileName = $this->exam_id.'_' . $externalexamcenter_id . '_' . $subject_id . '.' . $file->getClientOriginalExtension();
  
     
     $destinationPath = public_path('files/markfiles/');
@@ -393,22 +231,11 @@ class EvaluationController extends Controller
         //     return back();
         // }
 
-$id =  $this->helperService->getEvaluationcenterID();
-        if ($id == 65) {
-    // $applications = \App\Allexamstudent::where('externalexamcenter_id', $externalexamcenter_id)
-    //     ->where('exam_id', 27)
-    //     ->where('subject_id', $subject_id)
-    //     ->where('attendance', 1)
-    //     ->orderBy('language_id','DESC')
-    //     ->orderBy('candidate_id','DESC')
-    //     ->get();
-            $applications =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',27)->where('subject_id',$subject_id)->where('attendance',1)->orderBy('language_id')->get();
 
-} else {
-    $applications =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',27)->where('subject_id',$subject_id)->where('attendance',1)->orderBy('language_id','candidate_id')->get();
-}
+    $applications =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',$this->exam_id)->where('subject_id',$subject_id)->where('attendance',1)->orderBy('language_id','candidate_id')->get();
 
 
+ $exam=\App\Exam::where('scheduled_exam',1)->first();
 
         // $applications =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',27)->where('subject_id',$subject_id)->where('attendance',1)->orderBy('language_id','candidate_id')->get();
 
@@ -427,7 +254,7 @@ $id =  $this->helperService->getEvaluationcenterID();
         // $evaluationcenter_id = $this->helperService->getEvaluationcenterID();
         // $evaluationcenter = $this->evaluationService->getEvaluationcenter($evaluationcenter_id);
 
-        return view('evaluationcenters.markentry',compact('applications','subject'));
+        return view('evaluationcenters.markentry',compact('applications','subject','exam'));
     }
 
 
@@ -484,7 +311,7 @@ $id =  $this->helperService->getEvaluationcenterID();
 
         $subject = \App\Subject::find($subject_id);
 
-        $applications =  \App\Allexamstudent::whereIn('externalexamcenter_id',$externalexamcenter_ids)->where('exam_id',27)->where('subject_id',$subject_id)->where('attendance',1)->orderBy('externalexamcenter_id','candidate_id','language_id')->get();
+        $applications =  \App\Allexamstudent::whereIn('externalexamcenter_id',$externalexamcenter_ids)->where('exam_id',$this->exam_id)->where('subject_id',$subject_id)->where('attendance',1)->orderBy('externalexamcenter_id','candidate_id','language_id')->get();
  
         $applications = $applications->sortBy(function($a) {
             return $a->candidate->enrolmentno;
@@ -538,7 +365,7 @@ $id =  $this->helperService->getEvaluationcenterID();
         // $applications =   $this->examService->getApplicantions($apid,$subject_id,1,$language_id);
                 // $externalexamcenter_ids =  $this->evaluationService->getExternalexamcenterIDs($this->helperService->getEvaluationcenterID());
 
-                $applications =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',27)->where('subject_id',$subject_id)->where('attendance',1)->orderBy('language_id','candidate_id')->get();
+                $applications =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',$this->exam_id)->where('subject_id',$subject_id)->where('attendance',1)->orderBy('language_id','candidate_id')->get();
 
         $subject = \App\Subject::find($subject_id);
         $evaluationcenter_id = $this->helperService->getEvaluationcenterID();
@@ -557,7 +384,7 @@ $id =  $this->helperService->getEvaluationcenterID();
         $approvedprogramme = Approvedprogramme::find($apid);
         $schedule = $this->timetableService->getSchedule($subject_id);
         $language_id = $r->has('language_id') ? $r->language_id : null;
-        $applications =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',27)->where('subject_id',$subject_id)->where('attendance',1)->orderBy('language_id','candidate_id')->get();
+        $applications =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',$this->exam_id)->where('subject_id',$subject_id)->where('attendance',1)->orderBy('language_id','candidate_id')->get();
         $subject = \App\Subject::find($subject_id);
         $evaluationcenter_id = $this->helperService->getEvaluationcenterID();
         $evaluationcenter = $this->evaluationService->getEvaluationcenter($evaluationcenter_id);

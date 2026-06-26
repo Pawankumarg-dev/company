@@ -291,11 +291,17 @@ class BacklogController extends Controller
 
 
     public function delete(Request $r){
-               
-        return back();
+
+
+   
+         return back();
 
         if(Auth::user()->id==87567){
             $exam_id = $r->exam_id;
+
+
+
+
             if($exam_id == '22'){
                 $application = Currentapplication::find($r->id);
             }else{
@@ -305,7 +311,15 @@ class BacklogController extends Controller
                            if($exam_id == '26'){    
                                 $application = \App\Allapplication::find($r->id);
                            }else{
+                                if($exam_id == '25'){
+                                $application = Newapplication::find($r->id);
+
+                            }
+                            else{
                             $application = Application::find($r->id);
+
+                            }
+
                            }
                 }
             }
@@ -314,6 +328,7 @@ class BacklogController extends Controller
             //     $table = 'application_id';
             // }
             $application->delete();
+            
             \App\Changemarkaudit::create([
                                         'ip_address' =>$_SERVER["REMOTE_ADDR"],
 
@@ -715,9 +730,7 @@ $check = \App\Allapplication::where('id', $r->id)->where('exam_id', 27)->first()
 
     public function termwise($id,$term){
         $ap  = Approvedprogramme::where('id',$id)->first();
-        
         $exam_id = Session::get('exam_id');
-      
         if($exam_id == 22){
             $applicant_ids = $ap->applicants()->pluck('candidate_id');
             $applications = Currentapplication::select('id', 'candidate_id','subject_id','internal_mark','external_mark','internalattendance_id','externalattendance_id','grace')->whereIn('candidate_id',$applicant_ids)->get()->toArray();
@@ -753,18 +766,7 @@ $check = \App\Allapplication::where('id', $r->id)->where('exam_id', 27)->first()
                     $applicants = \App\Allapplicant::where('exam_id',27)->whereHas('candidate',function($q) use($id){
                         $q->where('approvedprogramme_id',$id);
                     })->get();
-                }if($exam_id == 28){      
-                    $applications = \App\Allapplication::select('id', 'candidate_id','subject_id','mark_in as internal_mark','mark_ex as external_mark','attendance_in as internalattendance_id','attendance_ex as externalattendance_id','grace')
-                    ->where('exam_id',28)->whereHas('candidate',function($q) use($id){
-                        $q->where('approvedprogramme_id',$id);
-                    })->whereHas('subject',function($r) use($term){
-                        $r->where('syear',$term);
-                    })->get()->toArray();
-                    $applicants = \App\Allapplicant::where('exam_id',28)->whereHas('candidate',function($q) use($id){
-                        $q->where('approvedprogramme_id',$id);
-                    })->get();
-                }
-                else{
+                }else{
                     $applicant_ids = $ap->oldapplicants()->where('exam_id',$exam_id)->pluck('id');
                     $applications = Application::select('id', 'candidate_id','subject_id','internal_mark','external_mark','internalattendance_id','externalattendance_id','grace')->whereIn('applicant_id',$applicant_ids)->get()->toArray();
                     $applicants = $ap->oldapplicants()->where('exam_id',$exam_id)->get();

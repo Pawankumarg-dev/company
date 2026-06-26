@@ -32,20 +32,20 @@
                     {{-- @if  ( (Session::get('candidate')->approvedprogramme->programme_id != 57 && Session::get('candidate')->status_id !=9  && Session::get('candidate')->enrolmentno != '' &&  !is_null(Session::get('candidate')->enrolmentno     )) 
                      ||  ( Session::get('candidate')->approvedprogramme_id == 8837 && Session::get('candidate')->status_id !=9 )
                     ) --}}
-@if(Session::get('candidate')->status_id !=9  && Session::get('candidate')->enrolmentno != '' &&  !is_null(Session::get('candidate')->enrolmentno) && Session::get('academicyear_id') > 9 && Session::get('academicyear_id') != 14 && Session::get('academicyear_id') != 16) 
+@if(Session::get('candidate')->status_id !=9  && Session::get('candidate')->enrolmentno != '' &&  !is_null(Session::get('candidate')->enrolmentno) && Session::get('academicyear_id') > 9) 
 
                        {{-- <li class=""><a href="{{ url('/student/exam/applications') }}">Exam Application June 2025 </a></li> --}}
 
-                    <li class=""><a href="{{ url('/student/exam/applications?view=examform') }}">Exam Application 2026 Supplimentry </a></li>
+                    <li class=""><a href="{{ url('/student/exam/applications?view=examform') }}">Exam Application 2026 june </a></li>
 
                     
                     @endif
 
-                    <li><a  href="{{ url('/student/exam/applications?view=result') }}">Exam Result - June 2025 </a></li>
+                    <li><a  href="{{ url('/student/exam/applications?view=result') }}">Exam Result - April 2026 </a></li>
 
 
 
-                    @if(Session::get('academicyear_id')< 13 || Session::get('candidate')->approvedprogramme_id == 8837)
+                    @if(Session::get('academicyear_id')!=14 && Session::get('academicyear_id') < 16 )
 
                     {{-- <li><a  href="{{ url('/examapplication/25') }}">Annual Exam Result  June 2024 </a></li> --}}
                     {{-- <li><a href="{{ url('/reevaluation') }}">Reevaluation Result</a></li>--}}

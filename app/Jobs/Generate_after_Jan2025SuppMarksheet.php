@@ -54,22 +54,22 @@ public $exam_id;
 
             if(!is_null($result->marksheet_sl_no_first_year) && $candidate->approvedprogramme->programme_id!=57){
                 $this->generatems($result->candidate_id,1,$exam_id);
-                $result->status_id = 1;
+                $result->status_id = 2;
             }
             if(!is_null($result->marksheet_sl_no_second_year) && $candidate->approvedprogramme->programme_id!=57){
                 $this->generatems($result->candidate_id,2,$exam_id);
-                $result->status_id = 1;
+                $result->status_id = 2;
             }
 
              if(!is_null($result->marksheet_sl_no_first_year) && $candidate->approvedprogramme->programme_id==57){
                 $this->cbid_generatems($result->candidate_id,1,$exam_id);
-                $result->status_id = 1;
+                $result->status_id = 2;
             }
 
 
             if(!is_null($result->slno_certificate)){
                 $this->generatecertificate($result->candidate_id,$exam_id);
-                $result->status_id = 1;
+                $result->status_id = 2;
                 
             }
             // $result->save();

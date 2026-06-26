@@ -138,6 +138,8 @@ class Approvedprogramme extends Model
     public function admissiondeclaration(){
         return $this->hasOne('App\Admissiondeclaration');
     }
-
+ public function affiliationfee(){
+        return $this->hasMany('App\Affiliationfee');
+    }
     
 }

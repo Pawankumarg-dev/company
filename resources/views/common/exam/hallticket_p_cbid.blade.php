@@ -113,7 +113,7 @@
             <td>
                 <table border="1" cellpadding="2" cellspacing="0" width="100%" class="h8-text border-table" style="margin-top:15px;">
                     <tr>
-                        <td class="h7-text center-text blue-text" colspan="5" style="border-left:1px solid #aaa;border-top:1px solid #aaa;"><span class="h7-text bold-text bt">PRACTICAL HALL TICKET :  @if($exam->cbid_academicyear_id==$applicant->candidate->approvedprogramme->academicyear_id) Regular {{  $applicant->candidate->approvedprogramme->academicyear->year }} @else {{$exam->name}} @endif</span></td>
+                        <td class="h7-text center-text blue-text" colspan="5" style="border-left:1px solid #aaa;border-top:1px solid #aaa;"><span class="h7-text bold-text bt">PRACTICAL HALL TICKET : {{$exam->name}}</span></td>
                     </tr>
                     <tr>
                         <td class="left-text blue-text" width="15%">Name</td>
@@ -158,32 +158,7 @@
                         <td class="left-text blue-text" width="15%">Exam Center
                         </td>
                         <td class="left-text blue-text bold-text" width="25%" colspan="2" >
-                            @if($applicant->candidate->approvedprogramme_id==8837)
-                                <?php 
-                                    $eec = null;
-                                
-                                    if (in_array($applicant->candidate->enrolmentno, ['5725783004','5725783013','5725783021','5725783047','5725783058','5725783095','5725783096','5725783170','5725783216','5725783229','725783283','5725783292','5725783305','5725783333','5725783386','5725783401','5725783431','5725783446','5725783470','5725783143','5725783063','5725783158','5725783248','5725783255','5725783293','5725783300','5725783422'])) {
-                                    $eec=4196;
-                                    }
-
-                                    if (in_array($applicant->candidate->enrolmentno, [
-                                    '5725783015','5725783040','5725783031','5725783032','5725783057','5725783074','5725783092','5725783112','5725783120','5725783124','5725783140','5725783144','5725783165','5725783268','5725783274','5725783338','5725783355','5725783356','5725783416','5725783371','5725783382','5725783394','5725783384','5725783405','5725783472','5725783476','5725783008','5725783034','5725783249','5725783312','5725783345','5725783383','5725783060','5725783145','5725783198','5725783273'])) {
-                                    $eec=4197;
-                                    }
-
-                                    if (in_array($applicant->candidate->enrolmentno, [
-                                    '5725783080','5725783093','5725783409','5725783103','5725783132','5725783290','5725783357','5725783379','5725783380','5725783025','5725783028','5725783075','5725783130','5725783131','5725783203','5725783291','5725783303','5725783319','5725783396','5725783473'])) {
-                                    $eec=4098;
-                                    }
-                            
-                                $eec = \App\Externalexamcenter::find($eec);
-                                       
-                                ?>
-                                @if(!is_null($eec))
-                                    {{ $eec->code }} - {{ $eec->name }} <br />
-                                    {{ $eec->address }}
-                                @endif
-                                @endif
+                          
                         </td>
                     </tr>
                 </table>

@@ -13,13 +13,7 @@
 
     <meta http-equiv="Cache-Control" content="private, no-store"> --}}
     <title>RCI NBER </title>
-    <link rel="stylesheet" href="{{asset('packages/bootstrap-3.3.7/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('packages/sweetalert/sweetalert.min.css')}}">
-    <link rel="stylesheet"  href="{{asset('packages/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')}}" />
-    <link rel="stylesheet"  href="{{asset('css/style.css')}}" />
-    <link rel="stylesheet" href="{{ asset('packages/font-awesome/4.5.0/css/font-awesome.min.css') }}">
-    <link rel="stylesheet"  href="{{asset('packages/bootstrap-imageupload/dist/css/bootstrap-imageupload.css')}}" />
-    <link href="{{('/css/select2.min.css')}}" rel="stylesheet" />
+
 
    <!-- Fonts -->
    <link rel="stylesheet" href="{{asset('css/bootstrap33.min.css')}}">
@@ -40,7 +34,6 @@
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 	
     <!-- JavaScripts -->
-    <script src="{{asset('packages/bootstrap-3.3.7/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/jquery.min.js')}}" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="{{asset('js/bootstrap.min.js')}}" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
@@ -60,7 +53,7 @@
             background-color: darkblue;
             color: white;
         }
-       
+
     </style>
     @yield('style')
 </head>
@@ -74,7 +67,7 @@
                 <form action="{{url($link)}}/create" method="get">
                     <div id="{{$link}}_new_modal" class="modal fade" role="dialog">
                         <div class="modal-dialog">
-                            <div class="modal-content" >
+                            <div class="modal-content">
                                 <div class="modal-header"> 
                                     New
                                 </div>

@@ -106,7 +106,7 @@
            {{$candidate->approvedprogramme->academicyear->display_year}}
            @endif
            </b>, from <b>
-           @if($candidate->approvedprogramme->academicyear_id == 10)
+           {{-- @if($candidate->approvedprogramme->academicyear_id == 10)
                                         {{ucwords($candidate->approvedprogramme->institute->rci_name).','}} {{ucfirst($candidate->approvedprogramme->institute->rci_district).','}} {{$candidate->approvedprogramme->institute->rci_pin_code}}
                                     @else
                                         @if($candidate->approvedprogramme->programme->numberofterms == 1)
@@ -133,8 +133,9 @@
                                                 {{ucwords($candidate->approvedprogramme->institute->rci_name).','}} {{ucfirst($candidate->approvedprogramme->institute->rci_district).','}}  {{$candidate->approvedprogramme->institute->rci_pin_code}}
                                             @endif
                                         @endif
-                                    @endif
+                                    @endif --}}
 
+                                                {{ucwords($candidate->approvedprogramme->institute->rci_name).','}} {{ucfirst($candidate->approvedprogramme->institute->rci_district).','}}  {{$candidate->approvedprogramme->institute->rci_pin_code}}
 
                                 
                                 </b>

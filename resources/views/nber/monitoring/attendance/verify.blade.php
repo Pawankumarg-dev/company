@@ -96,7 +96,10 @@
                         @if($exampaper->attn_verification == 2) Incomplete/Correction Required , Reason  {{ $exampaper->attn_rej_reason }}  @endif
                     </th>
                 </tr>
-                @if($exampaper->attn_verification == 0 || $exampaper->attn_verification==2)
+
+
+                @if($exampaper->attn_verification == 0 || $exampaper->attn_verification==2 && \Carbon\Carbon::now()->format('Y-m-d') <= '2026-05-05')
+
                     <tr>
                         <th>
                             <form action="{{url('/nber/verifyattendance')}}/{{ $exampaper->id }}" method="post">
@@ -115,9 +118,12 @@
                                 @if(!is_null($nber))
                                     <button type="submit" class=" btn btn-primary btn-sm" style="margin-bottom:40px;">Save</button>
                                 @endif
+                                <button type="button" class=" btn btn-primary btn-sm" style="margin-bottom:40px;" onclick="showRow()">Edit Attendance</button>
                             </form>
                         </th>
                     </tr>
+                     @else
+                        verification date is over
                 @endif
             </table>
         </div>
@@ -128,10 +134,13 @@
         <div class="col-12">
             <table style="width:100%;">
                 <tr>
+
+                    <form action="{{url('/')}}/nber/updateattendance" method="post">
+                                                        {{ csrf_field() }}
+
                     <td style="vertical-align:top!important;">
                         <input type="hidden" name="approvedprogramme_id" value="{{$approvedprogramme->id}}">
                         <input type="hidden" name="subject_id" value="{{$subject->id}}">
-                        <input type="hidden" name="examschedule_id" value="{{$schedule->id}}">
                         <table class="table table-bordered table-striped table-hover">
                             <tr>
                                 <th>Sl.No.</th>
@@ -150,6 +159,8 @@
                             </tr>
                             <?php $count = 0; ?>
                             @foreach($applications->sortBy('candidate.enrolmentno') as $a)
+
+
                                 <tr>
                                     <?php $count++; ?>
                                     <td>{{$count}}</td>
@@ -161,23 +172,47 @@
                                     </td>
                                     <td>
                                         <input type="hidden" class="hiddenid" value="{{$a->id}}">
-                                        <input class="attn" disabled  data-id="{{$a->id}}"  type="radio" name="attendence_{{$a->id}}" value="1"  @if($a->attendance == 1) checked @endif /> Present 
-                                        <input  class="attn" disabled data-id="{{$a->id}}" type="radio" name="attendence_{{$a->id}}" value="2" @if($a->attendance == 2) checked @endif />  Absent 
+                                        <input class="attn"   data-id="{{$a->id}}"  type="radio" name="attendence_{{$a->id}}" value="1"  @if($a->attendance == 1) checked @endif /> Present 
+                                        <input  class="attn" data-id="{{$a->id}}" type="radio" name="attendence_{{$a->id}}" value="2" @if($a->attendance == 2) checked @endif />  Absent 
                                     </td>
                                         <td>
                                             {{--NB<input type="number" pattern="/^-?\d+\.?\d*$/"    onKeyPress="if(this.value.length==6) return false;" id="ansbookno_{{$a->id}}" name="ansbookno_{{$a->id}}"  value="{{$a->dummy_number}}" disabled> --}}
-                                            <input disabled type="text" id="ansbookno_{{$a->id}}" name="ansbookno_{{$a->id}}"  value="{{$a->answerbooklet_no}}" > 
+                                            <input type="text" id="ansbookno_{{$a->id}}" name="ansbookno_{{$a->id}}"  value="{{$a->answerbooklet_no}}" > 
                                         </td>
                                 </tr>
+
+
                             @endforeach
+<tr id="attendanceRow" style="display: none;">
+<td colspan="2">Update the attendance, if marked incorrect</td>
+                                <td colspan="2">
+                                            <label for="">Reason</label>
+                                            <input type="text" name="reason" required placeholder=""> 
+
+                                </td>
+                                <td><button type="submit">Update Attendance</button></td>
+                            </tr>
+                         
                         </table>
                     </td>
+                
+                    
+
+
+
+
+
+
+                    </form>
+
+
+
                     <td style="width:60%;vertical-align:top!important;">
                         <h3>Attendance Sheet </h3>
                         @if(is_null($exampaper->filename ))
                             Attendance sheet missing 
                         @else
-                            <iframe style="width:100%;min-height:1200px;" src="{{ url('files/examattendancefiles') }}/{{ $exampaper->filename }}" frameborder="0"></iframe>
+                            <iframe style="width: 100%;min-height: 607px;" src="{{ url('files/examattendancefiles') }}/{{ $exampaper->filename }}"></iframe>
                         @endif
                     </td>
                 </tr>
@@ -203,5 +238,12 @@
             $('#attn_rej_reason').addClass('hidden');
         }
     }
+</script>
+
+<script>
+function showRow() {
+    let row = document.getElementById("attendanceRow");
+    row.style.display = (row.style.display === "none") ? "table-row" : "none";
+}
 </script>
 @endsection

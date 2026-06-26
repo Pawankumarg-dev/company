@@ -24,6 +24,7 @@
     </script>
     <script src="{{ asset('packages/moment/moment.min.js') }}"></script>
     <script src="{{asset('packages/bootstrap-3.3.7/js/bootstrap.min.js')}}"></script>
+        {{-- <script src="{{asset('packages/bootstrap-4.0.0/bootstrap.min.js')}}"></script> --}}
 
     {{-- <script src="{{asset('js/notify.min.js')}}"></script> --}}
     <script src="{{asset('packages/sweetalert/sweetalert.min.js')}}"></script>

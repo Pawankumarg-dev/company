@@ -745,7 +745,7 @@ $c->approvedprogramme->programme->id==57
     </tr>
     @endif
 
-        @if($result->status_id == 1 || (Auth::user()->id == 88387 && $result->status_id == 3)|| $result->status_id == 2)
+        @if($result->status_id == 1 || $result->status_id == 2)
             {{-- First Year Marksheet --}}
             @if(!is_null($result->marksheet_sl_no_first_year))
                 <tr>

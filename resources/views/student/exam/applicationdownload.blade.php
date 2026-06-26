@@ -54,9 +54,7 @@
                     <li>
                         All eligible subjects are ticked by default for the exam.
                     </li>
-                    <li>
-                        De-select if do not want to appear the subject.
-                    </li>
+                    
                     <li>
                         After submission, the application can not be modified or updated.
                     </li>
@@ -83,7 +81,7 @@
                 <ul>
                     <li> Your payment has been successfully received.</li>
 
-                    <li> Your Supplementary Exam Application is submitted.</li>
+                    <li> Your Exam Application is submitted successfully.</li>
                 </ul>
             </div>
             <br />

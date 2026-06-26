@@ -73,8 +73,7 @@ class CandidateController extends Controller
             return redirect('nber/admissions?search='.$institutes->first()->rci_code);
         }
         $institutes  = $institutes->paginate(10);
-        $candidate = Candidate::where('enrolmentno', 'like', '%'.trim($r->enrolmentno).'%')->orWhere('name','like','%'.trim($r->enrolmentno).'%');
-        if(Auth::user()->id != 88387){
+        if(Auth::user()->id != 88387 && Auth::user()->id != 239776){
             
             // $candidate = $candidate->
             // whereHas('approvedprogramme',function($q) use($nber_id){
@@ -93,6 +92,10 @@ class CandidateController extends Controller
     })
     ->where('p.nber_id', '=', $nber_id)
     ->select('c.*'); 
+        }
+        else{
+
+        $candidate = Candidate::where('enrolmentno', 'like', '%'.trim($r->enrolmentno).'%')->orWhere('name','like','%'.trim($r->enrolmentno).'%');
         }
 
 
@@ -493,7 +496,7 @@ class CandidateController extends Controller
             //  return back();
 
         if(!is_null($candidate)){
-        if(Auth::user()->id == 88387 || Auth::user()->id==87567 ||  Auth::user()->id==99540 || Auth::user()->id==87569 || Auth::user()->id==87568){
+        if(Auth::user()->id == 88387 || Auth::user()->id==87567 ||  Auth::user()->id==99540 || Auth::user()->id==87569 || Auth::user()->id==87568 || Auth::user()->id==239184){
 
          
         //  return back();

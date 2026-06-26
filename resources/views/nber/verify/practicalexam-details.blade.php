@@ -1,25 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
- 
 <div class="container">
-   <div class="row">
-    <a class="btn btn-primary btn-sm pull-right" href="{{url('nber/practicalverify-list')}}">Back </a>
-   </div>
-    <div class="row"> 
+    <div class="row">
     <div class="col-lg-6">
         <table class="table table-bordered text-center">
     <thead class="table-dark">
         <tr>
             <th>SL</th>
             <th>Enrollment No</th>
-            <th>Name</th>
             @foreach ($subjects as $sub)
                 <th>
                     {{ $sub->scode }}
                     <br>
-                    <small>smin: {{ $sub->emin_marks }}</small>
-                    <small>smax: {{ $sub->emax_marks}}</small>
+                    <small>smin: {{ $sub->emin }}</small>
+                    <small>smax: {{ $sub->emax }}</small>
                 </th>
             @endforeach
         </tr>
@@ -29,8 +24,9 @@
         @foreach ($data as $index => $row)
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $row->enrolmentno}}</td>
-                <td>{{ $row->candidate_name}}</td>
+                                <td>{{ $row->enrolmentno}}</td>
+
+
                 @php
                     // Convert subject_marks string "1136:56,1137:57" into array ['1136'=>56, '1137'=>57]
                     $marksArray = [];
@@ -44,7 +40,7 @@
 
                 @foreach ($subjects as $sub)
                     <td>
-                        {{ $marksArray[$sub->id] ?? '-' }} {{-- show mark or '-' if not available --}}
+                        {{ $marksArray[$sub->id] ?? 'AB' }} {{-- show mark or '-' if not available --}}
                     </td>
                 @endforeach
             </tr>
@@ -66,6 +62,8 @@
     </div>
 @if($data[0]->verified==1)
 
+
+
 @else
 
     {{-- Verify button --}}
@@ -82,8 +80,51 @@
                                     </button>
                                 </form> --}}
 
+                                    <br><br>
+                                <p><strong>Note:</strong> If the awardlist has been uploaded incorrectly by the practical examiner, it can be updated here.</p>
+                            <form action="{{ url('nber/awardlist') }}" method="POST" enctype="multipart/form-data" class="mt-3">
+                                {{csrf_field()}}
+
+                                <input type="hidden" name="award_temp_id" value="{{ $data[0]->id }}">
+
+                                <div class="form-group mb-2">
+                                    <input type="file" name="file" id="file" class="form-control" required>
+                                </div>
+                                <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+<?php
+                                       $subjects =  \App\Subject::where('programme_id',$data[0]->programme_id)->where('subjecttype_id',2)->where('is_external',1)->get();
+                                       ?>
+<div class="form-group mb-2">
+    <label for="subjects">Select Subjects</label>
+
+    <select name="subjects[]" id="subjects" class="form-control" multiple>
+        @foreach($subjects as $subject)
+            <option value="{{ $subject->id }}">
+                {{ $subject->sname }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
+
+                                
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    Upload
+                                </button>
+                            </form>
+
+                            
 @endif
 </div>
 </div>
 </div>
+<script>
+    $('#subjects').select2({
+        placeholder: "Select subjects",
+        allowClear: true
+    });
+</script>
 @endsection
+

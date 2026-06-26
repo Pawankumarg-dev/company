@@ -73,7 +73,7 @@ class PracticalexaminerController extends Controller
       if($r->has('subjects')){
         foreach($r->subjects as $s){
           $subject = \App\Subject::find($s);
-          $pe = \App\Practicalexam::where('institute_id',$r->institute_id)->where('faculty_id',$r->faculty_id)->where('exam_id',28)->where('programme_id',$subject->programme_id)->first();
+          $pe = \App\Practicalexam::where('institute_id',$r->institute_id)->where('faculty_id',$r->faculty_id)->where('exam_id',$this->exam_id)->where('programme_id',$subject->programme_id)->first();
           $progamme = \App\Programme::find($subject->programme_id);
           if(is_null($pe)){
             $pe = \App\Practicalexam::create([
@@ -100,45 +100,116 @@ class PracticalexaminerController extends Controller
     }
 
 
-    public function institute_course(){
-
+    public function institute_course(Request $request){
+    
         $examname = \App\Exam::find($this->exam_id)->name;
+        $eid = $this->exam_id; 
+        $nid = $this->nber_id;  
+        $instituteId = $request->get('institute');
+// $institutes = DB::table('approvedprogrammes as ap')
+//     ->join('candidates', 'candidates.approvedprogramme_id', '=', 'ap.id')
+//     ->join('allapplicants', function($join) use ($eid) {
+//         $join->on('allapplicants.candidate_id', '=', 'candidates.id')
+//              ->where('allapplicants.exam_id', '=', $eid);
+//     })
+//     ->join('allapplications', 'allapplications.applicant_id', '=', 'allapplicants.id')
+//     ->join('subjects', function($join) {
+//         $join->on('subjects.id', '=', 'allapplications.subject_id')
+//              ->where('subjects.subjecttype_id', '=', 2)
+//              ->where('subjects.is_external', '=', 1);
+//     })
+//     ->join('programmes as p', 'p.id', '=', 'ap.programme_id')
+//     ->join('institutes as i', 'i.id', '=', 'ap.institute_id')
+//     ->select(
+//         'i.id as institute_id',
+//         'i.rci_code',
+//         'i.name',
+//          DB::raw("count(allapplications.candidate_id) as total_candidate"),
 
-        $eid = $this->exam_id; // exam ID
-$nid = $this->nber_id;  // nber_id
+//     DB::raw("
+//         COUNT(
+//             CASE 
+//                 WHEN allapplications.mark_ex >= 0 
+//                      OR allapplications.attendance_ex IN (1,2)
+//                 THEN allapplications.candidate_id 
+//             END
+//         ) as marks_entered
+//     "),
+// DB::raw("GROUP_CONCAT(DISTINCT CONCAT(p.id, ':', p.abbreviation) SEPARATOR ',') as programmes")
+//     )
+//     ->where('p.nber_id', '=', $nid)
+//     ->groupBy('ap.institute_id')
+//     ->orderBy('i.rci_code')
+//     ->get();
+
+
 
 $institutes = DB::table('approvedprogrammes as ap')
     ->join('candidates', 'candidates.approvedprogramme_id', '=', 'ap.id')
-    ->join('allapplicants', function($join) use ($eid) {
+
+    ->join('allapplicants', function ($join) use ($eid) {
         $join->on('allapplicants.candidate_id', '=', 'candidates.id')
              ->where('allapplicants.exam_id', '=', $eid);
     })
+
+    ->join('programmes as p', 'p.id', '=', 'ap.programme_id')
+
+  ->leftJoin('practicalexams', function ($join) use ($eid) {
+    $join->on('practicalexams.programme_id', '=', 'p.id')
+         ->on('ap.institute_id', '=', 'practicalexams.institute_id')
+         ->where('practicalexams.exam_id', '=', $eid);
+})
+
+    ->leftJoin('practicalexam_subject', function ($join) {
+        $join->on(
+            'practicalexam_subject.practicalexam_id',
+            '=',
+            'practicalexams.id'
+        );
+    })
+
     ->join('allapplications', 'allapplications.applicant_id', '=', 'allapplicants.id')
-    ->join('subjects', function($join) {
+
+    ->join('subjects', function ($join) {
         $join->on('subjects.id', '=', 'allapplications.subject_id')
              ->where('subjects.subjecttype_id', '=', 2)
              ->where('subjects.is_external', '=', 1);
     })
-    ->join('programmes as p', 'p.id', '=', 'ap.programme_id')
+
     ->join('institutes as i', 'i.id', '=', 'ap.institute_id')
+    ->when($instituteId, function ($query) use ($instituteId) {
+            return $query->where('ap.institute_id', $instituteId);
+        })
     ->select(
         'i.id as institute_id',
         'i.rci_code',
         'i.name',
-         DB::raw("count(allapplications.candidate_id) as total_candidate"),
 
-    DB::raw("
-        COUNT(
-            CASE 
-                WHEN allapplications.mark_ex >= 0 
-                     OR allapplications.attendance_ex IN (1,2)
-                THEN allapplications.candidate_id 
-            END
-        ) as marks_entered
-    "),
-DB::raw("GROUP_CONCAT(DISTINCT CONCAT(p.id, ':', p.abbreviation) SEPARATOR ',') as programmes")
+        DB::raw('COUNT(allapplications.candidate_id) as total_candidate'),
+
+        DB::raw("
+            COUNT(
+                CASE
+                    WHEN allapplications.mark_ex >= 0
+                      OR allapplications.attendance_ex IN (1,2)
+                    THEN allapplications.candidate_id
+                END
+            ) as marks_entered
+        "),
+
+        DB::raw('COUNT(distinct(subjects.id)) as total_subject'),
+
+        DB::raw('COUNT(distinct(practicalexam_subject.subject_id)) as mappsubject'),
+
+        DB::raw("
+            GROUP_CONCAT(
+                DISTINCT CONCAT(p.id, ':', p.abbreviation)
+                SEPARATOR ','
+            ) as programmes
+        ")
     )
-    ->where('p.nber_id', '=', $nid)
+
+    ->where('p.nber_id', $nid)
     ->groupBy('ap.institute_id')
     ->orderBy('i.rci_code')
     ->get();
@@ -189,8 +260,8 @@ $nid = $this->nber_id;  // nber_id
  $faculties = $this->page->getListofFaculties();
 
   
-    $min_date = '2026-03-30';
-    $max_date = '2026-04-06'; // last day of current month
+    $min_date = '2026-06-11';
+    $max_date = '2026-06-24'; // last day of current month
 
 
 
@@ -211,6 +282,8 @@ $nid = $this->nber_id;  // nber_id
         'practicalexams.start_date',
         'practicalexams.end_date',
         'practicalexams.id as del_id',
+                'practicalexams.slot as slot',
+
         DB::raw('GROUP_CONCAT(subjects.scode SEPARATOR ", ") as scode'),
         DB::raw('GROUP_CONCAT(subjects.sname SEPARATOR ", ") as sname'),
         DB::raw('GROUP_CONCAT(distinct(subjects.id)) as subject_id')
@@ -218,14 +291,14 @@ $nid = $this->nber_id;  // nber_id
     ->groupBy('faculties.id')
     ->get();
 
-    //dd($faculties);
+
         return view('nber.mapping.practical-course-subject', compact('institutes','faculties','min_date','max_date','mapped'));
     }
 
 
  public function practicalexammappingmail(Request $request){
 
-//  $practicalexaminers = \App\Practicalexam::where('exam_id',28)
+//  $practicalexaminers = \App\Practicalexam::where('exam_id',$this->exam_id)
 //     ->pluck('faculty_id')
 //     ->unique();
 
@@ -341,74 +414,183 @@ FROM
 
 
 
-
     // Save mapping
   public function savePracticalMapping(Request $r)
 {
-    return response()->json(['message' => 'Closed, Exam date is over']);
 
-//     $data = $r->json()->all(); // Get JSON data from AJAX
-//     $facultyId = $data['faculty_id'] ?? null;
-//     $startDate = $data['start_date'] ?? null;
-//     $endDate = $data['end_date'] ?? null;
-               
-//     $subjectsYear1 = $data['subjects_year1'] ?? [];
-//     $subjectsYear2 = $data['subjects_year2'] ?? [];
 
-//     // Function to save subjects per institute and year
-//     $saveSubjects = function($subjectsArray, $year) use ($facultyId, $startDate, $endDate) {
+
+
+
+
+
+    //  return response()->json(['message' =>'closed']);
+
+
+    $data = $r->json()->all(); // Get JSON data from AJAX
+$mytime = \Carbon\Carbon::now()->format('d-m-Y H:i:s');
+
+if ($mytime >= '09-06-2026 19:30:00') {
+if (!in_array($data['ins_data'], [543,571,583])) {
+
+    return response()->json(['message' => 'closed']);
+
+
+
+ }
+    
+}
+            // return response()->json(['message' => $data['end_date']]);
+
+if ($data['slot'] == 1) {
+
+    if (
+        $data['start_date'] < '2026-06-11' ||
+        $data['end_date'] > '2026-06-24'
+    ) {
+        return response()->json([
+            'message' => 'Schedule 1 exam dates must be between 11-06-2026 and 24-06-2026.'
+        ], 422);
+    }
+}
+
+if ($data['slot'] == 2) {
+
+    if (
+        $data['start_date'] < '2026-07-10' ||
+        $data['end_date'] > '2026-07-31'
+    ) {
+        return response()->json([
+            'message' => 'Schedule 2 exam dates must be between 10-07-2026 and 31-07-2026.'
+        ], 422);
+    }
+}
+      
+
+
+
+
+
+
+    $facultyId = $data['faculty_id'] ?? null;
+    $startDate = $data['start_date'] ?? null;
+    $endDate = $data['end_date'] ?? null;
+    $slot = $data['slot'] ?? null;
+
+    $subjectsYear1 = $data['subjects_year1'] ?? [];
+    $subjectsYear2 = $data['subjects_year2'] ?? [];
+
+
+$eid = $this->exam_id;
+
+// $conflict = \App\Practicalexam::where('faculty_id', $facultyId)
+//     ->where('exam_id', $eid)
+//     ->where(function ($q) use ($startDate, $endDate) {
+//         $q->whereBetween('start_date', [$startDate, $endDate])
+//           ->orWhereBetween('end_date', [$startDate, $endDate]);
+//     })
+//     ->exists();
+
+// if ($conflict) {
+//     return response()->json([
+//         'message' => 'Faculty is already engaged for selected dates'
+//     ], 422);
+// }
+
+
+
+$conflict = \App\Practicalexam::where('faculty_id', $facultyId)
+    ->where('exam_id', $eid)
+    ->where(function ($q) use ($startDate, $endDate) {
+        $q->whereBetween('start_date', [$startDate, $endDate])
+          ->orWhereBetween('end_date', [$startDate, $endDate]);
+    })
+    ->first();
+
+if ($conflict) {
+
+    if ($data['ins_data'] != $conflict->institute_id) {
+
+        return response()->json([
+            'message' => 'Faculty is already engaged for selected dates'
+        ], 422);
+
+    }
+
+}
+
+    // Function to save subjects per institute and year
+    $saveSubjects = function($subjectsArray, $year) use ($facultyId, $startDate, $endDate,$slot) {
    
 
-//         foreach ($subjectsArray as $instituteId => $subjectIds) {
-//             foreach ($subjectIds as $subjectId) {
-//                 $subject = \App\Subject::find($subjectId);
-//                 if (!$subject) continue;
-// $eid = $this->exam_id;
+        foreach ($subjectsArray as $instituteId => $subjectIds) {
+            foreach ($subjectIds as $subjectId) {
+                $subject = \App\Subject::find($subjectId);
+                if (!$subject) continue;
+$eid = $this->exam_id;
 
-//                 $pe = \App\Practicalexam::where('institute_id', $instituteId)
-//                         ->where('faculty_id', $facultyId)
-//                         ->where('exam_id',$eid)
-//                         ->where('programme_id', $subject->programme_id)
-//                         ->first();
+                $pe = \App\Practicalexam::where('institute_id', $instituteId)
+                        ->where('faculty_id', $facultyId)
+                        ->where('exam_id',$eid)
+                        ->where('programme_id', $subject->programme_id)
+                        ->first();
 
-//                 $programme = \App\Programme::find($subject->programme_id);
+                $programme = \App\Programme::find($subject->programme_id);
 
-//                 if (is_null($pe)) {
-//                     $pe = \App\Practicalexam::create([
-//                         'institute_id' => $instituteId,
-//                         'faculty_id' => $facultyId,
-//                         'exam_id' => $eid,
-//                         'programme_id' => $subject->programme_id,
-//                         'course_id' => $programme->course_id,
-//                         'start_date' => $startDate,
-//                         'end_date' => $endDate,
-//                     ]);
-//                 } else {
-//                     $pe->start_date = $startDate;
-//                     $pe->end_date = $endDate;
-//                     $pe->save();
-//                 }
+   
+
+
+                if (is_null($pe)) {
+                    $pe = \App\Practicalexam::create([
+                        'institute_id' => $instituteId,
+                        'faculty_id' => $facultyId,
+                        'exam_id' => $eid,
+                        'programme_id' => $subject->programme_id,
+                        'course_id' => $programme->course_id,
+                        'start_date' => $startDate,
+                        'end_date' => $endDate,
+                        'slot' => $slot,
+
+                    ]);
+                } else {
+                    $pe->start_date = $startDate;
+                    $pe->end_date = $endDate;
+                    $pe->save();
+                }
                 
 
-//                     $pe->subjects()->attach($subjectId);
+                    $pe->subjects()->attach($subjectId);
                 
-//             }
-//         }
-//     };
+            }
+        }
+    };
 
-//     // Save 1st year subjects
-//     $saveSubjects($subjectsYear1, 1);
+    // Save 1st year subjects
+    $saveSubjects($subjectsYear1, 1);
 
-//     // Save 2nd year subjects
-//     $saveSubjects($subjectsYear2, 2);
+    // Save 2nd year subjects
+    $saveSubjects($subjectsYear2, 2);
 
-//     return response()->json(['message' => 'Practical mapping saved successfully!']);
+    return response()->json(['message' => 'Practical mapping saved successfully!']);
 }
 
 
 public function PracticalMappingRemove(Request $request)
     {
+        $mytime = \Carbon\Carbon::now()->format('d-m-Y H:i:s');
         $item = \App\Practicalexam::find($request->id);
+
+if ($mytime >= '09-06-2026 19:30:00') {
+   
+if (!in_array($item->institute_id, [543,571,583])) {
+
+
+    return response()->json(['message' => 'closed']);
+
+    }
+    
+}
+
         if (!$item) {
             return response()->json(['status' => 'error', 'message' => 'Item not found'], 404);
         }
@@ -438,9 +620,50 @@ public function PracticalMappingRemove(Request $request)
     public function practicalverify_list()
     {
 
-$examId =28;
+$examId =$this->exam_id;
 
-$data = DB::table('practicalexams')
+// $data = DB::table('practicalexams')
+//     ->select(
+//         'institutes.name as institute_name',
+//         'institutes.rci_code',
+//         DB::raw('GROUP_CONCAT(DISTINCT subjects.scode) as subjects'),
+//         'awardlisttemplates.exam_date',
+//         'awardlisttemplates.marksheet',
+//         'programmes.abbreviation',
+//         'faculties.crr_no',
+//         'faculties.name as faculty_name',
+//         'faculties.mobileno',
+//         'faculties.email',
+//         'awardlisttemplates.id',
+//                 'awardlisttemplates.verified'
+
+//     )
+//     ->join('faculties', 'faculties.id', '=', 'practicalexams.faculty_id')
+//     ->join('awardlisttemplates', function($join) {
+//         $join->on('practicalexams.id', '=', 'awardlisttemplates.practicalexam_id')
+//              ->on('practicalexams.practicalexaminer_id', '=', 'awardlisttemplates.practicalexaminer_id');
+//     })
+//     ->join('institutes', 'practicalexams.institute_id', '=', 'institutes.id')
+//     ->join('approvedprogrammes', 'awardlisttemplates.approvedprogramme_id', '=', 'approvedprogrammes.id')
+//     ->join('programmes', 'programmes.id', '=', 'approvedprogrammes.programme_id')
+//     ->join('candidates', 'approvedprogrammes.id', '=', 'candidates.approvedprogramme_id')
+
+//     ->leftjoin('awardlisttemplate_subject', 'awardlisttemplates.id', '=', 'awardlisttemplate_subject.awardlisttemplate_id')
+//     ->leftjoin('subjects','awardlisttemplate_subject.subject_id', '=', 'subjects.id');
+// ->join('allapplications', function ($join) use ($examId) {
+//     $join->on('candidates.id', '=', 'allapplications.candidate_id')
+//     ->on('allapplications.subject_id', '=', 'subjects.id')
+//          ->on('allapplications.exam_id', '=', $examId);
+// })
+//     ->where('practicalexams.exam_id', $examId)
+//     ->where('programmes.nber_id', $this->nber_id)
+//         ->whereNOTNULL('awardlisttemplates.marksheet')
+
+//     ->groupBy('awardlisttemplates.id')
+//     ->get();
+
+
+    $data = DB::table('practicalexams')
     ->select(
         'institutes.name as institute_name',
         'institutes.rci_code',
@@ -449,73 +672,163 @@ $data = DB::table('practicalexams')
         'awardlisttemplates.marksheet',
         'programmes.abbreviation',
         'faculties.crr_no',
-        'faculties.id as faculty_id',
         'faculties.name as faculty_name',
         'faculties.mobileno',
         'faculties.email',
         'awardlisttemplates.id',
         'awardlisttemplates.verified'
-
     )
     ->join('faculties', 'faculties.id', '=', 'practicalexams.faculty_id')
-    ->join('awardlisttemplates', function($join) {
-        $join->on('practicalexams.id', '=', 'awardlisttemplates.practicalexam_id')
-             ->on('practicalexams.practicalexaminer_id', '=', 'awardlisttemplates.practicalexaminer_id');
-    })
+    ->join('awardlisttemplates','practicalexams.id', '=', 'awardlisttemplates.practicalexam_id')
     ->join('institutes', 'practicalexams.institute_id', '=', 'institutes.id')
     ->join('approvedprogrammes', 'awardlisttemplates.approvedprogramme_id', '=', 'approvedprogrammes.id')
     ->join('programmes', 'programmes.id', '=', 'approvedprogrammes.programme_id')
     ->join('candidates', 'approvedprogrammes.id', '=', 'candidates.approvedprogramme_id')
-    ->join('allapplications', 'candidates.id', '=', 'allapplications.candidate_id')
-    ->join('awardlisttemplate_subject', 'awardlisttemplates.id', '=', 'awardlisttemplate_subject.awardlisttemplate_id')
-    ->join('subjects', function($join) {
-        $join->on('awardlisttemplate_subject.subject_id', '=', 'subjects.id')
-             ->on('allapplications.subject_id', '=', 'subjects.id');
+    ->leftJoin('awardlisttemplate_subject', 'awardlisttemplates.id', '=', 'awardlisttemplate_subject.awardlisttemplate_id')
+    ->leftJoin('subjects', 'awardlisttemplate_subject.subject_id', '=', 'subjects.id')
+    ->join('allapplications', function ($join) use ($examId) {
+        $join->on('candidates.id', '=', 'allapplications.candidate_id')
+            ->on('allapplications.subject_id', '=', 'subjects.id')
+            ->on('allapplications.exam_id', '=', DB::raw($examId));  // ✅ DB::raw() for raw value in on()
     })
     ->where('practicalexams.exam_id', $examId)
     ->where('programmes.nber_id', $this->nber_id)
+    ->whereNotNull('awardlisttemplates.marksheet')
     ->groupBy('awardlisttemplates.id')
     ->get();
-   // dd($data);
     return view('nber.verify.practicalexam-list',compact('data'));
     }
         
    public function practicalverify_details($id)
-    {
-        
-    // $examId = $this->exam_id; 
-    $examId =28;
-    $data = DB::table('awardlisttemplates')
-        ->join('awardlisttemplate_subject', 'awardlisttemplates.id', '=', 'awardlisttemplate_subject.awardlisttemplate_id')
-        ->join('candidates', 'awardlisttemplates.approvedprogramme_id', '=', 'candidates.approvedprogramme_id')
-        ->join('allapplications', 'candidates.id', '=', 'allapplications.candidate_id')
-        ->join('subjects', function ($join) {
-            $join->on('awardlisttemplate_subject.subject_id', '=', 'subjects.id')
-                ->on('allapplications.subject_id', '=', 'subjects.id');
-        })
-        ->where('awardlisttemplates.id', $id)
-        ->where('allapplications.exam_id', $examId)
-        ->select(
-            DB::raw("GROUP_CONCAT(CONCAT(subjects.id, ':', allapplications.mark_ex) ORDER BY subjects.id SEPARATOR ',') as subject_marks"),
-            DB::raw("GROUP_CONCAT(DISTINCT subjects.id) as subjects"),
-            'allapplications.attendance_ex',
-            'awardlisttemplates.marksheet',
-            'candidates.enrolmentno',
-            'candidates.name as candidate_name',
-            'awardlisttemplates.id',
-            'awardlisttemplates.verified'
-
-        )
-        ->groupBy('allapplications.candidate_id', 'allapplications.attendance_ex')
-        ->get();
+{
+// $examId = $this->exam_id; 
+$examId =$this->exam_id;
 
 
+
+
+
+
+
+$data = DB::table('awardlisttemplates')
+    ->leftJoin(
+        'awardlisttemplate_subject',
+        'awardlisttemplates.id',
+        '=',
+        'awardlisttemplate_subject.awardlisttemplate_id'
+    )
+
+    ->leftjoin(
+        'candidates',
+        'awardlisttemplates.approvedprogramme_id',
+        '=',
+        'candidates.approvedprogramme_id'
+    )
+
+    ->leftjoin(
+        'approvedprogrammes',
+        'awardlisttemplates.approvedprogramme_id',
+        '=',
+        'approvedprogrammes.id'
+    )
+
+    ->leftjoin(
+        'programmes',
+        'programmes.id',
+        '=',
+        'approvedprogrammes.programme_id'
+    )
+
+    // ->leftjoin('allapplications', function ($join) use ($examId) {
+    //     $join->on('candidates.id', '=', 'allapplications.candidate_id')
+    //         ->on('awardlisttemplate_subject.subject_id', '=', 'allapplications.subject_id')
+
+    //          ->where('allapplications.exam_id', '=', $examId);
+    // })
+
+
+    ->leftJoin('allapplications', function ($join) use ($examId) {
+    $join->on('candidates.id', '=', 'allapplications.candidate_id')
+         ->on('awardlisttemplate_subject.subject_id', '=', 'allapplications.subject_id')
+         ->where('allapplications.exam_id', '=', $examId);
+})
+
+//     ->leftJoin('allapplications', function ($join) use ($examId) {
+//     $join->on('candidates.id', '=', 'allapplications.candidate_id')
+//          ->on('awardlisttemplate_subject.subject_id', '=', 'allapplications.subject_id')
+//          ->where('allapplications.exam_id', $examId);
+// })
+
+
+    ->leftJoin(
+        'subjects',
+        'allapplications.subject_id',
+        '=',
+        'subjects.id'
+    )
+
+    ->where('awardlisttemplates.id', $id)
+    ->where('allapplications.exam_id', $examId)
+
+    // optional: only template subjects
+    // ->whereColumn(
+    //     'awardlisttemplate_subject.subject_id',
+    //     'allapplications.subject_id'
+    // )
+
+    
+// ->where(function ($query) {
+//     $query->whereColumn(
+//             'awardlisttemplate_subject.subject_id',
+//             'allapplications.subject_id'
+//         )
+//         ->orWhereNull('awardlisttemplate_subject.subject_id');
+// })
+    ->select(
+        DB::raw("
+            GROUP_CONCAT(
+                CONCAT(subjects.id, ':', allapplications.mark_ex)
+                ORDER BY subjects.id
+                SEPARATOR ','
+            ) as subject_marks
+        "),
+
+        DB::raw("
+            GROUP_CONCAT(DISTINCT subjects.id) as subjects
+        "),
+
+        'allapplications.attendance_ex',
+        'awardlisttemplates.marksheet',
+        'candidates.enrolmentno',
+        'awardlisttemplates.id',
+        'awardlisttemplates.verified',
+        'programmes.id as programme_id'
+    )
+
+    ->groupBy(
+        'allapplications.candidate_id',
+        'allapplications.attendance_ex'
+    )
+
+    ->get();
+
+    // return $data;
+$subjectIds = [];
+
+if (!empty($data) && !empty($data[0]->subjects)) {
     $subjectIds = explode(',', $data[0]->subjects);
+}
+// $subjectIds = explode(',', $data[0]->subjects);
 
-    $subjects = \App\Subject::whereIn('id', $subjectIds)->get();
+$subjects = \App\Subject::whereIn('id', $subjectIds)->get();
+$nber_id=$this->nber_id;
 
-        return view('nber.verify.practicalexam-details', compact('data', 'subjects'));
-    }
+
+
+
+
+    return view('nber.verify.practicalexam-details', compact('data', 'subjects','nber_id'));
+}
  public function verify($id)
     {
         $mark = \App\Awardlisttemplate::findOrFail($id);
@@ -529,8 +842,41 @@ $data = DB::table('practicalexams')
         $mark = \App\Awardlisttemplate::findOrFail($id);
         $mark->verified = 2;
         $mark->save();
-        return redirect()->back()->with('success', 'Student marks not verified!');
+        return redirect()->back()->with('success', 'Student marks verified successfully!');
+    }
+public function award_file(Request $request)
+{
+
+ $datetime = \Carbon\Carbon::now()->format('Ymd_His');
+
+    if ($request->hasFile('file')) {
+        $file = $request->file('file');
+        $extension = $file->getClientOriginalExtension();
+        $fname = $request->award_temp_id . '_' . $datetime . '.' . $extension;
+        $destination = public_path('files/externalpractical');
+        $file->move($destination, $fname);
+
+         $template = \App\Awardlisttemplate::find($request->award_temp_id);
+    if ($template) {
+        $template->marksheet_uploaded_at = $datetime;
+        $template->marksheet = $fname;
+        $template->updated_by = Auth::user()->id;
+        $template->save();
     }
 
+
+
+    $subjectIds = $request->subjects; // array
+
+foreach ($subjectIds as $subjectId) {
+
+                $template->subjects()->attach($subjectId);
+}
+        return back()->with('messages', 'File uploaded successfully!');
+
+
+        }
+    return back()->with('error', 'No file found.');
+}
 
 }

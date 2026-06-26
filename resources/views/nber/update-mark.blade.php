@@ -231,14 +231,24 @@ $.ajax({
             cancelButtonText: "Reject",        
 
         }).then((result) => {
-            if (result.value) {
-                var newmark = result.value;
+            if (result.value !== undefined && result.value !== null) {
+                let newmark = result.value;
+                max = parseFloat(max);
 
-
-                // alert(newmark);
-                // alert(max);
+        if (isNaN(newmark)) {
+            swal({
+                type: 'error',
+                title: "Invalid number",
+                timer: 1500
+            });
+            return;
+        }
+console.log(typeof newmark, newmark);
+console.log(typeof max, max);
+                //  alert(newmark);
+                //  alert(max);
                 
-                  if(newmark > max )
+                  if(newmark>max)
                 {
                     swal({
                         type: 'error',

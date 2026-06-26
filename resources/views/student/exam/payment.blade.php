@@ -34,15 +34,21 @@
 
 
                         <div class="alert alert-success">
+                            <h2>For Payment</h2>
                             <ul>
                                 <li>
-                                        Please click on pay online button below for examination fee payment.
+                                        Please click on 'Pay Online' below for examination fee payment.
                                 </li>
                                 <li>
-                                    In case the payment is not completed, your application will not be considered.
+                                    {{-- In case the payment is not completed, your application will not be considered. --}}
+                                    If the enrollment fee and examination fee is not paid, your hall ticket will not be generated.
+
                                 </li>
                                <li>
-                                    In case the payment is deducted but not showing paid then wait for 48 hours.
+                                    In case the payment is deducted but not showing paid then wait for 48 hours to auto update by the system.
+                                </li>
+                                <li>
+                                    In case of the payment received back, please repay.
                                 </li>
                             </ul>
                         </div>  
@@ -182,6 +188,9 @@
                                                     Pay Online
                                                 </button>
                                             </form>
+
+                                            <a href="{{url('student/exam/recheckStatusall')}}/{{$applicant->id}}/examfee/{{$applicant->exam_id}}" class="btn btn-sm btn-primary hidden"  style="margin-top:3px;">Refresh Payment Status</a> 
+
                                         </td>
                                     @endif
                                 </tr>

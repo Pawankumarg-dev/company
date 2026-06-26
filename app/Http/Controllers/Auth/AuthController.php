@@ -40,7 +40,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
 
-//dd($request->all());
+
     
 
     // $blockedIps = ['103.153.58.147'];
@@ -71,16 +71,19 @@ class AuthController extends Controller
     ]);
 
 
+
+
+
+
         $user = User::where('username', $request->username)->first();
-      
+
         if (!$user || !Hash::check($request->password, $user->password)) {
             return back()->withErrors([
                 'username' => 'Invalid username or password.',
             ])->withInput($request->only('username'));
         }
-       
+
         Auth::login($user);
-       
         return redirect()->intended($this->redirectTo);
     }
 

@@ -63,10 +63,7 @@ class AwardlisttemplateController extends Controller
         }   
 
         $subject_ids =  $template->subjects()->pluck('id');
-        $candidate_ids = \App\Newapplication::whereHas('newapplicant', function($q) use($r){
-                    $q->where('approvedprogramme_id',$r->approvedprogramme_id);
-                })->whereIn('subject_id',$subject_ids)
-                ->pluck('candidate_id')->unique()->toArray();
+        $candidate_ids = \App\Allapplication::where('exam_id',28)->whereIn('subject_id',$subject_ids)->pluck('candidate_id')->unique()->toArray();
         $candidates = \App\Candidate::whereIn('id',$candidate_ids)->get();
         if($candidates->count()==0){
             $template->subjects()->detach();
@@ -75,6 +72,8 @@ class AwardlisttemplateController extends Controller
             $practicalexams = \App\Practicalexam::where('practicalexaminer_id',$practicalexaminer_id)->orderBy('institute_id')->get();
             return redirect('practicalexam/home');
         }
+
+
         return view('practicalexaminer.awardlisttemplate.template',compact(
             'approvedprogramme',
             'term',

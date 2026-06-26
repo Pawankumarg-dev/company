@@ -66,7 +66,6 @@
 									</td>
 									
 									<td>
-										
 										<a href="javascript:changepassword({{$institute->id}},'{{$institute->rci_code}}')" class="btn btn-sm btn-primary">Change</a>
 									</td>
 								</tr>
@@ -78,7 +77,6 @@
 		</div>
 	</div>
 	<script>
-		
 		function changepassword(id,name){
 			swal({
                 title: 'Change/Add password for Username '  + name  ,

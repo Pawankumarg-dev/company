@@ -37,9 +37,8 @@
 
                                         @else
 
-@php
-    $crrNo = 'A70186';
-    $url = "https://rciregistration.nic.in/rehabcouncil/api/findbycrrno.jsp?id={$crrNo}";
+{{-- @php
+    $url = "https://rciregistration.nic.in/rehabcouncil/api/findbycrrno.jsp?id={$faculty->crr_no}";
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -64,11 +63,12 @@ $expiryDate = $data[0]['RegistrationExpiedDate'];
 
 
 
-@endphp
+@endphp --}}
 
                                         
                                         
-                                        @if(\Carbon\Carbon::parse($expiryDate) >= \Carbon\Carbon::now() )
+                                        {{-- @if(\Carbon\Carbon::parse($expiryDate) >= \Carbon\Carbon::now() ) --}}
+                                        @if(\Carbon\Carbon::parse($faculty->crr_expiry) >= \Carbon\Carbon::now() )
                                             <small class="label label-info">
                                                 Active
                                             </small>
@@ -87,15 +87,7 @@ $expiryDate = $data[0]['RegistrationExpiedDate'];
                         </td>
                         </tr>
                        
-                        @if(!is_null($faculty->subjects))
-                        <tr>
-                            <td colspan="2">
-                                <small><b>Subjects:</b>
-                                {{ $faculty->subjects }}
-                                </small>
-                            </td>
-                        </tr>
-                        @endif
+                     
                     </table>
                 </div>
         @endforeach    

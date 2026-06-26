@@ -46,12 +46,12 @@
 
 
     </td>
-    <td>
+    {{-- <td>
         @if(!is_null($qp))
             <form method="post"  enctype="multipart/form-data" action="{{url('nber/deletequestionpaperupload')}}/{{$timetable->id}}/{{$language->id}}">
                 {{ csrf_field() }}
                 <button type="submit" class="btn btn-xs btn-danger">Delete</button>
             </form>
         @endif
-    </td>
+    </td> --}}
 </tr>

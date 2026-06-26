@@ -10,10 +10,12 @@ use App\Services\Exam\ApplicantService;
 use App\Services\Common\HelperService;
 use Session;
 use App\Exam;
+use App\Affiliationfee;
+use App\Practicalexam;
 use PDF;
-
+use App\Attendance;
 use App\Http\Requests\Backlog\StoreApplicantRequest;
-
+use DB;
 class ApplicantController extends Controller
 {
     /**
@@ -43,8 +45,13 @@ class ApplicantController extends Controller
     }
     public function index(Request $r)
     {
-       
-        Session::put('exam_id',28); 
+
+
+
+
+
+
+        Session::put('exam_id',29); 
         if($r->has('exam_id')){
             Session::put('exam_id',$r->exam_id);
         }
@@ -65,6 +72,63 @@ class ApplicantController extends Controller
        // return $applicants;
 
 
+
+//        if ($ap->programme_id != 57) {
+
+//     $totalAmount = Affiliationfee::where('approvedprogramme_id', $ap->id)
+//         ->where('orderstatus_id', 1)
+//         ->sum('amount');
+
+//     if ($ap->academicyear_id == 14) {
+//         $amount = 10000;
+//     } else {
+//         $amount = $ap->programme->numberofterms * 10000;
+//     }
+//     if ($totalAmount < $amount) {
+//     Session::flash(
+//     'error',
+//     'If the affiliation fee has not been paid, please go to the Payment section and complete the payment.If offline or neft  paid, please go to the Payment section and select offline payment. It will be considered after verification; otherwise, we may block marksheet and certificate details. If the affiliation fee has already been paid but the transaction is still incomplete, please contact RCI-NBER. '
+// );
+      
+//         return back();
+//     }
+// }
+
+$maped = DB::table('approvedprogrammes')
+    ->join('programmes', 'approvedprogrammes.programme_id', '=', 'programmes.id')
+    ->join('subjects', 'programmes.id', '=', 'subjects.programme_id')
+    ->join('candidates', 'candidates.id', '=', 'approvedprogrammes.id')
+    
+    // Fixed: Using a closure to handle multiple join conditions properly
+    ->join('allapplications', function ($join) {
+        $join->on('allapplications.candidate_id', '=', 'candidates.id')
+             ->on('subjects.id', '=', 'allapplications.subject_id')
+             ->where('allapplications.exam_id', '=', 29); // Assuming examid belongs to allappcations
+    })
+
+    ->leftJoin('practicalexams', function ($join) {
+        $join->on('approvedprogrammes.institute_id', '=', 'practicalexams.institute_id')
+             ->on('approvedprogrammes.programme_id', '=', 'practicalexams.programme_id')
+             ->whereNull('practicalexams.deleted_at');
+    })
+    ->leftJoin('practicalexam_subject', 'practicalexams.practicalexaminer_id', '=', 'practicalexam_subject.practicalexam_id')
+    ->where('approvedprogrammes.id', $apid)
+    ->select([
+        DB::raw('COUNT(DISTINCT subjects.id) as total_subject'),
+        DB::raw('COUNT(DISTINCT practicalexam_subject.subject_id) as mapped_subject')
+    ])
+    ->first();
+if ($maped->total_subject != $maped->mapped_subject) {
+    Session::flash('error', 'Exam Not schedule in 1st slot Please contact consern NBER.');
+    return back();
+}
+
+
+
+
+
+
+
         return view('institute.exam.applicants.index',compact(
             'applicants',
             'exam',
@@ -74,13 +138,16 @@ class ApplicantController extends Controller
 
     public function show($id,Request $r)
     {              
-    
-        if($this->exam_id >28){
+         
+        if($this->exam_id >30){
             Session::flash('error','Please select valid exam');
             return back();
         }
+
+        // return $id;
         $applicant = $this->ApplicantService->getApplicant($id);
-       // dd( $applicant);
+
+       
         $candidate = \App\Candidate::find($applicant->candidate_id);
         $institute = \App\Institute::find($this->helperService->getInstituteID());
         $exam = $this->exam;
@@ -95,24 +162,68 @@ class ApplicantController extends Controller
                 Session::flash('error','Document verification is pending contact to consern NBER');
                 return back();
             }
-            // if ($applicant->payment_status != 1 || is_null($applicant->payment_status)) {
-            //     Session::flash('error', 'Payment not Done');
+
+
+        //         $enrollemnt = \App\Enrolmentfeepayment::where('candidate_id', $candidate->id)->first();
+        //     if ($candidate->approvedprogramme->academicyear_id==14 && (!$enrollemnt || $enrollemnt->orderstatus_id != 1)) {
+
+        //    session::flash('error','Enrolment Payment not Done');
+        //         return back();
+        //     }
+            // if ($applicant->payment_status != 1) {
+            //     Session::flash('error', 'Examination Payment not Done');
             //     return back();
             // }
 
-            //   if($applicant->first_year_practical_ht < 1 && $applicant->second_year_practical_ht < 1 ){
-            //     Session::flash('error','Not Generated contact to consern NBER');
+
+            
+              if($applicant->first_year_practical_ht < 1 && $applicant->second_year_practical_ht < 1 ){
+                Session::flash('error','Not Generated contact to consern NBER');
+                return back();
+            }
+
+            if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
+                Session::flash('error','Photo not found contact to consern NBER');
+                return back();
+            }
+            if(!file_exists(public_path().'/files/enrolment/signature/'.$applicant->candidate->signature)){
+                Session::flash('error','Signature not found contact to consern NBER');
+                return back();
+            }
+
+
+
+
+
+            $atten = Attendance::where('candidate_id', $candidate->id)
+                ->where('attendance_p', '>=', 75)
+                ->count();
+            // $numberOfTerms = $candidate->approvedprogramme->programme->numberofterms ?? 0;
+            // if ($atten < $numberOfTerms && $candidate->approvedprogramme->academicyear_id != 14){ 
+            //     Session::flash('error', 'Attendance is less than 75%');
+            //     return back();
+            // }
+          
+            //  if ($candidate->approvedprogramme->academicyear_id == 14 && $atten < 1){ 
+            //     Session::flash('error', 'Attendance is less than 75%');
             //     return back();
             // }
 
-            // if(!file_exists(public_path().'/files/enrolment/photos/'.$applicant->candidate->photo)){
-            //     Session::flash('error','Photo not found contact to consern NBER');
-            //     return back();
-            // }
-            // if(!file_exists(public_path().'/files/enrolment/signature/'.$applicant->candidate->signature)){
-            //     Session::flash('error','Signature not found contact to consern NBER');
-            //     return back();
-            // }
+
+
+            $slot = Practicalexam::where('exam_id', 29)
+                ->where('institute_id', $candidate->approvedprogramme->institute_id)
+                ->where('programme_id', $candidate->approvedprogramme->programme_id)
+                ->first();
+
+            if (!$slot || $slot->slot != 1) {
+                Session::flash(
+                    'error',
+                    'Hall ticket download will be available only after the theory examination. For further assistance, please contact to consern NBER.'
+                );
+                return back();
+            }
+
             $ht = \App\Practicalhallticket::where('candidate_id',$applicant->candidate_id)->where('exam_id',$this->exam_id)->first();
             $ht->downloaded = 1;
             $ht->save();
@@ -198,7 +309,6 @@ class ApplicantController extends Controller
                 'exam',
                 'institute'
             ));
-           
             view()->share('applicant',$applicant);
             view()->share('exam_center',$exam_center);
             view()->share('term',$term);
@@ -235,12 +345,13 @@ class ApplicantController extends Controller
         $sy_count = $this->ApplicantService->getNumberOfPapers(2);
 
 
-         
+  
         
-        // dd($applicant->candidate->approvedprogramme->institute->state->state_name);
+
         return view('institute.exam.applicants.show',compact(
             'applicant',
             'exam',
+            'exam_center',
             'fy_count',
             'sy_count'
         ));

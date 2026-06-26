@@ -15,7 +15,7 @@ use App\Configuration;
 use App\Order;
 use App\User;
 use App\Reevaluationapplicationfee;
-
+use DB;
 use App\Refund;
 
 class ReevaluationController extends Controller

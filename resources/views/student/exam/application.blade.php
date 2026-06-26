@@ -52,24 +52,37 @@
                 <?php $slno = 1; ?>
                 
                         <div class="alert alert-success">
-                            <ul>
+                            <h2>IMPORTANT</h2>
+                            <ul style="    font-weight: 700;font-size: 20px; color:rgb(238, 74, 74)">
                                
-                                
                                 <li>
-                                    To appear for the external exam, the internal exam must be passed as per the Scheme of Examination.
-                                </li>
+                                  To apply for the examination, the following conditions must be fulfilled as per the Scheme of Examination: <br />
+                                  a.	Enrollment fees paid.<br />
+                                  b.	Examination fees paid.<br />
+                                  c.	Passed in internal exam<br />
+                                  d.	Attendance as per Scheme of Exam<br />
+                                  
+
+                              </li>
+                              
                                 
                                <li>
-                                    All eligible subjects are ticked by default for the exam.
+                                    All eligible subjects are ticked by default for the exam and cannot be changed.
                                 </li>
-                                 <li>
+                                 {{-- <li>
                                     De-select if do not want to appear the subject.
+                                </li> --}}
+                               
+                                <li>
+                                    Language Selected for exam can be changed, if required.
                                 </li>
                                 <li>
+                                    {{-- In case the payment is not completed, your application will not be considered. --}}
+                                        If the enrollment fee and examination fee is not paid, your hall ticket will not be generated.
+                                </li>
+
+                                 <li>
                                     After submission, the application can not be modified or updated.
-                                </li>
-                                <li>
-                                    In case the payment is not completed, your application will not be considered.
                                 </li>
                                 {{-- <li>
                                     If a student fails the internal exam, TTI is responsible.
@@ -181,20 +194,25 @@ if (!empty($internalpass) && !empty($internalpass[0]->internalpass)) {
     $internalpassArray = explode(',', $internalpass[0]->internalpass);
 }
                                                 ?>
-@if(in_array($s->id, $internalpassArray))
+@if(in_array($s->id, $internalpassArray) || $s->programme_id == 70)
                                                 <input type="checkbox" onchange="confirmUncheck(this)" class="pull-right checkbox" id="{{ $s->id }}" name="subject_{{ $s->id }}" checked @if($s->application_status == 1) disabled @endif>
 @else
-                                        <small><span class="btn btn-danger pull-right" style="margin-right:5px;">Not Eligible For This Subject <br> <Strong>Reason:</Strong> Internal Fail or Attendance is not 75% </span></small> 
+<small>
+    <span class="btn btn-danger pull-right" style="margin-right:5px;">
+        Not Eligible for This Subject (Please Contact your TTI)<br>
+        <strong>Reason:</strong> Failed in the internal examination or attendance is less than 75%.
+    </span>
+</small>
 
-
-@endif
+@endif 
 
                                                 <input type="hidden" id="amount_{{ $s->id }}" value="<?php if($s->is_external==1) {echo '100'; } else {echo'0';}  ?>">
                                             </div>
                                             <div>
                                             <div style="margin-left:30px;">
                                                 @if(is_null($s->elective_subjects))
-                                                    {{ $s->sname }}
+                                                    {{ $s->sname }}                                                    
+
                                                     <input type="hidden" id="elective_{{ $s->id }}" value="0" >
                                                 @else
                                                     <span style="color:red;">Select your alternative subject</span> <br/>
@@ -206,7 +224,12 @@ if (!empty($internalpass) && !empty($internalpass[0]->internalpass)) {
                                                                     {{  $es->sname }} (<small>{{  $es->scode }} </small>)
                                                                 </td>
                                                                 <td style="vertical-align: top!important;">
-                                                                    @if(in_array($s->id, $internalpassArray))
+
+                                                                    {{$s->alternativesubject_id}}
+                                                                
+
+
+                                                                    @if(in_array($s->id, $internalpassArray) || $s->programme_id == 70)
 
                                                                     <input 
                                                                         type="radio" 
@@ -234,9 +257,7 @@ if (!empty($internalpass) && !empty($internalpass[0]->internalpass)) {
                             <select name="language_id" id="language_id"  class="form-control"  @if(!is_null($applicant))  @endif >
                                 <option value="0"  selected> --Please choose --</option>
                                 @foreach($languages as $l)
-                                    @if($l->id != 13)
                                         <option  @if($Candidate->language_id==$l->id) selected @endif value="{{ $l->id }}">{{ $l->language }}</option>
-                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -504,17 +525,17 @@ if (!empty($internalpass) && !empty($internalpass[0]->internalpass)) {
 </script>
 <script>
 function confirmUncheck(checkbox) {
-    if (!checkbox.checked) {
-        const confirmed = confirm("Are you sure you want to remove the subject?");
-        if (!confirmed) {
-            checkbox.checked = true; // re-check if user cancels
-        }
-    }
+    // if (!checkbox.checked) {
+    //     const confirmed = confirm("Are you sure you want to remove the subject?");
+    //     if (!confirmed) {
+    //         checkbox.checked = true; // re-check if user cancels
+    //     }
+    // }
 
-//    if (!checkbox.checked) {
+   if (!checkbox.checked) {
        
-//             checkbox.checked = true; // re-check if user cancels
-//     }
+            checkbox.checked = true; // re-check if user cancels
+    }
 
 }
   function printPayment() {

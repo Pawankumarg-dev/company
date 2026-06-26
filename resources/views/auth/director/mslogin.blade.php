@@ -13,11 +13,11 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3" >
             <div class="panel panel-primary" style="box-shadow: 8px 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                <div class="panel-heading" style="   background: linear-gradient(#003A77, #0F77BC);"> <i class="fa fa-sign-in" ></i>&nbsp; Login</div>
+                <div class="panel-heading" style="   background: linear-gradient(#003A77, #0F77BC);"> <i class="fa fa-sign-in" ></i>&nbsp; Department Login</div>
                 <div class="panel-body">
 					@include('common.errorandmsg')
                 	<ul class="nav nav-tabs" id="myTab">
-					    <li class="active"><a data-toggle="tab" href="#eval">Question Paper Release</a></li>
+					    {{-- <li class="active"><a data-toggle="tab" href="#eval">Question Paper Release</a></li> --}}
 					    
 				  	</ul>
 					<?php $otpauth = false;  ?>

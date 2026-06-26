@@ -12,7 +12,7 @@ class Institute extends Model
         'city_id', 'created_by', 'updated_by','deleted_by', 'edit_status', 'address1', 'address2', 'address3',
         'postoffice', 'landmark', 'website', 'verify_status', 'code', 'faxno',
         'street_address', 'email2', 'active_status','rci_code','externalexamcenter_id','state_id',
-        'is_password_updated','is_data_verified','is_mobile_verified','is_email_verified','is_institute_head_verified','is_institute_head_email_verified','is_institute_head_mobile_verified','is_facilities_verified','examcenter_se_24'
+        'is_password_updated','is_data_verified','is_mobile_verified','is_email_verified','is_institute_head_verified','is_institute_head_email_verified','is_institute_head_mobile_verified','is_facilities_verified','examcenter_se_24','coe'
     ];
 	
 	public function user()

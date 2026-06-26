@@ -73,7 +73,7 @@
 									@foreach($courses as $subject)
 									<tr class="@if($subject->pending == 0 && $subject->present == $subject->evaluated) bg-success @else bg-danger @endif">
 										<td>
-											{{$subject->abbreviation}}
+											{{$subject->course_name}}
 										</td>
 										<td class="text-center">
 											{{$subject->nofpappers}}
@@ -126,7 +126,7 @@
 									@foreach($sa as $subject)
 									<tr  class="@if($subject->pending == 0 && $subject->present == $subject->evaluated) bg-success @else bg-danger @endif">
 										<td>
-											{{$subject->abbreviation}}
+											{{$subject->course_name}}
 										</td>
 										<td>
 											{{$subject->scode}} - {{$subject->sname}}

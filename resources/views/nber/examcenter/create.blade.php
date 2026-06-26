@@ -11,7 +11,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h4>Add COE</h4>
+            <h4>Add Exam Center</h4>
             @include('common.errorandmsg')
 
             <div class="alert alert-success">
@@ -36,7 +36,7 @@
                 </a>
 
                 <table class="table table-bordered table-condensed">
-				    <input type="hidden" name="exam_id" value='28'>                        
+				    <input type="hidden" name="exam_id" value='29'>                        
 					<input type="hidden" name="institute_id" value='{{ Auth::user()->id }}'>                        
 
                     <tr>

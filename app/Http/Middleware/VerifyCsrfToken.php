@@ -31,6 +31,8 @@ class VerifyCsrfToken extends BaseVerifier
         '/institute/enrolmentpayments/ccavenuepaymentgatewayfailpage/',
         '/student/reevaluation/ccavenuepaymentgatewayresponsehandler',
         '/student/examapplication/ccavenuepaymentgatewayresponsehandler',
+        '/student/enrolmentpayments/ccavenuepaymentgatewayresponsehandler',
+        '/institute/incidentalpayments/ccavenuepaymentgatewayresponsehandler/',
         '/api',
         '/payment-response',
         'api/*'

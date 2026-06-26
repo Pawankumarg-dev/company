@@ -220,6 +220,39 @@ return 'ss';
    public function send_csemail(){ 
 
 
+
+   $exams = \App\Evaluationcenter::where('exam_id', 28)->get();
+        $count = 0;
+
+        foreach ($exams as $ec) {
+if (empty($ec->user_id))
+{
+echo $count . PHP_EOL;
+            $count++;
+                        $characters = '123456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
+
+            $password = substr(str_shuffle($characters), 0, 10);
+            $user = \App\User::create([
+                'username' => $ec->code,
+                'password' => Hash::make($password),
+                'confirmed' => 0,
+                'confirmation_code' => 123,
+                'usertype_id' => 7,
+                'email' => $ec->email1
+            ]);
+            $ec->user_id = $user->id;
+            $ec->password = $password;
+            $ec->save();
+}
+        }
+
+return 'created';
+
+
+
+
+
+
     $examcenters = \App\Examcenter::where('exam_id',28)
     ->pluck('externalexamcenter_id')
     ->unique();
@@ -430,46 +463,53 @@ public function course(){
 
         $exam_id = Session::get('exam_id');
         $nber_id = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
-        $programmes = \App\Programme::where('nber_id',$nber_id)->where('active_status',1)->get();
+
+
+        $programmes = \App\Programme::join('allexampapers', function ($join) use ($exam_id) {
+                $join->on('programmes.id', '=', 'allexampapers.programme_id')
+                    ->where('allexampapers.exam_id','=', $exam_id);
+            })
+            ->where('programmes.nber_id', $nber_id)
+            ->where('programmes.active_status', 1)
+            ->select('programmes.*')
+            ->groupBy('programmes.id')
+            ->get();
+
         $year =Session::get('academicyear_id');
         $evaluationcenters = \App\Evaluationcenter::where('exam_id',$exam_id)->get();
-
-
-
-        return view('nber.evaluations.programmes', compact('programmes','year','evaluationcenters'));
+        $exam = \App\Exam::find($exam_id);
+        return view('nber.evaluations.programmes', compact('programmes','year','evaluationcenters','exam','nber_id'));
 
 }
 
 
 public function verify_external(Request $request){
+
+            $exam_id = Session::get('exam_id');
+                        $exam = \App\Exam::find($exam_id);
+
         $nber_id = \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
-
         $subject = \App\Subject::find($request->subject_id);
-
-
-
-//  if ($nber_id == 65) {
-
-//             $applications =  \App\Allexamstudent::where('externalexamcenter_id',$request->externalexamcenter_id)->where('exam_id',27)->where('subject_id',$request->subject_id)->where('attendance',1)->orderBy('language_id')->get();
-
-// } else {
-        $applications =  \App\Allexamstudent::where('externalexamcenter_id',$request->externalexamcenter_id)->where('exam_id',27)->where('subject_id',$request->subject_id)->where('attendance',1)->orderBy('language_id','candidate_id')->get();
-
-// }
-
-
-        return view('nber.evaluations.markentry',compact('applications','subject'));
-
-
+        $applications =  \App\Allexamstudent::where('externalexamcenter_id',$request->externalexamcenter_id)->where('exam_id',$exam_id)->where('subject_id',$request->subject_id)->where('attendance',1)->orderBy('language_id','candidate_id')->get();
+        return view('nber.evaluations.markentry',compact('applications','subject','exam_id','exam'));
 
 }
 
 
 public function verify_marks(Request $r){
+            $exam_id = Session::get('exam_id');
+if($exam_id<28){
+return 'closed';
+}
+
+
+
+
+
      $externalexamcenter_id = $r->externalexamcenter_id;
         $subject_id = $r->subject_id;
         $applications =  \App\Allexamstudent::where('externalexamcenter_id', $externalexamcenter_id)
-    ->where('exam_id', 27)
+    ->where('exam_id', $exam_id)
     ->where('subject_id', $subject_id)
     ->where('attendance', 1)
     ->update(['verified' => 1]);

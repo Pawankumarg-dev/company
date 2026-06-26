@@ -12,8 +12,13 @@
   //  $working_key='8D29080EBDBF0C2E451319B1183A12EF';//Shared by CCAVENUES
    // $access_code='AVAY53IJ99BL03YALB';//Shared by CCAVENUES
     $nber_id = Session::get('nber_id');
-    $working_key = \App\Configuration::where('attribute','ccavenue_working_key_nber_'.$nber_id)->first()->value;
-    $access_code = \App\Configuration::where('attribute','ccavenue_access_code_nber_'.$nber_id)->first()->value;
+    // $working_key = \App\Configuration::where('attribute','ccavenue_working_key_nber_'.$nber_id)->first()->value;
+    // $access_code = \App\Configuration::where('attribute','ccavenue_access_code_nber_'.$nber_id)->first()->value;
+
+     $working_key = \App\Configuration::where('attribute','ccavenue_working_key')->first()->value;
+    $access_code = \App\Configuration::where('attribute','ccavenue_access_code')->first()->value;
+
+
    /* foreach ($data as $key => $value){
         if($merchant_data != "")
             $merchant_data .= "&";

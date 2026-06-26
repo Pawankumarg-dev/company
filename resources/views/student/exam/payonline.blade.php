@@ -17,7 +17,7 @@
     <input type="hidden" name="billing_email" id="billing_email" value="{{$candidate->email}}" >
     <input type="hidden" name="applicant_id" value="{{$applicant->id}}">
     <input type="hidden" name="payment" value="{{$payment}}">
-    <input type="hidden" name="exam_id" value="28">
+    <input type="hidden" name="exam_id" value="{{$applicant->exam_id}}">
     <button class="btn btn-sm btn-primary hidden" style="display: none;" type="submit">Pay Online</button> <br />
 </form>
 </div>

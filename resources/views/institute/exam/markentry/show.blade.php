@@ -47,7 +47,7 @@
                                     {{$mark}}
                                 </td>
                             @endforeach
-                    </tr>
+                        </tr>
                     @endforeach
                 </table>
                 @if($slno == 1)

@@ -7,20 +7,22 @@ use Illuminate\Http\Request;
 
 
 use App\Services\Common\HelperService;
-
+use Session;
 use PDF;
 use DB;
 
 class EvaluationtrackingController extends Controller
 {
     private $helperService;
-    private $nber_id;
+    private $exam_id;
 
     public function __construct(HelperService $helper)
     {
        $this->middleware(['role:nber']);
         $this->helperService = $helper;
         $this->nber_id = $this->helperService->getNberID();
+		        $this->exam_id = Session::get('exam_id');
+
     }
 
     public function index(){
@@ -57,7 +59,7 @@ FROM
 		evaluationcenterdetails.evaluationcenter_id = evaluationcenters.id
 		
 WHERE
-	allexamstudents.exam_id = 27 AND
+	allexamstudents.exam_id = " . $this->exam_id ." AND evaluationcenterdetails.nber_id = " . $this->nber_id ." AND
 	programmes.nber_id = " . $this->nber_id ." group by evaluationcenters.id,programmes.id ORDER BY programmes.abbreviation,evaluationcenters.name";
 
 

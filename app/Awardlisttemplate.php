@@ -8,7 +8,7 @@ class Awardlisttemplate extends Model
 {
     //
     protected $fillable = [
-        "practicalexam_id", "exam_date",'practicalexaminer_id','institute_id','approvedprogramme_id','term','downloaded_at','marksheet','marksheet_uploaded_at','faculty_id','verified','longitude_latitude'
+        "practicalexam_id", "exam_date",'practicalexaminer_id','institute_id','approvedprogramme_id','term','downloaded_at','marksheet','marksheet_uploaded_at','faculty_id','verified','updated_by','longitude_latitude'
     ];
 
     

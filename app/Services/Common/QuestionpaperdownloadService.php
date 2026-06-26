@@ -27,12 +27,11 @@ class QuestionpaperdownloadService
 
     }
     
-    public function downloadquestionpaper($usertype_id,$r){
-
-
+    public function downloadquestionpaper($usertype_id,$r,$nohistory){
 
        //return "processing";
-        //$schedule_id = 43;
+
+
         $examtimetable = \App\Examtimetable::find($r->examtimetable_id);
         $this->examtimetable = $examtimetable;
 
@@ -58,13 +57,24 @@ class QuestionpaperdownloadService
                 
           
                 //Change this to specific schedule
+
+                     $set = 0;
+                $set = \App\Examschedule::find($examtimetable->examschedule_id)->qpset;
+                if($set == 0){
+                   //$set = 1;
+                   return "processing";
+                }
             
                 $history = \App\Questionpaperdownloadhistory::where('examtimetable_id',$r->examtimetable_id)
                             ->where('externalexamcenter_id',$externalexamcenter_id)
                             ->where('language_id',$r->language_id)
                             ->first();
                             
-                    // if(!is_null($history) ){
+                    if(!is_null($history) && $nohistory==0){
+                        Session::flash('error','Already downloaded');
+                        return false;
+                    }
+                    //  if(!is_null($history)){
                     //     Session::flash('error','Already downloaded');
                     //     return false;
                     // }
@@ -89,14 +99,7 @@ class QuestionpaperdownloadService
                 $allexampaper_id=$r->allexampaper_id;
                 $omr_code = $r->omr_code;
                 $language_id = $r->language_id;
-                $set = 0;
-                $set = \App\Examschedule::find($examtimetable->examschedule_id)->qpset;
-
-               
-                if($set == 0){
-                   //$set = 1;
-                   return "processing";
-                }
+           
 
                 // return $set;
             

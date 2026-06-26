@@ -124,7 +124,7 @@ class AttendanceController extends Controller
         }   
         if($message==''){
             Session::flash('messages','Updated');
-            $exampaper = \App\Allexampaper::where('approvedprogramme_id',$r->approvedprogramme_id)->where('subject_id',$r->subject_id)->where('exam_id',27)->first();
+            $exampaper = \App\Allexampaper::where('approvedprogramme_id',$r->approvedprogramme_id)->where('subject_id',$r->subject_id)->where('exam_id',$this->exam_id)->first();
             $exampaper->attendance = $count;
             $exampaper->present = $pcount;
             $exampaper->absent = $acount;

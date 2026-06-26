@@ -5,7 +5,7 @@
 		<div class="col-md-6">
             <?php $slno = 1; ?>
             <h3>Time Table - Theory</h3>
-            <h4>Supplementary 2026 Examinations </h4>
+            <h4>{{$exam->name}}</h4>
             <br>
             <form action="{{url('/exam-timetable')}}" method="get">
                 {{csrf_field()}}
@@ -29,6 +29,8 @@
                         <option value="10" @if($academicyear_id == 10) selected @endif> 2022</option>
                         <option value="11" @if($academicyear_id == 11) selected @endif> 2023</option>
                         <option value="12" @if($academicyear_id == 12) selected @endif> 2024</option>
+                        <option value="14" @if($academicyear_id == 14) selected @endif> 2025</option>
+
                     </select>
                 </div>
                 <div class="form-group">

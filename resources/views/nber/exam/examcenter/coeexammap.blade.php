@@ -23,7 +23,7 @@
                         Before mapping, please check the exam center details and ensure all information is correct.
                     </li>
                     <li>
-                        NBER can only map its own institute and candidates.
+                        NBER can only map its own state institute and candidates.
                     </li>
                     <li>
                         Please do not map more than the maximum capacity.

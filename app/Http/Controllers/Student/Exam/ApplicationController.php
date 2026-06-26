@@ -17,23 +17,34 @@ class ApplicationController extends Controller
 
     private $examService;
     private $helperService;
-   
+
     public function __construct(Request $r)
     {
         $this->examService = new MainExamService();
         $this->helperService = new HelperService();
     }
 
+
     public function index(Request $r)
     {
-        
+
         if ($r->has('view')) {
             if ($r->view == 'result') {
 
-            $allapplicant = \App\Allapplicant::where('candidate_id', $this->helperService->getCandidateID())->where('exam_id', 27)->first();
-         
-                if($allapplicant->blocked==0 || $allapplicant->blocked==2){
-                                $allapplications = \App\Allapplication::where('candidate_id', $this->helperService->getCandidateID())->where('exam_id', 27)->where('blocked', 0)->get();
+             $malpractice = \App\Malpractice::where('active', '1')
+            ->where('candidate_id', $this->helperService->getCandidateID())
+            ->first();
+
+                if ($malpractice) {
+                    return 'Malpractice Case, contact to consern NBER';
+                }
+
+       
+
+            $allapplicant = \App\Allapplicant::where('candidate_id', $this->helperService->getCandidateID())->where('exam_id', 28)->first();
+
+                if($allapplicant && ($allapplicant->blocked==0 || $allapplicant->blocked==2)){
+                                $allapplications = \App\Allapplication::where('candidate_id', $this->helperService->getCandidateID())->where('exam_id', 28)->where('blocked', 0)->get();
 
                 }
                 else{
@@ -42,9 +53,9 @@ class ApplicationController extends Controller
 
 
                      
-                $allapplicantrev = \App\Allapplication::where('candidate_id', $this->helperService->getCandidateID())->where('exam_id', 27)->whereNotNull('mark_ex_re')->get();
+                // $allapplicantrev = \App\Allapplication::where('candidate_id', $this->helperService->getCandidateID())->where('exam_id', 27)->whereNotNull('mark_ex_re')->get();
 
-            //    $allapplicantrev=[];
+                $allapplicantrev=[];
 
 
 
@@ -74,13 +85,32 @@ if ($r->has('view')) {
 
             if ($r->view == 'examform') {
 
+            $Candidate = \App\Candidate::where('user_id', Auth::user()->id)->first();
+
+
+
+
+            $enrollemnt = \App\Enrolmentfeepayment::where('candidate_id', $Candidate->id)->first();
+            if ($Candidate->approvedprogramme->academicyear_id==14 && (!$enrollemnt || $enrollemnt->orderstatus_id != 1)) {
+
+            $c=$Candidate;
+                return view('student.enrolmentfee.enrollment', compact('c'));
+            }
 
  $date = \Carbon\Carbon::today()->toDateString();
-        $Candidate = \App\Candidate::where('user_id', Auth::user()->id)->first();
+
             $theoty=1;
             $paractical=2;
 
-        if($Candidate->approvedprogramme->programme_id == 57){
+                  $malpractice = \App\Malpractice::where('active', '1')
+    ->where('candidate_id', $Candidate->id)
+    ->first();
+
+        if ($malpractice) {
+            return 'Malpractice Case, contact to consern NBER';
+        }
+
+        // if($Candidate->approvedprogramme->programme_id == 57){
            $atte = \App\Attendance::where('candidate_id', $Candidate->id)
         ->selectRaw('MAX(attendance_t) as attendance_t, MAX(attendance_p) as attendance_p')
         ->first();
@@ -91,7 +121,7 @@ if ($r->has('view')) {
             if ($atte->attendance_p < 75.00) {
                  $paractical=0;
             }
-        }
+        // }
 
 
         // return $Candidate->approvedprogramme->academicyear_id; 
@@ -102,24 +132,53 @@ if ($r->has('view')) {
 $eligiable = DB::table('allexamresults')
     ->select(
         'candidate_id',
+
         DB::raw('COUNT(sl_no_marksheet_term_one) AS term_one_exam_count'),
+      DB::raw("
+            CASE 
+                WHEN MAX(term_one_result_id) = 1 
+                     OR MAX(reevaluation_term_one_result_id) = 1
+                THEN 1
+                ELSE 0
+            END AS first_year_result
+        "),
+
+        DB::raw("
+            CASE 
+                WHEN MAX(term_two_result_id) = 1 
+                     OR MAX(reevaluation_term_two_result_id) = 1
+                THEN 1
+                ELSE 0
+            END AS second_year_result
+        "),
+
+
         DB::raw('COUNT(sl_no_marksheet_term_two) AS term_two_exam_count')
     )
     ->where('candidate_id', $Candidate->id)
+    ->where('candidate_id','!=', 77001)
     ->groupBy('candidate_id')
     ->first(); // Use first() instead of get()
 
+if($eligiable){
         if (
-            // ($eligiable->term_one_exam_count > 2 || $eligiable->term_two_exam_count > 2) ||
+              (($eligiable->term_one_exam_count > 2 && $eligiable->first_year_result !=1)|| $eligiable->term_two_exam_count > 2 && $eligiable->first_year_result !=1) ||
         ($Candidate->approvedprogramme->programme->numberofterms == 1 && $Candidate->approvedprogramme->academicyear_id<11) || ($Candidate->approvedprogramme->programme->numberofterms == 2 && $Candidate->approvedprogramme->academicyear_id<10)
 
         ) {
+
+
+
+
+
+
             Session::flash('messages', "N+2 chances are over as per scheme of examination. You are not eligible for exam");
             return back();
         }
+            }
 
         // exam form
-        $allapplicant = \App\Allapplicant::where('candidate_id', $Candidate->id)->where('exam_id',28)->first();
+        $allapplicant = \App\Allapplicant::where('candidate_id', $Candidate->id)->where('exam_id',29)->first();
         $subjects = $this->examService->getSubjects();
         $exam = $this->examService->getExam();
         $languages = \App\Language::all();
@@ -130,7 +189,7 @@ $eligiable = DB::table('allexamresults')
             if (!is_null($allapplicant)) {
 
                 if($allapplicant->payment_status!=1){
-                $allapplications = \App\Allapplication::where('candidate_id', $Candidate->id)->where('exam_id', 28)->where('blocked', 0)->get();
+                $allapplications = \App\Allapplication::where('candidate_id', $Candidate->id)->where('exam_id', 29)->where('blocked', 0)->get();
 
 if (count($allapplications) > 0) { // ✅ works in older versions
     
@@ -207,7 +266,7 @@ if($allapplicant->payment_status==1){
             'Candidate',
             'internalpass'
         ));
-}elseif(($date < '2026-03-25' && $Candidate->approvedprogramme_id==8837) ||($date < '2026-03-28' && $Candidate->approvedprogramme->institute_id==987)){
+}elseif($date <= '2026-06-04'){
 
  return view('student.exam.application',compact(
             'subjects',
@@ -271,7 +330,7 @@ WHERE
 ) t
 GROUP BY t.candidate_id;");
 
-if(($date < '2026-03-25' && $Candidate->approvedprogramme_id==8837) ||($date < '2026-03-28' && $Candidate->approvedprogramme->institute_id==987)){
+if($date <= '2026-06-04'){
             return view('student.exam.application',compact(
             'subjects',
             'exam',
@@ -410,7 +469,8 @@ else{
 
     public function store(Request $r)
     {
-
+     Session::put('messages','Exam application is closed');
+             return back();
        
         $approvedprogramme_id = \App\Candidate::where('user_id', Auth::user()->id)->first()->approvedprogramme_id;
 
@@ -446,6 +506,8 @@ else{
         //     //
         // }
         //Session::flash('messages',"Exam application are closed");
+
+
         return view('student.exam.payonline', compact(
             'candidate',
             'applicant',

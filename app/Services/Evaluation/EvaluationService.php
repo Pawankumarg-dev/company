@@ -26,6 +26,7 @@ class EvaluationService
     {
         $this->helper = $helper;
         $this->exam_id = $this->helper->getScheduledExamID();
+
     }
 
     public function getEvaluationcenter($id){
@@ -49,10 +50,14 @@ class EvaluationService
                         ->pluck('id')->toArray();
     }
 
-    public function getCourses($examcenter_ids){
+    public function getCourses($examcenter_ids,$nber_id){
+
+
+        
+
         $programme_ids =  \App\Allexampaper::whereIn('externalexamcenter_id',$examcenter_ids)->where('exam_id',$this->exam_id)->pluck('programme_id')->unique()->toArray();
         
-        $course_ids = \App\Programme::whereIn('id',$programme_ids)->pluck('course_id')->unique()->toArray();
+        $course_ids = \App\Programme::whereIn('id',$programme_ids)->whereIn('nber_id',$nber_id)->pluck('course_id')->unique()->toArray();
         return \App\Course::whereIn('id',$course_ids)->get();
     }
 
@@ -86,7 +91,7 @@ class EvaluationService
 
 
 
-        $papers =  \App\Allexamstudent::whereIn('externalexamcenter_id',$examcenter_ids)->where('exam_id',27);
+        $papers =  \App\Allexamstudent::whereIn('externalexamcenter_id',$examcenter_ids)->where('exam_id',$this->exam_id);
         
          if(!is_null($course_id)){
             $programme_ids = $this->getProgammeIDs($course_id);
@@ -110,20 +115,12 @@ class EvaluationService
 ->groupBy('subject_id')
 ->get();
 
-
-
-
-
-
-
-
-
     }
 
     public function getInstituteIDs($examcenter_ids,$course_id = null){
         //return \App\Institute::whereIn('examcenter_se_24',$examcenter_ids)->pluck('id')->toArray();
-        $papers =  \App\Exampaper::whereIn('externalexamcenter_id',$examcenter_ids);
-        if(!is_null($course_id)){
+        $papers =  \App\Allexampaper::whereIn('externalexamcenter_id',$examcenter_ids);
+        if(is_null($course_id)){
             $programme_ids = $this->getProgammeIDs($course_id);
             $papers= $papers->whereIn('programme_id',$programme_ids);                
         }

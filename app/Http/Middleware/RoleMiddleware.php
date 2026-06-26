@@ -87,7 +87,10 @@ class RoleMiddleware
                 $clo = \App\Clo::where('user_id',Auth::user()->id)->first();
                 Session::put('clo',$clo);
             }
-
+            if ( $usertype_id == 12) 
+            {
+                    Session::put('role','ms');
+            }
             // RCI Session
             if ( $usertype_id == 5) 
             {

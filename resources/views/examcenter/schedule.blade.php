@@ -206,7 +206,7 @@
                             $closetime  = \Carbon\Carbon::parse($s->starttime)->addHours(2)->toTimeString();
 
 
-                            $maxdate = \Carbon\Carbon::parse($s->examdate)->addDays(2)->toDateString();
+                            $maxdate = \Carbon\Carbon::parse($s->examdate)->addDays(7)->toDateString();
                             //REMOVE THIS LINE
                             // $opentime  = \Carbon\Carbon::parse($s->starttime)->subHours(4)->toTimeString();
 

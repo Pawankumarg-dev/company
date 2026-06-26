@@ -22,7 +22,7 @@
             $this->helperService = new HelperService();        
             $this->candidate = $this->helperService->getCandidate();
             //$this->exam = $this->helperService->getScheduledExam();
-            $this->exam = \App\Exam::find(28);
+            $this->exam = \App\Exam::find(29);
             $this->applicant = Allapplicant::where('candidate_id',$this->candidate->id)->where('exam_id',$this->exam->id)->first();
             $this->request = app()->request;
             $this->subjects =  $this->getSubjects();
@@ -51,10 +51,15 @@
             s.subjecttype_id,
 			s.scode,
 			s.sname,
+            			s.omr_code,
+            			s.programme_id,
+
 			IF( COUNT(alts.id) > 0 ,GROUP_CONCAT(json_object(
 				'id',alts.id,
 				'scode', alts.scode,
-				'sname', alts.sname
+				'sname', alts.sname,
+                'omr_code', alts.omr_code
+
 			)),NULL) AS elective_subjects,
             st.type as type,
             s.syear as term,
@@ -82,7 +87,7 @@
 		ON 
 			a.candidate_id = ".$this->candidate->id." 
         
-        AND a.exam_id=28 AND
+        AND a.exam_id= " .$this->exam->id." AND
 			a.subject_id = s.id
         INNER JOIN 
             candidates c  ON c.id = ".$this->candidate->id."  
@@ -98,17 +103,18 @@
 			s.alternative = 0
 		AND 
 			(
-				(".$academicyear_id." < ".$this->exam->academicyear_id." AND ". $academicyear_id . " > " . ($this->exam->academicyear_id - 4 ) ." AND ". $this->candidate->approvedprogramme->programme->numberofterms .  " = 2 )  
+				(".$academicyear_id." < ".$this->exam->academicyear_id." AND ". $academicyear_id . " >= " . ($this->exam->academicyear_id - 4 ) ." AND ". $this->candidate->approvedprogramme->programme->numberofterms .  " = 2 )  
                 OR
-                (".$academicyear_id." < ".$this->exam->academicyear_id." AND ". $academicyear_id . " > " . ($this->exam->academicyear_id - 3 ) ." AND ". $this->candidate->approvedprogramme->programme->numberofterms .  " = 1 )  
+                (".$academicyear_id." < ".$this->exam->academicyear_id." AND ". $academicyear_id . " >= " . ($this->exam->academicyear_id - 3 ) ." AND ". $this->candidate->approvedprogramme->programme->numberofterms .  " = 1 )  
 				OR
 				(
 					".$academicyear_id." = ".$this->exam->academicyear_id."
 					AND
 					s.syear = 1
 				)
-                OR  ". $this->candidate->approvedprogramme->academicyear_id . " = 13
-                OR  ". $this->candidate->approvedprogramme->academicyear_id . " = 15
+              
+                OR  ". $this->candidate->approvedprogramme->academicyear_id . " = 16
+
 			)
 		AND
 			s.id NOT IN (".$passed_papers.")

@@ -17,7 +17,7 @@ class ScheduleService
 
     }
     public function getSchedule($exam_id){
-        return \App\Examschedule::where('exam_id',$exam_id)->get();
+        return \App\Examschedule::where('exam_id',$exam_id)->orderby('examdate')->get();
     }
     public function getCandidatesCount($programme_id){
         return \App\Viewapplicant::where('programme_id',$programme_id)

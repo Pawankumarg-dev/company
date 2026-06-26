@@ -13,7 +13,8 @@ class Enrolmentfeepayment extends Model
         'academicyear_id',
         'order_id',
         'orderstatus_id',
-        'nber_id'
+        'nber_id',
+        'candidate_id'
     ];
 
     public function order(){

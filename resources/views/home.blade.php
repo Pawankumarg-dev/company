@@ -11,7 +11,8 @@
     <div class="raw">
         <div class="col-md-12">
             @include('common.errorandmsg')
-            <div class="alert alert-success" >
+            
+            <div class="alert alert-success hidden" >
                 <b> Supplementary Examination Applicaiton Form</b> 
                 <p>
                     Students can fill the supplimentary examination application form online.
@@ -20,27 +21,25 @@
             </div> 
 
             
-<div class="alert alert-success ">
+<div class="alert alert-success">
                 <h4>
-                    <a href="https://nber-rehabcouncil.gov.in/files/notice/NBER_supp_2026addendum.pdf" target="_blank">Addendum:Circular for Supplementary exam 2026</a>
+                    Exam Application Form Submission date is exatanded till 04-06-2026
                 </h4>
              </div>
             
 
-            <div class="alert alert-success hidden">
-                <h4> <a href="{{url('/')}}/login#student" target="_blank"> June 2025 Re-evalution results </a></h4>
+          
+            <div class="alert alert-success">
+                <h4> <a href="{{url('/')}}/login#student" target="_blank"> Supplementary 2026 results </a></h4>
                 <h4>
-                   <strong>(Candidates can view their Re-evalution/ Re-totaling Marks on the candidate login dashboard.) &nbsp;&nbsp;&nbsp;</strong>
+                   <strong>(The passed out candidates may download their Certificate, Marksheet with CRR Certificate from 15-05-2026) &nbsp;&nbsp;&nbsp;</strong>
                         
                 </h4>
             </div>
 
-            <div class="alert alert-success hidden">
-                <h4> <a href="{{url('/')}}/login#student" target="_blank"> June 2025 results </a></h4>
-                <h4>
-                   <strong>(The passed out candidates may download their Certificate, Marksheet with CRR Certificate from 13-10-2025) &nbsp;&nbsp;&nbsp;</strong>
-                        
-                </h4>
+            <div class="alert alert-success ">
+                <strong>Announcement of Annual Term End Examination 2026 of Diploma & Certificate level courses &nbsp;&nbsp;&nbsp;</strong>
+                <a href="{{ url('files/notice/June_2026_Exam_Timeline.pdf') }}" target="_blank">    View Circular</a><br>
             </div>
 
             <div class="alert alert-success hidden">
@@ -68,9 +67,7 @@
 
 
 
-        {{-- <div class="alert alert-success ">
-                <h4> "The counselling for admission 2025 is open, Please wait for revised schedule'" </h4>
-            </div> --}}
+  
             
             
             <div class="alert alert-success hidden">
@@ -219,70 +216,7 @@
                             <a  target="_blank" href="{{url('files/Exam_schedule_june_2024.pdf')}}"> Announcement of the date of Annual Theory and Practical Examination, June - 2024 </a>
                                         
             </div>
-            <div class="alert alert-success" style="display: none;">
-                
-                <b> Results of the Supplementary Examinations - April 2024  </b>    
-                <br />            
-                <br />            
-                    <ul>
-                        <li>
-                            <b>
-                                Students
-                            </b> can login to this portal and click on <i>Supplementary Exam Result</i> link to view the results.
-                        </li>
-                        <li>
-                            <b>Institutes</b> can login to this portal and click on <i> Examination -> Supplementary Exam April 2024</i> to view the results.
-                        </li>
-                        <li>
-                            Downloading of the marksheets and certificates for the Supplementary results will be available on this portal soon.
-                        </li>
-                    </ul>
-            </div>
-{{--            
-            <div class="alert alert-success" >
-                <b>Important Announcement: </b>                
-                    Supplementary Examination has been scheduled on 5,6,7,8,10 and 12 April 2024 in morning and afternoon shift. <br>
-            </div>
-
-            <div class="alert alert-danger" >
-                <b>Important Announcement: </b>                
-                    Data verification on NBER portal is opened for the admission of 2023 academic year.<br>
-                    All the TTIs who have not uploaded the data of the students may upload latest by 30th March 2024, failing which the admission stands cancelled.
-            </div>
-
-            <div class="alert alert-danger" style="display:none;" >
-                <b>Important Announcement: </b> 
-                <a target="_blank" href="{{url('files/nberexam220923.pdf')}}">
-                    For online generation of marks cards and certificates, all the heads of the training institutes are advised to upload all candidate data including Aadhar card number, mobile number and email etc. on this portal.
-                </a>
-            </div>
-
-
-                       
-
-            <div class="alert alert-warning" >
-                <b> Reevaluation Result</b> 
-                <p>
-                    Results of Re-evaluation for Sep-Oct 2023 exams is published. Result can be downlowed from Student login and TTI login.
-
-                    Please read the <a href="{{url('files')}}/Guidelines_student.pdf">Guidelines</a> for Students
-                </p>
-            </div>
-
-            <div class="alert alert-success" >
-                <b> Sep/Oct 2023 Exam Results</b> 
-                <p>
-                Sep/Oct 2023 Exam Result are declared. Students and TTIs can download the marksheets and certificates by logging in to this portal.
-                </p>
-            </div>
-
-            <div class="alert alert-warning" >
-                <b>Add Faculties:  </b> 
-                Information of the faculty and their CRR details in each NI / TTI  which are running various courses of RCI has to be updated. 
-                <a target="_blank" href="{{url('files/Adding_Faculty_to_TTI_Login.pdf')}}">
-                    Guidelines 
-                </a> 
-            </div> --}}
+     
 
         </div>
     </div>

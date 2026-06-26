@@ -41,7 +41,6 @@ class MarkEntryController extends Controller
     }
 
     public function getTotal($id,$r){
-        //dd($id,$r);
         if(Session::has($id.$r->syear.$r->subjecttype_id."_totalmark")){
             $totalmark = Session::get($id.$r->syear.$r->subjecttype_id."_totalmark");
         }else{
@@ -55,21 +54,18 @@ class MarkEntryController extends Controller
     }
     public function show($id,Request $r)
     {
-
       
         $subjecttype = \App\Subjecttype::find($r->subjecttype_id);
         $exam  = \App\Exam::find($r->exam_id);
-        //dd($exam);
         $approvedprogramme = \App\Approvedprogramme::find($id);
-       
         $programme_id = $approvedprogramme->programme_id;
         $syear = $r->syear;
-        $subjects = $this->markentryService->getSubjects($programme_id,$r);       
+        $subjects = $this->markentryService->getSubjects($programme_id,$r);
         $supplementary = null;
         if($r->has('supplementary')){
             $supplementary  = "Yes";
         }
-        $marks = $this->markentryService->getCandidates($subjects,$id,$r,$supplementary);      
+        $marks = $this->markentryService->getCandidates($subjects,$id,$r,$supplementary);        
         $marksheet = $this->markentryService->getMarksheet($id,$r);
         $totalmark = $this->getTotal($id,$r);
         return view('institute.exam.markentry.show',compact(
@@ -88,13 +84,10 @@ class MarkEntryController extends Controller
 
     public function edit($id,Request $r)
     {
-     
        
-    $approvedprogramme = \App\Approvedprogramme::find($id);
-        //dd($approvedprogramme);
+        $approvedprogramme = \App\Approvedprogramme::find($id);
 //  if($approvedprogramme->institute_id == 'rrrr')
 // {
-
 
 
 
@@ -105,17 +98,13 @@ class MarkEntryController extends Controller
         $exam  = \App\Exam::find($r->exam_id);
         $syear = $r->syear;
         $subjects = $this->markentryService->getSubjects($programme_id,$r);
-       //dd($subjects);
         $supplementary = null;
         if($r->has('supplementary')){
             $supplementary  ="Yes";
         }
         $marks = $this->markentryService->getCandidates($subjects,$id,$r,$supplementary);  
-        // dd($marks);
         $marksheet = $this->markentryService->getMarksheet($id,$r);
-        
         $totalmark = $this->getTotal($id,$r);
-        
         return view('institute.exam.markentry.edit',compact(
             'marks',
             'exam',
@@ -141,7 +130,6 @@ class MarkEntryController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
         //return "Closed";
         if($request->has('candidate_id')){
             $approvedprogramme = \App\Approvedprogramme::find($id);
@@ -150,9 +138,7 @@ class MarkEntryController extends Controller
                 $result  = $this->markentryService->getInternalFailedSubject($request,$programme_id);
             }else{
                 $result  = $this->markentryService->getFailedSubject($request,$programme_id);
-               
             }
-            
             return $result;
         }
         if($request->has('uploadsheet')){
@@ -165,7 +151,6 @@ class MarkEntryController extends Controller
             $supplementary = '&supplementary=Yes';
             return back();
         }
-       
         return redirect('/institute/exam/markentry/'.$id.'?exam_id='.$request->exam_id.'&subjecttype_id='.$request->subjecttype_id.'&syear='.$request->syear.$supplementary);
     }
 

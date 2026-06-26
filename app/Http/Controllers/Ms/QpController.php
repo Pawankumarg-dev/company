@@ -87,17 +87,37 @@ foreach ($examschedule2 as $schedule) {
     // ✅ Get papers for THIS schedule (fix here)
     $exampapers = \App\Allexampaper::where('examschedule_id', $schedule->id)->get();
     // $exampapers = \App\Exampaper::where('examschedule_id', $schedule->id)->get();
-
     foreach ($exampapers as $ep) {
         $ep->password = $this->generateRandomString(8);
         $ep->save();
     }
+
+
+$exampapers_access = \App\Allexampaper::where('examschedule_id', $schedule->id)
+    ->get()
+    ->unique('omr_code');
+
+foreach ($exampapers_access as $ep) {
+
+    $qps = DB::table('examtimetable_language')
+        ->where('exam_id', $this->exam_id)
+        ->where('omr_code', $ep->omr_code)
+        ->get();
+    foreach ($qps as $qp) 
+        {
+        $column = 'question_paper_' . $r->set;
+            $filePath = public_path('files/questionpapers/' . $this->exam_id . '/' . $qp->$column);
+            if (file_exists($filePath)) {
+                chmod($filePath, 0755);
+            }
+    }
 }
 
-
+}
         Session::put('messages','Question Paper Released');
         return back();
     }
+    
 
     public function generateRandomString($max) {
         $characters = 'ABCDEFGHJKLMNPQRSTUVWXY3456789';

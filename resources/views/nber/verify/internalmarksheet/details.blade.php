@@ -21,7 +21,7 @@
     </style>
 <div class="container">
     <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <table class="table table-bordered table-condensed" id="myTable">
     <thead>
         <tr>
@@ -62,7 +62,7 @@
     </tbody>
 </table>
             </div>
-                        <div class="col-md-6" style="height: 600px;">
+                        <div class="col-md-4" style="height: 600px;">
                             
             @if(isset($Internalmarksheet) && $Internalmarksheet->filename)
             <button  class="btn btn-sm btn-info" onclick="window.open('{{ url('/files/internalmarksheets/'.$Internalmarksheet->filename) }}', '_blank')">
@@ -78,9 +78,12 @@
             @else
                 <p class="text-center text-muted">No marksheet uploaded</p>
             @endif
-
+@if($Internalmarksheet->verified==1)
+ Verified
+@else
+date is over
             
-            <div style="display: flex">
+            {{-- <div style="display: flex">
  <form action="{{url('/')}}/nber/internal-marksheet-verify" method="POST" class="d-inline" style="padding-right:5px">
             {{ csrf_field() }}
             <input type="hidden" name="id" value="{{ $Internalmarksheet->id }}">
@@ -92,6 +95,8 @@
                 Not verify
             </button>
         </form>
+
+
             
 <form action="{{url('/')}}/nber/internal-marksheet-verify" method="POST" class="d-inline">
             {{ csrf_field() }}
@@ -104,9 +109,11 @@
                 Verify
             </button>
         </form>
-            </div>
+
+
+            </div> --}}
        
-        
+        @endif
     
 
 

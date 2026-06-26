@@ -6,7 +6,7 @@
         formData.append('subjecttype_id', {{$subjecttype->id}} ); 
         formData.append('syear',{{$syear}});
         formData.append('_method','PUT');
-        // console.log(formData);
+        console.log(formData);
         $('#candidatename').text($('#name_'+candidate_id).text());
         $('#enrolmentno').text($('#enrolmentno_'+candidate_id).text());
         $('#failed').text('Please wait..');
@@ -23,12 +23,12 @@
             },
             data: formData,
             success: function (data) {
-                // console.log(data);
+                console.log(data);
             },
             error: function (data) {
-                // console.log(data);
+                console.log(data);
             if (data.status === 422) {
-                // console.log(data);
+                console.log(data);
             } else {
             }
         }
@@ -62,17 +62,16 @@
             },
             data: formData,
             success: function (data) {
-                // console.log(data);
+                console.log(data);
             },
             error: function (data) {
-                // console.log(data);
+                console.log(data);
             if (data.status === 422) {
                 console.log(data);
             } else {
             }
         }
         }).done(function(response) {
-             console.log(response);
             var html = '';
             if(response.length==0){
                  html = 'Passed in Internals';

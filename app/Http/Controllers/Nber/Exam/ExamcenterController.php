@@ -51,8 +51,8 @@ class ExamcenterController extends Controller
     )
     ->leftJoin('institutes', 'examcenters.institute_id', '=', 'institutes.id')
     ->leftJoin('max_candidate_for_theory_exam', function ($join) {
-        $join->on('examcenters.institute_id', '=', 'max_candidate_for_theory_exam.institute_id')
-             ->on('examcenters.nber_id', '=', 'max_candidate_for_theory_exam.nber_id');
+        $join->on('examcenters.institute_id', '=', 'max_candidate_for_theory_exam.institute_id');
+             //->on('examcenters.nber_id', '=', 'max_candidate_for_theory_exam.nber_id');
     })
     ->where('examcenters.exam_id', $examId)
     ->where('examcenters.nber_id','!=', 8)
@@ -100,21 +100,44 @@ class ExamcenterController extends Controller
 }
     public function create(){
 
-    //return 'closed';
+  
+$nber_id = \App\Nberstaff::where('user_id', Auth::user()->id)->first()->nber_id;
 
-        $nber_id=  \App\Nberstaff::where('user_id',Auth::user()->id)->first()->nber_id;
-        $externalexamcenters = Externalexamcenter::where('exam_id',$this->exam_id)->get();
 
-       $maxstudents = \App\MaxCandidateForTheoryExam::where('nber_id', $nber_id)
-    ->whereNotExists(function ($query) {
+
+    $nber=\App\Nber::find($nber_id);
+
+
+$states = explode(',', $nber->statezone);
+
+$externalexamcenters = Externalexamcenter::whereIn('lgstate_id', $states)
+    ->where(function ($q) {
+        $q->where('exam_id', $this->exam_id)
+          ->orWhere('coe', 1);
+    })
+    ->get();
+
+
+      $examId = $this->exam_id;
+
+
+$maxstudents = \App\MaxCandidateForTheoryExam::wherein('state_id',$states)
+    ->whereNotExists(function ($query) use ($examId) {
         $query->select(DB::raw(1))
             ->from('examcenters')
-            ->whereColumn('examcenters.institute_id', 'max_candidate_for_theory_exam.institute_id')
-            ->whereColumn('examcenters.nber_id', 'max_candidate_for_theory_exam.nber_id')
-            ->where('examcenters.exam_id', $this->exam_id);
+            ->whereColumn(
+                'examcenters.institute_id',
+                'max_candidate_for_theory_exam.institute_id'
+            )
+            // ->whereColumn(
+            //     'examcenters.nber_id',
+            //     'max_candidate_for_theory_exam.nber_id'
+            // )
+            ->where('examcenters.exam_id', $examId);
     })
-        ->orderBy('rci_code', 'asc')
+    ->orderBy('rci_code', 'asc')
     ->get();
+
   return view('nber.exam.examcenter.coeexammap',compact('externalexamcenters','maxstudents','nber_id'));
 
 
@@ -159,7 +182,8 @@ class ExamcenterController extends Controller
     
         public function show($id){
 
-       // return 'closed';
+
+    
              $nber = \App\Nberstaff::where('user_id', Auth::user()->id)->first();
             if (!$nber) {
                 return back()->with('error', 'NBER staff not found');
@@ -177,6 +201,8 @@ $updated = Examcenter::where('id', $id)
     ->update(['nber_id' => 8]);
 
                 // $examcenters->delete();
+                                return back();
+
             }
         }
     public function edit($id,Request $r){
@@ -216,6 +242,8 @@ $updated = Examcenter::where('id', $id)
     }
 
     public function store(Request $r){
+
+
 $examId = $r->exam_id;
 $nber_id = $r->nber_id;
     $externalexamcenters = Externalexamcenter::where('exam_id', $this->exam_id)->where('id',$r->externalexamcenter_id)
@@ -257,12 +285,17 @@ $nber_id = $r->nber_id;
         ->orderBy('rci_code', 'asc')
         ->first();
         $total = ($examcenters->max_candidates ?? 0) + ($maxstudents->max_candidate_count ?? 0);
-        $setting_capacity = Externalexamcenter::where('exam_id',$this->exam_id)->where('id',$r->externalexamcenter_id)->first()->setting_capacity;
-        if ($setting_capacity < $total) {
-            return back()->with('error', 'Seating capacity is full.');
-        }
+        $setting_capacity = Externalexamcenter::where('id',$r->externalexamcenter_id)
+         ->where(function ($q) {
+        $q->where('exam_id', $this->exam_id)
+          ->orWhere('coe', 1);
+    })
+        ->first()->setting_capacity;
+        // if ($setting_capacity < $total) {
+        //     return back()->with('error', 'Seating capacity is full.');
+        // }
 
-        if($r->exam_id == 28){
+        if($r->exam_id == 29){
 
             if($r->type == 'institute'){
 

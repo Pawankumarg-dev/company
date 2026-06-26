@@ -1,4 +1,4 @@
-<form id="form_{{$ap->id}}_{{$term}}" action="{{url('practicalexam/awardlisttemplate/download')}}" method="POST">
+<form id="form_{{$ap->id}}_{{$term}}" action="{{url('practicalexam/awardlisttemplate')}}" method="POST">
 @include('practicalexaminer._partials._modal._top')
 <div class="alert alert-warning subjects">
     {{ csrf_field() }}
@@ -43,9 +43,8 @@
                         <input 
                             type="checkbox"
                             class="chk_{{$ap->id}}_{{$term}}" 
-                            {{-- name="chk_{{$subject->id}}"   --}}
-                            name ="subject_ids[]"
-                            value="{{$subject->id}}"
+                            name="chk_{{$subject->id}}"
+                            
                         >
                     </td>
                 </tr>

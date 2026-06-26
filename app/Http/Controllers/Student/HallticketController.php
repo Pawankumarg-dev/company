@@ -890,24 +890,102 @@ else{
         return view('student.hallticket.index',compact('c'));
     }
 
-    public function recheckSupplimentaryPayment($rid){
-        set_time_limit(0);
-        //return "Y";
+    public function recheckSupplimentaryPayment($rid,$examfee,$exam_id){
+       
         require_once base_path().'/resources/views/paymentgateway/CryptoNewForAPI.blade.php';
         
         error_reporting(0);
         $type = Session::get('type');
-        if($type=='supplimentary'){
+        if($exam_id=='supplimentary'){
             $applicant = Supplimentaryapplicant::find($rid);
         }else{
-            if($type=='supplimentary2025'){
+            if($exam_id > '25'){
                 $applicant = \App\Allapplicant::find($rid);
             }else{
-                $applicant = Newapplicant::find($rid);
+                $exam_id = Newapplicant::find($rid);
             }
         }
+// return $applicant;
+
+
         $nber_id = $applicant->candidate->approvedprogramme->programme->nber_id;
         $amount = $applicant->amount;
+
+
+
+
+
+
+
+
+$working_key = \App\Configuration::where('attribute','ccavenue_working_key_nber_'.$nber_id)->first()->value;
+        $access_code = \App\Configuration::where('attribute','ccavenue_access_code_nber_'.$nber_id)->first()->value;
+        $order=Order::find($applicant->order_id);
+
+        $candidate = Candidate::where('user_id',Auth::user()->id)->first();
+          $merchant_json_data =
+        array(
+            'order_email'=> $order->billing_email,
+            'from_date' => '03-03-2025',
+            'order_bill_tel' => $order->billing_tel,
+            'order_no' => $order->order_number
+        );
+        // $merchant_json_data =
+        // array(
+        //     'order_no' => $order->order_number,
+        //     // 'reference_no' => $order->ccavenue_referencenumber
+        // );
+        // return $merchant_json_data;
+        $merchant_data = json_encode($merchant_json_data);
+        $encrypted_data = payment_encryptapi($merchant_data, $working_key);
+        $final_data = 'enc_request='.$encrypted_data.'&access_code='.$access_code.'&command=orderStatusTracker&request_type=JSON&response_type=JSON';
+ 
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api.ccavenue.com/apis/servlet/DoWebTrans");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER,'Content-Type: application/json') ;
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $final_data);
+        // Get server response ...
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $status = '';
+        $information = explode('&', $result);
+        $dataSize = sizeof($information);
+        echo "Request is: ". $final_data .'<br />';
+        echo "Response is: ".$result .'<br />';
+        echo "Data Size: "; 
+        echo $dataSize . '<br />';
+        for ($i = 0; $i < $dataSize; $i++) {
+            echo 'Information[i]'. $information[$i]. '<br />';
+            $info_value = explode('=', $information[$i]);
+            echo "Info Value:";
+            echo $info_value[0] . '<br />';
+            if ($info_value[0] == 'enc_response') {
+                $status = payment_decryptapi(trim($info_value[1]), $working_key);
+            }
+        }
+
+  echo "Status: ";
+        echo $status .'<br />';
+        $obj = json_decode($status);
+echo 'dfgdfgfg';
+return $obj->Order_Lookup_Result;
+
+
+
+
+
+
+
+
+
+
+
+
+
         
         $working_key = \App\Configuration::where('attribute','ccavenue_working_key_nber_'.$nber_id)->first()->value;
         $access_code = \App\Configuration::where('attribute','ccavenue_access_code_nber_'.$nber_id)->first()->value;
@@ -915,17 +993,13 @@ else{
         $candidate = Candidate::where('id',$applicant->candidate_id)->first();
         if(is_null($candidate->email)){
             Session::put('error','Kindly Update your email Address to continue.');
-            if($type=='supplimentary2025'){
                 return redirect('student/exam/applications');
-            }
-            return back();
+            
         }
         if($candidate->duplicate_mobile_no == 1){
             Session::put('error','Please ensure the mobile number is unique.');
-            if($type=='supplimentary2025'){
                 return redirect('student/exam/applications');
-            }
-            return back();
+
         }
 
         if($type=='supplimentary'){
@@ -1473,6 +1547,8 @@ else{
                 return $pdf->download($candidate->enrolmentno.'.pdf');
             //}
     }
+
+    
 
 }
 

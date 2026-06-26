@@ -28,6 +28,7 @@ class FacultyController extends Controller
         $institutes = $this->helperService->getInsitututeList();
         $faculties = null;
         $institute_id = null;
+        $coe = 0;
 
         $instituteIds = $institutes->pluck('id');
   
@@ -40,7 +41,7 @@ class FacultyController extends Controller
             $faculties = Faculty::whereIn('institute_id', $instituteIds)->get();
             }      
         return view('nber.faculties.index',compact(
-            'institutes','faculties','institute_id'    
+            'institutes','faculties','institute_id','coe'    
         ));
               
     }

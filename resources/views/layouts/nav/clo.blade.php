@@ -29,6 +29,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/') }}/clo/tabill">T.A Bill & CLO Report</a></li>
+                    <li><a href="{{ url('/') }}/clo/dailyreport">Daily Report</a></li>
                 </ul>
                 
                 <!-- Right Side Of Navbar -->
@@ -49,9 +50,6 @@
                     @endif
                     
                 </ul>
-
-                 
-
             </div>
         </div>
     </nav>

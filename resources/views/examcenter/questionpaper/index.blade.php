@@ -149,6 +149,25 @@
                                 if($omr_code == '38112'){
                                 $omr_code=39112;
                                 }
+                                // if($omr_code == '25213'){
+                                // $omr_code=26213;
+                                // }
+
+
+                                
+                                if($omr_code == '30118'){
+                                $omr_code=30113;
+                                }
+
+                                if($omr_code == '38113'){
+                                $omr_code=39113;
+                                }
+
+                                if($omr_code == '38116'){
+                                $omr_code=39116;
+                                }
+
+
                                     $omr = \App\Omrcode::where('omr_code',$omr_code)->first();
 
                                     

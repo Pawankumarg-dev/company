@@ -28,6 +28,8 @@
     <script src="{{ asset('packages/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('packages/moment/moment.min.js') }}"></script>
     <script src="{{asset('packages/bootstrap-3.3.7/js/bootstrap.min.js')}}"></script>
+            {{-- <script src="{{asset('packages/bootstrap-4.0.0/bootstrap.min.js')}}"></script> --}}
+
     <script src="{{ asset('packages/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
     <script src="{{asset('packages/sweetalert/sweetalert.min.js')}}"></script>
     <script src="{{ asset('packages/bootstrap-fileinput/bootstrap.file-input.js') }}"></script>
@@ -351,23 +353,6 @@
             justify-content: center;
             align-items: center;
         }
-        /* Ensure Bootstrap modals appear above other content and show correctly */
-        /* .modal.show {
-            display: block !important;
-            opacity: 1 !important;
-        }
-
-        .modal {
-            z-index: 999999 !important;
-        }
-
-        .modal-backdrop {
-            z-index: 99999 !important;
-        } */
-        /* Ensure SweetAlert2 popups appear above other overlays (modals, navbars) */
-        
-         
-        
     </style>
 </head>
 <body id="app-layout">

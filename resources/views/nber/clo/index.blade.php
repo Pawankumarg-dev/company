@@ -20,7 +20,7 @@
 						<th>Details / Edit</th>
 					</tr>
 					<?php $slno = 1; ?>
-					@foreach($clos as $e)
+					@forelse($clos as $e)
 						<tr>
 							<td>{{$slno}}
 								<?php $slno++ ; ?>
@@ -32,24 +32,30 @@
 							<td>{{$e->email}}</td>
 
 							<td>
-                                @if($e->is_verified !=1)
                                 <a href="{{url('nber/clo/')}}/{{$e->id}}" class="btn btn-xs btn-primary">Edit</a>
-                                @endif
-                                @if($e->is_verified !=1 && Auth::user()->id==88387)
-                                <button class="btn btn-xs btn-danger deleteButton" data-id="{{$e->id}}">Verify</button>
-                                @else
-                               
-                                <button class="btn btn-xs btn-danger deleteButton">Verified</button>
-
                                 <button class="btn btn-xs btn-danger sendpasswordButton" data-id="{{$e->id}}">Send Password</button>
 
-                                <a href="{{url('nber/clo/details')}}/{{$e->id}}" class="btn btn-xs btn-primary">Payment</a>
-
-                                
-                                @endif
+                                <a href="{{url('nber/clo/details')}}/{{$e->id}}" class="btn btn-xs btn-primary">Payment </a>
+                                <form action="{{ url('/nber/clo/report') }}" method="POST" style="margin: 5px;">
+                                   {{ csrf_field() }}
+                                    <input type="hidden" name="id" value="{{ $e->id }}">
+                                    <input type="hidden" name="nber_id" value="{{ $e->nber_id }}">
+                                    <input type="hidden" name="exam_id" value="{{ $e->exam_id }}">
+                                    <input type="hidden" name="user_id" value="{{ $e->user_id }}">
+                                    <button type="submit" class="btn btn-xs btn-success">
+                                        Details
+                                    </button>
+                                </form>
 							</td>
 						</tr>
-					@endforeach
+                        @empty
+                            <tr>
+                                <td colspan="7" class="text-center" style="color:red;">
+                                    No Data Found
+                                </td>
+                            </tr>
+                        @endforelse
+                   
 				</table>
 			</div>
 		</div>
@@ -99,6 +105,7 @@
                             item_id: itemId               
                         },
                         success: function(response) {
+                            console.log(response);
                             alert(response.message || 'Password sent successfully!');
                             $this.text('Password Sent');  
                             // $this.attr('disabled', true); 

@@ -30,6 +30,9 @@
 
     $encrypted_data=payment_encrypt($merchant_data,$working_key);
     ?>
+
+
+
     <form method="post" name="redirect" action="https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction">
 
   {{--  <form method="post" name="redirect" action="https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction">

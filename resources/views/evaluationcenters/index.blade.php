@@ -37,7 +37,7 @@
                         Dummy Enrolment Numbers
                     </th>
                     @endif
-                    <th style="width:22%">
+                    <th style="width:25%">
                         @if (!$is_deo)
                         Coversheet and Foil sheets
                         @else
@@ -126,7 +126,7 @@
                       <td>
                         @if($pending < 1 && !$is_deo) <?php $sheet=1;?> 
                         @foreach(explode(',', $ep->externalexamcenter_ids) as $externalexamcenter_id)
-                        <?php $applications_count =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',27)->where('subject_id',$ep->subject->id)->where('attendance',1)->count(); ?>
+                        <?php $applications_count =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',$exam_id)->where('subject_id',$ep->subject->id)->where('attendance',1)->count(); ?>
                                                 <?php $exam_center =  \App\Externalexamcenter::where('id',$externalexamcenter_id)->first(); ?>
 
                             @if($applications_count>0)
@@ -149,7 +149,7 @@
                                                     @foreach(explode(',', $ep->externalexamcenter_ids) as $externalexamcenter_id)
                                                         @php
                                                             $papers = \App\Allexamstudent::where('externalexamcenter_id', $externalexamcenter_id)
-                                                                ->where('exam_id', 27)
+                                                                ->where('exam_id', $exam_id)
                                                                 ->where('subject_id', $ep->subject_id)
                                                                 ->whereNull('attendance')
                                                                 ->count();
@@ -166,13 +166,13 @@
                     <td style="gap:10px" class="">
                         @if($pending < 1 && !$is_deo) <?php $sheet=1;?> 
                             @foreach(explode(',', $ep->externalexamcenter_ids) as $externalexamcenter_id)
-                            <?php $applications_count =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',27)->where('subject_id',$ep->subject->id)->where('attendance',1)->count(); ?>
+                            <?php $applications_count =  \App\Allexamstudent::where('externalexamcenter_id',$externalexamcenter_id)->where('exam_id',$exam_id)->where('subject_id',$ep->subject->id)->where('attendance',1)->count(); ?>
                             @if($applications_count>0)
     <?php $exam_center =  \App\Externalexamcenter::where('id',$externalexamcenter_id)->first(); ?>
                             @php
 
 
-                            $pdfPath='files/markfiles/27_' . $externalexamcenter_id . '_' . $ep->subject->id . '.pdf';
+                            $pdfPath='files/markfiles/'.$exam_id.'_' . $externalexamcenter_id . '_' . $ep->subject->id . '.pdf';
 
 
                             @endphp

@@ -230,6 +230,8 @@ class IncidentalchargeController extends Controller
     public function showDetails(Request $r) {
 
                 if($r->type=='examfee'){
+
+
               $exam_id = $r->exam_id;
             $payment = $r->payment;
             // if($r->has('payment') && $r->payment == 'Recheck'){
@@ -442,6 +444,7 @@ class IncidentalchargeController extends Controller
         
 
         if($r->type=='examapplication'){
+
             $type = 'examapplication';
             $billing_name = $r->billing_name;
             $billing_designation = $r->billing_designation;
@@ -499,6 +502,7 @@ class IncidentalchargeController extends Controller
         }
 
         if($r->type=='enrolment_student'){
+
             
             $paymentType = \App\Onlinepaymenttype::where('type',$r->type)->first();
             //return $paymentType;
@@ -517,6 +521,25 @@ class IncidentalchargeController extends Controller
                     $blade =$paymentType->blade_file;
                     $order_number = "ENF".$row->id."OR".date('Ymdhis').$this->generateRandomString().rand(1000, 9999);
                     Session::put('order_number',$order_number);
+
+                           $ap = \App\Approvedprogramme::find($row->approvedprogramme_id);
+   
+
+                      $enrolmentfee  = Enrolmentfeepayment::where('candidate_id',$r->id);
+            if($enrolmentfee->count() == 0){
+                Enrolmentfeepayment::create([
+                    'institute_id' => $ap->institute->id,
+                    'academicyear_id' => $ap->academicyear_id,
+                    'orderstatus_id' => 0,
+                    'order_id' => 0,
+                    'nber_id' =>  $nber_id,
+                    'candidate_id' =>  $r->id,
+
+                ]);
+            }
+            $enrolmentfee  = Enrolmentfeepayment::where('candidate_id',$r->id)->first();
+
+
                     return view($blade,compact('row','billing_notes','billing_designation','billing_name','billing_tel','billing_email','nber_id'));
                 }else{
                     Session::put('error','Invalid payment type');
@@ -526,6 +549,8 @@ class IncidentalchargeController extends Controller
                 Session::put('error','Something went wrong!');
                 return back();
             }
+
+
         }
 
         $academicyear = \App\Academicyear::where('current',1)->first();
@@ -556,6 +581,55 @@ class IncidentalchargeController extends Controller
             return view('institute.enrolmentfee.submit',compact('institute','academicyear_id','billing_notes','billing_designation','billing_name','billing_tel','billing_email','nber_id'));
         }
 
+        if($r->type=='affiliation'){
+             //type
+             //approveprogram_id
+             //noofterms
+
+
+        $ap = \App\Approvedprogramme::find($r->id);
+
+
+              $programme = \App\Programme::find($ap->programme_id);
+
+            $total = 10000;
+            // if ($programme && $programme->numberofterms == 2) {
+            //     $total = 20000;
+            // }
+
+       if ($ap) {
+            $institute = Institute::find($ap->institute_id);
+            $academicyear = \App\Academicyear::find($ap->academicyear_id);
+        }
+
+        $billing_notes = "Affiliation fee payment for the year - " . $academicyear->year."-".$institute->id;
+       $ref_num = rand(1000000000,9999999999);
+
+
+        Session::put('total',$total);
+        $order_number = "JE".$ap->institute_id."OR".date('Ymdhis').$this->generateRandomString().rand(1000, 9999);
+            Session::put('order_number',$order_number);
+        $affiliationfee  = Affiliationfee::where('approvedprogramme_id',$r->id)->where('term',$r->term);
+
+            if($affiliationfee->count() == 0){
+            Affiliationfee::create([
+                'institute_id' => $institute->id,
+                'academicyear_id' => $ap->academicyear_id,
+                'orderstatus_id' => 0,
+                'order_id' => 0,
+                'amount'=> 10000,
+                'term'=> $r->term,
+                'approvedprogramme_id'=>$r->id
+            ]);
+        }
+        $affiliationfee  = Affiliationfee::where('approvedprogramme_id',$r->id)->where('term',$r->term)->first();
+
+        
+                return view('institute.incidentalpayments.affiliationpayment', compact('academicyear','institute','billing_notes','ap','ref_num','affiliationfee'));
+
+        // return view('institute.incidentalpayments.showdetails', compact('academicyear','institute','billing_notes','affiliationfee'));
+             }
+
      
         
         $billing_notes = "Affiliation fee payment for the year - " . $academicyearname;
@@ -583,13 +657,7 @@ class IncidentalchargeController extends Controller
                     if($sortorder == $currentorder){
                         $count = \App\Incidentalfee::where('programme_id',$ap->programme_id)->where('academicyear_id',$academicyear_id)->where('term',$i)->count();
                         //if($count>0){
-                            // $fee = \App\Incidentalfee::where('programme_id',$ap->programme_id)->where('academicyear_id',$academicyear_id)->where('term',$i)->first()->fee; 
-                            $incidental = \App\Incidentalfee::where('programme_id', $ap->programme_id)
-                                ->where('academicyear_id', $academicyear_id)
-                                ->where('term', $i)
-                                ->first();
-
-                            $fee = $incidental ? $incidental->fee : 0; // or null / default value
+                            $fee = \App\Incidentalfee::where('programme_id',$ap->programme_id)->where('academicyear_id',$academicyear_id)->where('term',$i)->first()->fee; 
                             $total += $fee;
 //                        }
                     }
@@ -597,9 +665,8 @@ class IncidentalchargeController extends Controller
                 }
        //     }
         }
-       //dd($academicyear);
         Session::put('total',$total);
-        return view('institute.incidentalpayments.showdetails', compact('academicyear_id','academicyearname','institute', 'currentorder','billing_notes','affiliationfee','academicyear'));
+        return view('institute.incidentalpayments.showdetails', compact('academicyear_id','academicyearname','institute', 'currentorder','billing_notes','affiliationfee'));
     }
  
     public function uattest(){
@@ -685,8 +752,9 @@ class IncidentalchargeController extends Controller
         $academicyear_id = Session::get('academicyear_id');
         $access_code = \App\Configuration::where('attribute','ccavenue_access_code')->first()->value;
 
-        $affiliationfee  = Affiliationfee::where('institute_id',$institute->id)->where('academicyear_id',$academicyear_id)->first();
-
+$af_id=Session::get('af_id');
+        // $affiliationfee  = Affiliationfee::where('institute_id',$institute->id)->where('academicyear_id',$academicyear_id)->first();
+        $affiliationfee  = Affiliationfee::where('id',$af_id)->first();
         if(count($request->all() > 0)) {
             if($request->has('encResp')) {
                 $encResponse=$request->encResp;		
@@ -800,14 +868,14 @@ class IncidentalchargeController extends Controller
                         }
                     }
                 }
-                return redirect('/institute/affiliationfee');
+                return redirect('/institute/affiliationfee-details');
             }
             else {
-                return redirect('/institute/affiliationfee');
+                return redirect('/institute/affiliationfee-details');
             }
         }
         else {
-            return redirect('/institute/affiliationfee');
+            return redirect('/institute/affiliationfee-details');
         }
 
         /* Old Codes

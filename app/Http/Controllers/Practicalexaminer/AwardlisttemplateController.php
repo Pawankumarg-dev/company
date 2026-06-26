@@ -18,7 +18,7 @@ class AwardlisttemplateController extends Controller
     {
         $this->middleware(['role:faculty']);
         $this->helperService = $help;
-        $this->exam_id = 28;
+        $this->exam_id = 29;
 
     }
 
@@ -193,7 +193,11 @@ class AwardlisttemplateController extends Controller
         {
            
             $term = $r->input('term');
-            $subject_ids = collect($r->subject_ids)->map(fn($id) => (int) $id);
+            $subject_ids = collect($r->subject_ids)->map(function ($id) {
+    return (int) $id;
+});
+
+            // $subject_ids = collect($r->subject_ids)->map(fn($id) => (int) $id);
             $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
            // dd( $practicalexaminer_id);
             $practicalexaminer  = \App\Faculty::find($practicalexaminer_id);
@@ -207,12 +211,19 @@ class AwardlisttemplateController extends Controller
                         ->whereIn('id', $subject_ids)
                         ->get(); 
             $exam_name  = \App\Exam::find($this->exam_id);
-            $candidate_ids = \App\Allapplication::whereHas('candidate', function($q) use($r){
+            $candidates = \App\Allapplication::whereHas('candidate', function($q) use($r){
                         $q->where('approvedprogramme_id',$r->approvedprogramme_id);
                     })->whereIn('subject_id',$subject_ids)->where('exam_id', $this->exam_id)
-                    ->pluck('candidate_id')->unique()->toArray();
+                    ->get();
         // dd( $candidate_ids);
-            $candidates = \App\Candidate::whereIn('id',$candidate_ids)->get();
+            // $candidates = \App\Candidate::whereIn('id',$candidate_ids)->get();
+            
+            if($candidates->count() == 0 ){
+                Session::flash('error','No Candidates found for the selected subjects');
+               return back(); 
+            }
+
+
             $date = \Carbon\Carbon::now()->toDateString();
             Session::put('date', $date);
             return view('practicalexaminer.awardlisttemplate.template',compact(
@@ -229,6 +240,7 @@ class AwardlisttemplateController extends Controller
 
     public function upload_entry(Request $r)
     {
+        //dd($r->all());
         $practicalexaminer_id = $this->helperService->getPracticalExaminerID();
         $date = \Carbon\Carbon::now()->toDateString();
         $downloadTime = \Carbon\Carbon::now()->toDateTimeString();
@@ -273,16 +285,24 @@ class AwardlisttemplateController extends Controller
                 Session::flash('error', 'Record not found');
                 return back();
             }
+        
+            $lat =  number_format((float)$r->input('latitude'), 8, '.', '') ;
+            $lng =  number_format((float)$r->input('longitude'), 8, '.', '') ;
 
-            $template->update([
+            $updateData = [
                 'marksheet' => $fname,
                 'exam_date' => $date,
                 'downloaded_at' => $downloadTime,
                 'marksheet_uploaded_at' => \Carbon\Carbon::now(),
-                'longitude_latitude' =>  \DB::raw("POINT({$r->longitude} , {$r->latitude})")
-            ]);
+            ];
 
-            // Subject pivot update
+            if ($lat !== null && $lng !== null) {
+                $updateData['longitude_latitude'] = \DB::raw("POINT({$lng}, {$lat})");
+            }
+
+            $template->update($updateData);
+
+          
             $template->subjects()->syncWithoutDetaching([
                 $r->subject_id => [
                     'marks_upload' => 1,
@@ -291,7 +311,11 @@ class AwardlisttemplateController extends Controller
             ]);
 
         } else {
-            $template = \App\Awardlisttemplate::create([
+          
+            $lat =  number_format((float)$r->input('latitude'), 8, '.', '');
+            $lng =  number_format((float)$r->input('longitude'), 8, '.', '');
+
+            $createData = [
                 'faculty_id' => $practicalexaminer_id,
                 'exam_date' => $date,
                 'marksheet' => $fname,
@@ -301,10 +325,15 @@ class AwardlisttemplateController extends Controller
                 'term' => $term,
                 'downloaded_at' => $downloadTime,
                 'marksheet_uploaded_at' => \Carbon\Carbon::now(),
-                'longitude_latitude' =>  \DB::raw("POINT({$r->longitude}, {$r->latitude})")
-            ]);
+            ];
 
-            // attach subject
+            if ($lat !== null && $lng !== null) {
+                $createData['longitude_latitude'] = \DB::raw("POINT({$lng}, {$lat})");
+            }
+
+            $template = \App\Awardlisttemplate::create($createData);
+
+        
             $template->subjects()->attach($r->subject_id, [
                 'marks_upload' => 1,
                 'date_uploaded' => \Carbon\Carbon::now()
@@ -318,3 +347,4 @@ class AwardlisttemplateController extends Controller
 }
 
 //A25515
+//A84711

@@ -2,102 +2,146 @@
 
 @section('content')
 
-    <div class="container">
-        <div class="row">
-            <div class="row text-right" style="margin-right: 20px;">
-                <div style="margin-bottom:15px;">
-                    <a class="btn btn-success btn-sm" href="{{ route('verifyattnninternal') }}">Back</a>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>SL NO.</th>
-                            <th>Enrolment No</th>
-                            <th>Candidate Name</th>
-                            <th>Term</th>
-                            <th>Theory </th>
-                            <th>Practical </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (count($internal_details) > 0)
-                            @foreach ($internal_details as $index => $internal_detail)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $internal_detail->enrolmentno }}</td>
-                                    <td>{{ $internal_detail->name }}</td>
-                                    <td>{{ $internal_detail->term }}</td>
-                                    <td>{{ $internal_detail->attendance_t . ' % ' }} <br> <button type="button"
-                                            class="btn btn-sm btn-success add-attendance-btn"
-                                            data-enrolmentno="{{ $internal_detail->enrolmentno }}"
-                                            data-term="{{ $internal_detail->term }}" data-type="theory">Add</button></td>
-                                    <td>{{ $internal_detail->attendance_p . ' % ' }} <br> <button type="button"
-                                            class="btn btn-sm btn-success add-attendance-btn"
-                                            data-enrolmentno="{{ $internal_detail->enrolmentno }}"
-                                            data-term="{{ $internal_detail->term }}" data-type="practical">Add</button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr class="text-center text-danger">
-                                <td colspan="6">No Data Found</td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-            </div>
+<div class="container">
 
-            <div class="col-md-6" style="height: 1500px;">
-                <div style="font-size:20px; margin-left:10px;">Attendance</div>
-                @if (count($internal_details) > 0)
-                    @php
-                        $internal_detail = $internal_details[0];
-                    @endphp
-                    <div id="iframeContainer" style="border:1px solid #ccc; overflow-y:auto;" >
-                        <div class="iframeWrapper" style="height:500px;" style="margin-bottom:20px;">
-                            <div style="font-size:16px; margin:10px;">Theory</div>
-                            <button class="btn btn-sm btn-info"
-                                onclick="window.open('{{ url('/files/attendance/' . $internal_detail->document_t) }}', '_blank')">
-                                Open PDF Full View
-                            </button>
-                            <iframe id="pdf1" src="{{ url('/files/attendance/' . $internal_detail->document_t) }}"
-                                style="width: 100%; height: 100%; border: 1px solid #ccc;" style="border:1px solid #ccc;">
-                            </iframe>
-                        </div>
-
-                        <div class="iframeWrapper" style="height: 500px;">
-                            <div style="font-size:16px; margin:10px;">Practical</div>
-
-                            <button class="btn btn-sm btn-info"
-                                onclick="window.open('{{ url('/files/attendance/' . $internal_detail->document_p) }}', '_blank')">
-                                Open PDF Full View
-                            </button>
-                            <iframe id="iframePractical" src="{{ url('/files/attendance/' . $internal_detail->document_p) }}"
-                                style="width: 100%; height: 100%; border: 1px solid #ccc;" style="border:1px solid #ccc;">
-                            </iframe>
-                        </div>
-                    </div>
-
-                    <div class="row mt-3">
-                        <div class="col-md-12  text-right " style="margin-top: 20px;">
-                            @if ($internal_detail->enable_edit == 0)
-                                <a href="{{ url('/nber/exam/verifyattendancedata', [$internal_detail->id, $internal_detail->term]) }}"
-                                    class="btn btn-sm btn-success">
-                                    Verify
-                                </a>
-                            @else
-                                <strong>Already Verified</strong>
-                            @endif
-                        </div>
-                    </div>
-            </div>
+    <div class="row">
+        <div class="col-12 text-right" style="margin-bottom:15px;">
+            <a class="btn btn-success btn-sm" href="{{ route('verifyattnninternal') }}">
+                Back
+            </a>
         </div>
+    </div>
+
+    <div class="row">
+
+        {{-- LEFT TABLE --}}
+        <div class="col-md-6">
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>SL NO.</th>
+                        <th>Enrolment No</th>
+                        <th>Candidate Name</th>
+                        <th>Term</th>
+                        <th>Theory</th>
+                        <th>Practical</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                @if(!empty($internal_details) && count($internal_details))
+
+                    @foreach ($internal_details as $index => $internal_detail)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $internal_detail->enrolmentno }}</td>
+                            <td>{{ $internal_detail->name }}</td>
+                            <td>{{ $id }}</td>
+                              <td>{{ $internal_detail->attendance_t . ' % ' }} <br> 
+                                                                                           @if ($internal_detail->enable_edit == 0)
+ 
+                                {{-- <button type="button"
+                                            class="btn btn-sm btn-success add-attendance-btn"
+                                            data-enrolmentno="{{ $internal_detail->enrolmentno }}"
+                                            data-term="{{ $id }}" data-type="theory">Update</button> --}}
+                                        @endif
+
+                                        </td>
+                                    <td>{{ $internal_detail->attendance_p . ' % ' }} <br> 
+                                                            @if ($internal_detail->enable_edit == 0)
+
+                                        {{-- <button type="button"
+                                            class="btn btn-sm btn-success add-attendance-btn"
+                                            data-enrolmentno="{{ $internal_detail->enrolmentno }}"
+                                            data-term="{{ $id }}" data-type="practical">Update</button> --}}
+@endif
+
+                                    </td>
+
+                        </tr>
+                    @endforeach
+
+                @else
+                    <tr class="text-center text-danger">
+                        <td colspan="6">No Data Found</td>
+                    </tr>
+                @endif
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        {{-- RIGHT SIDE PDF VIEW --}}
+        @if(!empty($internal_details) && count($internal_details))
+            @php
+                $internal_detail = $internal_details[0];
+            @endphp
+
+            <div class="col-md-6 attendance-panel">
+
+                <div style="font-size:20px; margin-left:10px; margin-bottom:10px;">
+                    Attendance
+                </div>
+
+                {{-- THEORY --}}
+                <div class="iframeWrapper" style="margin-bottom:20px;">
+                    <div style="font-size:16px; margin:10px;">
+                        Theory
+                    </div>
+
+                    <button class="btn btn-sm btn-info"
+                        onclick="window.open('{{ url('/files/attendance/'.$internal_detail->document_t) }}', '_blank')">
+                        Open PDF Full View
+                    </button>
+
+                    <iframe
+                        src="{{ url('/files/attendance/'.$internal_detail->document_t) }}"
+                        style="width:100%; height:600px; border:1px solid #ccc;">
+                    </iframe>
+                </div>
+
+
+                {{-- PRACTICAL --}}
+                <div class="iframeWrapper">
+                    <div style="font-size:16px; margin:10px;">
+                        Practical
+                    </div>
+
+                    <button class="btn btn-sm btn-info"
+                        onclick="window.open('{{ url('/files/attendance/'.$internal_detail->document_p) }}', '_blank')">
+                        Open PDF Full View
+                    </button>
+
+                    <iframe
+                        src="{{ url('/files/attendance/'.$internal_detail->document_p) }}"
+                        style="width:100%; height:600px; border:1px solid #ccc;">
+                    </iframe>
+                </div>
+
+
+                {{-- VERIFY BUTTON --}}
+                <div class="row mt-3">
+
+                    @if ($internal_detail->enable_edit == 0)
+                        {{-- <a href="{{ url('/nber/exam/verifyattendancedata', [$internal_detail->id, $id]) }}"
+                           class="btn btn-sm btn-success">
+                            Verify
+                        </a> --}}
+                        date id over
+                    @else
+                        <strong>Already Verified</strong>
+                    @endif
+
+                </div>
+
+            </div>
         @endif
 
     </div>
-
+</div>
 
 
 @endsection
@@ -107,10 +151,10 @@
     <div class="modal fade" id="addAttendanceModal" tabindex="-1" role="dialog" aria-labelledby="addAttendanceLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content" style = "width:350px;">
+            <div class="modal-content" >
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="addAttendanceLabel">Add Attendance</h4>
+                    <h4 class="modal-title" id="addAttendanceLabel">Update Attendance</h4>
                 </div>
                 <div class="modal-body">
                     <form id="addAttendanceForm">
@@ -120,9 +164,12 @@
                         <input type="hidden" name="type" id="modalType">
 
                         <div class="form-group">
-                            <label for="attendanceValue">Maximum attendance increase: 5 %. </label>
-                            <input type="number" class="form-control" id="attendanceValue" name="value" min="1"
-                                max="5" step="any" required>
+                            <label for="attendanceValue">Attendance Change: </label>
+                            <input type="number" class="form-control" id="attendanceValue" name="value"  step="any" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="remarks">Remarks</label>
+                            <input type="text" class="form-control" id="remarks" name="remarks">
                         </div>
                     </form>
                     <div id="addAttendanceFeedback" style="display:none;" class="alert"></div>
@@ -138,16 +185,17 @@
     <script>
         $(function() {
             var modal = $('#addAttendanceModal');
-
             $(document).on('click', '.add-attendance-btn', function(e) {
                 e.preventDefault();
                 var enrol = $(this).data('enrolmentno');
                 var term = $(this).data('term');
                 var type = $(this).data('type');
+                var remarks = $(this).data('remarks');
                 $('#modalEnrolmentno').val(enrol);
                 $('#modalTerm').val(term);
                 $('#modalType').val(type);
                 $('#attendanceValue').val('');
+                $('#remarks').val(remarks);
                 $('#addAttendanceFeedback').hide();
                 modal.modal('show');
             });
@@ -156,9 +204,24 @@
                 var form = $('#addAttendanceForm');
                 var data = form.serialize();
                 var value = parseFloat($('#attendanceValue').val());
-                if (isNaN(value) || value < 1 || value > 5) {
-                    $('#addAttendanceFeedback').removeClass().addClass('alert alert-danger').text(
-                        'Please enter  minimum 1% and maximum 5% attendance increase').show();
+                var remarks = $('#remarks').val();
+                // Attendance validation
+                if (isNaN(value)) {
+                    $('#addAttendanceFeedback')
+                        .removeClass()
+                        .addClass('alert alert-danger')
+                        .text('Please enter a valid attendance change')
+                        .show();
+                    return;
+                }
+
+                // Remarks validation
+                if (remarks === '') {
+                    $('#addAttendanceFeedback')
+                        .removeClass()
+                        .addClass('alert alert-danger')
+                        .text('Please enter remarks')
+                        .show();
                     return;
                 }
 

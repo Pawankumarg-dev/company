@@ -15,7 +15,7 @@
                 <h4><strong>Note: Complete / Update the details for Mapping of Exam Centers and Save</strong></h4>
 				
 				@include('common.errorandmsg')
-				<form action="{{ url('nber/excenter/') }}/{{$examcenter->id}}" method="POST">
+				<form action="{{ url('nber/excenter/update') }}/{{$examcenter->id}}" method="POST">
 					{{ csrf_field() }}
 					<input type="hidden" name="_method" value="PUT"> 
 

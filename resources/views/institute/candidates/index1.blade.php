@@ -199,7 +199,9 @@ function showotpinput() {
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-
+	@php
+							$now = \Carbon\Carbon::now();
+						@endphp
 				<ul class="breadcrumb" style="background:transparent!important;">
 					<li><a href="{{url('/nber/admissions')}}">Enrolment</a></li>
 					<li> {{$ap->programme->course_name}}  - {{$ap->academicyear->year}} </li>
@@ -210,9 +212,7 @@ function showotpinput() {
 						@if($ap->id ==   8838)
 							{{-- <a  class="btn btn-primary pull-right btn-bc" style="color:white;" href="{{url('candidate/create/'.$ap->id)}}">Add Candidate</a> --}}
 						@endif
-						@php
-							$now = Carbon\Carbon::now();
-						@endphp
+					
 						{{-- @if(( $ap->enable_admission == 1 && $now->toDateString() <= \Carbon\Carbon::parse($ap->enable_admission_till)->toDateString()  )  
 						
 						) 

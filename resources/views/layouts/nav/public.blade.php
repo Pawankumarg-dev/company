@@ -32,7 +32,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('https://rehabcouncil.nic.in/') }}" target="_blank">About RCI</a></li>
                     <li><a href="{{ url('notices-circulars') }}">Notices/Circulars</a></li>
-                    <li><a href="{{ url('institute-details') }}">Institutes & Courses</a></li>
+                    <li><a href="{{ url('institute-details-show') }}">Institutes & Courses</a></li>
                   
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

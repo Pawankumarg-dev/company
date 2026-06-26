@@ -32,7 +32,10 @@
 </style>
 @endsection
 @section('fields')
-	<input type='hidden' name='programme_id' value='{{$pid}}' /> 
+
+{{-- add button --}}
+
+	{{-- <input type='hidden' name='programme_id' value='{{$pid}}' /> 
 	
 	<input type='hidden' name='syllabus_type' value='New' /> 
 	{!! Form::bsText('sortorder','Sort Order') !!}
@@ -45,7 +48,7 @@
 	{!! Form::bsText('emin_marks','External Mimimum Marks') !!}	
 	{!! Form::bsText('emax_marks','External Maximum Marks') !!}	
 	{!! Form::bsText('is_internal','Is Internal?') !!}	
-	{!! Form::bsText('is_external','Is External?') !!}	
+	{!! Form::bsText('is_external','Is External?') !!}	 --}}
 @endsection
 
 @section('table')
@@ -107,7 +110,7 @@
 					Yes
 				@endif
 			</td>
-			{!! Form::tbEdit($link,$c) !!}
+			{{-- {!! Form::tbEdit($link,$c) !!} --}}
 			<td class="hidden">
 				{!! Form::tbText('is_internal',$c) !!}
 			</td>

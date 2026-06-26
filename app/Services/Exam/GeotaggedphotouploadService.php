@@ -54,7 +54,7 @@ class GeotaggedphotouploadService
     }
         $date = \Carbon\Carbon::now()->toDateString();
 
-   
+    // ✅ Save to database
     \App\Geotaggedphoto::create([
         'practicalexam_id' => $request->practicalexam_id,
         'exam_date' => $date,

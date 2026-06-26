@@ -45,16 +45,16 @@ class QuestionPaperController extends Controller
         $opentime  = \Carbon\Carbon::parse($schedule->starttime)->subHours(1)->toTimeString();
         $closetime  = \Carbon\Carbon::parse($schedule->starttime)->addHours(3)->toTimeString();
         
-        // if(
-        //    !(
-        //     $date  == $sdate && 
-        //     $time > $opentime && 
-        //     $time < $closetime  
-        //    )
-        // ){
-        //     Session::put('messages','Please wait');
-        //     return back();
-        // }
+        if(
+           !(
+            $date  == $sdate && 
+            $time > $opentime && 
+            $time < $closetime  
+           )
+        ){
+            Session::put('messages','Please wait');
+            return back();
+        }
         
         $otp = \App\Questionpaperotp::where('externalexamcenter_id',\App\Externalexamcenter::where('user_id',Auth::user()->id)->first()->id)
             ->where('examschedule_id',$r->examschedule_id)

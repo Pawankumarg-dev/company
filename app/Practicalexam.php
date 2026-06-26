@@ -11,7 +11,7 @@ class Practicalexam extends Model
 
     protected $fillable = [
         "exam_id", "institute_id", "common_code", "exam_date", "exam_date2", "coursecoordinator_name", "coursecoordinator_contactnumber",
-        "coursecoordinator_whatsappnumber", "coursecoordinator_email", "status_id", "to_instituteemail", "active_status",'practicalexaminer_id','faculty_id','programme_id','course_id','emailed','reason','end_date','start_date'
+        "coursecoordinator_whatsappnumber", "coursecoordinator_email", "status_id", "to_instituteemail", "active_status",'practicalexaminer_id','faculty_id','programme_id','course_id','emailed','reason','end_date','start_date','slot'
     ];
 
     protected $dates = ["exam_date", "exam_date2"];

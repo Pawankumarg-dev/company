@@ -215,8 +215,7 @@ class ApplicantService
     }
     
     public function getApplicant($id){
-        // $this->applicant = $this->model::find($id);
-         $this->applicant =\App\Allapplicant::find($id);
+        $this->applicant = $this->model::find($id);
         return $this->applicant;
     }
 
@@ -233,7 +232,7 @@ class ApplicantService
         where 
             a.candidate_id = '.$candidate_id.'
             and s.syear = '.$term.' 
-            and s.subjecttype_id = 2 
+            and s.subjecttype_id = 2 and s.is_external = 1
             and (ifnull(im.internal,0) >= s.imin_marks or a.eligible = 1 )
         order by s.sortorder
         ';

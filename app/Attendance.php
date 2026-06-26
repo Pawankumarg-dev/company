@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 	  
 class Attendance extends Model
 {
+
 	protected $fillable = [
-        'exam_id', 'candidate_id','attendance_t','attendance_p','exemption','document_t','document_p','document_exemption','term'
+	'exam_id', 'candidate_id','attendance_t','attendance_p','exemption','document_t','document_p','document_exemption','term', 'user_id', 'remarks'
     ];
-	
             
     public function candidate()
 	{

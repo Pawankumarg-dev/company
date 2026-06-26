@@ -36,8 +36,11 @@
                 <table class="table table-bordered table-condensed" id="myTable">
                     <tr>
                         <th>Slno</th>
-                        <th>Faculty Name</th>
+                        <th>Faculty Details</th>
+
                         <th>Faculty Type</th>
+                        <th>COE/NCOE</th>
+
                         <th>CRR Number</th>
                         <th>Course</th>
                         <th>CRR Expiry</th>
@@ -50,13 +53,29 @@
                                     <?php $slno++; ?>
                                 </td>
                                 <td>
-                                    {{$faculty->name}}
+                                    <strong>Name:</strong> {{$faculty->name}} <br>
+                                    <strong>Mobile:</strong> {{$faculty->mobileno}} <br>
+                                    <strong>Institute:</strong> {{$faculty->institute->rci_code}} <br>
+                                    <strong>Qualification:</strong> {{$faculty->qualification}}
                                 </td>
                                 <td>
                                     @if(!is_null($faculty->core))
                                     @if($faculty->core == 1) Core @endif @if($faculty->core == 0) Guest / Visiting @endif
                                     @endif
                                 </td>
+                                  <td>
+
+                                        @if(isset($faculty->institute))
+
+                                            @if($faculty->institute->coe == 1)
+                                                COE
+                                            @else
+                                                NCOE
+                                            @endif
+
+                                        @endif
+
+                                    </td>
                                 <td>
                                     {{$faculty->crr_no}}
                                 </td>

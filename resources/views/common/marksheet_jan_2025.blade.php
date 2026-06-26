@@ -177,7 +177,7 @@
                         <tr>
                             <td class="left-text blue-text"  style="padding-bottom:2px;">Name of the Training Institute</td>
                             <td class="left-text blue-text bold-text"  colspan="3" style="padding-bottom:2px;"> : 
-                                @if($candidate->approvedprogramme->academicyear_id == 10)
+                                {{-- @if($candidate->approvedprogramme->academicyear_id == 10)
                                     {{strtoupper($candidate->approvedprogramme->institute->rci_name).','}} {{strtoupper($candidate->approvedprogramme->institute->rci_district).','}} {{$candidate->approvedprogramme->institute->rci_pin_code}}
                                 @else
                                     @if($candidate->approvedprogramme->programme->numberofterms == 1)
@@ -205,7 +205,10 @@
                                         @endif
                                     @endif
                                 @endif
-                                
+                                 --}}
+                                 
+                            {{strtoupper($candidate->approvedprogramme->institute->rci_name).','}} {{strtoupper($candidate->approvedprogramme->institute->rci_district).','}}  {{$candidate->approvedprogramme->institute->rci_pin_code}}
+
                                 
                             </td>
                             <td>Course Code</td>

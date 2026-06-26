@@ -62,6 +62,7 @@ class TimetableController extends Controller
     }
 
     public function create(Request $r){
+        // return 'closed';
         $existing_subjects = $this->timetableService->getTimetable($r->programme_id,$this->exam_id)->pluck('subject_id')->toArray();
    
                    if($r->programme_id=='57' || $r->programme_id=='62') {
@@ -89,6 +90,14 @@ class TimetableController extends Controller
     }
 
     public function store(StoreTimetableRequest $r){
+                
+$mytime = \Carbon\Carbon::now()->format('d-m-Y H:i:s');
+
+if ($mytime >= '12-06-2026 19:15:00') {
+
+    return 'closed';
+    
+}
         Examtimetable::create($r->all());
         return redirect('nber/exam/timetable?programme_id='.$r->programme_id);
     }
@@ -109,7 +118,15 @@ class TimetableController extends Controller
     }
 
     public function destroy($id){
-     //   return 'Nah nah';
+
+
+        $mytime = \Carbon\Carbon::now()->format('d-m-Y H:i:s');
+
+if ($mytime >= '12-06-2026 19:15:00') {
+
+    return 'closed';
+    
+}
         $timetable = Examtimetable::find($id);
         $timetable->delete();
         Session::flash('messages','Deleted');

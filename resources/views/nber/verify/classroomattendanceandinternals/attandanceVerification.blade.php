@@ -107,25 +107,20 @@
 
                 <td>{{ $result->abbreviation }}</td>
                 <td>{{ $result->year }}</td>
-                
                 <td>{{$result->enable_edit ==1 ? 'Verify' : 'Not Verify' }}</td>
                 <td>
-                    @php
-                        $terms = explode(',', $result->terms);
-                    @endphp
-
-                    @if(in_array(1, $terms))
-                        <a class="btn btn-success"
-                        href="{{ url('/nber/exam/verifattendance', [ $result->id , 'id' => 1 ]) }}">
+                    @if(isset($result->id) && !empty($result->id))
+                         <a class="btn btn-success"
+                           href="{{ route('verifyattendance', [ $result->id , 'id' =>1 ]) }}">
                             Term1
-                        </a>
-                    @endif
-
-                    @if(in_array(2, $terms))
-                        <a class="btn btn-success"
-                        href="{{ url('/nber/exam/verifattendance', [ $result->id , 'id' => 2 ]) }}">
+                        </a>  
+                        
+                        @if ($result->numberofterms == 2)
+                           <a class="btn btn-success"
+                           href="{{ route('verifyattendance', [ $result->id , 'id' => 2 ]) }}">
                             Term2
-                        </a>
+                        </a>  
+                        @endif
                     @endif
                 </td>
             </tr>

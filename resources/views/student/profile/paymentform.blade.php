@@ -1,4 +1,4 @@
-<form class="form-horizontal"  onsubmit="return validateForm()" action="{{url('/institute/affiliationfee')}}" method='get' >
+<form class="form-horizontal"  onsubmit="return validateForm()" action="{{url('/institute/affiliationfee/')}}" method='get' >
     {!! csrf_field() !!}
     <input type="hidden" id="nber_id" name='nber_id' value="{{ $c->approvedprogramme->programme->nber_id }}"  />
     <input type="hidden" name="id" value={{ $c->id }}>

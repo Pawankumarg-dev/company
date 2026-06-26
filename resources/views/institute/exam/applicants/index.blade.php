@@ -21,7 +21,19 @@
                 @endif
             @endif
             @include('common.errorandmsg')
+
+
+<div class="alert alert-success">
+                <ul>
+                    <li>In case of non receipt of affiliation fees as per the details of fees paid submitted by your institute, the results will be withheld till the payment of the fees.</li>
+                    <li>यदि आपके संस्थान द्वारा प्रस्तुत शुल्क भुगतान के विवरण के अनुसार संबद्धता शुल्क प्राप्त नहीं होता है, तो शुल्क का भुगतान होने तक परिणाम रोक दिए जाएंगे।</li>
+                </ul>
+             </div>
+
         </div>
+
+
+
     </div>
             @if(!is_null($applicants))
                 @if($applicants->count()>0)

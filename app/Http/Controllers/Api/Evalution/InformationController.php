@@ -25,6 +25,7 @@ use App\Evaluationcenter;
 use App\Services\DBService;
 use Illuminate\Support\Str;
 use Auth;
+
 class InformationController extends Controller
 {
     private $helperService;
@@ -905,9 +906,166 @@ public function get_crr(Request $request)
 
     }
 }
+public function faculty_data(Request $request)
+{
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://rciamas.nic.in/inst_proposal/api/findallfaculty/',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode([
+            "AdmissionNumber" => "A12345",
+            "Name" => "John Doe",
+            "FatherName" => "Richard Doe",
+            "DOB" => "2010-05-20",
+            "state" => "Uttar Pradesh"
+        ]),
+        CURLOPT_HTTPHEADER => array(
+            'X-API-KEY: RCI@facultyKey123',
+            'Content-Type: application/json'
+        ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+
+    return $response;
+}
 
 
+public function faculty()
+{
+    $curl = curl_init();
 
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://rciamas.nic.in/inst_proposal/api/findallfaculty/',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS =>'{
+    inst_code: Dl021
+}',
+  CURLOPT_HTTPHEADER => array(
+    'X-API-KEY: RCI@facultyKey123',
+    'Content-Type: text/plain'
+  ),
+));
+
+
+    $response = curl_exec($curl);
+
+// return response()->json(json_decode($response, true));
+    // cURL Error
+    if (curl_errno($curl)) {
+
+        $error = curl_error($curl);
+
+        curl_close($curl);
+
+        return response()->json([
+            'status' => false,
+            'message' => $error
+        ], 500);
+    }
+
+    curl_close($curl);
+
+    $data = json_decode($response, true);
+
+    if (empty($data['data'])) {
+
+        return response()->json([
+            'status' => false,
+            'message' => 'No faculty data found'
+        ]);
+    }
+
+    $saved = 0;
+$data = json_decode($response, true);
+
+foreach ($data['data'] as $item) {
+
+    
+$institute = \App\Institute::where('rci_code', $item['instituteCode'])->first();
+
+echo $item['instituteCode'] . "<br>";
+
+if (!$institute) {
+
+    $institute = \App\Institute::create([
+        'rci_code' => $item['instituteCode'],
+                'name' => $item['instName'],
+                'address' => $item['instAddress'],
+                'contactnumber1' => $item['instMobile'],
+      'api'=> 1,
+      'user_id'=> NULL,
+                    'coe'=> 1,
+    ]);
+
+}
+
+$institute = \App\Institute::where('rci_code', $item['instituteCode'])->first();
+ $institute->coe = 1;
+$institute->save();
+
+if ($institute) {
+
+$crrNo = trim($item['crrNumber'] ?? '');
+$faculty = \App\Faculty::where('crr_no', $crrNo)->first();
+
+
+if ($faculty) {
+echo $crrNo;
+    // UPDATE
+    $faculty->update([
+        'name' => $item['facultyName'] ?? null,
+        'mobileno' => $item['mobile'] ?? null,
+        'qualification' => $item['qualification'] ?? null,
+        'joining_date' => $item['joiningDate'] ?? null,
+        'email' => $item['email'] ?? null,
+        'core' => 1,
+        'verified' => 1,
+        'institute_id'=>$institute->id,
+        'api'=> 1,
+
+    ]);
+
+} else {
+    \App\Faculty::create([
+        'crr_no' => $crrNo,
+        'name' => $item['name'] ?? null,
+        'mobileno' => $item['mobile'] ?? null,
+        'qualification' => $item['qualification'] ?? null,
+        'joining_date' => $item['joiningDate'] ?? null,
+        'email' => $item['email'] ?? null,
+        'core' => 1,
+        'verified' => 1,
+        'institute_id'=>$institute->id,
+        'api'=> 1,
+
+    ]);
+}
+
+        $saved++;
+    }
+    }
+    return response()->json([
+        'status' => true,
+        'message' => 'Faculty synced successfully',
+        'total_records' => $saved
+    ], 200, [], JSON_PRETTY_PRINT);
+}
 
 
 }

@@ -18,6 +18,7 @@ class EvaluationtrackingController extends Controller
     private $helperService;
     private $evaluationcenter_id;
 	private $evaluationService;
+	private $exam_id;
 
     public function __construct(HelperService $helper,EvaluationService $evaluation)
     {
@@ -25,6 +26,7 @@ class EvaluationtrackingController extends Controller
         $this->helperService = $helper;
         $this->evaluationcenter_id = $this->helperService->getEvaluationcenterID();
         $this->evaluationService = $evaluation;
+        $this->exam_id = $this->helperService->getScheduledExamID();
 
     }
 
@@ -35,7 +37,7 @@ class EvaluationtrackingController extends Controller
 
 		        $evaluationcenter_id =  $this->evaluationService->getExternalexamcenterIDs($this->evaluationcenter_id);
 
-         $exampapers = \App\Allexampaper::where('evaluationcenter_id',$this->evaluationcenter_id)->where('exam_id',27)->get();
+         $exampapers = \App\Allexampaper::where('evaluationcenter_id',$this->evaluationcenter_id)->where('exam_id',$this->exam_id)->get();
 
 
 		// print_r($evaluationcenter_id);
@@ -96,7 +98,7 @@ FROM
 	ON 
 		allexamstudents.programme_id = programmes.id
 WHERE
-	allexamstudents.exam_id = 27 AND
+	allexamstudents.exam_id = $this->exam_id AND
 	evaluationcenterdetails.evaluationcenter_id = " . $this->evaluationcenter_id ." group by programmes.id";
 
     $rVal  = DB::select($sql);

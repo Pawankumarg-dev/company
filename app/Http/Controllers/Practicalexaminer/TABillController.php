@@ -22,7 +22,7 @@ class TABillController extends Controller
     {
 		$this->middleware(['role:faculty']);
 		//$this->exam_id = Session::get('exam_id');
-        		$this->exam_id = 28;
+        		$this->exam_id = 29;
 
     }
 	public function index() {

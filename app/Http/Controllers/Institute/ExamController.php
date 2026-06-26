@@ -40,6 +40,7 @@ use File;
 use Input;
 use Response;
 use PDF;
+use DB;
 
 class ExamController extends Controller
 {

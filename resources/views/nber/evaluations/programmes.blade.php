@@ -6,7 +6,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            Evaluations
+                            {{$exam->name}} Evaluations verification
                         </div>
                     </div>
 
@@ -45,9 +45,7 @@
                                                                                 <tbody>
 
 <?php 
-                                                $examcenters=\App\Evaluationcenterdetail::where('exam_id',27)->where('evaluationcenter_id',$evaluationcenter->id)->get()
-
-
+                                                $examcenters=\App\Evaluationcenterdetail::where('exam_id',$exam->id)->where('evaluationcenter_id',$evaluationcenter->id)->where('nber_id',$nber_id)->get()
                                                 ?>
 
 
@@ -62,45 +60,32 @@
 
                                             <td style="display: flex; flex-wrap: wrap; gap: 10px;">
 
-                                                <?php $peogram =  \App\Allexamstudent::where('externalexamcenter_id',$examcenter->externalexamcenter->id)->where('programme_id',$data->id)->where('attendance',1)->count(); ?>
-                                                    @if($peogram>0)
-
-
-
-                                                @foreach(\App\Subject::where('programme_id', $data->id)->where('subjecttype_id', 1)->get() as $subject_data)
-
-
+                                    
 
                                                  <?php 
+                                                 $applications_count =  \App\Allexamstudent::where('externalexamcenter_id',$examcenter->externalexamcenter->id)->where('exam_id',$exam->id)->where('attendance',1)->where('programme_id',$data->id)->groupBy('subject_id')->get(); ?>
 
-                                                 
-                                                 
-                                                 $applications_count =  \App\Allexamstudent::where('externalexamcenter_id',$examcenter->externalexamcenter->id)->where('exam_id',27)->where('subject_id',$subject_data->id)->where('attendance',1)->count(); ?>
-                                                    @if($applications_count>0)
+                                                @foreach($applications_count as $subject_data)
 
+                                                    @if(empty($subject_data->mark_file))
+
+                                                    <button class="btn btn-danger">mark file not uploaded</button>
+
+                                                    @elseif($subject_data->verified==1)
+                                                    <button class="btn btn-success">Verified</button>
+                                                    @else
                                                 <form action="{{url('/')}}/verify-external" method="post">
                                                      {{csrf_field()}}
-                                                    <input type="hidden" name="subject_id" value="{{$subject_data->id}}">
+                                                    <input type="hidden" name="subject_id" value="{{$subject_data->subject_id}}">
                                                     <input type="hidden" name="program_id" value="{{$data->id}}">
                                                     <input type="hidden" name="evaluationcenter_id" value="{{$evaluationcenter->id}}">
                                                     <input type="hidden" name="externalexamcenter_id" value="{{ $examcenter->externalexamcenter->id }}">
 
-                                                    <button class="btn btn-warning">{{ $subject_data->scode }}</button>
-
+                                                    <button class="btn btn-warning">{{ $subject_data->subject->scode }}</button>
                                                 </form>
 
-
-
-                                                @else
-                                                    <button class="btn btn-success">Verified</button>
-                                                
-                                                @endif
-
-
-
-
-                                                @endforeach
                                                  @endif
+                                                @endforeach
                                             </td>
 
 

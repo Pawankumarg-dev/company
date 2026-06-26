@@ -151,11 +151,13 @@ class InstituteController extends Controller
             }
         }
 
-        $apids = \App\Approvedprogramme::where('institute_id',$institute->id)->where('academicyear_id',14)->get();
+        $apids = \App\Approvedprogramme::where('institute_id',$institute->id)->wherein('academicyear_id',[14,16])->get();
         
         $paractical = DB::table('practicalexams')
             ->join('faculties', 'practicalexams.faculty_id', '=', 'faculties.id')
             ->join('courses', 'practicalexams.course_id', '=', 'courses.id')
+            ->join('programmes', 'programmes.id', '=', 'practicalexams.programme_id')
+
             ->join('practicalexam_subject', 'practicalexams.id', '=', 'practicalexam_subject.practicalexam_id')
             ->leftjoin('subjects', function ($join) {
                 $join->on('practicalexam_subject.subject_id', '=', 'subjects.id')
@@ -174,11 +176,18 @@ class InstituteController extends Controller
                                 'practicalexams.id'
 
             )
-            ->where('practicalexams.exam_id', 28)
+            ->where('practicalexams.exam_id', 29)
             ->where('practicalexams.institute_id', $institute->id)
             ->where('practicalexams.deleted_at',null)
-            ->groupBy('faculties.id','practicalexams.course_id')
+            ->groupBy('faculties.id','practicalexams.course_id','programmes.id')
             ->get();
+
+
+
+
+        
+
+
 
         return view('institute.notice',compact('af_paid','enf_paid','institute','paractical','apids'));
     }
@@ -477,4 +486,85 @@ class InstituteController extends Controller
         return back();
 
     }
+
+
+
+     public function affiliationfee_details(){
+
+
+       $institute_id = Institute::where('user_id', Auth::user()->id)
+                ->first()
+                ->id;
+
+$records = DB::table('approvedprogrammes')
+    ->join('programmes', 'approvedprogrammes.programme_id', '=', 'programmes.id')
+    ->join('academicyears', 'approvedprogrammes.academicyear_id', '=', 'academicyears.id')
+    ->where('approvedprogrammes.academicyear_id','>', 10)
+    ->where('approvedprogrammes.institute_id', $institute_id)
+        ->where('approvedprogrammes.programme_id', '!=', 57)
+
+->whereNull('approvedprogrammes.deleted_at')
+    ->orderBy('approvedprogrammes.academicyear_id', 'desc') // ✅ correct
+    ->select(
+        'approvedprogrammes.id',
+        'programmes.abbreviation',
+        'academicyears.year',
+       'programmes.numberofterms'
+    )
+    ->get();
+
+        return view('institute.incidentalpayments.paymentdetails-list', compact('records'));
+    }
+
+public function storeOfflinePayment(Request $request)
+{
+                $ap = \App\Approvedprogramme::find($request->id);
+  $fee = AffiliationFee::where('institute_id', $ap->institute_id)
+    ->where('academicyear_id', $ap->academicyear_id)
+    ->where('institute_id', $request->institute_id)
+    ->first();
+
+if ($fee) {
+    $fee->update([
+        'bank_name' => $request->bank_name,
+        'branch_address' => $request->branch_address,
+        'account_number' => $request->account_number,
+        'account_name' => $request->account_name,
+        'ifsc_code' => $request->ifsc_code,
+        'transaction_no' => $request->transaction_no,
+        'amount' => $request->amount,
+        'transaction_date'=> $request->transaction_date,
+        'term'=> $request->term,
+        'transaction_details' => $request->transaction_details,
+
+    ]);
+
+} else {
+
+    // INSERT
+    AffiliationFee::create([
+        'institute_id' => $ap->institute_id,
+        'academicyear_id' => $ap->academicyear_id,
+        'order_id' => $request->order_id,
+        'bank_name' => $request->bank_name,
+        'branch_address' => $request->branch_address,
+        'account_number' => $request->account_number,
+        'account_name' => $request->account_name,
+        'ifsc_code' => $request->ifsc_code,
+        'transaction_no' => $request->transaction_no,
+        'amount' => $request->amount,
+        'transaction_date'=> $request->transaction_date,
+        'term'=> $request->term,
+        'transaction_details' => $request->transaction_details,
+        'approvedprogramme_id' => $request->id,
+
+
+    ]);
+}
+
+    return back()->with('messages', 'Payment details updated');
+}
+
+
+    
 }
