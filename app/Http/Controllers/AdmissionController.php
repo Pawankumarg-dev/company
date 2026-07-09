@@ -39,6 +39,7 @@ class AdmissionController extends Controller
 
 public function admission_save(Request $request)
 {
+    
 
     $registrationNo = 'RCI' . date('YmdHis') . rand(100, 999);
     $uploadDir = public_path('uploads/admission');
@@ -184,15 +185,7 @@ public function registration_save(Request $request){
     // Send OTP to selected mobile or email
     public function sendOtp(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'target' => 'required|in:mobile,email',
-            'mobile' => 'required_if:target,mobile|digits:10',
-            'email' => 'required_if:target,email|email'
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+        
 
         $target = $request->target;
         $mobile = $request->mobile;
@@ -254,13 +247,7 @@ public function registration_save(Request $request){
     // Verify OTP and create session
     public function verifyOtp(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'otp' => 'required|digits:6'
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+        
 
         $stored = Session::get('otp', []);
         if (empty($stored) || time() > ($stored['expires'] ?? 0)) {
