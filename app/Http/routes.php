@@ -206,6 +206,22 @@ Route::post('/changepassword', 'PublicController@changePassword');
 Route::get('/notices-circulars', 'PublicController@notices_circulars');
 Route::get('/exam-timetable', 'PublicController@exam_timetable');
 
+//Admission routes
+Route::get('/admission', 'AdmissionController@admission');
+Route::post('/admission-save', 'AdmissionController@admission_save');
+Route::get('/registration', 'AdmissionController@registration');
+Route::post('/registration-save', 'AdmissionController@registration_save');
+
+
+// OTP session login routes
+Route::get('/otp-login', 'AdmissionController@showOtpLogin');
+Route::post('/otp-send', 'AdmissionController@sendOtp');
+Route::get('/otp-verify', 'AdmissionController@showOtpVerify');
+Route::post('/otp-verify', 'AdmissionController@verifyOtp');
+Route::get('/logout', 'AdmissionController@logout');
+
+
+
 
 
 
@@ -1067,15 +1083,15 @@ Route::group(array('middleware' => ['role:evaluationcenter']),function(){
 });
 Route::group(array('middleware' => ['role:examcenter']),function(){
     // examprocess
-     Route::resource('examcenter/schedule','Examcenter\Exam\ExamController');
+    Route::resource('examcenter/schedule','Examcenter\Exam\ExamController');
 //      Route::resource('examcenter/attendance','Examcenter\Exam\AttendanceController');
 //      Route::get('examcenter/evalution-center','Examcenter\Exam\ExamController@evalution_center');
 //     Route::resource('examcenter/attendancesheet','Examcenter\Exam\AttendancesheetController');
 
-// // qp doenload url
-//     Route::resource('examcenter/questionpaper','Examcenter\Exam\QuestionPaperController');
-//     Route::post('examcenter/downloadqp','Examcenter\ExamController@downloadqp');
-// // end qp doenload url
+// qp doenload url
+    Route::resource('examcenter/questionpaper','Examcenter\Exam\QuestionPaperController');
+    Route::post('examcenter/downloadqp','Examcenter\ExamController@downloadqp');
+// end qp doenload url
 
 
 //     Route::get('examcenter/questionpapers/{sid}','Examcenter\ExamController@download');
@@ -1100,7 +1116,6 @@ Route::group(array('middleware' => ['role:examcenter']),function(){
     Route::get('examcenter/institutes','Examcenter\ExamController@institutes'); */
 });
 Route::group(array('middleware' => ['role:student']), function (){
-     
     Route::resource('student/exam/applications','Student\Exam\ApplicationController');
     Route::get('student/exam/applicants/{cid}/{id}/{term}','Student\HallticketController@downloadht');
     Route::get('/examapplication','Student\HallticketController@apply');

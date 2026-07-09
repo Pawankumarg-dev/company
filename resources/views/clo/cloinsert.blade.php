@@ -37,7 +37,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Description <span class="text-danger">*<span></label>
-                                <textarea name="description" id="description" class="form-control" rows="5"></textarea>
+                                <textarea name="description" id="description" class="form-control" rows="5" ></textarea>
                                 <span id="description_error" style="color:red;"></span>
                             </div>
                             <div class="form-group">
@@ -165,7 +165,7 @@
                     }
 
                  
-                    if (videoFile.size > 524288000) {
+                    if (videoFile.size > 5242880) {
 
                         $('#video_error')
                             .html('Video size must not exceed 500 MB');

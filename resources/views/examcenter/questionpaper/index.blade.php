@@ -246,8 +246,6 @@
 
    
 ?>
-
-
                                     @foreach ($qp as $paper)
                                             <form target="_blank" action="{{ url('examcenter/downloadqp') }}" method="post"
                                                 class="">

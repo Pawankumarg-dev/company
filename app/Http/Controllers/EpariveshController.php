@@ -25,9 +25,6 @@ use Illuminate\Support\Facades\Validator;
 
 class EpariveshController extends Controller
 {
-
-    
-
      public function __construct()
     {
         $this->middleware(['role:institute']);
@@ -146,17 +143,11 @@ public function cancel(Request $request, $id)
 
 
 
-     public function addcandidate($id,$apid,$candidate=null){
-
-
+public function addcandidate($id,$apid,$candidate=null){
 $student = EpariveshStudent::find($id);
-
-
         $now = \Carbon\Carbon::now();
         $ap = Approvedprogramme::find($apid);
-                    $admitted=\App\Candidate::where('approvedprogramme_id',$apid)->count();
-
-                
+        $admitted=\App\Candidate::where('approvedprogramme_id',$apid)->count();
         if($ap->maxintake <= $admitted)
         {
             Session::put('error','No sheet Avilable');
@@ -277,16 +268,6 @@ public function eotp(Request $request)
         ], 500);
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

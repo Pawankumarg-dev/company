@@ -12,6 +12,8 @@ use App\Candidate;
 use App\Order;
 use App\User;
 use App\Reportedissue;
+use App\EpariveshStudent;
+use App\Epariveshacadmic;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 use Carbon\Carbon;
@@ -1417,5 +1419,7 @@ private function getMacAddress(): string
 
     return 'Not Found';
 }
+
+
 
 }
