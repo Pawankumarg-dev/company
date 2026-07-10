@@ -80,6 +80,43 @@
             font-size: 13px;
             margin-bottom: 25px;
         }
+
+        /* ---- Confirmation Modal styling ---- */
+        #confirmDetailsModal .modal-content {
+            border-radius: 8px;
+            overflow: hidden;
+            border: none;
+        }
+
+        #confirmDetailsModal .modal-header {
+            border-bottom: none;
+            padding: 18px 20px;
+        }
+
+        #confirmDetailsModal .modal-header-primary {
+            background-color: #337ab7 !important;
+            color: #fff;
+        }
+
+        #confirmDetailsModal .modal-header-primary .modal-title {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #confirmDetailsModal .modal-header-primary .close {
+            color: #fff;
+            opacity: .8;
+            text-shadow: none;
+        }
+
+        #confirmDetailsModal .table td {
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        #confirmDetailsModal .table td:first-child {
+            background: #f9fafb;
+        }
     </style>
 
     <div class="container">
@@ -99,7 +136,7 @@
 
                     <div class="register-body">
 
-                        <form method="POST" action="{{ url('/registration-save') }}">
+                        <form method="POST" action="{{ url('/registration-save') }}" id="registerForm">
                             {{ csrf_field() }}
 
                             <div class="row">
@@ -167,7 +204,7 @@
 
 
 
-                            <button class="btn btn-primary btn-block btn-register">
+                            <button type="button" id="btnRegisterNow" class="btn btn-primary btn-block btn-register">
                                 <i class="glyphicon glyphicon-ok-circle"></i>
                                 Register Now
                             </button>
@@ -178,6 +215,69 @@
 
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmDetailsModal" tabindex="-1" role="dialog" aria-labelledby="confirmDetailsLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="confirmDetailsLabel">
+                        <i class="glyphicon glyphicon-check"></i>
+                        Confirm Your Details
+                    </h4>
+                </div>
+                <div class="modal-body " style="padding:25px;">
+                    <div class="alert alert-warning" style="font-size:13px;">
+                        <i class="glyphicon glyphicon-info-sign"></i>
+                        Please verify that the below details exactly match your <strong>Aadhaar card</strong> before proceeding. Incorrect details may lead to rejection of your application.
+                    </div>
+
+                    <table class="table table-bordered" style="margin-bottom:15px;">
+                        <tbody>
+                            <tr>
+                                <td style="width:40%; font-weight:600; color:#555;">Full Name</td>
+                                <td id="confirm_first_name">-</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:600; color:#555;">Aadhaar Number</td>
+                                <td id="confirm_aadhar_number">-</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:600; color:#555;">Email Address</td>
+                                <td id="confirm_email">-</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:600; color:#555;">Mobile Number</td>
+                                <td id="confirm_mobile">-</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:600; color:#555;">State</td>
+                                <td id="confirm_state">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="checkbox" style="margin-top:0;">
+                        <label style="font-weight:normal; font-size:13px; color:#555;">
+                            <input type="checkbox" id="confirmCheckbox">
+                            I confirm that the above details are correct and match my Aadhaar card.
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <i class="glyphicon glyphicon-remove"></i> Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnConfirmSubmit" disabled>
+                        <i class="glyphicon glyphicon-ok"></i> Confirm &amp; Register
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -283,13 +383,6 @@
                 });
             }
 
-            $('form').on('submit', function(e) {
-                if (!validateRegistrationForm()) {
-                    e.preventDefault();
-                    return false;
-                }
-            });
-
             $('[name="first_name"]').on('input', function() {
                 clearFieldError('first_name');
             });
@@ -308,6 +401,35 @@
 
             $('[name="state_id"]').on('change', function() {
                 clearFieldError('state_id');
+            });
+
+            // Register Now -> validate -> populate modal -> show modal
+            $('#btnRegisterNow').on('click', function() {
+                if (!validateRegistrationForm()) {
+                    return false;
+                }
+
+                $('#confirm_first_name').text($.trim($('[name="first_name"]').val()));
+                $('#confirm_aadhar_number').text($.trim($('[name="aadhar_number"]').val()));
+                $('#confirm_email').text($.trim($('[name="email"]').val()));
+                $('#confirm_mobile').text($.trim($('[name="mobile"]').val()));
+                $('#confirm_state').text($('[name="state_id"] option:selected').text());
+
+                // Reset checkbox + confirm button state every time modal opens
+                $('#confirmCheckbox').prop('checked', false);
+                $('#btnConfirmSubmit').prop('disabled', true);
+
+                $('#confirmDetailsModal').modal('show');
+            });
+
+            // Enable Confirm button only when checkbox is ticked
+            $('#confirmCheckbox').on('change', function() {
+                $('#btnConfirmSubmit').prop('disabled', !this.checked);
+            });
+
+            // Final submit
+            $('#btnConfirmSubmit').on('click', function() {
+                document.getElementById('registerForm').submit();
             });
         });
     </script>

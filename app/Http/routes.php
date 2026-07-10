@@ -208,7 +208,7 @@ Route::get('/exam-timetable', 'PublicController@exam_timetable');
 
 //Admission routes
 Route::get('/admission', 'AdmissionController@admission');
-Route::post('/admission-save', 'AdmissionController@admission_save');
+Route::post('/admission-save', 'AdmissionController@admissionSave');
 Route::get('/registration', 'AdmissionController@registration');
 Route::post('/registration-save', 'AdmissionController@registration_save');
 
