@@ -12,6 +12,7 @@
             <form class="admission-form" method="POST" action="{{ url('/admission-save') }}" enctype="multipart/form-data"
                 style="background:#fff; border:1px solid #d9e2ec; border-top:none; border-radius:0 0 4px 4px; padding:25px;">
                 {{ csrf_field() }}
+                <input type="hidden" name="student_id" id="student_id" value="{{$studentDetails->id}}">
 
                 <!-- ===================== PROFESSIONAL STEPPER ===================== -->
                 <div class="stepper-wrapper">
@@ -23,13 +24,13 @@
 
                     <div class="stepper-step" data-step="2">
                         <div class="step-circle">2</div>
-                        <div class="step-label">Education</div>
+                        <div class="step-label">Address</div>
                     </div>
                     <div class="stepper-line" data-line="2"></div>
 
                     <div class="stepper-step" data-step="3">
                         <div class="step-circle">3</div>
-                        <div class="step-label">Address</div>
+                        <div class="step-label">Education</div>
                     </div>
                     <div class="stepper-line" data-line="3"></div>
 
@@ -40,7 +41,7 @@
                 </div>
                 <!-- =================== END PROFESSIONAL STEPPER =================== -->
 
-                <!-- ============================ STEP 1 ============================ -->
+                <!-- ============================ STEP 1: BASIC INFO ============================ -->
                 <div class="form-step" data-step="1">
                     <div class="section-block"
                         style="margin-bottom:20px; background:#f8fbff; border:1px solid #dce6f1; border-radius:4px; padding:18px;">
@@ -53,25 +54,25 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Full Name </label>
-                                    <input value="Pawan Kumar Gupta" class="form-control required-field" readonly>
+                                    <input name="student_name" value="{{ $studentDetails->FirstName}}" class="form-control required-field" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Email ID</label>
-                                    <input value="pawankumargupta@example.com" class="form-control required-field" readonly>
+                                    <input name="email" value="{{ $studentDetails->email}}" class="form-control required-field" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Mobile Number</label>
-                                    <input value="6307079220" class="form-control required-field" readonly>
+                                    <input name="mobile" value="{{ $studentDetails->mobile}}" class="form-control required-field" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Aadhar Number </label>
-                                    <input value="820683519606" class="form-control required-field"
+                                    <input name="aadhar_number" value="{{ $studentDetails->addharNumber}}" class="form-control required-field"
                                         placeholder="Enter Aadhar number" readonly>
                                 </div>
                             </div>
@@ -94,12 +95,10 @@
                                 <div class="form-group required-radio-group" data-error-id="gender_error">
                                     <label>Gender <span class="text-danger">*</span></label>
                                     <div class="radio">
-                                        <label><input name="gender" type="radio" value="male"> Male</label>
-                                        <label style="margin-left:15px;"><input name="gender" type="radio"
-                                                value="female">
+                                        <label><input name="gender" type="radio" value="1"> Male</label>
+                                        <label style="margin-left:15px;"><input name="gender" type="radio" value="2">
                                             Female</label>
-                                        <label style="margin-left:15px;"><input name="gender" type="radio"
-                                                value="transgender">Other</label>
+                                        <label style="margin-left:15px;"><input name="gender" type="radio"  value="3">Other</label>
                                     </div>
                                 </div>
                             </div>
@@ -127,8 +126,8 @@
                                     <select name="nationality" class="form-control required-field"
                                         data-error-id="nationality_error">
                                         <option value="">--Please Select Nationality--</option>
-                                        <option value="india">Indian</option>
-                                        <option value="other">Other</option>
+                                        <option value="86">Indian</option>
+                                        <option value="0">Other</option>
                                     </select>
                                 </div>
                             </div>
@@ -138,10 +137,10 @@
                                     <select name="category" class="form-control required-field"
                                         data-error-id="category_error">
                                         <option value="">Please select</option>
-                                        <option value="general">General</option>
-                                        <option value="obc">OBC</option>
-                                        <option value="sc">SC</option>
-                                        <option value="st">ST</option>
+                                        <option value="GENERAL">GENERAL</option>
+                                        <option value="OBC">OBC</option>
+                                        <option value="SCHEDULED CASTE (SC)">SCHEDULED CASTE (SC)</option>
+                                        <option value="SCHEDULED TRIBE (ST)">SCHEDULED TRIBE (ST)</option>
                                     </select>
                                 </div>
                             </div>
@@ -162,93 +161,8 @@
                 </div>
                 <!-- ========================== END STEP 1 ========================== -->
 
-                <!-- ============================ STEP 2 ============================ -->
+                <!-- ============================ STEP 2: ADDRESS ============================ -->
                 <div class="form-step" data-step="2">
-                    <div class="section-block"
-                        style="margin-bottom:20px; background:#f8fbff; border:1px solid #dce6f1; border-radius:4px; padding:18px;">
-                        <div class="section-title" style="margin-bottom:18px;">
-                            <span class="dot"></span>
-                            <h5 style="display:inline-block; margin:0; font-size:16px; font-weight:600;">Education Details
-                            </h5>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-bordered" style="margin-bottom:0;">
-                                <thead style="background:#1f4e79; color:#fff;">
-                                    <tr>
-                                        <th>Examination</th>
-                                        <th>Board/University</th>
-                                        <th>Year of Passing</th>
-                                        <th>Total Marks</th>
-                                        <th>Marks Obtained</th>
-                                        <th>Percentage / CGPA </th>
-                                        <th>Subject(s)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="education-row">
-                                        <td>10th <span class="text-danger">*</span></td>
-                                        <td>
-                                            <select name="board10" class="form-control required-field education-board"
-                                                data-error-id="board10_error">
-                                                <option value="">Select Board</option>
-                                                <option value="10_STANDARD_OR_EQUIVALENT">10 STANDARD OR EQUIVALENT
-                                                </option>
-                                                <option value="CBSE">CBSE</option>
-                                                <option value="ICSE">ICSE</option>
-                                                <option value="STATE_BOARD">STATE BOARD</option>
-                                            </select>
-                                        </td>
-                                        <td><input name="year10" type="number" min="1950" max="2026"
-                                                step="1" class="form-control required-field education-year"
-                                                data-error-id="year10_error" placeholder="Year"></td>
-                                        <td><input name="total10" type="number" min="1"
-                                                class="form-control required-field education-total"
-                                                data-error-id="total10_error" placeholder="Total Marks"></td>
-                                        <td><input name="marks10" type="number" min="0"
-                                                class="form-control required-field education-obtained"
-                                                data-error-id="marks10_error" placeholder="Marks Obtained"></td>
-                                        <td><input name="percent10" type="number" min="0" max="99.99"
-                                                step="any" class="form-control required-field education-percent"
-                                                data-error-id="percent10_error" placeholder="Percentage"></td>
-                                        <td><input name="subject10" type="text"
-                                                class="form-control required-field education-subject"
-                                                data-error-id="subject10_error" placeholder="Subject(s)"></td>
-                                    </tr>
-                                    <tr class="education-row">
-                                        <td>12th <span class="text-danger">*</span></td>
-                                        <td><select name="board12" class="form-control required-field education-board"
-                                                data-error-id="board12_error">
-                                                <option value="">Select Board</option>
-                                                <option value="10+2_OR_EQUIVALENT">10+2 OR EQUIVALENT</option>
-                                                <option value="CBSE">CBSE</option>
-                                                <option value="ICSE">ICSE</option>
-                                                <option value="STATE_BOARD">STATE BOARD</option>
-                                            </select></td>
-                                        <td><input name="year12" type="number" min="1950" max="2026"
-                                                step="1" class="form-control required-field education-year"
-                                                data-error-id="year12_error" placeholder="Year"></td>
-                                        <td><input name="total12" type="number" min="1"
-                                                class="form-control required-field education-total"
-                                                data-error-id="total12_error" placeholder="Total Marks"></td>
-                                        <td><input name="marks12" type="number" min="0"
-                                                class="form-control required-field education-obtained"
-                                                data-error-id="marks12_error" placeholder="Marks Obtained"></td>
-                                        <td><input name="percent12" type="number" min="0" max="99.99"
-                                                step="any" class="form-control required-field education-percent"
-                                                data-error-id="percent12_error" placeholder="Percentage"></td>
-                                        <td><input name="subject12" type="text"
-                                                class="form-control required-field education-subject"
-                                                data-error-id="subject12_error" placeholder="Subject(s)"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- ========================== END STEP 2 ========================== -->
-
-                <!-- ============================ STEP 3 ============================ -->
-                <div class="form-step" data-step="3">
                     <div class="section-block"
                         style="margin-bottom:20px; background:#f8fbff; border:1px solid #dce6f1; border-radius:4px; padding:18px;">
                         <div class="section-title" style="margin-bottom:18px;">
@@ -388,9 +302,94 @@
                         </div>
                     </div>
                 </div>
+                <!-- ========================== END STEP 2 ========================== -->
+
+                <!-- ============================ STEP 3: EDUCATION ============================ -->
+                <div class="form-step" data-step="3">
+                    <div class="section-block"
+                        style="margin-bottom:20px; background:#f8fbff; border:1px solid #dce6f1; border-radius:4px; padding:18px;">
+                        <div class="section-title" style="margin-bottom:18px;">
+                            <span class="dot"></span>
+                            <h5 style="display:inline-block; margin:0; font-size:16px; font-weight:600;">Education Details
+                            </h5>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" style="margin-bottom:0;">
+                                <thead style="background:#1f4e79; color:#fff;">
+                                    <tr>
+                                        <th>Examination</th>
+                                        <th>Board/University</th>
+                                        <th>Year of Passing</th>
+                                        <th>Total Marks</th>
+                                        <th>Marks Obtained</th>
+                                        <th>Percentage / CGPA </th>
+                                        <th>Subject(s)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="education-row">
+                                        <td>10th <span class="text-danger">*</span></td>
+                                        <td>
+                                            <select name="board10" class="form-control required-field education-board"
+                                                data-error-id="board10_error">
+                                                <option value="">Select Board</option>
+                                                <option value="10_STANDARD_OR_EQUIVALENT">10 STANDARD OR EQUIVALENT
+                                                </option>
+                                                <option value="CBSE">CBSE</option>
+                                                <option value="ICSE">ICSE</option>
+                                                <option value="STATE_BOARD">STATE BOARD</option>
+                                            </select>
+                                        </td>
+                                        <td><input name="year10" type="number" min="1950" max="2026"
+                                                step="1" class="form-control required-field education-year"
+                                                data-error-id="year10_error" placeholder="Year"></td>
+                                        <td><input name="total10" type="number" min="1"
+                                                class="form-control required-field education-total"
+                                                data-error-id="total10_error" placeholder="Total Marks"></td>
+                                        <td><input name="marks10" type="number" min="0"
+                                                class="form-control required-field education-obtained"
+                                                data-error-id="marks10_error" placeholder="Marks Obtained"></td>
+                                        <td><input name="percent10" type="number" min="0" max="99.99"
+                                                step="any" class="form-control required-field education-percent"
+                                                data-error-id="percent10_error" placeholder="Percentage"></td>
+                                        <td><input name="subject10" type="text"
+                                                class="form-control required-field education-subject"
+                                                data-error-id="subject10_error" placeholder="Subject(s)"></td>
+                                    </tr>
+                                    <tr class="education-row">
+                                        <td>12th <span class="text-danger">*</span></td>
+                                        <td><select name="board12" class="form-control required-field education-board"
+                                                data-error-id="board12_error">
+                                                <option value="">Select Board</option>
+                                                <option value="10+2_OR_EQUIVALENT">10+2 OR EQUIVALENT</option>
+                                                <option value="CBSE">CBSE</option>
+                                                <option value="ICSE">ICSE</option>
+                                                <option value="STATE_BOARD">STATE BOARD</option>
+                                            </select></td>
+                                        <td><input name="year12" type="number" min="1950" max="2026"
+                                                step="1" class="form-control required-field education-year"
+                                                data-error-id="year12_error" placeholder="Year"></td>
+                                        <td><input name="total12" type="number" min="1"
+                                                class="form-control required-field education-total"
+                                                data-error-id="total12_error" placeholder="Total Marks"></td>
+                                        <td><input name="marks12" type="number" min="0"
+                                                class="form-control required-field education-obtained"
+                                                data-error-id="marks12_error" placeholder="Marks Obtained"></td>
+                                        <td><input name="percent12" type="number" min="0" max="99.99"
+                                                step="any" class="form-control required-field education-percent"
+                                                data-error-id="percent12_error" placeholder="Percentage"></td>
+                                        <td><input name="subject12" type="text"
+                                                class="form-control required-field education-subject"
+                                                data-error-id="subject12_error" placeholder="Subject(s)"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
                 <!-- ========================== END STEP 3 ========================== -->
 
-                <!-- ============================ STEP 4 ============================ -->
+                <!-- ============================ STEP 4: DOCUMENTS ============================ -->
                 <div class="form-step" data-step="4">
                     <div class="section-block"
                         style="margin-bottom:20px; background:#f8fbff; border:1px solid #dce6f1; border-radius:4px; padding:18px;">
@@ -518,6 +517,19 @@
             color: #333;
             background-color: #fff;
             border-color: #ccc;
+        }
+
+        .btn-next[disabled],
+        .btn-submit[disabled] {
+            opacity: .65;
+            cursor: not-allowed;
+        }
+
+        .step-save-status {
+            font-size: 12px;
+            color: #2e7d32;
+            margin-top: 10px;
+            display: none;
         }
 
         /* ===================== PROFESSIONAL STEPPER STYLES ===================== */
@@ -829,15 +841,155 @@
                 $('.btn-submit').toggle(step === totalSteps);
             }
 
+            function csrfToken() {
+                return $('input[name="_token"]').val();
+            }
+
+            function showAjaxError(xhr, fallbackMessage) {
+                if (xhr && xhr.status === 422 && xhr.responseJSON && xhr.responseJSON.errors) {
+                    var errors = xhr.responseJSON.errors;
+                    var messages = [];
+                    $.each(errors, function(field, fieldMessages) {
+                        messages.push(fieldMessages[0]);
+                    });
+                    alert(messages.join('\n'));
+                } else {
+                    alert(fallbackMessage);
+                }
+            }
+
+            // ---- Per-step AJAX save handlers ----
+
             $('.btn-next').on('click', function() {
                 if (!validateForm()) {
                     return;
                 }
-                if (currentStep < totalSteps) {
+
+                var $nextBtn = $(this);
+                var originalText = $nextBtn.text();
+                $nextBtn.prop('disabled', true).text('Saving...');
+
+                function goNext() {
+                    $nextBtn.prop('disabled', false).text(originalText);
                     currentStep++;
                     showStep(currentStep);
                 }
+
+                function restoreBtn() {
+                    $nextBtn.prop('disabled', false).text(originalText);
+                }
+
+                if (currentStep === 1) {
+                    saveStep1WithRestore(goNext, restoreBtn);
+                } else if (currentStep === 2) {
+                    saveStep2WithRestore(goNext, restoreBtn);
+                } else if (currentStep === 3) {
+                    saveStep3WithRestore(goNext, restoreBtn);
+                }
             });
+
+            function saveStep1WithRestore(onSuccess, onError) {
+                var data = {
+                    _token: csrfToken(),
+                    step: 1,
+                    student_id: $('#student_id').val(),
+                    student_name: $('[name="student_name"]').val(),
+                    email: $('[name="email"]').val(),
+                    mobile: $('[name="mobile"]').val(),
+                    aadhar_number: $('[name="aadhar_number"]').val(),
+                    father_name: $('[name="father_name"]').val(),
+                    mother_name: $('[name="mother_name"]').val(),
+                    gender: $('input[name="gender"]:checked').val(),
+                    pwd: $('input[name="pwd"]:checked').val(),
+                    dob: $('[name="dob"]').val(),
+                    nationality: $('[name="nationality"]').val(),
+                    category: $('[name="category"]').val(),
+                    ews: $('input[name="ews"]:checked').val()
+                };
+
+                $.ajax({
+                    url: '{{ url("/admission-save") }}',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function(res) {
+                        $('#student_id').val(res.student_id);
+                        onSuccess();
+                    },
+                    error: function(xhr) {
+                        onError();
+                        showAjaxError(xhr, 'Could not save Basic Information. Please try again.');
+                    }
+                });
+            }
+
+            function saveStep2WithRestore(onSuccess, onError) {
+                var data = {
+                    _token: csrfToken(),
+                    step: 2,
+                    student_id: $('#student_id').val(),
+                    corr_address: $('#corr_address').val(),
+                    corr_state: $('#corr_state').val(),
+                    corr_district: $('#corr_district').val(),
+                    corr_subdistrict: $('#corr_subdistrict').val(),
+                    corr_block: $('#corr_block').val(),
+                    corr_pin: $('#corr_pin').val(),
+                    perm_address: $('#perm_address').val(),
+                    perm_state: $('#perm_state').val(),
+                    perm_district: $('#perm_district').val(),
+                    perm_subdistrict: $('#perm_subdistrict').val(),
+                    perm_block: $('#perm_block').val(),
+                    perm_pin: $('#perm_pin').val()
+                };
+
+                $.ajax({
+                    url: '{{ url("/admission-save") }}',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function() {
+                        onSuccess();
+                    },
+                    error: function(xhr) {
+                        onError();
+                        showAjaxError(xhr, 'Could not save Address details. Please try again.');
+                    }
+                });
+            }
+
+            function saveStep3WithRestore(onSuccess, onError) {
+                var data = {
+                    _token: csrfToken(),
+                    step: 3,
+                    student_id: $('#student_id').val(),
+                    board10: $('[name="board10"]').val(),
+                    year10: $('[name="year10"]').val(),
+                    total10: $('[name="total10"]').val(),
+                    marks10: $('[name="marks10"]').val(),
+                    percent10: $('[name="percent10"]').val(),
+                    subject10: $('[name="subject10"]').val(),
+                    board12: $('[name="board12"]').val(),
+                    year12: $('[name="year12"]').val(),
+                    total12: $('[name="total12"]').val(),
+                    marks12: $('[name="marks12"]').val(),
+                    percent12: $('[name="percent12"]').val(),
+                    subject12: $('[name="subject12"]').val()
+                };
+
+                $.ajax({
+                    url: '{{ url("/admission-save") }}',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function() {
+                        onSuccess();
+                    },
+                    error: function(xhr) {
+                        onError();
+                        showAjaxError(xhr, 'Could not save Education details. Please try again.');
+                    }
+                });
+            }
 
             $('.btn-previous').on('click', function() {
                 if (currentStep > 1) {
@@ -848,17 +1000,8 @@
 
             $('.stepper-step').on('click', function() {
                 var step = $(this).data('step');
-                // Only allow jumping to a step if all previous steps are valid
-                if (step && step >= 1 && step <= totalSteps) {
-                    if (step > currentStep) {
-                        for (var s = currentStep; s < step; s++) {
-                            currentStep = s;
-                            if (!validateForm()) {
-                                showStep(currentStep);
-                                return;
-                            }
-                        }
-                    }
+                // Only allow jumping backward freely; forward jumps must go through Next (so each step saves)
+                if (step && step >= 1 && step <= totalSteps && step < currentStep) {
                     currentStep = step;
                     showStep(currentStep);
                 }
@@ -967,11 +1110,44 @@
                 }
             });
 
+            // Final step (Documents) submit -> AJAX with files -> finalize record
             $('.admission-form').on('submit', function(e) {
+                e.preventDefault();
+
                 if (!validateForm()) {
-                    e.preventDefault();
                     $('.has-error').first().find('input, select, textarea').first().focus();
+                    return;
                 }
+
+                if (!$('#student_id').val()) {
+                    alert('Please complete the previous steps first.');
+                    return;
+                }
+
+                var $submitBtn = $('.btn-submit');
+                var originalText = $submitBtn.text();
+                $submitBtn.prop('disabled', true).text('Submitting...');
+
+                var formData = new FormData(this);
+                formData.append('step', 4);
+
+                $.ajax({
+                    url: '{{ url("/admission-save") }}',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        $submitBtn.prop('disabled', false).text(originalText);
+                        alert('Admission submitted successfully. Your Registration No is ' + res.registration_no);
+                        window.location.href = '{{ url("/admission") }}';
+                    },
+                    error: function(xhr) {
+                        $submitBtn.prop('disabled', false).text(originalText);
+                        showAjaxError(xhr, 'Could not submit documents. Please try again.');
+                    }
+                });
             });
 
             $('.admission-form').find('input, select, textarea').on('input change', function() {

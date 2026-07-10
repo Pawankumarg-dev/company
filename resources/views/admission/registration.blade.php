@@ -80,6 +80,43 @@
             font-size: 13px;
             margin-bottom: 25px;
         }
+
+        /* ---- Confirmation Modal styling ---- */
+        #confirmDetailsModal .modal-content {
+            border-radius: 8px;
+            overflow: hidden;
+            border: none;
+        }
+
+        #confirmDetailsModal .modal-header {
+            border-bottom: none;
+            padding: 18px 20px;
+        }
+
+        #confirmDetailsModal .modal-header-primary {
+            background-color: #337ab7 !important;
+            color: #fff;
+        }
+
+        #confirmDetailsModal .modal-header-primary .modal-title {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #confirmDetailsModal .modal-header-primary .close {
+            color: #fff;
+            opacity: .8;
+            text-shadow: none;
+        }
+
+        #confirmDetailsModal .table td {
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        #confirmDetailsModal .table td:first-child {
+            background: #f9fafb;
+        }
     </style>
 
     <div class="container">
@@ -99,7 +136,7 @@
 
                     <div class="register-body">
 
-                        <form method="POST" action="{{ url('/registration-save') }}">
+                        <form method="POST" action="{{ url('/registration-save') }}" id="registerForm" autocomplete="off">
                             {{ csrf_field() }}
 
                             <div class="row">
@@ -111,8 +148,11 @@
                                         </label>
                                         <small class="info-text">As per your Aadhaar card</small>
                                         <input type="text" name="first_name" class="form-control"
-                                            placeholder="Enter Full Name" value="{{ old('first_name') }}">
-                                        <span class="field-error" id="error-first_name"></span>
+                                            placeholder="Enter Full Name" value="{{ old('first_name') }}"
+                                            maxlength="100"
+                                            onpaste="return false;" oncopy="return false;" oncut="return false;"
+                                            onkeypress="return allowOnlyChar(event)">
+                                        <span class="field-error" id="error-first_name">{{ $errors->first('first_name') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -123,8 +163,10 @@
                                     <span class="required">*</span>
                                 </label>
                                 <input type="text" name="aadhar_number" maxlength="12" class="form-control"
-                                    placeholder="Enter 12 Digit Aadhaar Number" value="{{ old('aadhar_number') }}">
-                                <span class="field-error" id="error-aadhar_number"></span>
+                                    placeholder="Enter 12 Digit Aadhaar Number" value="{{ old('aadhar_number') }}"
+                                    onpaste="return false;" oncopy="return false;" oncut="return false;"
+                                    onkeypress="return allowOnlyNumber(event)">
+                                <span class="field-error" id="error-aadhar_number">{{ $errors->first('aadhar_number') }}</span>
                             </div>
 
                             <div class="form-group">
@@ -134,8 +176,10 @@
                                 </label>
 
                                 <input type="email" name="email" class="form-control" placeholder="Enter Email Address"
-                                    value="{{ old('email') }}">
-                                <span class="field-error" id="error-email">  {{ $errors->first('email') }}</span>
+                                    value="{{ old('email') }}" maxlength="100"
+                                    onpaste="return false;" oncopy="return false;" oncut="return false;"
+                                    onkeypress="return allowEmailChar(event)">
+                                <span class="field-error" id="error-email">{{ $errors->first('email') }}</span>
                             </div>
 
                             <div class="form-group">
@@ -144,8 +188,10 @@
                                     <span class="required">*</span>
                                 </label>
                                 <input type="text" name="mobile" maxlength="10" class="form-control" placeholder="Enter Mobile Number"
-                                    value="{{ old('mobile') }}">
-                                <span class="field-error" id="error-mobile">  {{ $errors->first('mobile') }}</span>
+                                    value="{{ old('mobile') }}"
+                                    onpaste="return false;" oncopy="return false;" oncut="return false;"
+                                    onkeypress="return allowMobileChar(event)">
+                                <span class="field-error" id="error-mobile">{{ $errors->first('mobile') }}</span>
                             </div>
                             <div class="form-group">
                                 <label>
@@ -162,12 +208,12 @@
                                     @endforeach
 
                                 </select>
-                                <span class="field-error" id="error-state_id"></span>
+                                <span class="field-error" id="error-state_id">{{ $errors->first('state_id') }}</span>
                             </div>
 
 
 
-                            <button class="btn btn-primary btn-block btn-register">
+                            <button type="button" id="btnRegisterNow" class="btn btn-primary btn-block btn-register">
                                 <i class="glyphicon glyphicon-ok-circle"></i>
                                 Register Now
                             </button>
@@ -182,7 +228,127 @@
         </div>
     </div>
 
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmDetailsModal" tabindex="-1" role="dialog" aria-labelledby="confirmDetailsLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="confirmDetailsLabel">
+                        <i class="glyphicon glyphicon-check"></i>
+                        Confirm Your Details
+                    </h4>
+                </div>
+                <div class="modal-body " style="padding:25px;">
+                    <div class="alert alert-warning" style="font-size:13px;">
+                        <i class="glyphicon glyphicon-info-sign"></i>
+                        Please verify that the below details exactly match your <strong>Aadhaar card</strong> before proceeding. Incorrect details may lead to rejection of your application.
+                    </div>
+
+                    <table class="table table-bordered" style="margin-bottom:15px;">
+                        <tbody>
+                            <tr>
+                                <td style="width:40%; font-weight:600; color:#555;">Full Name</td>
+                                <td id="confirm_first_name">-</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:600; color:#555;">Aadhaar Number</td>
+                                <td id="confirm_aadhar_number">-</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:600; color:#555;">Email Address</td>
+                                <td id="confirm_email">-</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:600; color:#555;">Mobile Number</td>
+                                <td id="confirm_mobile">-</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:600; color:#555;">State</td>
+                                <td id="confirm_state">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="checkbox" style="margin-top:0;">
+                        <label style="font-weight:normal; font-size:13px; color:#555;">
+                            <input type="checkbox" id="confirmCheckbox">
+                            I confirm that the above details are correct and match my Aadhaar card.
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <i class="glyphicon glyphicon-remove"></i> Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnConfirmSubmit" disabled>
+                        <i class="glyphicon glyphicon-ok"></i> Confirm &amp; Register
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        /* ==================== KEYPRESS-LEVEL INPUT RESTRICTIONS ==================== */
+
+        // Full Name: only letters (A-Z, a-z) and single space between words.
+        // No leading space, no two consecutive spaces.
+        function allowOnlyChar(e) {
+            var charCode = e.which ? e.which : e.keyCode;
+            var value = e.target.value;
+
+            // Letters allowed
+            if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122)) {
+                return true;
+            }
+
+            // Space allowed only if not first char and previous char is not already a space
+            if (charCode === 32) {
+                if (value.length === 0 || value.slice(-1) === ' ') {
+                    return false;
+                }
+                return true;
+            }
+
+            return false;
+        }
+
+        // Aadhaar Number: only digits 0-9
+        function allowOnlyNumber(e) {
+            var charCode = e.which ? e.which : e.keyCode;
+            return (charCode >= 48 && charCode <= 57);
+        }
+
+        // Mobile Number: only digits, first digit must be 6-9 (valid Indian mobile format)
+        function allowMobileChar(e) {
+            var charCode = e.which ? e.which : e.keyCode;
+            var value = e.target.value;
+
+            if (charCode < 48 || charCode > 57) {
+                return false;
+            }
+
+            // First digit must be between 6 and 9
+            if (value.length === 0 && charCode < 54) {
+                return false;
+            }
+
+            return true;
+        }
+
+        // Email: only characters valid in an email address
+        function allowEmailChar(e) {
+            var charCode = e.which ? e.which : e.keyCode;
+            var ch = String.fromCharCode(charCode);
+            var allowed = /^[a-zA-Z0-9._%+\-@]$/;
+            return allowed.test(ch);
+        }
+
+        /* ==================== FIELD ERROR HELPERS ==================== */
+
         function clearFieldError(fieldName) {
             $('#error-' + fieldName).text('');
         }
@@ -190,6 +356,8 @@
         function setFieldError(fieldName, message) {
             $('#error-' + fieldName).text(message);
         }
+
+        /* ==================== AADHAAR VERHOEFF CHECKSUM VALIDATION ==================== */
 
         function validateAadhaar(value) {
             var digits = value.replace(/\D+/g, '');
@@ -225,6 +393,8 @@
             return c === 0;
         }
 
+        /* ==================== FULL FORM VALIDATION (ON SUBMIT) ==================== */
+
         function validateRegistrationForm() {
             var valid = true;
             var firstName = $.trim($('[name="first_name"]').val());
@@ -232,18 +402,26 @@
             var email = $.trim($('[name="email"]').val());
             var mobile = $.trim($('[name="mobile"]').val());
             var stateId = $('[name="state_id"]').val();
+
+            var namePattern = /^[A-Za-z]+( [A-Za-z]+)*$/;
             var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             var mobilePattern = /^[6-9]\d{9}$/;
 
             $('.field-error').text('');
 
             if (!firstName) {
-                setFieldError('first_name', 'First name is required.');
+                setFieldError('first_name', 'Full name is required.');
+                valid = false;
+            } else if (!namePattern.test(firstName)) {
+                setFieldError('first_name', 'Only letters and a single space between words are allowed.');
                 valid = false;
             }
 
             if (!aadhar) {
                 setFieldError('aadhar_number', 'Aadhaar number is required.');
+                valid = false;
+            } else if (!/^[0-9]{12}$/.test(aadhar)) {
+                setFieldError('aadhar_number', 'Aadhaar number must be exactly 12 digits.');
                 valid = false;
             } else if (!validateAadhaar(aadhar)) {
                 setFieldError('aadhar_number', 'Please enter a valid Aadhaar number.');
@@ -262,7 +440,7 @@
                 setFieldError('mobile', 'Mobile number is required.');
                 valid = false;
             } else if (!mobilePattern.test(mobile)) {
-                setFieldError('mobile', 'Mobile number must be 10 digits .');
+                setFieldError('mobile', 'Please enter a valid 10 digit mobile number.');
                 valid = false;
             }
 
@@ -274,6 +452,8 @@
             return valid;
         }
 
+        /* ==================== EVENT BINDINGS ==================== */
+
         $(document).ready(function() {
             if ($.fn.select2) {
                 $('.select2').select2({
@@ -283,31 +463,70 @@
                 });
             }
 
-            $('form').on('submit', function(e) {
-                if (!validateRegistrationForm()) {
-                    e.preventDefault();
-                    return false;
-                }
-            });
-
             $('[name="first_name"]').on('input', function() {
+                // Strip any character that slipped through (e.g. via mobile autocorrect) and collapse spaces
+                var cleaned = this.value.replace(/[^A-Za-z ]/g, '').replace(/ {2,}/g, ' ').replace(/^ /, '');
+                if (cleaned !== this.value) {
+                    this.value = cleaned;
+                }
                 clearFieldError('first_name');
             });
 
             $('[name="aadhar_number"]').on('input', function() {
+                var cleaned = this.value.replace(/\D/g, '').slice(0, 12);
+                if (cleaned !== this.value) {
+                    this.value = cleaned;
+                }
                 clearFieldError('aadhar_number');
             });
 
             $('[name="email"]').on('input', function() {
+                var cleaned = this.value.replace(/[^a-zA-Z0-9._%+\-@]/g, '');
+                if (cleaned !== this.value) {
+                    this.value = cleaned;
+                }
                 clearFieldError('email');
             });
 
             $('[name="mobile"]').on('input', function() {
+                var cleaned = this.value.replace(/\D/g, '').slice(0, 10);
+                if (cleaned !== this.value) {
+                    this.value = cleaned;
+                }
                 clearFieldError('mobile');
             });
 
             $('[name="state_id"]').on('change', function() {
                 clearFieldError('state_id');
+            });
+
+            // Register Now -> validate -> populate modal -> show modal
+            $('#btnRegisterNow').on('click', function() {
+                if (!validateRegistrationForm()) {
+                    return false;
+                }
+
+                $('#confirm_first_name').text($.trim($('[name="first_name"]').val()));
+                $('#confirm_aadhar_number').text($.trim($('[name="aadhar_number"]').val()));
+                $('#confirm_email').text($.trim($('[name="email"]').val()));
+                $('#confirm_mobile').text($.trim($('[name="mobile"]').val()));
+                $('#confirm_state').text($('[name="state_id"] option:selected').text());
+
+                // Reset checkbox + confirm button state every time modal opens
+                $('#confirmCheckbox').prop('checked', false);
+                $('#btnConfirmSubmit').prop('disabled', true);
+
+                $('#confirmDetailsModal').modal('show');
+            });
+
+            // Enable Confirm button only when checkbox is ticked
+            $('#confirmCheckbox').on('change', function() {
+                $('#btnConfirmSubmit').prop('disabled', !this.checked);
+            });
+
+            // Final submit
+            $('#btnConfirmSubmit').on('click', function() {
+                document.getElementById('registerForm').submit();
             });
         });
     </script>

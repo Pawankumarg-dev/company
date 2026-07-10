@@ -2,20 +2,69 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
-
-use App\Http\Requests;
+use DB;
+use Session;
 use App\EpariveshStudent;
 use App\Epariveshacadmic;
-use Validator;
+
 
 class AdmissionController extends Controller
 {
-    public function admission(){
+
+
+    public function registration(){
+    $states = DB::table('lgstates')->get();
+    return view('admission.registration', compact('states'));
+    }
+
+    public function registration_save(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'first_name'    => ['required', 'regex:/^[A-Za-z]+( [A-Za-z]+)*$/'],
+        'aadhar_number' => ['required', 'numeric', 'digits:12', 'unique:eparivesh_students,addharNumber'],
+        'email'         => ['required', 'email', 'unique:eparivesh_students,email'],
+        'mobile'        => ['required', 'numeric', 'digits:10', 'regex:/^[6-9][0-9]{9}$/', 'unique:eparivesh_students,mobile'],
+        'state_id'      => ['required'],
+    ], [
+        'first_name.required'    => 'Full name is required.',
+        'first_name.regex'       => 'Full name should contain only letters and a single space between words.',
+        'aadhar_number.required' => 'Aadhaar number is required.',
+        'aadhar_number.numeric'  => 'Aadhaar number must contain only digits.',
+        'aadhar_number.digits'   => 'Aadhaar number must be exactly 12 digits.',
+        'aadhar_number.unique'   => 'Aadhaar number already exists.',
+        'email.required'         => 'Email address is required.',
+        'email.email'            => 'Please enter a valid email address.',
+        'email.unique'           => 'Email address already exists.',
+        'mobile.required'        => 'Mobile number is required.',
+        'mobile.numeric'         => 'Mobile number must contain only digits.',
+        'mobile.digits'          => 'Mobile number must be exactly 10 digits.',
+        'mobile.regex'           => 'Please enter a valid 10 digit mobile number.',
+        'mobile.unique'          => 'Mobile number already exists.',
+        'state_id.required'      => 'Please select a state.',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
+
+    $student = new EpariveshStudent();
+    $student->FirstName    = $request->first_name;
+    $student->email        = $request->email;
+    $student->addharNumber = $request->aadhar_number;
+    $student->mobile       = $request->mobile;
+    $student->pstate_id    = $request->state_id;
+    $student->save();
+
+    Session::flash('messages', 'Registration successful');
+    return redirect('otp-login');
+}
+
+
+    public function admission(Request $request)
+    {
+    $mobile = '6307079220'; // Replace with the actual mobile number you want to search for
     // $institutes = \App\Institute::where('active_status',1)->whereNull('deleted_at')->get();
     // $courses = \App\Course::whereNull('status')->get();
     // $state_code = 6 ;
@@ -34,152 +83,276 @@ class AdmissionController extends Controller
    
     ->orderBy('lgstates.state_name', 'asc')
     ->get();
-    return view('admission.admission', compact('states_disticts'));
+    $studentDetails = EpariveshStudent::where('mobile', $mobile)->first();
+   
+    return view('admission.admission', compact('states_disticts', 'studentDetails'));
 }
 
-public function admission_save(Request $request)
+public function admissionSave(Request $request)
 {
-    
+    $step = (int) $request->input('step');
+    switch ($step) {
+        case 1:
+            return $this->saveStep1($request);
+        case 2:
+            return $this->saveStep2($request);
+        case 3:
+            return $this->saveStep3($request);
+        case 4:
+            return $this->saveStep4($request);
+        default:
+            return response()->json(['errors' => ['step' => ['Invalid step.']]], 422);
+    }
+}
 
-    $registrationNo = 'RCI' . date('YmdHis') . rand(100, 999);
+private function saveStep1(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'father_name'  => 'required|string|max:255',
+        'mother_name'  => 'required|string|max:255',
+        'gender'       => 'required|in:1,2,3',
+        'pwd'          => 'required|in:yes,no',
+        'dob'          => 'required|date',
+        'nationality'  => 'required|in:86,0',
+        'category'     => 'required|in:GENERAL,OBC,SCHEDULED CASTE (SC),SCHEDULED TRIBE (ST)',
+        'ews'          => 'required|in:yes,no',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    if (!empty($request->student_id)) {
+        $student = EpariveshStudent::find($request->student_id);
+        $student->CreatedOn = date('Y-m-d H:i:s');
+        $student->LastName = '';
+        $student->FatherName = $request->father_name;
+        $student->MotherName = $request->mother_name;
+        $student->DateofBirth = $request->dob;
+        $student->IsPWD = $request->pwd;
+        $student->IsEWS = $request->ews;
+        $student->nationality_id = $request->nationality;
+        $student->nationalityname = $request->nationality === '86' ? 'Indian' : 'Other';
+        $student->countryname = $request->nationality === '86' ? 'India' : 'Other';
+        $student->categoryname = $request->category;
+        $student->gendername = $request->gender;
+        $student->save();
+    } 
+        // $student->RegistrationNo = 'RCI' . date('YmdHis') . rand(100, 999);
+        // $student->StudentSysCode = $student->RegistrationNo;
+        // $student->status = 'draft';
+    return response()->json([
+        'student_id'      => $student->id,
+        'registration_no' => $student->RegistrationNo,
+    ]);
+}
+
+    private function saveStep2(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'corr_address'      => 'required|string',
+            'corr_state'        => 'required',
+            'corr_district'     => 'required',
+            'corr_subdistrict'  => 'required|string|max:255',
+            'corr_block'        => 'required|string|max:255',
+            'corr_pin'          => 'required|digits:6',
+            'perm_address'      => 'required|string',
+            'perm_state'        => 'required',
+            'perm_district'     => 'required',
+            'perm_subdistrict'  => 'required|string|max:255',
+            'perm_block'        => 'required|string|max:255',
+            'perm_pin'          => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $corr_disticts = DB::table('districts')->select('districtName')->where('districtCode', $request->corr_district)->first();
+        $corr_states   = DB::table('lgstates')->select('state_name')->where('state_code', $request->corr_state)->first();
+        $perm_disticts = DB::table('districts')->select('districtName')->where('districtCode', $request->perm_district)->first();
+        $perm_states   = DB::table('lgstates')->select('state_name')->where('state_code', $request->perm_state)->first();
+
+        if (!$corr_disticts || !$corr_states || !$perm_disticts || !$perm_states) {
+            return response()->json(['errors' => ['state_district' => ['Invalid state or district selected']]], 422);
+        }
+
+        $student = EpariveshStudent::findOrFail($request->student_id);
+
+        // Correspondence Address
+        $student->CorrespondanceAddress        = $request->corr_address;
+        $student->CorrespondanceAddressState   = $corr_states->state_name;
+        $student->CorrespondanceAddressDistrict = $corr_disticts->districtName;
+        $student->cstate_id                    = $request->corr_state;
+        $student->cdistrict_id                 = $request->corr_district;
+        $student->corrSubdistictTehsil         = $request->corr_subdistrict;
+        $student->corrBlock                    = $request->corr_block;
+        $student->corrPincode                  = $request->corr_pin;
+
+        // Permanent Address
+        $student->PermanentAddress        = $request->perm_address;
+        $student->PermanentAddressstate  = $perm_states->state_name;
+        $student->PermanentAddressdistrict = $perm_disticts->districtName;
+        $student->pstate_id               = $request->perm_state;
+        $student->pdistrict_id            = $request->perm_district;
+        $student->perSubdistictTehsil     = $request->perm_subdistrict;
+        $student->perBlock                = $request->perm_block;
+        $student->perPincode              = $request->perm_pin;
+
+        $student->save();
+
+        return response()->json(['status' => 'success']);
+    }
+
+    private function saveStep3(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'board10'    => 'required|string',
+            'year10'     => 'required|integer|min:1950|max:2026',
+            'total10'    => 'required|numeric|min:1',
+            'marks10'    => 'required|numeric|min:0',
+            'percent10'  => 'required|numeric|min:0|max:99.99',
+            'subject10'  => 'required|string|max:255',
+
+            'board12'    => 'required|string',
+            'year12'     => 'required|integer|min:1950|max:2026',
+            'total12'    => 'required|numeric|min:1',
+            'marks12'    => 'required|numeric|min:0',
+            'percent12'  => 'required|numeric|min:0|max:99.99',
+            'subject12'  => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        if ($request->marks10 > $request->total10) {
+            return response()->json(['errors' => ['marks10' => ['Marks obtained cannot exceed total marks']]], 422);
+        }
+        if ($request->marks12 > $request->total12) {
+            return response()->json(['errors' => ['marks12' => ['Marks obtained cannot exceed total marks']]], 422);
+        }
+
+        $student = EpariveshStudent::findOrFail($request->student_id);
+
+        try {
+        
+            $tenth = new Epariveshacadmic();
+            $tenth->eparivesh_student_id = $student->id;
+            // $tenth->StudentSysCode       = $student->StudentSysCode;
+            // $tenth->registration_no      = $student->RegistrationNo;
+            $tenth->qulification_name    = '10 STANDARD OR EQUIVALENT';
+            $tenth->board_name           = $request->board10;
+            $tenth->passing_year         = $request->year10;
+            $tenth->max_marks            = $request->total10;
+            $tenth->obtained_marks       = $request->marks10;
+            $tenth->percentage           = $request->percent10;
+            $tenth->subjects             = 'NA'; // see note above — subject10 input is currently discarded
+            $tenth->marksheet            = '';
+            $tenth->save();
+
+            $twelveth = new Epariveshacadmic();
+            $twelveth->eparivesh_student_id = $student->id;
+            // $twelveth->StudentSysCode       = $student->StudentSysCode;
+            // $twelveth->registration_no      = $student->RegistrationNo;
+            $twelveth->qulification_name    = '10+2 OR EQUIVALENT';
+            $twelveth->board_name           = $request->board12;
+            $twelveth->passing_year         = $request->year12;
+            $twelveth->max_marks            = $request->total12;
+            $twelveth->obtained_marks       = $request->marks12;
+            $twelveth->percentage           = $request->percent12;
+            $twelveth->subjects             = $request->subject12;
+            $twelveth->marksheet            = '';
+            $twelveth->save();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => 'error', 'message' => 'Could not save education details'], 500);
+        }
+
+        return response()->json(['status' => 'success']);
+    }
+
+private function saveStep4(Request $request)
+{
+    $rules = [
+        'student_id'  => 'required|exists:eparivesh_students,id',
+        'photo'       => 'required|image|mimes:jpeg,jpg,png|max:200',
+        'marksheet10' => 'required|mimes:pdf|min:200|max:2048',
+        'marksheet12' => 'required|mimes:pdf|min:200|max:2048',
+    ];
+
+    if ($request->input('pwd') === 'yes') {
+        $rules['pwd_certificate'] = 'required|mimes:pdf|min:200|max:2048';
+    }
+    if (in_array($request->input('category'), ['obc', 'sc', 'st'])) {
+        $rules['category_certificate'] = 'required|mimes:pdf|min:200|max:2048';
+    }
+    if ($request->input('ews') === 'yes') {
+        $rules['ews_certificate'] = 'required|mimes:pdf|min:200|max:2048';
+    }
+
+    $validator = Validator::make($request->all(), $rules);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    $student = EpariveshStudent::findOrFail($request->student_id);
     $uploadDir = public_path('uploads/admission');
     if (!file_exists($uploadDir)) {
         mkdir($uploadDir, 0755, true);
     }
 
-    $photoPath = '';
-    $marksheet10Path = '';
-    $marksheet12Path = '';
-    $pwdCertificatePath = '';
-
     if ($request->hasFile('photo')) {
         $photo = $request->file('photo');
         $photoFileName = 'photo_' . time() . '_' . rand(1000, 9999) . '.' . $photo->getClientOriginalExtension();
         $photo->move($uploadDir, $photoFileName);
-        $photoPath = 'uploads/admission/' . $photoFileName;
-    }
-
-    if ($request->hasFile('marksheet10')) {
-        $marksheet10 = $request->file('marksheet10');
-        $marksheet10FileName = 'marksheet10_' . time() . '_' . rand(1000, 9999) . '.' . $marksheet10->getClientOriginalExtension();
-        $marksheet10->move($uploadDir, $marksheet10FileName);
-        $marksheet10Path = 'uploads/admission/' . $marksheet10FileName;
-    }
-
-    if ($request->hasFile('marksheet12')) {
-        $marksheet12 = $request->file('marksheet12');
-        $marksheet12FileName = 'marksheet12_' . time() . '_' . rand(1000, 9999) . '.' . $marksheet12->getClientOriginalExtension();
-        $marksheet12->move($uploadDir, $marksheet12FileName);
-        $marksheet12Path = 'uploads/admission/' . $marksheet12FileName;
+        $student->photo = 'uploads/admission/' . $photoFileName;
     }
 
     if ($request->hasFile('pwd_certificate')) {
         $pwdCertificate = $request->file('pwd_certificate');
         $pwdCertificateFileName = 'pwd_certificate_' . time() . '_' . rand(1000, 9999) . '.' . $pwdCertificate->getClientOriginalExtension();
         $pwdCertificate->move($uploadDir, $pwdCertificateFileName);
-        $pwdCertificatePath = 'uploads/admission/' . $pwdCertificateFileName;
+        $student->pwdCertificate = 'uploads/admission/' . $pwdCertificateFileName;
     }
 
-    $student = new EpariveshStudent();
-    $student->RegistrationNo = $registrationNo;
-    $student->StudentSysCode = $registrationNo;
-    $student->FirstName = $request->student_name;
-    $student->LastName = '';
-    $student->FatherName = $request->father_name;
-    $student->MotherName = $request->mother_name;
-    $student->email = $request->email;
-    $student->mobile = $request->mobile;
-    $student->DateofBirth = $request->dob;
-    $student->IsEWS = $request->ews;
-    $student->IsPWD = $request->pwd;
-    $student->PermanentAddress = $request->perm_address;
-    $student->PermanentAddressdistrict = $request->perm_district;
-    $student->pstate_id = is_numeric($request->perm_state) ? $request->perm_state : null;
-    $student->PermanentAddressstate = $request->perm_state;
-    $student->CorrespondanceAddress = $request->corr_address;
-    $student->CorrespondanceAddressDistrict = $request->corr_district;
-    $student->cstate_id = is_numeric($request->corr_state) ? $request->corr_state : null;
-    $student->CorrespondanceAddressState = $request->corr_state;
-    $student->IPAddress = $request->ip();
-    $student->CreatedOn = date('Y-m-d H:i:s');
-    $student->nationality_id = $request->nationality;
-    $student->nationalityname = $request->nationality === 'india' ? 'Indian' : 'Other';
-    $student->gendername = $request->gender === 'male' ? 1 : ($request->gender === 'female' ? 2 : 3);
-    $student->communities_id = null;
-    $student->categoryname = $request->category;
-    $student->countryname = $request->nationality === 'india' ? 'India' : 'Other';
     $student->status = 'pending';
-    $student->institute_id = $request->institute_id;
-    $student->course_id = $request->course_id;
-    $student->addharNumber = $request->aadhar_number;
-    $student->pwdCertificate = $pwdCertificatePath;
-    $student->photo = $photoPath;
     $student->save();
 
-    $tenth = new Epariveshacadmic();
-    $tenth->eparivesh_student_id = $student->id;
-    $tenth->registration_no = $registrationNo;
-    $tenth->qulification_name = $request->board10;
-    $tenth->board_name = $request->board10;
-    $tenth->passing_year = $request->year10;
-    $tenth->max_marks = $request->total10;
-    $tenth->obtained_marks = $request->marks10;
-    $tenth->percentage = $request->percent10;
-    $tenth->subjects = $request->subject10;
-    $tenth->marksheet = $marksheet10Path;
-    $tenth->save();
+    if ($request->hasFile('marksheet10')) {
+        $marksheet10 = $request->file('marksheet10');
+        $marksheet10FileName = 'marksheet10_' . time() . '_' . rand(1000, 9999) . '.' . $marksheet10->getClientOriginalExtension();
+        $marksheet10->move($uploadDir, $marksheet10FileName);
+        Epariveshacadmic::where('eparivesh_student_id', $student->id)
+            ->where('qulification_name', '!=', '10+2 OR EQUIVALENT')
+            ->update(['marksheet' => 'uploads/admission/' . $marksheet10FileName]);
+    }
 
-    $twelveth = new Epariveshacadmic();
-    $twelveth->eparivesh_student_id = $student->id;
-    $twelveth->registration_no = $registrationNo;
-    $twelveth->qulification_name = '10+2 OR EQUIVALENT';
-    $twelveth->board_name = $request->board12;
-    $twelveth->passing_year = $request->year12;
-    $twelveth->max_marks = $request->total12;
-    $twelveth->obtained_marks = $request->marks12;
-    $twelveth->percentage = $request->percent12;
-    $twelveth->subjects = $request->subject12;
-    $twelveth->marksheet = $marksheet12Path;
-    $twelveth->save();
+    if ($request->hasFile('marksheet12')) {
+        $marksheet12 = $request->file('marksheet12');
+        $marksheet12FileName = 'marksheet12_' . time() . '_' . rand(1000, 9999) . '.' . $marksheet12->getClientOriginalExtension();
+        $marksheet12->move($uploadDir, $marksheet12FileName);
+        Epariveshacadmic::where('eparivesh_student_id', $student->id)
+            ->where('qulification_name', '10+2 OR EQUIVALENT')
+            ->update(['marksheet' => 'uploads/admission/' . $marksheet12FileName]);
+    }
 
-    return redirect('/admission')->with('success', 'Admission submitted. Your Registration No is ' . $registrationNo);
+    return response()->json([
+        'status'          => 'success',
+        'registration_no' => $student->RegistrationNo,
+    ]);
 }
 
 
-public function registration(){
-    $states = DB::table('lgstates')->get();
-    return view('admission.registration', compact('states'));
-}
 
-public function registration_save(Request $request){
-    //dd($request->all());
-    $mobileExists = EpariveshStudent::select('mobile')->where('mobile', $request->mobile)->first();
-    $emailExists = EpariveshStudent::select('email')->where('email', $request->email)->first();
-
-    $errors = [];
-    if (EpariveshStudent::where('mobile', $request->mobile)->exists()) {
-        $errors['mobile'] = 'Mobile number already exists.';
-    }
-    if (EpariveshStudent::where('email', $request->email)->exists()) {
-        $errors['email'] = 'Email address already exists.';
-    }
-    if (!empty($errors)) {
-        return redirect()->back() ->withErrors($errors) ->withInput();
-    }
-    $student = new EpariveshStudent();
-    $student->FirstName = $request->first_name;
-    $student->email = $request->email;
-    $student->addharNumber = $request->aadhar_number;
-    $student->mobile = $request->mobile;
-    $student->pstate_id = $request->state_id;
-    $student->save();
-    session::flash('success', 'Registration successful.' );
-}
 
     // Show OTP login form
     public function showOtpLogin()
     {
-        return view('auth.otp_login');
+        return view('admission.otp_login');
     }
 
     // Send OTP to selected mobile or email
